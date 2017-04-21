@@ -9,5 +9,7 @@ public class MainMapScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_map_screen);
+
+        //has to create a fragment and such if there isn't one
     }
 }
