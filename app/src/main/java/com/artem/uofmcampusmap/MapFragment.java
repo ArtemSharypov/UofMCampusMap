@@ -9,29 +9,38 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 /**
  * Created by Artem on 2017-04-21.
  */
 
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private MapView mMapView;
     private GoogleMap googleMap;
-    private Toolbar toolbar;
+    private ImageView previousDirection;
+    private ImageView nextDirection;
+    private TextView currentDirections;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
+        previousDirection = (ImageView) view.findViewById(R.id.previous_direction);
+        //set onClickListener
+
+        nextDirection = (ImageView) view.findViewById(R.id.next_direction);
+        //set onClickListener
+
+        currentDirections = (TextView) view.findViewById(R.id.current_directions);
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -46,20 +55,9 @@ public class MapFragment extends Fragment {
             e.printStackTrace();
         }
 
-
-        //center map
-        //add entrance markers
-        //routes / tunnels
+        mMapView.getMapAsync(this);
 
         return view;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        //switch statement switching on the click
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -81,4 +79,16 @@ public class MapFragment extends Fragment {
     }
 
 
+    @Override
+    public void onMapReady(GoogleMap map) {
+        googleMap = map;
+        setUpMap();
+    }
+
+    public void setUpMap()
+    {
+        //center map
+        //add entrance markers
+        //routes / tunnels
+    }
 }
