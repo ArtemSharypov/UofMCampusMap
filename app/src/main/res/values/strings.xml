@@ -40,31 +40,54 @@
     <string name="archi_2">Architecture 2</string>
     <string name="fac_music">Faculty of Music</string>
     <string name="education">Education</string>
+    <string name="st_johns">St.Johns College</string>
+    <string name="robert_schultz">Robert Schultz Theatre</string>
+    <string name="st_pauls">St.Pauls College</string>
+    <string name="ext_education">Extended Education</string>
+    <string name="frank_kennedy">Frank Kenny Centre</string>
+    <string name="art_lab">Artlab</string>
+    <string name="drake_centre">Drake Centre</string>
+    <string name="dairy_science">Dairy Science</string>
+    <string name="agr_engineer">Agricultural Engineering</string>
+    <string name="agriculture">Agriculture</string>
+    <string name="plant_sci">Plant Science</string>
+    <string name="animal_sci">Animal Science / Entomology</string>
 
-    
     <string-array name="building_options" >
+        <item>@string/agriculture</item>
+        <item>@string/agr_engineer</item>
+        <item>@string/allen</item>
+        <item>@string/animal_sci</item>
         <item>@string/archi_2</item>
         <item>@string/armes</item>
-        <item>@string/allen</item>
+        <item>@string/art_lab</item>
         <item>@string/bio_sci</item>
         <item>@string/buller</item>
+        <item>@string/dairy_science</item>
+        <item>@string/drake_centre</item>
         <item>@string/duff_roblin</item>
         <item>@string/education</item>
         <item>@string/eitc_e1</item>
         <item>@string/eitc_e2</item>
         <item>@string/eitc_e3</item>
         <item>@string/elizabeth_dafoe</item>
+        <item>@string/ext_education</item>
         <item>@string/fac_music</item>
         <item>@string/fletcher</item>
+        <item>@string/frank_kennedy</item>
         <item>@string/helen_glass</item>
         <item>@string/human_ecology</item>
         <item>@string/isbister</item>
         <item>@string/machray</item>
         <item>@string/music_2</item>
         <item>@string/parker</item>
+        <item>@string/plant_sci</item>
+        <item>@string/robert_schultz</item>
         <item>@string/robson</item>
         <item>@string/russel</item>
         <item>@string/stanley_paul</item>
+        <item>@string/st_johns</item>
+        <item>@string/st_pauls</item>
         <item>@string/tier</item>
         <item>@string/uni_centre</item>
         <item>@string/university_college</item>
