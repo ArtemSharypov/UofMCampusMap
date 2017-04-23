@@ -94,8 +94,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private void centerMap()
     {
-        //centers map in center of campus
-        //sets boundaries for the area
         LatLng northEastCorner = new LatLng(49.814274, -97.131857);
         LatLng southWestCorner = new LatLng(49.798710, -97.152484);
         LatLngBounds uOfMCampus = new LatLngBounds(northEastCorner, southWestCorner);
