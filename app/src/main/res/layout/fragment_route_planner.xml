@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/from_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:text="From"
+        android:textAppearance="@android:style/TextAppearance.Large" />
+
+    <TextView
+        android:id="@+id/from_building_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/from_title"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@+id/to_title"
+        android:layout_toRightOf="@+id/to_title"
+        android:text="Building"
+        android:textAppearance="@android:style/TextAppearance.Large" />
+
+    <Spinner
+        android:id="@+id/from_building"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/from_building_title"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp" />
+
+    <Spinner
+        android:id="@+id/to_building"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/to_building_title"
+        android:layout_alignLeft="@+id/from_building"
+        android:layout_alignStart="@+id/from_building" />
+
+    <TextView
+        android:id="@+id/to_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/from_title"
+        android:layout_alignStart="@+id/from_title"
+        android:layout_below="@+id/from_building"
+        android:layout_marginTop="83dp"
+        android:text="To"
+        android:textAppearance="@android:style/TextAppearance.Large" />
+
+    <Button
+        android:id="@+id/find_route_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cancel_button"
+        android:layout_alignBottom="@+id/cancel_button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="31dp"
+        android:layout_marginRight="31dp"
+        android:text="Find Route"
+        android:textAppearance="@android:style/TextAppearance.Large" />
+
+    <TextView
+        android:id="@+id/prefer_tunnel_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prefer Tunnels?"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_above="@+id/cancel_button"
+        android:layout_alignLeft="@+id/to_title"
+        android:layout_alignStart="@+id/to_title"
+        android:layout_marginBottom="93dp" />
+
+    <CheckBox
+        android:id="@+id/prefer_tunnels_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/prefer_tunnel_title"
+        android:layout_alignBottom="@+id/prefer_tunnel_title"
+        android:layout_alignLeft="@+id/find_route_button"
+        android:layout_alignStart="@+id/find_route_button" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="23dp"
+        android:text="Cancel"
+        android:textAppearance="@android:style/TextAppearance.Large"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/to_building_title"
+        android:layout_alignEnd="@+id/to_building_title" />
+
+    <TextView
+        android:id="@+id/to_building_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/to_title"
+        android:layout_marginTop="19dp"
+        android:layout_toEndOf="@+id/to_title"
+        android:layout_toRightOf="@+id/to_title"
+        android:text="Building"
+        android:textAppearance="@android:style/TextAppearance.Large" />
+
+</RelativeLayout>

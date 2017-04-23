@@ -10,23 +10,39 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class MainMapScreenActivity extends AppCompatActivity {
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+    }
 
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private CharSequence mTitle;
+    private String[] optionTitles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_map_screen);
+        setContentView(R.layout.activity_main);
+
+        //Temp options PH
+        optionTitles = new String[5];
+        optionTitles[0] = "First";
+        optionTitles[1] = "Second";
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        //set adapter
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.row_main_nav_drawer, optionTitles));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,6 +77,16 @@ public class MainMapScreenActivity extends AppCompatActivity {
         //initial fragment transaction with map if its not coming from a previous state
     }
 
+    //On click item for items in the drawer.
+    private void selectItem(int position) {
+        //Switch fragments depending on what gets clicked
+
+
+        // Highlight the selected item, update the title, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -69,9 +95,17 @@ public class MainMapScreenActivity extends AppCompatActivity {
             return true;
         }
 
-        //change fragments here depending on what gets clicked
+        //menu onclicks handled here
+        switch(item.getItemId())
+        {
+            case R.id.navigate_button:
+                //switch fragments to route planner
 
-        return super.onOptionsItemSelected(item);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
