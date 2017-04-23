@@ -1,6 +1,8 @@
 package com.artem.uofmcampusmap;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
@@ -30,11 +33,19 @@ public class RoutePlannerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route_planner, container, false);
 
+        ArrayAdapter<CharSequence> fromBuildingAdapter =
+                ArrayAdapter.createFromResource(this.getActivity(), R.array.building_options, android.R.layout.simple_spinner_item);
+        fromBuildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         fromBuilding = (Spinner) view.findViewById(R.id.from_building);
-        //set adapter and populate with options
+        fromBuilding.setAdapter(fromBuildingAdapter);
+
+        ArrayAdapter<CharSequence> toBuildingAdapter =
+                ArrayAdapter.createFromResource(this.getActivity(), R.array.building_options, android.R.layout.simple_spinner_item);
+        toBuildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         toBuilding = (Spinner) view.findViewById(R.id.to_building);
-        //set adapter and populate with options
+        toBuilding.setAdapter(toBuildingAdapter);
 
         preferTunnelsBox = (CheckBox) view.findViewById(R.id.prefer_tunnels_check);
 
@@ -42,7 +53,8 @@ public class RoutePlannerFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //return to the previous fragment / map screen fragment
+                //returns to the map fragment / screen
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });
 
@@ -50,8 +62,10 @@ public class RoutePlannerFragment extends Fragment {
         findRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //pass to / from location to the map
-                //return to the map screen fragment
+                //get current option from building
+                //get current option from to building
+                //set those in the activity
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });
 

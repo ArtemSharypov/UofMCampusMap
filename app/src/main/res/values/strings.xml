@@ -5,4 +5,70 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="campus_map">Campus Map</string>
+    <string name="navigate">Navigate</string>
+
+    <string-array name="drawer_options">
+        <item>@string/campus_map</item>
+        <item>@string/navigate</item>
+    </string-array>
+
+    <string name="wallace">Wallace</string>
+    <string name="parker">Parker</string>
+    <string name="armes">Armes</string>
+    <string name="allen">Allen</string>
+    <string name="machray">Machray</string>
+    <string name="buller">Buller</string>
+    <string name="duff_roblin">Duff Roblin</string>
+    <string name="human_ecology">Human Ecology</string>
+    <string name="university_college">University College</string>
+    <string name="robson">Robson</string>
+    <string name="elizabeth_dafoe">Elizabeth Dafoe</string>
+    <string name="fletcher">Fletcher</string>
+    <string name="tier">Tier</string>
+    <string name="isbister">Isbister</string>
+    <string name="bio_sci">Biological Science</string>
+    <string name="uni_centre">University Centre</string>
+    <string name="helen_glass">Helen Glass</string>
+    <string name="eitc_e2">EITC E2</string>
+    <string name="eitc_e1">EITC_E1</string>
+    <string name="eitc_e3">EITC_E3</string>
+    <string name="stanley_paul">Stanley Paul Centre</string>
+    <string name="music_2">Music Annex 2</string>
+    <string name="russel">Russel</string>
+    <string name="archi_2">Architecture 2</string>
+    <string name="fac_music">Faculty of Music</string>
+    <string name="education">Education</string>
+
+    
+    <string-array name="building_options" >
+        <item>@string/archi_2</item>
+        <item>@string/armes</item>
+        <item>@string/allen</item>
+        <item>@string/bio_sci</item>
+        <item>@string/buller</item>
+        <item>@string/duff_roblin</item>
+        <item>@string/education</item>
+        <item>@string/eitc_e1</item>
+        <item>@string/eitc_e2</item>
+        <item>@string/eitc_e3</item>
+        <item>@string/elizabeth_dafoe</item>
+        <item>@string/fac_music</item>
+        <item>@string/fletcher</item>
+        <item>@string/helen_glass</item>
+        <item>@string/human_ecology</item>
+        <item>@string/isbister</item>
+        <item>@string/machray</item>
+        <item>@string/music_2</item>
+        <item>@string/parker</item>
+        <item>@string/robson</item>
+        <item>@string/russel</item>
+        <item>@string/stanley_paul</item>
+        <item>@string/tier</item>
+        <item>@string/uni_centre</item>
+        <item>@string/university_college</item>
+        <item>@string/wallace</item>
+    </string-array>
+
 </resources>

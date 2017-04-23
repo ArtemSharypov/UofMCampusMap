@@ -2,7 +2,7 @@ package com.artem.uofmcampusmap;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,8 +84,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     public void setUpMap()
     {
-        //center map
-        //add entrance markers
-        //routes / tunnels
+        centerMap();
+        addBuildingEntranceMarkers();
+    }
+
+    private void centerMap()
+    {
+        //centers map in center of campus
+        //sets boundaries for the area
+    }
+
+    private void addBuildingEntranceMarkers()
+    {
+        //adds building entrances on map
     }
 }
