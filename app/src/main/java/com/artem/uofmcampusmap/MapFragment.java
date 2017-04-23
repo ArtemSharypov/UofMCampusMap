@@ -2,17 +2,21 @@ package com.artem.uofmcampusmap;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 /**
  * Created by Artem on 2017-04-21.
@@ -84,8 +88,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     public void setUpMap()
     {
-        //center map
-        //add entrance markers
-        //routes / tunnels
+        centerMap();
+        addBuildingEntranceMarkers();
+    }
+
+    private void centerMap()
+    {
+        LatLng northEastCorner = new LatLng(49.814274, -97.131857);
+        LatLng southWestCorner = new LatLng(49.798710, -97.152484);
+        LatLngBounds uOfMCampus = new LatLngBounds(northEastCorner, southWestCorner);
+
+        googleMap.setLatLngBoundsForCameraTarget(uOfMCampus);
+
+        LatLng centerOfCampus = new LatLng(49.809496, -97.133810);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(centerOfCampus));
+    }
+
+    private void addBuildingEntranceMarkers()
+    {
+        //adds building entrances on map
     }
 }

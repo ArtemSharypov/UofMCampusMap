@@ -1,7 +1,9 @@
 package com.artem.uofmcampusmap;
 
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.annotation.Nullable;
+import android.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainMapScreenActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -35,10 +37,7 @@ public class MainMapScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Temp options PH
-        optionTitles = new String[5];
-        optionTitles[0] = "First";
-        optionTitles[1] = "Second";
+        optionTitles = getResources().getStringArray(R.array.drawer_options);
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.row_main_nav_drawer, optionTitles));
@@ -74,17 +73,47 @@ public class MainMapScreenActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        //initial fragment transaction with map if its not coming from a previous state
+        MapFragment mapFragment = new MapFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.main_frame_layout, mapFragment);
+        fragmentTransaction.commit();
     }
 
-    //On click item for items in the drawer.
+    //On click item for items in the nav drawer.
     private void selectItem(int position) {
-        //Switch fragments depending on what gets clicked
+        String stringClicked = (String) mDrawerList.getItemAtPosition(position);
+        String campusMapString = getResources().getString(R.string.campus_map);
+        String navigateString = getResources().getString(R.string.navigate);
 
+        if(stringClicked.equals(campusMapString))
+        {
+            //Map fragment should be at the very bottom of the stack if there is one
+            if(getFragmentManager().getBackStackEntryCount() > 0)
+            {
+                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+        }
+        else if(stringClicked.equals(navigateString))
+        {
+            switchToRoutePlanner();
+        }
 
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+    //Switch current fragment to the RoutePlannerFragment
+    private void switchToRoutePlanner()
+    {
+        RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame_layout, routePlannerFragment);
+        fragmentTransaction.addToBackStack("MapFragment");
     }
 
     @Override
@@ -95,16 +124,28 @@ public class MainMapScreenActivity extends AppCompatActivity {
             return true;
         }
 
-        //menu onclicks handled here
+        //Handles any onClicks for the toolbar
         switch(item.getItemId())
         {
             case R.id.navigate_button:
-                //switch fragments to route planner
+                switchToRoutePlanner();
 
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() > 0)
+        {
+            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        else
+        {
+            super.onBackPressed();
         }
     }
 
@@ -114,6 +155,7 @@ public class MainMapScreenActivity extends AppCompatActivity {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.toolbar).setVisible(!drawerOpen);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
