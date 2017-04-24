@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -96,13 +95,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     {
         LatLng northEastCorner = new LatLng(49.814274, -97.131857);
         LatLng southWestCorner = new LatLng(49.798710, -97.152484);
-        LatLngBounds uOfMCampus = new LatLngBounds(northEastCorner, southWestCorner);
+        LatLngBounds uOfMCampus = new LatLngBounds(southWestCorner, northEastCorner);
 
         googleMap.setLatLngBoundsForCameraTarget(uOfMCampus);
 
         LatLng centerOfCampus = new LatLng(49.809496, -97.133810);
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(centerOfCampus));
+        float zoomAmount = 17f;
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerOfCampus, zoomAmount));
     }
 
     private void addBuildingEntranceMarkers()
