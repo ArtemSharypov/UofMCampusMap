@@ -138,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigate_button:
                 switchToRoutePlanner();
 
-                System.out.println("ayo");
-
                 return true;
 
             default:
