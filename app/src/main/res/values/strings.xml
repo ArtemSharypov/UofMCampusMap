@@ -22,7 +22,7 @@
     <string name="buller">Buller</string>
     <string name="duff_roblin">Duff Roblin</string>
     <string name="human_ecology">Human Ecology</string>
-    <string name="university_college">University College</string>
+    <string name="uni_college">University College</string>
     <string name="robson">Robson</string>
     <string name="elizabeth_dafoe">Elizabeth Dafoe</string>
     <string name="fletcher">Fletcher</string>
@@ -90,7 +90,7 @@
         <item>@string/st_pauls</item>
         <item>@string/tier</item>
         <item>@string/uni_centre</item>
-        <item>@string/university_college</item>
+        <item>@string/uni_college</item>
         <item>@string/wallace</item>
     </string-array>
 

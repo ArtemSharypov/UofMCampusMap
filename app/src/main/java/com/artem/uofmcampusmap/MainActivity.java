@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         optionTitles = getResources().getStringArray(R.array.drawer_options);
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.row_main_nav_drawer, optionTitles));
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.nav_drawer_single_item, optionTitles));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,14 +55,14 @@ public class MainActivity extends AppCompatActivity {
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mTitle);
+                getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu();
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
+                getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu();
             }
         };
@@ -114,6 +114,14 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame_layout, routePlannerFragment);
         fragmentTransaction.addToBackStack("MapFragment");
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -147,16 +155,6 @@ public class MainActivity extends AppCompatActivity {
         {
             super.onBackPressed();
         }
-    }
-
-    /* Called whenever we call invalidateOptionsMenu() */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        menu.findItem(R.id.toolbar).setVisible(!drawerOpen);
-
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
