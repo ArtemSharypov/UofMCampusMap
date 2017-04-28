@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-    private CharSequence mTitle;
     private String[] optionTitles;
 
     @Override
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        mTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.drawer_open, R.string.drawer_close) {
@@ -55,14 +53,15 @@ public class MainActivity extends AppCompatActivity {
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle(mTitle);
+                getSupportActionBar().setTitle("Menu");
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
                 invalidateOptionsMenu();
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mTitle);
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
                 invalidateOptionsMenu();
             }
         };
