@@ -94,7 +94,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private void centerMap()
     {
-        LatLng northEastCorner = new LatLng(49.814274, -97.131857);
+        LatLng northEastCorner = new LatLng(49.815699, -97.129079);
         LatLng southWestCorner = new LatLng(49.798710, -97.152484);
         LatLngBounds uOfMCampus = new LatLngBounds(southWestCorner, northEastCorner);
 
@@ -133,7 +133,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         LatLng bio_sci = new LatLng(49.810222, -97.134779);
         googleMap.addMarker(new MarkerOptions().position(bio_sci).title(getResources().getString(R.string.bio_sci)));
 
-        LatLng buller = new LatLng(49.810222, -97.134779);
+        LatLng buller = new LatLng(49.810516, -97.133458);
         googleMap.addMarker(new MarkerOptions().position(buller).title(getResources().getString(R.string.buller)));
 
         LatLng dairy_sci = new LatLng(49.807553, -97.133297);
@@ -157,10 +157,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         LatLng eitc_e3 = new LatLng(49.8083665, -97.1344375);
         googleMap.addMarker(new MarkerOptions().position(eitc_e3).title(getResources().getString(R.string.eitc_e3)));
 
-        LatLng elizabeth_dafoe = new LatLng(49.809063, -97.135516);
+        LatLng elizabeth_dafoe = new LatLng(49.8102360, -97.1316754);
         googleMap.addMarker(new MarkerOptions().position(elizabeth_dafoe).title(getResources().getString(R.string.elizabeth_dafoe)));
 
-        LatLng ext_education = new LatLng(49.808682, -97.136705);
+        LatLng ext_education = new LatLng(49.807408, -97.138650);
         googleMap.addMarker(new MarkerOptions().position(ext_education).title(getResources().getString(R.string.ext_education)));
 
         LatLng fac_music = new LatLng(49.807224, -97.135906);
@@ -175,7 +175,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         LatLng helen_glass = new LatLng(49.809063, -97.135516);
         googleMap.addMarker(new MarkerOptions().position(helen_glass).title(getResources().getString(R.string.helen_glass)));
 
-        LatLng human_ecology = new LatLng(49.809714, -97.130965);
+        LatLng human_ecology = new LatLng(49.810734, -97.132233);
         googleMap.addMarker(new MarkerOptions().position(human_ecology).title(getResources().getString(R.string.human_ecology)));
 
         LatLng istbister = new LatLng(49.809384, -97.130538);
@@ -205,19 +205,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         LatLng stanley_paul = new LatLng(49.807977, -97.134038);
         googleMap.addMarker(new MarkerOptions().position(stanley_paul).title(getResources().getString(R.string.stanley_paul)));
 
-        LatLng st_johns = new LatLng(49.810074, -97.136627);
+        LatLng st_johns = new LatLng(49.810565, -97.136832);
         googleMap.addMarker(new MarkerOptions().position(st_johns).title(getResources().getString(R.string.st_johns)));
 
-        LatLng st_pauls = new LatLng(49.810074, -97.136627);
+        LatLng st_pauls = new LatLng(49.810266, -97.137926);
         googleMap.addMarker(new MarkerOptions().position(st_pauls).title(getResources().getString(R.string.st_pauls)));
 
-        LatLng tier = new LatLng(49.811844, -97.130639);
+        LatLng tier = new LatLng(49.809219, -97.130942);
         googleMap.addMarker(new MarkerOptions().position(tier).title(getResources().getString(R.string.tier)));
 
-        LatLng uni_centre = new LatLng(49.811844, -97.130639);
+        LatLng uni_centre = new LatLng(49.8094187, -97.1347299);
         googleMap.addMarker(new MarkerOptions().position(uni_centre).title(getResources().getString(R.string.uni_centre)));
 
-        LatLng uni_college = new LatLng(49.811844, -97.130639);
+        LatLng uni_college = new LatLng(49.811203, -97.131089);
         googleMap.addMarker(new MarkerOptions().position(uni_college).title(getResources().getString(R.string.uni_college)));
 
         LatLng wallace = new LatLng(49.811757, -97.135920);
