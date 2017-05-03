@@ -16,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PassRouteData{
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private String[] optionTitles;
+    private String startLocation;
+    private String destinationLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +119,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void passStartLocation(String source) {
+        startLocation = source;
+    }
+
+    @Override
+    public String getStartLocation() {
+        return startLocation;
+    }
+
+    @Override
+    public void passDestinationLocation(String destination) {
+        destinationLocation = destination;
+    }
+
+    @Override
+    public String getDestinationLocation() {
+        return destinationLocation;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
@@ -126,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //ActionBarDrawerToggle handles it if true
+        //Handles any clicks for the navigation drawer
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }

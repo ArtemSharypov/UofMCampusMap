@@ -5,4 +5,10 @@ package com.artem.uofmcampusmap;
  */
 
 public interface PassRouteData {
+
+    void passStartLocation(String source);
+    String getStartLocation();
+    void passDestinationLocation(String destination);
+    String getDestinationLocation();
+
 }
