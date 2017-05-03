@@ -12,6 +12,10 @@ public class Vertex {
     private String name;
     private LatLng position;
     private ArrayList<Edge> connections;
+    private long g; //cost from the parent vertex
+    private long h; //estimated cost from this to the destination
+    private long f; //total cost (g+h)
+    private Vertex parent;
 
     public Vertex(String name, LatLng position)
     {
@@ -34,9 +38,14 @@ public class Vertex {
         connections = new ArrayList<>(vertexToCopy.getConnections());
     }
 
-    public void addEdge(Edge edgeToAdd)
+    public void addConnection(Edge edgeToAdd)
     {
         connections.add(edgeToAdd);
+    }
+
+    public void addConnection(Vertex vertexToConnect)
+    {
+        connections.add(new Edge(this, vertexToConnect));
     }
 
     public Edge findConnection(Vertex vertex)
@@ -53,6 +62,39 @@ public class Vertex {
         }
 
         return edge;
+    }
+
+    public void calculateF()
+    {
+        this.f = g + h;
+    }
+
+    public long getG() {
+        return g;
+    }
+
+    public void setG(long g) {
+        this.g = g;
+    }
+
+    public long getH() {
+        return h;
+    }
+
+    public void calculateH(Vertex endPoint) {
+        //todo: calculate and set h to the weight from this to the end vertex
+    }
+
+    public long getF() {
+        return f;
+    }
+
+    public Vertex getParent() {
+        return parent;
+    }
+
+    public void setParent(Vertex parent) {
+        this.parent = parent;
     }
 
     public boolean equals(Vertex vertex)
