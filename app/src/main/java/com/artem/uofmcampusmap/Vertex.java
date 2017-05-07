@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Vertex {
     private String name;
     private LatLng position;
-    private ArrayList<Edge> connections;
+    private ArrayList<Edge> connections; //todo change Edge's just to vertex's? edges dont really do anything
     private long g; //cost from the parent vertex
     private long h; //estimated cost from this to the destination
     private long f; //total cost (g+h)
@@ -66,7 +66,7 @@ public class Vertex {
 
     public void calculateF()
     {
-        this.f = g + h;
+        this.f = this.g + this.h;
     }
 
     public long getG() {
