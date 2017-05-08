@@ -29,6 +29,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private ImageView previousDirection;
     private ImageView nextDirection;
     private TextView currentDirections;
+    private MapGraph campusMap;
 
     @Nullable
     @Override
@@ -57,6 +58,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         }
 
         mMapView.getMapAsync(this);
+
+        campusMap = new MapGraph(getActivity().getApplicationContext());
 
         return view;
     }
@@ -97,18 +100,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         LatLng northEastCorner = new LatLng(49.815699, -97.129079);
         LatLng southWestCorner = new LatLng(49.798710, -97.152484);
         LatLngBounds uOfMCampus = new LatLngBounds(southWestCorner, northEastCorner);
-
-        googleMap.setLatLngBoundsForCameraTarget(uOfMCampus);
-
         LatLng centerOfCampus = new LatLng(49.809496, -97.133810);
-
         float zoomAmount = 17f;
 
+        googleMap.setLatLngBoundsForCameraTarget(uOfMCampus);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerOfCampus, zoomAmount));
     }
 
     private void addBuildingMarkers()
     {
+        //todo make custom markers that just say the building name, over the building its meant to represent. maybe turn off onClicks for them
+
         LatLng agriculture = new LatLng(49.806950, -97.135443);
         googleMap.addMarker(new MarkerOptions().position(agriculture).title(getResources().getString(R.string.agriculture)));
 

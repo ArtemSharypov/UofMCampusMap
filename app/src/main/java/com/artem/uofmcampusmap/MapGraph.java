@@ -180,7 +180,7 @@ public class MapGraph {
         Vertex D_B = new Vertex(new LatLng(49.810992, -97.137633));
         Vertex A45_A46 = new Vertex(new LatLng(49.810794, -97.137122));
         Vertex D_A = new Vertex(new LatLng(49.810733, -97.138385));
-        Vertex B_A21_A45 = new Vertex(new LatLng(49.810733, -97.138385));
+        Vertex B_A21_A45 = new Vertex(new LatLng(49.810656, -97.137366));
         Vertex A24_A23_A22 = new Vertex(new LatLng(49.810511, -97.137170));
         Vertex A24_A21 = new Vertex(new LatLng(49.810568, -97.137337));
         Vertex A23_A21 = new Vertex(new LatLng(49.810435, -97.137310));
@@ -188,7 +188,8 @@ public class MapGraph {
         Vertex A21_A20 = new Vertex(new LatLng(49.810132, -97.137196));
         Vertex A20_A18_A19_A17 = new Vertex(new LatLng(49.810037, -97.137051));
         Vertex A18_A16_A15 = new Vertex(new LatLng(49.809929, -97.137234));
-        Vertex A15_A17_M = new Vertex(new LatLng(49.809745, -97.136707));
+        Vertex A17_M = new Vertex(new LatLng(49.809745, -97.136707));
+        Vertex A15_M = new Vertex(new LatLng(49.809707, -97.136842));
         Vertex A14_M = new Vertex(new LatLng(49.809884, -97.136281));
         Vertex F_I = new Vertex(new LatLng(49.811333, -97.135826));
         Vertex G_I = new Vertex(new LatLng(49.811510, -97.135103));
@@ -209,7 +210,7 @@ public class MapGraph {
         Vertex U_U1 = new Vertex(new LatLng(49.810265, -97.133501));
         Vertex U_U2 = new Vertex(new LatLng(49.810395, -97.133117));
         Vertex U_W = new Vertex(new LatLng(49.810539, -97.132721));
-        Vertex A28_W = new Vertex(new LatLng(49.811043, -97.133168));
+        Vertex A28_W = new Vertex(new LatLng(49.811049, -97.133148));
         Vertex V_W = new Vertex(new LatLng(49.810752, -97.132914));
         Vertex V_A48 = new Vertex(new LatLng(49.810784, -97.132799));
         Vertex W_A48 = new Vertex(new LatLng(49.810688, -97.132843));
@@ -264,7 +265,7 @@ public class MapGraph {
         Vertex A13_AL = new Vertex(new LatLng(49.808248, -97.132312));
         Vertex AAY_A53 = new Vertex(new LatLng(49.808967, -97.132845));
         Vertex A53_S = new Vertex(new LatLng(49.808894, -97.133020));
-        Vertex S_AL = new Vertex(new LatLng(49.808205, -97.132511));
+        Vertex S_AL = new Vertex(new LatLng(49.808216, -97.132490));
         Vertex AQ_S = new Vertex(new LatLng(49.808559, -97.132751));
         Vertex AP_S = new Vertex(new LatLng(49.808764, -97.132921));
         Vertex AO_S = new Vertex(new LatLng(49.809083, -97.133179));
@@ -318,15 +319,14 @@ public class MapGraph {
         Vertex A38_AL2 = new Vertex(new LatLng(49.807714, -97.133368));
         Vertex A39_AL2 = new Vertex(new LatLng(49.808686, -97.130599));
         Vertex A40_A39 = new Vertex(new LatLng(49.808638, -97.130480));
+        Vertex AW_AL2 = new Vertex(new LatLng(49.807432, -97.134804));
+        Vertex S_AL2 = new Vertex(new LatLng(49.808085, -97.132369));
     }
 
     private void connectVertices(Vertex vertex1, Vertex vertex2)
     {
-        Edge v1ToV2 = new Edge(vertex1, vertex2);
-        vertex1.addConnection(v1ToV2);
-
-        Edge v2ToV1 = new Edge(vertex2, vertex1);
-        vertex2.addConnection(v2ToV1);
+        vertex1.addConnection(vertex2);
+        vertex2.addConnection(vertex1);
     }
 
     public Route findRoute(String startLocation, String endLocation)
