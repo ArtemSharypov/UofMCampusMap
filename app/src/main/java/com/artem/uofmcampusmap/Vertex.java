@@ -11,62 +11,50 @@ import java.util.ArrayList;
 public class Vertex {
     private String name;
     private LatLng position;
-    private ArrayList<Edge> connections;
+    private ArrayList<Vertex> connections;
     private long g; //cost from the parent vertex
     private long h; //estimated cost from this to the destination
     private long f; //total cost (g+h)
     private Vertex parent;
 
-    public Vertex(String name, LatLng position)
-    {
+    public Vertex(String name, LatLng position) {
         this.name = name;
         this.position = position;
         connections = new ArrayList<>();
     }
 
-    public Vertex(LatLng position)
-    {
+    public Vertex(LatLng position) {
         this.name = "";
         this.position = position;
         connections = new ArrayList<>();
     }
 
-    public Vertex(Vertex vertexToCopy)
-    {
+    public Vertex(Vertex vertexToCopy) {
         this.name = vertexToCopy.getName();
         this.position = vertexToCopy.getPosition();
         connections = new ArrayList<>(vertexToCopy.getConnections());
     }
 
-    public void addConnection(Edge edgeToAdd)
-    {
-        connections.add(edgeToAdd);
+    public void addConnection(Vertex vertexConnection) {
+        connections.add(vertexConnection);
     }
 
-    public void addConnection(Vertex vertexToConnect)
+    public boolean hasConnection(Vertex vertex)
     {
-        connections.add(new Edge(this, vertexToConnect));
-    }
+        boolean connects = false;
 
-    public Edge findConnection(Vertex vertex)
-    {
-        Edge edge = null;
-
-        for(Edge currEdge: connections)
-        {
-            if(currEdge.getDestination().equals(vertex))
-            {
-                edge = currEdge;
+        for (Vertex currConnection : connections) {
+            if (currConnection.equals(vertex)) {
+                connects = true;
                 break;
             }
         }
 
-        return edge;
+        return connects;
     }
 
-    public void calculateF()
-    {
-        this.f = g + h;
+    public void calculateF() {
+        this.f = this.g + this.h;
     }
 
     public long getG() {
@@ -82,7 +70,21 @@ public class Vertex {
     }
 
     public void calculateH(Vertex endPoint) {
-        //todo: calculate and set h to the weight from this to the end vertex
+        this.h = getDistanceFrom(endPoint);
+    }
+
+    public long getDistanceFrom(Vertex vertex)
+    {
+        long distance = 0;
+
+        //todo: calculate distance from this to the specified vertex and return it
+
+        return distance;
+    }
+
+    public void setH(long h)
+    {
+        this.h = h;
     }
 
     public long getF() {
@@ -139,7 +141,7 @@ public class Vertex {
         return result;
     }
 
-    public ArrayList<Edge> getConnections() {
+    public ArrayList<Vertex> getConnections() {
         return connections;
     }
 

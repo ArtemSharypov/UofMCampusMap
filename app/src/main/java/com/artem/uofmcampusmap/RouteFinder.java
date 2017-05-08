@@ -12,8 +12,8 @@ public class RouteFinder {
     public Route findRoute(Vertex start, Vertex end)
     {
         Route route = null;
-        Vertex startPF;
-        Vertex endPF;
+        Vertex source;
+        Vertex destination;
         Vertex lowestCostVertex;
         Vertex vertexToCompare;
         ArrayList<Vertex> closedList; //vertices evaluated
@@ -22,25 +22,25 @@ public class RouteFinder {
 
         if(start != null && end != null)
         {
-            startPF = new Vertex(start);
-            startPF.setG(0);
-            endPF = new Vertex(end);
+            source = new Vertex(start);
+            source.setG(0);
+            destination = new Vertex(end);
             closedList = new ArrayList<>();
             openList = new ArrayList<>();
 
-            openList.add(startPF);
+            openList.add(source);
 
             while(!openList.isEmpty())
             {
                 lowestCostVertex = findLowestCostVertex(openList);
 
                 openList.remove(lowestCostVertex);
-                successors = generateSuccessors(lowestCostVertex);
+                successors = generateSuccessors(lowestCostVertex, end);
 
                 //find the connections the next vertices have
                 for(Vertex currVertex: successors)
                 {
-                    if(currVertex.equals(endPF))
+                    if(currVertex.equals(destination))
                     {
                         //Save the route and clear everything
                         route = Route.reverseRoute(currVertex);
@@ -49,8 +49,8 @@ public class RouteFinder {
                     }
 
                     //g = parent g + distance between parent and this
-                    currVertex.setG(lowestCostVertex.getG() + lowestCostVertex.findConnection(currVertex).getWeight());
-                    currVertex.calculateH(endPF);
+                    currVertex.setG(lowestCostVertex.getG() + lowestCostVertex.getDistanceFrom(currVertex));
+                    currVertex.calculateH(destination);
                     currVertex.calculateF();
 
                     if(openList.contains(currVertex))
@@ -95,33 +95,36 @@ public class RouteFinder {
         return route;
     }
 
-    private ArrayList<Vertex> generateSuccessors(Vertex parent)
+    private ArrayList<Vertex> generateSuccessors(Vertex parent, Vertex destination)
     {
-        ArrayList<Edge> connections;
+        ArrayList<Vertex> connections;
         ArrayList<Vertex> successors = new ArrayList<>();
-        Vertex convertedVertex;
+        Vertex childVertex;
 
         if(parent != null)
         {
             connections = parent.getConnections();
 
-            for(Edge edge: connections)
+            for(Vertex currConnection: connections)
             {
-                convertedVertex = new Vertex(edge.getDestination());
-                convertedVertex.setParent(parent);
-                successors.add(convertedVertex);
+                childVertex = new Vertex(currConnection);
+                childVertex.setParent(parent);
+                childVertex.setG(parent.getG() + parent.getDistanceFrom(childVertex));
+                childVertex.calculateH(destination);
+                childVertex.calculateF();
+                successors.add(childVertex);
             }
         }
 
         return successors;
     }
 
-    private Vertex findLowestCostVertex(ArrayList<Vertex> setToSearch)
+    private Vertex findLowestCostVertex(ArrayList<Vertex> vertexList)
     {
         Vertex currVertex = null;
         double currCost = 0;
 
-        for(Vertex vertex: setToSearch)
+        for(Vertex vertex: vertexList)
         {
             if(currVertex == null)
             {

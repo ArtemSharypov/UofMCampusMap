@@ -7,9 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Route {
-
-    //todo: switch vertexes instead for edges? easier to draw and show the distance of them
-    private ArrayList<Vertex> route;
+    private ArrayList<Edge> route;
     private int currInstruction;
     private int maxInstructions;
     private long routeLength;
@@ -22,7 +20,7 @@ public class Route {
         routeLength = 0;
     }
 
-    public Vertex topVertex()
+    public Edge getFirstInstruction()
     {
         if(route.size() > 0)
         {
@@ -33,17 +31,17 @@ public class Route {
         return route.get(0);
     }
 
-    public Vertex nextVertex()
+    public Edge getNextInstruction()
     {
-        Vertex vertex = null;
+        Edge currEdge = null;
 
         if(currInstruction < maxInstructions)
         {
-            vertex = route.get(currInstruction);
+            currEdge = route.get(currInstruction);
             currInstruction++;
         }
 
-        return vertex;
+        return currEdge;
     }
 
     public boolean currRouteQuicker(Route route)
@@ -61,32 +59,39 @@ public class Route {
     public static Route reverseRoute(Vertex endVertex)
     {
         Route reversedRoute = new Route();
-        Vertex currVertex = endVertex;
+        Vertex currVertex;
+        Vertex prevVertex;
+        Edge edgeToAdd;
 
-        while(currVertex != null)
+        if(endVertex != null)
         {
-            reversedRoute.addVertexToStart(currVertex);
-            currVertex = currVertex.getParent();
+            currVertex = endVertex.getParent();
+            prevVertex = endVertex;
+
+            while (currVertex != null) {
+                edgeToAdd = new Edge(currVertex, prevVertex);
+                reversedRoute.addInstructionToStart(edgeToAdd);
+
+                prevVertex = currVertex;
+                currVertex = currVertex.getParent();
+            }
         }
 
         return reversedRoute;
     }
 
-    public void addVertexToStart(Vertex vertex)
+    private void addInstructionToStart(Edge edge)
     {
-        if(vertex != null)
+        if(edge != null)
         {
-            route.add(0, vertex);
+            route.add(0, edge);
+            routeLength += edge.getWeight();
+            maxInstructions++;
         }
     }
 
-    public long getRouteLength() {
-        if(route.size() > 2)
-        {
-            //full cost will be the vertex before the destination
-            routeLength = route.get(route.size() - 2).getF();
-        }
-
+    public long getRouteLength()
+    {
         return routeLength;
     }
 }

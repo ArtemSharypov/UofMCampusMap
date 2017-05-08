@@ -13,6 +13,7 @@ public class Edge {
     {
         this.source = source;
         this.destination = destination;
+        calculateWeight();
     }
 
     public Edge(Vertex source, Vertex destination, long weight)
@@ -22,8 +23,10 @@ public class Edge {
         this.weight = weight;
     }
 
-
-    //todo: find weight of the edge based on distance from source to destination
+    private void calculateWeight()
+    {
+        //todo: find weight of the edge based on distance from source to destination
+    }
 
     public long getWeight()
     {
