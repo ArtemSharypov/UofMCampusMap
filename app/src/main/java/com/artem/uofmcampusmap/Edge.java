@@ -7,7 +7,7 @@ package com.artem.uofmcampusmap;
 public class Edge {
     private Vertex source;
     private Vertex destination;
-    private long weight;
+    private double weight;
 
     public Edge(Vertex source, Vertex destination)
     {
@@ -16,7 +16,7 @@ public class Edge {
         calculateWeight();
     }
 
-    public Edge(Vertex source, Vertex destination, long weight)
+    public Edge(Vertex source, Vertex destination, double weight)
     {
         this.source = source;
         this.destination = destination;
@@ -25,10 +25,10 @@ public class Edge {
 
     private void calculateWeight()
     {
-        //todo: find weight of the edge based on distance from source to destination
+        this.weight = source.getDistanceFrom(destination);
     }
 
-    public long getWeight()
+    public double getWeight()
     {
         return weight;
     }

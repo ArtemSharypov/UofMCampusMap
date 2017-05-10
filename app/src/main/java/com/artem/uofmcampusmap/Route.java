@@ -10,7 +10,7 @@ public class Route {
     private ArrayList<Edge> route;
     private int currInstruction;
     private int maxInstructions;
-    private long routeLength;
+    private double routeLength;
 
     Route()
     {
@@ -58,7 +58,7 @@ public class Route {
 
     public static Route reverseRoute(Vertex endVertex)
     {
-        Route reversedRoute = new Route();
+        Route reversedRoute = null;
         Vertex currVertex;
         Vertex prevVertex;
         Edge edgeToAdd;
@@ -67,6 +67,7 @@ public class Route {
         {
             currVertex = endVertex.getParent();
             prevVertex = endVertex;
+            reversedRoute = new Route();
 
             while (currVertex != null) {
                 edgeToAdd = new Edge(currVertex, prevVertex);
@@ -90,7 +91,7 @@ public class Route {
         }
     }
 
-    public long getRouteLength()
+    public double getRouteLength()
     {
         return routeLength;
     }

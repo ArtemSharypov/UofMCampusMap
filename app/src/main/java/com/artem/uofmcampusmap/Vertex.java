@@ -12,9 +12,9 @@ public class Vertex {
     private String name;
     private LatLng position;
     private ArrayList<Vertex> connections;
-    private long g; //cost from the parent vertex
-    private long h; //estimated cost from this to the destination
-    private long f; //total cost (g+h)
+    private double g; //cost from the parent vertex
+    private double h; //estimated cost from this to the destination
+    private double f; //total cost (g+h)
     private Vertex parent;
 
     public Vertex(String name, LatLng position) {
@@ -57,15 +57,15 @@ public class Vertex {
         this.f = this.g + this.h;
     }
 
-    public long getG() {
+    public double getG() {
         return g;
     }
 
-    public void setG(long g) {
+    public void setG(double g) {
         this.g = g;
     }
 
-    public long getH() {
+    public double getH() {
         return h;
     }
 
@@ -73,21 +73,24 @@ public class Vertex {
         this.h = getDistanceFrom(endPoint);
     }
 
-    public long getDistanceFrom(Vertex vertex)
+    public double getDistanceFrom(Vertex vertex)
     {
-        long distance = 0;
+        double distance = 0;
 
-        //todo: calculate distance from this to the specified vertex and return it
+        //todo: calculate distance from this to the specified vertex and return it (needs to switch to feet)
+        distance += Math.abs(Math.abs(vertex.getPosition().latitude) - Math.abs(position.latitude));
+        distance += Math.abs(Math.abs(vertex.getPosition().longitude) - Math.abs(position.longitude));
+        distance = Math.sqrt(distance);
 
         return distance;
     }
 
-    public void setH(long h)
+    public void setH(double h)
     {
         this.h = h;
     }
 
-    public long getF() {
+    public double getF() {
         return f;
     }
 

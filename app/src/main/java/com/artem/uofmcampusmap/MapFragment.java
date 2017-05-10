@@ -3,6 +3,7 @@ package com.artem.uofmcampusmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
  * Created by Artem on 2017-04-21.
@@ -30,6 +32,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private ImageView nextDirection;
     private TextView currentDirections;
     private MapGraph campusMap;
+    private String startLocation;
+    private String destinationLocation;
+    private Route route;
 
     @Nullable
     @Override
@@ -43,6 +48,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         //set onClickListener
 
         currentDirections = (TextView) view.findViewById(R.id.current_directions);
+
+        campusMap = new MapGraph();
+
+        MainActivity activity = (MainActivity) getActivity();
+        startLocation = activity.getStartLocation();
+        destinationLocation = activity.getDestinationLocation();
+
+        if(!startLocation.equals(" ") && !destinationLocation.equals(" "))
+        {
+            route = campusMap.findRoute(startLocation, destinationLocation);
+        }
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -59,9 +75,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         mMapView.getMapAsync(this);
 
-        campusMap = new MapGraph(getActivity().getApplicationContext());
-
         return view;
+    }
+
+    private void drawRouteOnMap()
+    {
+        LatLng startPoint;
+        LatLng endPoint;
+        Edge currInstruction;
+        PolylineOptions currLine;
+
+        if(route != null && route.getRouteLength() > 0 && googleMap != null)
+        {
+            currInstruction = route.getFirstInstruction();
+
+            while(currInstruction != null)
+            {
+                startPoint = (currInstruction.getSource()).getPosition();
+                endPoint = (currInstruction.getDestination()).getPosition();
+                currLine = new PolylineOptions().add(startPoint)
+                        .add(endPoint);
+
+                googleMap.addPolyline(currLine); //todo save the polyline so it can be hidden or reused later
+                currInstruction = route.getNextInstruction();
+            }
+        }
     }
 
     @Override
@@ -82,7 +120,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         mMapView.onDestroy();
     }
 
-
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;
@@ -93,6 +130,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     {
         centerMap();
         addBuildingMarkers();
+        drawRouteOnMap();
     }
 
     private void centerMap()

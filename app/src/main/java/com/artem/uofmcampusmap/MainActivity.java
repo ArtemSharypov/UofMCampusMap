@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        startLocation = "";
+        destinationLocation = "";
+
         optionTitles = getResources().getStringArray(R.array.drawer_options);
 
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
