@@ -76,11 +76,18 @@ public class Vertex {
     public double getDistanceFrom(Vertex vertex)
     {
         double distance = 0;
+        double latDistance;
+        double longDistance;
+        final double FEET_PER_DEGREE_LATITUDE = 364861; //from https://msi.nga.mil/MSISiteContent/StaticFiles/Calculators/degree.html at 49
+        final double FEET_PER_DEGREE_LONGITUDE = 240065;
 
-        //todo: calculate distance from this to the specified vertex and return it (needs to switch to feet)
-        distance += Math.abs(Math.abs(vertex.getPosition().latitude) - Math.abs(position.latitude));
-        distance += Math.abs(Math.abs(vertex.getPosition().longitude) - Math.abs(position.longitude));
-        distance = Math.sqrt(distance);
+        latDistance = Math.abs(Math.abs(vertex.getPosition().latitude) - Math.abs(position.latitude));
+        latDistance = latDistance * FEET_PER_DEGREE_LATITUDE;
+
+        longDistance = Math.abs(Math.abs(vertex.getPosition().longitude) - Math.abs(position.longitude));
+        longDistance = longDistance * FEET_PER_DEGREE_LONGITUDE;
+
+        distance = Math.sqrt(Math.exp(latDistance) + Math.exp(longDistance));
 
         return distance;
     }

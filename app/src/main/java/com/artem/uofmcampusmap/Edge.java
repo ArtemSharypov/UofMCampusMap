@@ -41,4 +41,9 @@ public class Edge {
         return destination;
     }
 
+    //todo implement this fully
+    public String getInstructions()
+    {
+        return "" + weight;
+    }
 }

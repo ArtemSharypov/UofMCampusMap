@@ -21,21 +21,21 @@ public class MapGraph {
         populateGraph();
     }
 
-    private void addEntrance(String keyName, Vertex entranceVertice)
+    private void addEntrance(String keyName, Vertex entranceVertex)
     {
-        ArrayList<Vertex> locationsList;
+        ArrayList<Vertex> entrancesList;
 
         if(startEndLocations.containsKey(keyName))
         {
-            locationsList = startEndLocations.get(keyName);
+            entrancesList = startEndLocations.get(keyName);
         }
         else
         {
-            locationsList = new ArrayList<>();
+            entrancesList = new ArrayList<>();
         }
 
-        locationsList.add(entranceVertice);
-        startEndLocations.put(keyName, locationsList);
+        entrancesList.add(entranceVertex);
+        startEndLocations.put(keyName, entrancesList);
     }
 
     private void populateGraph()
@@ -167,186 +167,190 @@ public class MapGraph {
         String wallace = "Wallace";
         Vertex wallace_ent = new Vertex(wallace, new LatLng(49.811639, -97.135697));
 
-        //Other points
+        //Points used for paths
+        //Starts with single
+        Vertex A_D = new Vertex(new LatLng(49.810733, -97.138385));
+        Vertex B_D = new Vertex(new LatLng(49.810992, -97.137633));
+        Vertex B_A21_A45 = new Vertex(new LatLng(49.810656, -97.137366));
+        Vertex C_D = new Vertex(new LatLng(49.811250, -97.136879));
+        Vertex D_E_H = new Vertex(new LatLng(49.811423, -97.136240));
         Vertex E_F = new Vertex(new LatLng(49.811589, -97.135828));
         Vertex E_F_G = new Vertex(new LatLng(49.811588, -97.135712));
-        Vertex E_D_H = new Vertex(new LatLng(49.811423, -97.136240));
-        Vertex D_C = new Vertex(new LatLng(49.811250, -97.136879));
-        Vertex D_B = new Vertex(new LatLng(49.810992, -97.137633));
-        Vertex A45_A46 = new Vertex(new LatLng(49.810794, -97.137122));
-        Vertex D_A = new Vertex(new LatLng(49.810733, -97.138385));
-        Vertex B_A21_A45 = new Vertex(new LatLng(49.810656, -97.137366));
-        Vertex A24_A23_A22 = new Vertex(new LatLng(49.810511, -97.137170));
-        Vertex A24_A21 = new Vertex(new LatLng(49.810568, -97.137337));
-        Vertex A23_A21 = new Vertex(new LatLng(49.810435, -97.137310));
-        Vertex A22_A19 = new Vertex(new LatLng(49.810204, -97.136786));
-        Vertex A21_A20 = new Vertex(new LatLng(49.810132, -97.137196));
-        Vertex A20_A18_A19_A17 = new Vertex(new LatLng(49.810037, -97.137051));
-        Vertex A18_A16_A15 = new Vertex(new LatLng(49.809929, -97.137234));
-        Vertex A17_M = new Vertex(new LatLng(49.809745, -97.136707));
-        Vertex A15_M = new Vertex(new LatLng(49.809707, -97.136842));
-        Vertex A14_M = new Vertex(new LatLng(49.809884, -97.136281));
         Vertex F_I = new Vertex(new LatLng(49.811333, -97.135826));
         Vertex G_I = new Vertex(new LatLng(49.811510, -97.135103));
-        Vertex I_H = new Vertex(new LatLng(49.811285, -97.136112));
-        Vertex A35_I = new Vertex(new LatLng(49.811592, -97.134816));
-        Vertex J_H = new Vertex(new LatLng(49.810654, -97.135593));
-        Vertex J_K = new Vertex(new LatLng(49.810955, -97.134620));
+        Vertex H_I = new Vertex(new LatLng(49.811285, -97.136112));
+        Vertex H_J = new Vertex(new LatLng(49.810654, -97.135593));
         Vertex H_L = new Vertex(new LatLng(49.810354, -97.135364));
+        Vertex I_A35 = new Vertex(new LatLng(49.811592, -97.134816));
+        Vertex J_K = new Vertex(new LatLng(49.810955, -97.134620));
         Vertex L_M = new Vertex(new LatLng(49.810113, -97.135576));
-        Vertex Q_A47 = new Vertex(new LatLng(49.810205, -97.135152));
-        Vertex P_A47 = new Vertex(new LatLng(49.810086, -97.135066));
         Vertex L_A56 = new Vertex(new LatLng(49.810160, -97.135529));
+        Vertex M_O = new Vertex(new LatLng(49.809709, -97.136797));
+        Vertex M_A14 = new Vertex(new LatLng(49.809884, -97.136281));
+        Vertex M_A15 = new Vertex(new LatLng(49.809707, -97.136842));
+        Vertex M_A17 = new Vertex(new LatLng(49.809745, -97.136707));
+        Vertex N_AAF = new Vertex(new LatLng(49.807898, -97.137776));
+        Vertex N_A58 = new Vertex(new LatLng(49.807579, -97.137750));
+        Vertex O_AAA_AAC_LP6 = new Vertex(new LatLng(49.808720, -97.136015));
+        Vertex O_AAB = new Vertex(new LatLng(49.808819, -97.136071));
+        Vertex Q_A47 = new Vertex(new LatLng(49.810205, -97.135152));
         Vertex Q_A56 = new Vertex(new LatLng(49.810134, -97.135267));
+        Vertex O_A57 = new Vertex(new LatLng(49.809201, -97.136399));
+        Vertex P_A47 = new Vertex(new LatLng(49.810086, -97.135066));
         Vertex Q_S = new Vertex(new LatLng(49.810502, -97.134322));
         Vertex R_S = new Vertex(new LatLng(49.810356, -97.134215));
         Vertex S_U = new Vertex(new LatLng(49.810097, -97.134001));
+        Vertex S_AL = new Vertex(new LatLng(49.808216, -97.132490));
+        Vertex S_AM = new Vertex(new LatLng(49.809366, -97.133421));
+        Vertex S_AO_AAV = new Vertex(new LatLng(49.809091, -97.133163));
+        Vertex S_AP = new Vertex(new LatLng(49.808764, -97.132921));
+        Vertex S_AQ = new Vertex(new LatLng(49.808559, -97.132751));
+        Vertex S_AAT = new Vertex(new LatLng(49.809821, -97.133766));
+        Vertex S_AL2 = new Vertex(new LatLng(49.808085, -97.132369));
+        Vertex S_A50 = new Vertex(new LatLng(49.809618, -97.133597));
+        Vertex S_A53 = new Vertex(new LatLng(49.808894, -97.133020));
+        Vertex T_A50_A51 = new Vertex(new LatLng(49.809489, -97.133801));
+        Vertex U_W = new Vertex(new LatLng(49.810539, -97.132721));
         Vertex U_AAU = new Vertex(new LatLng(49.810191, -97.133445));
         Vertex U_AAW = new Vertex(new LatLng(49.810324, -97.133047));
         Vertex U_U1 = new Vertex(new LatLng(49.810265, -97.133501));
         Vertex U_U2 = new Vertex(new LatLng(49.810395, -97.133117));
-        Vertex U_W = new Vertex(new LatLng(49.810539, -97.132721));
-        Vertex A28_W = new Vertex(new LatLng(49.811049, -97.133148));
         Vertex V_W = new Vertex(new LatLng(49.810752, -97.132914));
-        Vertex V_A48 = new Vertex(new LatLng(49.810784, -97.132799));
-        Vertex W_A48 = new Vertex(new LatLng(49.810688, -97.132843));
-        Vertex V_A49 = new Vertex(new LatLng(49.810899, -97.132447));
-        Vertex AA_A49 = new Vertex(new LatLng(49.810814, -97.132467));
         Vertex V_AB = new Vertex(new LatLng(49.810954, -97.132282));
-        Vertex W_A43 = new Vertex(new LatLng(49.810870, -97.133014));
-        Vertex A28_A42 = new Vertex(new LatLng(49.811276, -97.132537));
-        Vertex A44_AA = new Vertex(new LatLng(49.810692, -97.132372));
+        Vertex V_A48 = new Vertex(new LatLng(49.810784, -97.132799));
+        Vertex V_A49 = new Vertex(new LatLng(49.810899, -97.132447));
         Vertex W_Z = new Vertex(new LatLng(49.810361, -97.132558));
-        Vertex AA_Z = new Vertex(new LatLng(49.810406, -97.132402));
-        Vertex Z_AC = new Vertex(new LatLng(49.810919, -97.130977));
-        Vertex AD_Z = new Vertex(new LatLng(49.811158, -97.130407));
-        Vertex AAT_AAW = new Vertex(new LatLng(49.810221, -97.132566));
-        Vertex AAT_W = new Vertex(new LatLng(49.810253, -97.132450));
-        Vertex AAT_AAU = new Vertex(new LatLng(49.809871, -97.133596));
-        Vertex AAT_S = new Vertex(new LatLng(49.809821, -97.133766));
-        Vertex A50_S = new Vertex(new LatLng(49.809618, -97.133597));
-        Vertex T_A50_A51 = new Vertex(new LatLng(49.809489, -97.133801));
-        Vertex AN_A51 = new Vertex(new LatLng(49.809261, -97.133832));
-        Vertex AM_S = new Vertex(new LatLng(49.809366, -97.133421));
-        Vertex Y_W = new Vertex(new LatLng(49.809994, -97.132167));
-        Vertex AE_W = new Vertex(new LatLng(49.809734, -97.131940));
-        Vertex Y_AE_AF = new Vertex(new LatLng(49.809901, -97.131709));
-        Vertex AF_A55 = new Vertex(new LatLng(49.809799, -97.131503));
-        Vertex A55_A54 = new Vertex(new LatLng(49.809686, -97.131429));
-        Vertex A54_AG = new Vertex(new LatLng(49.809604, -97.131482));
-        Vertex AG_AH = new Vertex(new LatLng(49.809546, -97.131433));
-        Vertex AH_W = new Vertex(new LatLng(49.809470, -97.131720));
-        Vertex AI_W = new Vertex(new LatLng(49.809117, -97.131423));
-        Vertex AL_W_A10 = new Vertex(new LatLng(49.808644, -97.131080));
-        Vertex AK_AL = new Vertex(new LatLng(49.808964, -97.130162));
-        Vertex A60_AL = new Vertex(new LatLng(49.808844, -97.130504));
-        Vertex AJ_AL = new Vertex(new LatLng(49.808791, -97.130653));
-        Vertex A59_AL = new Vertex(new LatLng(49.808822, -97.130542));
-        Vertex AAV_A52 = new Vertex(new LatLng(49.809436, -97.132023));
-        Vertex A52_W_AAZ = new Vertex(new LatLng(49.809397, -97.131698));
-        Vertex AAV_S_AO = new Vertex(new LatLng(49.809091, -97.133163));
-        Vertex AAV_A9 = new Vertex(new LatLng(49.809283, -97.132460));
+        Vertex W_AE = new Vertex(new LatLng(49.809734, -97.131940));
+        Vertex W_AH = new Vertex(new LatLng(49.809470, -97.131720));
+        Vertex W_AI = new Vertex(new LatLng(49.809117, -97.131423));
+        Vertex W_AL_A10 = new Vertex(new LatLng(49.808644, -97.131080));
+        Vertex W_AAZ_A52 = new Vertex(new LatLng(49.809397, -97.131698));
+        Vertex W_AAT = new Vertex(new LatLng(49.810253, -97.132450));
+        Vertex W_A28 = new Vertex(new LatLng(49.811049, -97.133148));
         Vertex W_A30 = new Vertex(new LatLng(49.809030, -97.131369));
-        Vertex AAZ_A1_A2 = new Vertex(new LatLng(49.809086, -97.131898));
-        Vertex A30_A2_A3 = new Vertex(new LatLng(49.808936, -97.131622));
-        Vertex A3_A4_A10 = new Vertex(new LatLng(49.808703, -97.131580));
-        Vertex A4_A5_A11 = new Vertex(new LatLng(49.808567, -97.131712));
-        Vertex A6_A5_A13 = new Vertex(new LatLng(49.808480, -97.132224));
-        Vertex A5_A12 = new Vertex(new LatLng(49.808476, -97.132063));
-        Vertex A6_A7 = new Vertex(new LatLng(49.808655, -97.132539));
-        Vertex A7_A8_AAY = new Vertex(new LatLng(49.808895, -97.132538));
-        Vertex A8_A1_A9 = new Vertex(new LatLng(49.809073, -97.132298));
-        Vertex A11_AL = new Vertex(new LatLng(49.808419, -97.131737));
-        Vertex A12_AL = new Vertex(new LatLng(49.808385, -97.131824));
-        Vertex A13_AL = new Vertex(new LatLng(49.808248, -97.132312));
-        Vertex AAY_A53 = new Vertex(new LatLng(49.808967, -97.132845));
-        Vertex A53_S = new Vertex(new LatLng(49.808894, -97.133020));
-        Vertex S_AL = new Vertex(new LatLng(49.808216, -97.132490));
-        Vertex AQ_S = new Vertex(new LatLng(49.808559, -97.132751));
-        Vertex AP_S = new Vertex(new LatLng(49.808764, -97.132921));
-        Vertex AO_A31 = new Vertex(new LatLng(49.809024, -97.133488));
+        Vertex W_A43 = new Vertex(new LatLng(49.810870, -97.133014));
+        Vertex W_A48 = new Vertex(new LatLng(49.810688, -97.132843));
+        Vertex Y_W = new Vertex(new LatLng(49.809994, -97.132167));
+        Vertex Y_AE_AF = new Vertex(new LatLng(49.809901, -97.131709));
+        Vertex Z_AA = new Vertex(new LatLng(49.810406, -97.132402));
+        Vertex Z_AC = new Vertex(new LatLng(49.810919, -97.130977));
+        Vertex Z_AD = new Vertex(new LatLng(49.811158, -97.130407));
+
+        //Starts with double
+        Vertex AA_A44 = new Vertex(new LatLng(49.810692, -97.132372));
+        Vertex AA_A49 = new Vertex(new LatLng(49.810814, -97.132467));
+        Vertex AF_A55 = new Vertex(new LatLng(49.809799, -97.131503));
+        Vertex AG_AH = new Vertex(new LatLng(49.809546, -97.131433));
+        Vertex AG_A54 = new Vertex(new LatLng(49.809604, -97.131482));
+        Vertex AJ_AL = new Vertex(new LatLng(49.808791, -97.130653));
+        Vertex AK_AL = new Vertex(new LatLng(49.808964, -97.130162));
+        Vertex AL_AW = new Vertex(new LatLng(49.807411, -97.134860));
+        Vertex AL_AV = new Vertex(new LatLng(49.807799, -97.133741));
+        Vertex AL_AAN = new Vertex(new LatLng(49.807194, -97.135541));
+        Vertex AL_A11 = new Vertex(new LatLng(49.808419, -97.131737));
+        Vertex AL_A12 = new Vertex(new LatLng(49.808385, -97.131824));
+        Vertex AL_A13 = new Vertex(new LatLng(49.808248, -97.132312));
+        Vertex AL_A27 = new Vertex(new LatLng(49.806183, -97.138606));
+        Vertex AL_A59 = new Vertex(new LatLng(49.808822, -97.130542));
+        Vertex AL_A60 = new Vertex(new LatLng(49.808844, -97.130504));
         Vertex AN_A30 = new Vertex(new LatLng(49.808888, -97.134933));
-        Vertex A30_AR = new Vertex(new LatLng(49.808771, -97.134822));
-        Vertex AR_AS = new Vertex(new LatLng(49.808707, -97.135006));
-        Vertex AS_AO = new Vertex(new LatLng(49.808601, -97.134933));
-        Vertex AS_AT = new Vertex(new LatLng(49.808753, -97.135040));
-        Vertex A41_AAA_AT_AAM = new Vertex(new LatLng(49.808734, -97.135606));
+        Vertex AN_A51 = new Vertex(new LatLng(49.809261, -97.133832));
+        Vertex AO_AS = new Vertex(new LatLng(49.808601, -97.134933));
         Vertex AO_AU = new Vertex(new LatLng(49.808763, -97.134453));
         Vertex AO_AAM = new Vertex(new LatLng(49.808427, -97.135449));
-        Vertex A30_A29 = new Vertex(new LatLng(49.809041, -97.135083));
-        Vertex M_O = new Vertex(new LatLng(49.809709, -97.136797));
-        Vertex O_A57 = new Vertex(new LatLng(49.809201, -97.136399));
-        Vertex O_AAB = new Vertex(new LatLng(49.808819, -97.136071));
-        Vertex O_AAA_AAC_LP6 = new Vertex(new LatLng(49.808720, -97.136015));
-        Vertex LP6_LP5_LP1 = new Vertex(new LatLng(49.808573, -97.136018));
-        Vertex LP5_LP4 = new Vertex(new LatLng(49.808503, -97.135880));
-        Vertex LP4_AAK_LP3 = new Vertex(new LatLng(49.808386, -97.135833));
-        Vertex LP3_LP2_AAF = new Vertex(new LatLng(49.808369, -97.136263));
-        Vertex LP1_LP2 = new Vertex(new LatLng(49.808490, -97.136255));
-        Vertex AAM_AAK = new Vertex(new LatLng(49.808485, -97.135491));
-        Vertex AAM_AAJ = new Vertex(new LatLng(49.808351, -97.135394));
-        Vertex AAJ_AY = new Vertex(new LatLng(49.808297, -97.135545));
-        Vertex AAJ_AAH = new Vertex(new LatLng(49.808173, -97.135956));
-        Vertex AAH_AAG = new Vertex(new LatLng(49.808004, -97.136044));
-        Vertex AAH_AAI = new Vertex(new LatLng(49.807683, -97.136191));
-        Vertex AL_AAN = new Vertex(new LatLng(49.807194, -97.135541));
-        Vertex AV_AL = new Vertex(new LatLng(49.807799, -97.133741));
-        Vertex AW_AL = new Vertex(new LatLng(49.807411, -97.134860));
-        Vertex AAE_AAF = new Vertex(new LatLng(49.808224, -97.136760));
-        Vertex AAG_AAF = new Vertex(new LatLng(49.808238, -97.136637));
-        Vertex A32_AAG = new Vertex(new LatLng(49.808053, -97.136251));
-        Vertex AAE_AAD = new Vertex(new LatLng(49.808364, -97.137251));
-        Vertex AAD_A33 = new Vertex(new LatLng(49.808431, -97.137319));
-        Vertex N_AAF = new Vertex(new LatLng(49.807898, -97.137776));
-        Vertex N_A58 = new Vertex(new LatLng(49.807579, -97.137750));
-        Vertex A27_AAF = new Vertex(new LatLng(49.807250, -97.139614));
-        Vertex A27_A26 = new Vertex(new LatLng(49.807031, -97.139409));
-        Vertex AL_A27 = new Vertex(new LatLng(49.806183, -97.138606));
-        Vertex A27_AL2 = new Vertex(new LatLng(49.805955, -97.138535));
-        Vertex A25_AL2 = new Vertex(new LatLng(49.806084, -97.138131));
-        Vertex AAR_AL2 = new Vertex(new LatLng(49.806269, -97.137642));
-        Vertex AAQ_AL2 = new Vertex(new LatLng(49.807007, -97.135533));
-        Vertex AAP_AL2 = new Vertex(new LatLng(49.807148, -97.135114));
-        Vertex A36_AL2 = new Vertex(new LatLng(49.807462, -97.134166));
-        Vertex A37_AL2 = new Vertex(new LatLng(49.807552, -97.133820));
-        Vertex A38_AL2 = new Vertex(new LatLng(49.807714, -97.133368));
-        Vertex A39_AL2 = new Vertex(new LatLng(49.808686, -97.130599));
-        Vertex A40_A39 = new Vertex(new LatLng(49.808638, -97.130480));
+        Vertex AO_A31 = new Vertex(new LatLng(49.809024, -97.133488));
+        Vertex AR_AS = new Vertex(new LatLng(49.808707, -97.135006));
+        Vertex AR_A30 = new Vertex(new LatLng(49.808771, -97.134822));
+        Vertex AS_AT = new Vertex(new LatLng(49.808753, -97.135040));
+        Vertex AT_AAA_AAM_A41 = new Vertex(new LatLng(49.808734, -97.135606));
         Vertex AW_AL2 = new Vertex(new LatLng(49.807432, -97.134804));
-        Vertex S_AL2 = new Vertex(new LatLng(49.808085, -97.132369));
+        Vertex AY_AAJ = new Vertex(new LatLng(49.808297, -97.135545));
+        Vertex A1_A8_A9 = new Vertex(new LatLng(49.809073, -97.132298));
+        Vertex A2_A3_A30 = new Vertex(new LatLng(49.808936, -97.131622));
+        Vertex A3_A4_A10 = new Vertex(new LatLng(49.808703, -97.131580));
+        Vertex A4_A5_A11 = new Vertex(new LatLng(49.808567, -97.131712));
+        Vertex A5_A6_A13 = new Vertex(new LatLng(49.808480, -97.132224));
+        Vertex A5_A12 = new Vertex(new LatLng(49.808476, -97.132063));
+        Vertex A6_A7 = new Vertex(new LatLng(49.808655, -97.132539));
+        Vertex A15_A16_A18 = new Vertex(new LatLng(49.809929, -97.137234));
+        Vertex A17_A18_A19_A20 = new Vertex(new LatLng(49.810037, -97.137051));
+        Vertex A19_A22 = new Vertex(new LatLng(49.810204, -97.136786));
+        Vertex A20_A21 = new Vertex(new LatLng(49.810132, -97.137196));
+        Vertex A21_A24 = new Vertex(new LatLng(49.810568, -97.137337));
+        Vertex A21_A23 = new Vertex(new LatLng(49.810435, -97.137310));
+        Vertex A22_A23_A24 = new Vertex(new LatLng(49.810511, -97.137170));
+        Vertex A28_A42 = new Vertex(new LatLng(49.811276, -97.132537));
+        Vertex A45_A46 = new Vertex(new LatLng(49.810794, -97.137122));
+        Vertex A54_A55 = new Vertex(new LatLng(49.809686, -97.131429));
 
-        //Todo fix this mess
-        //Other connections
-        connectVertices(E_F_G, E_F);
+        //Starts with triple
+        Vertex AAD_AAE = new Vertex(new LatLng(49.808364, -97.137251));
+        Vertex AAD_A33 = new Vertex(new LatLng(49.808431, -97.137319));
+        Vertex AAE_AAF = new Vertex(new LatLng(49.808224, -97.136760));
+        Vertex AAF_AAG = new Vertex(new LatLng(49.808238, -97.136637));
+        Vertex AAF_A27 = new Vertex(new LatLng(49.807250, -97.139614));
+        Vertex AAF_LP2_LP3 = new Vertex(new LatLng(49.808369, -97.136263));
+        Vertex AAG_AAH = new Vertex(new LatLng(49.808004, -97.136044));
+        Vertex AAG_A32 = new Vertex(new LatLng(49.808053, -97.136251));
+        Vertex AAH_AAJ = new Vertex(new LatLng(49.808173, -97.135956));
+        Vertex AAH_AAI = new Vertex(new LatLng(49.807683, -97.136191));
+        Vertex AAJ_AAM = new Vertex(new LatLng(49.808351, -97.135394));
+        Vertex AAK_AAM = new Vertex(new LatLng(49.808485, -97.135491));
+        Vertex AAK_LP3_LP4 = new Vertex(new LatLng(49.808386, -97.135833));
+        Vertex AAT_AAW = new Vertex(new LatLng(49.810221, -97.132566));
+        Vertex AAT_AAU = new Vertex(new LatLng(49.809871, -97.133596));
+        Vertex AAV_A52 = new Vertex(new LatLng(49.809436, -97.132023));
+        Vertex AAV_A9 = new Vertex(new LatLng(49.809283, -97.132460));
+        Vertex AAY_A7_A8 = new Vertex(new LatLng(49.808895, -97.132538));
+        Vertex AAY_A53 = new Vertex(new LatLng(49.808967, -97.132845));
+        Vertex AAZ_A1_A2 = new Vertex(new LatLng(49.809086, -97.131898));
+        Vertex AL2_AAP = new Vertex(new LatLng(49.807148, -97.135114));
+        Vertex AL2_AAQ = new Vertex(new LatLng(49.807007, -97.135533));
+        Vertex AL2_AAR = new Vertex(new LatLng(49.806269, -97.137642));
+        Vertex AL2_A25 = new Vertex(new LatLng(49.806084, -97.138131));
+        Vertex AL2_A27 = new Vertex(new LatLng(49.805955, -97.138535));
+        Vertex AL2_A36 = new Vertex(new LatLng(49.807462, -97.134166));
+        Vertex AL2_A37 = new Vertex(new LatLng(49.807552, -97.133820));
+        Vertex AL2_A38 = new Vertex(new LatLng(49.807714, -97.133368));
+        Vertex AL2_A39 = new Vertex(new LatLng(49.808686, -97.130599));
+        Vertex A26_A27 = new Vertex(new LatLng(49.807031, -97.139409));
+        Vertex A29_A30 = new Vertex(new LatLng(49.809041, -97.135083));
+        Vertex A39_A40 = new Vertex(new LatLng(49.808638, -97.130480));
+        Vertex LP1_LP2 = new Vertex(new LatLng(49.808490, -97.136255));
+        Vertex LP1_LP5_LP6 = new Vertex(new LatLng(49.808573, -97.136018));
+        Vertex LP4_LP5 = new Vertex(new LatLng(49.808503, -97.135880));
+
+        //todo organize these better
+        //connections start with initial single letter vertex
+        connectVertices(E_F, E_F_G);
         connectVertices(E_F_G, G_I);
-        connectVertices(E_F, E_D_H);
+        connectVertices(E_F, D_E_H);
         connectVertices(E_F, F_I);
-        connectVertices(G_I, A35_I);
+        connectVertices(G_I, I_A35);
         connectVertices(G_I, F_I);
-        connectVertices(F_I, I_H);
-        connectVertices(E_D_H, I_H);
-        connectVertices(I_H, J_H);
-        connectVertices(J_H, J_K);
-        connectVertices(J_H, H_L);
+        connectVertices(F_I, H_I);
+        connectVertices(D_E_H, H_I);
+        connectVertices(H_I, H_J);
+        connectVertices(H_J, J_K);
+        connectVertices(H_J, H_L);
         connectVertices(H_L, L_A56);
         connectVertices(L_A56, L_M);
-        connectVertices(L_M, A14_M);
+        connectVertices(L_M, M_A14);
         connectVertices(L_A56, Q_A56);
         connectVertices(Q_A56, Q_A47);
         connectVertices(Q_A47, P_A47);
         connectVertices(Q_A47, Q_S);
         connectVertices(Q_S, R_S);
         connectVertices(R_S, S_U);
-        connectVertices(S_U, AAT_S);
+        connectVertices(S_U, S_AAT);
         connectVertices(S_U, U_U1);
         connectVertices(U_U1, U_AAU);
         connectVertices(U_AAU, AAT_AAU);
         connectVertices(U_U1, U_U2);
         connectVertices(U_U2, U_AAW);
         connectVertices(U_AAW, U_AAU);
-        connectVertices(AAT_S, AAT_AAU);
-        connectVertices(AAT_AAU, AAT_AAW);
-        connectVertices(AAT_AAW, AAT_W);
+        connectVertices(S_AAT, AAT_AAU);
+        connectVertices(AAT_AAW, W_AAT);
         connectVertices(AAT_AAW, U_AAW);
         connectVertices(U_U2, U_W);
         connectVertices(U_W, W_A48);
@@ -354,173 +358,178 @@ public class MapGraph {
         connectVertices(W_A48, V_W);
         connectVertices(V_W, V_A48);
         connectVertices(V_W, W_A43);
-        connectVertices(W_A43, A28_W);
-        connectVertices(A28_W, A28_A42);
+        connectVertices(W_A43, W_A28);
+        connectVertices(W_A28, A28_A42);
         connectVertices(V_A48, V_A49);
         connectVertices(V_A49, AA_A49);
         connectVertices(V_A49, V_AB);
-        connectVertices(AA_A49, A44_AA);
-        connectVertices(A44_AA, AA_Z);
+        connectVertices(AA_A44, Z_AA);
         connectVertices(U_W, W_Z);
-        connectVertices(W_Z, AA_Z);
-        connectVertices(W_Z, AAT_W);
-        connectVertices(AAT_W, Y_W);
-        connectVertices(AA_Z, Z_AC);
-        connectVertices(Z_AC, AD_Z);
+        connectVertices(W_Z, Z_AA);
+        connectVertices(W_Z, W_AAT);
+        connectVertices(W_AAT, Y_W);
+        connectVertices(Z_AA, Z_AC);
+        connectVertices(Z_AC, Z_AD);
         connectVertices(Y_W, Y_AE_AF);
-        connectVertices(Y_W, AE_W);
-        connectVertices(AE_W, Y_AE_AF);
+        connectVertices(Y_W, W_AE);
+        connectVertices(W_AE, Y_AE_AF);
         connectVertices(Y_AE_AF, AF_A55);
-        connectVertices(AF_A55, A55_A54);
-        connectVertices(A55_A54, A54_AG);
-        connectVertices(A54_AG, AG_AH);
-        connectVertices(AG_AH, AH_W);
-        connectVertices(AH_W, AE_W);
-        connectVertices(AH_W, A52_W_AAZ);
-        connectVertices(A52_W_AAZ, AI_W);
-        connectVertices(AI_W, W_A30);
-        connectVertices(W_A30, AL_W_A10);
-        connectVertices(W_A30, A30_A2_A3);
-        connectVertices(AL_W_A10, AJ_AL);
-        connectVertices(AJ_AL, A59_AL);
-        connectVertices(A59_AL, A60_AL);
-        connectVertices(A60_AL, AK_AL);
-        connectVertices(AJ_AL, A39_AL2);
-        connectVertices(A39_AL2, A40_A39);
-        connectVertices(A52_W_AAZ, AAV_A52);
-        connectVertices(AAV_A52, AAV_A9);
-        connectVertices(AAV_A9, AAV_S_AO);
-        connectVertices(AAT_S, A50_S);
-        connectVertices(A50_S, T_A50_A51);
+        connectVertices(AG_AH, W_AH);
+        connectVertices(W_AH, W_AE);
+        connectVertices(W_AH, W_AAZ_A52);
+        connectVertices(W_AAZ_A52, W_AI);
+        connectVertices(W_AI, W_A30);
+        connectVertices(W_A30, W_AL_A10);
+        connectVertices(W_A30, A2_A3_A30);
+        connectVertices(W_AL_A10, AJ_AL);
+        connectVertices(W_AAZ_A52, AAV_A52);
+        connectVertices(AAV_A9, S_AO_AAV);
+        connectVertices(S_AAT, S_A50);
+        connectVertices(S_A50, T_A50_A51);
         connectVertices(T_A50_A51, AN_A51);
-        connectVertices(A50_S, AM_S);
-        connectVertices(AM_S, AAV_S_AO);
-        connectVertices(AAV_S_AO, AO_A31);
-        connectVertices(AAV_S_AO, A53_S);
-        connectVertices(A53_S, AP_S);
-        connectVertices(AP_S, AQ_S);
-        connectVertices(AQ_S, S_AL);
+        connectVertices(S_A50, S_AM);
+        connectVertices(S_AM, S_AO_AAV);
+        connectVertices(S_AO_AAV, AO_A31);
+        connectVertices(S_AO_AAV, S_A53);
+        connectVertices(S_A53, S_AP);
+        connectVertices(S_AP, S_AQ);
+        connectVertices(S_AQ, S_AL);
         connectVertices(S_AL, S_AL2);
-        connectVertices(S_AL2, A39_AL2);
-        connectVertices(S_AL, A13_AL);
-        connectVertices(A13_AL, A6_A5_A13);
-        connectVertices(A13_AL, A12_AL);
-        connectVertices(A12_AL, A5_A12);
-        connectVertices(A12_AL, A11_AL);
-        connectVertices(A11_AL, A4_A5_A11);
-        connectVertices(A11_AL, AL_W_A10);
-        connectVertices(AL_W_A10, A3_A4_A10);
-        connectVertices(A3_A4_A10, A4_A5_A11);
-        connectVertices(A3_A4_A10, A30_A2_A3);
-        connectVertices(A30_A2_A3, AAZ_A1_A2);
-        connectVertices(AAZ_A1_A2, A52_W_AAZ);
-        connectVertices(AAZ_A1_A2, A8_A1_A9);
-        connectVertices(A8_A1_A9, AAV_A9);
-        connectVertices(A8_A1_A9, A7_A8_AAY);
-        connectVertices(A7_A8_AAY, AAY_A53);
-        connectVertices(AAY_A53, A53_S);
-        connectVertices(A7_A8_AAY, A6_A7);
-        connectVertices(A6_A7, A6_A5_A13);
-        connectVertices(A6_A5_A13, A5_A12);
-        connectVertices(A5_A12, A4_A5_A11);
-        connectVertices(S_AL, AV_AL);
-        connectVertices(AV_AL, AW_AL);
-        connectVertices(AW_AL, AW_AL2);
-        connectVertices(AW_AL, AL_AAN);
-        connectVertices(AL_AAN, AL_A27);
-        connectVertices(AL_A27, A27_AL2);
-        connectVertices(AL_A27, A27_A26);
-        connectVertices(A27_A26, A27_AAF);
-        connectVertices(A27_AAF, N_AAF);
+        connectVertices(S_AL2, AL2_A39);
+        connectVertices(S_AL, AL_A13);
+        connectVertices(AL_A11, W_AL_A10);
+        connectVertices(W_AL_A10, A3_A4_A10);
+        connectVertices(AAZ_A1_A2, W_AAZ_A52);
+        connectVertices(AAY_A53, S_A53);
+        connectVertices(S_AL, AL_AV);
+        connectVertices(AAF_A27, N_AAF);
         connectVertices(N_AAF, N_A58);
-        connectVertices(A27_AL2, A25_AL2);
-        connectVertices(A25_AL2, AAR_AL2);
-        connectVertices(AAR_AL2, AAQ_AL2);
-        connectVertices(AAQ_AL2, AAP_AL2);
-        connectVertices(AAP_AL2, AW_AL2);
-        connectVertices(AW_AL2, A36_AL2);
-        connectVertices(A36_AL2, A37_AL2);
-        connectVertices(A37_AL2, A38_AL2);
-        connectVertices(A38_AL2, S_AL2);
-        connectVertices(AAH_AAI, AAH_AAG);
-        connectVertices(AAH_AAG, AAG_AAF);
-        connectVertices(AAH_AAG, AAJ_AAH);
-        connectVertices(AAG_AAF, AAE_AAF);
+        connectVertices(AL2_A38, S_AL2);
         connectVertices(AAE_AAF, N_AAF);
-        connectVertices(AAE_AAF, AAE_AAD);
-        connectVertices(AAE_AAD, AAD_A33);
-        connectVertices(AAG_AAF, LP3_LP2_AAF);
-        connectVertices(LP3_LP2_AAF, LP4_AAK_LP3);
-        connectVertices(LP4_AAK_LP3, AAJ_AAH);
-        connectVertices(AAJ_AAH, AAJ_AY);
-        connectVertices(AAJ_AY, AAM_AAJ);
-        connectVertices(AAM_AAJ, AO_AAM);
-        connectVertices(AO_AAM, AS_AO);
-        connectVertices(AS_AO, AO_AU);
-        connectVertices(AO_AU, AO_A31);
-        connectVertices(AN_A51, AN_A30);
-        connectVertices(AN_A30, A30_A29);
-        connectVertices(AN_A30, A30_AR);
-        connectVertices(A30_AR, AR_AS);
-        connectVertices(AR_AS, AS_AO);
-        connectVertices(AR_AS, AS_AT);
-        connectVertices(AS_AT, A41_AAA_AT_AAM);
-        connectVertices(A41_AAA_AT_AAM, AAM_AAK);
-        connectVertices(AAM_AAK, AO_AAM);
-        connectVertices(AAM_AAK, LP4_AAK_LP3);
-        connectVertices(LP4_AAK_LP3, LP5_LP4);
-        connectVertices(LP5_LP4, LP6_LP5_LP1);
-        connectVertices(LP6_LP5_LP1, LP1_LP2);
-        connectVertices(LP1_LP2, LP3_LP2_AAF);
-        connectVertices(LP6_LP5_LP1, O_AAA_AAC_LP6);
-        connectVertices(O_AAA_AAC_LP6, A41_AAA_AT_AAM); //check this one
+        connectVertices(LP1_LP5_LP6, O_AAA_AAC_LP6);
+        connectVertices(O_AAA_AAC_LP6, AT_AAA_AAM_A41);
         connectVertices(O_AAA_AAC_LP6, O_AAB);
         connectVertices(O_AAB, O_A57);
         connectVertices(O_A57, M_O);
-        connectVertices(M_O, A15_M);
-        connectVertices(A15_M, A17_M);
-        connectVertices(A17_M, A14_M);
-        connectVertices(A15_M, A18_A16_A15);
-        connectVertices(A18_A16_A15, A20_A18_A19_A17);
-        connectVertices(A17_M, A20_A18_A19_A17);
-        connectVertices(A20_A18_A19_A17, A22_A19);
-        connectVertices(A22_A19, A24_A23_A22);
-        connectVertices(A24_A23_A22, A23_A21);
-        connectVertices(A24_A23_A22, A24_A21);
-        connectVertices(A20_A18_A19_A17, A21_A20);
-        connectVertices(A21_A20, A23_A21);
-        connectVertices(A23_A21, A24_A21);
-        connectVertices(A24_A21, B_A21_A45);
+        connectVertices(M_O, M_A15);
+        connectVertices(M_A15, M_A17);
+        connectVertices(M_A17, M_A14);
+        connectVertices(M_A15, A15_A16_A18);
+        connectVertices(A21_A24, B_A21_A45);
         connectVertices(B_A21_A45, A45_A46);
-        connectVertices(B_A21_A45, D_B);
-        connectVertices(D_A, D_B);
-        connectVertices(D_B, D_C);
-        connectVertices(D_C, E_D_H);
+        connectVertices(B_A21_A45, B_D);
+        connectVertices(A_D, B_D);
+        connectVertices(B_D, C_D);
+        connectVertices(C_D, D_E_H);
+        connectVertices(M_A17, A17_A18_A19_A20);
+
+        //connections start with initial double letter vertex
+        connectVertices(AA_A49, AA_A44);
+        connectVertices(AF_A55, A54_A55);
+        connectVertices(A54_A55, AG_A54);
+        connectVertices(AG_A54, AG_AH);
+        connectVertices(AJ_AL, AL_A59);
+        connectVertices(AL_A59, AL_A60);
+        connectVertices(AL_A60, AK_AL);
+        connectVertices(AJ_AL, AL2_A39);
+        connectVertices(AL2_A39, A39_A40);
+        connectVertices(AL_A13, A5_A6_A13);
+        connectVertices(AL_A13, AL_A12);
+        connectVertices(AL_A12, A5_A12);
+        connectVertices(AL_A12, AL_A11);
+        connectVertices(AL_A11, A4_A5_A11);
+        connectVertices(A3_A4_A10, A4_A5_A11);
+        connectVertices(A3_A4_A10, A2_A3_A30);
+        connectVertices(A2_A3_A30, AAZ_A1_A2);
+        connectVertices(AAZ_A1_A2, A1_A8_A9);
+        connectVertices(A1_A8_A9, AAV_A9);
+        connectVertices(A1_A8_A9, AAY_A7_A8);
+        connectVertices(AAY_A7_A8, A6_A7);
+        connectVertices(A6_A7, A5_A6_A13);
+        connectVertices(A5_A6_A13, A5_A12);
+        connectVertices(A5_A12, A4_A5_A11);
+        connectVertices(AL_AV, AL_AW);
+        connectVertices(AL_AW, AW_AL2);
+        connectVertices(AL_AW, AL_AAN);
+        connectVertices(AL_AAN, AL_A27);
+        connectVertices(AL_A27, AL2_A27);
+        connectVertices(AL_A27, A26_A27);
+        connectVertices(AL2_AAP, AW_AL2);
+        connectVertices(AW_AL2, AL2_A36);
+        connectVertices(AAH_AAJ, AY_AAJ);
+        connectVertices(AY_AAJ, AAJ_AAM);
+        connectVertices(AAJ_AAM, AO_AAM);
+        connectVertices(AO_AAM, AO_AS);
+        connectVertices(AO_AS, AO_AU);
+        connectVertices(AO_AU, AO_A31);
+        connectVertices(AN_A51, AN_A30);
+        connectVertices(AN_A30, A29_A30);
+        connectVertices(AN_A30, AR_A30);
+        connectVertices(AR_A30, AR_AS);
+        connectVertices(AR_AS, AO_AS);
+        connectVertices(AR_AS, AS_AT);
+        connectVertices(AS_AT, AT_AAA_AAM_A41);
+        connectVertices(AT_AAA_AAM_A41, AAK_AAM);
+        connectVertices(AAK_AAM, AO_AAM);
+
+        //connections start with initial triple letter vertex
+        connectVertices(AAT_AAU, AAT_AAW);
+        connectVertices(AAV_A52, AAV_A9);
+        connectVertices(AAY_A7_A8, AAY_A53);
+        connectVertices(A26_A27, AAF_A27);
+        connectVertices(AL2_A27, AL2_A25);
+        connectVertices(AL2_A25, AL2_AAR);
+        connectVertices(AL2_AAR, AL2_AAQ);
+        connectVertices(AL2_AAQ, AL2_AAP);
+        connectVertices(AL2_A36, AL2_A37);
+        connectVertices(AL2_A37, AL2_A38);
+        connectVertices(AAH_AAI, AAG_AAH);
+        connectVertices(AAG_AAH, AAF_AAG);
+        connectVertices(AAG_AAH, AAH_AAJ);
+        connectVertices(AAF_AAG, AAE_AAF);
+        connectVertices(AAE_AAF, AAD_AAE);
+        connectVertices(AAD_AAE, AAD_A33);
+        connectVertices(AAF_AAG, AAF_LP2_LP3);
+        connectVertices(AAF_LP2_LP3, AAK_LP3_LP4);
+        connectVertices(AAK_LP3_LP4, AAH_AAJ);
+        connectVertices(AAK_AAM, AAK_LP3_LP4);
+        connectVertices(AAK_LP3_LP4, LP4_LP5);
+        connectVertices(LP4_LP5, LP1_LP5_LP6);
+        connectVertices(LP1_LP5_LP6, LP1_LP2);
+        connectVertices(LP1_LP2, AAF_LP2_LP3);
+        connectVertices(A17_A18_A19_A20, A19_A22);
+        connectVertices(A19_A22, A22_A23_A24);
+        connectVertices(A22_A23_A24, A21_A23);
+        connectVertices(A22_A23_A24, A21_A24);
+        connectVertices(A17_A18_A19_A20, A20_A21);
+        connectVertices(A20_A21, A21_A23);
+        connectVertices(A21_A23, A21_A24);
+        connectVertices(A15_A16_A18, A17_A18_A19_A20);
 
         //Agriculture
-        connectVertices(agriculture_ent_AAQ, AAQ_AL2);
-        connectVertices(agriculture_ent_AAP, AAP_AL2);
+        connectVertices(agriculture_ent_AAQ, AL2_AAQ);
+        connectVertices(agriculture_ent_AAP, AL2_AAP);
 
         addEntrance(agriculture, agriculture_ent_AAQ);
         addEntrance(agriculture, agriculture_ent_AAP);
 
         //Agriculture Engineer
-        connectVertices(agri_engineer_ent_A36, A36_AL2);
-        connectVertices(agri_engineer_ent_A37, A37_AL2);
+        connectVertices(agri_engineer_ent_A36, AL2_A36);
+        connectVertices(agri_engineer_ent_A37, AL2_A37);
 
         addEntrance(agri_engineer, agri_engineer_ent_A36);
         addEntrance(agri_engineer, agri_engineer_ent_A37);
 
         //Animal Sci
-        connectVertices(animal_sci_ent_A25, A25_AL2);
-        connectVertices(animal_sci_ent_AAR, AAR_AL2);
+        connectVertices(animal_sci_ent_A25, AL2_A25);
+        connectVertices(animal_sci_ent_AAR, AL2_AAR);
 
         addEntrance(animal_sci, animal_sci_ent_A25);
         addEntrance(animal_sci, animal_sci_ent_AAR);
 
         //Architecture 2
         connectVertices(archi2_ent_AAI, AAH_AAI);
-        connectVertices(archi2_ent_A32, A32_AAG);
+        connectVertices(archi2_ent_A32, AAG_A32);
 
         addEntrance(architecture2, archi2_ent_AAI);
         addEntrance(architecture2, archi2_ent_A32);
@@ -535,7 +544,7 @@ public class MapGraph {
         addEntrance(allen, armes_parker_allen_ent_K);
 
         //Artlab
-        connectVertices(artlab_ent_A40, A40_A39);
+        connectVertices(artlab_ent_A40, A39_A40);
 
         addEntrance(artlab, artlab_ent_A40);
 
@@ -554,13 +563,13 @@ public class MapGraph {
         addEntrance(buller, buller_ent_U2);
 
         //Dairy Sci
-        connectVertices(dairy_sci_ent_A38, A38_AL2);
+        connectVertices(dairy_sci_ent_A38, AL2_A38);
 
         addEntrance(dairy_sci, dairy_sci_ent_A38);
 
         //Drake
-        //connectVertices(drake_ent_A39, A39_AL2);
-        connectVertices(drake_ent_A39, A40_A39);
+        //connectVertices(drake_ent_A39, AL2_A39);
+        connectVertices(drake_ent_A39, A39_A40);
 
         addEntrance(drake, drake_ent_A39);
 
@@ -590,11 +599,11 @@ public class MapGraph {
         addEntrance(elizabeth_dafoe, eli_dafoe_lib_ent_Y_AE);
 
         //EITC 1 / 2 / 3
-        connectVertices(e1_e2_ent_AV, AV_AL);
-        connectVertices(engineer1_ent_AQ, AQ_S);
-        connectVertices(engineer2_ent_AP, AP_S);
+        connectVertices(e1_e2_ent_AV, AL_AV);
+        connectVertices(engineer1_ent_AQ, S_AQ);
+        connectVertices(engineer2_ent_AP, S_AP);
         connectVertices(engineer2_ent_A31, AO_A31);
-        connectVertices(engineer2_ent_A31, AAV_S_AO);
+        connectVertices(engineer2_ent_A31, S_AO_AAV);
         connectVertices(engineer3_ent_AU, AO_AU);
 
         addEntrance(engineer1, e1_e2_ent_AV);
@@ -606,7 +615,7 @@ public class MapGraph {
 
         //Extended Education
         connectVertices(ext_educ_ent_A58, N_A58);
-        connectVertices(ext_educ_ent_A26, A27_A26);
+        connectVertices(ext_educ_ent_A26, A26_A27);
 
         addEntrance(ext_educ, ext_educ_ent_A58);
         addEntrance(ext_educ, ext_educ_ent_A26);
@@ -624,54 +633,54 @@ public class MapGraph {
         addEntrance(fletcher, fletcher_ent_AH);
 
         //Helen Glass
-        connectVertices(helen_glass_ent_A41, A41_AAA_AT_AAM);
+        connectVertices(helen_glass_ent_A41, AT_AAA_AAM_A41);
 
         addEntrance(helen_glass, helen_glass_ent_A41);
 
         //Human Ecology
-        connectVertices(human_eco_ent_A44, A44_AA);
+        connectVertices(human_eco_ent_A44, AA_A44);
 
         addEntrance(human_eco, human_eco_ent_A44);
 
         //Istbister
         connectVertices(istbister_ent_AK_A60, AK_AL);
-        connectVertices(istbister_ent_AK_A60, A60_AL);
+        connectVertices(istbister_ent_AK_A60, AL_A60);
 
         addEntrance(istbister, istbister_ent_AK_A60);
 
         //Machray
-        connectVertices(machray_armes_ent_A28, A28_W);
+        connectVertices(machray_armes_ent_A28, W_A28);
 
         addEntrance(machray, machray_armes_ent_A28);
         addEntrance(armes, machray_armes_ent_A28);
 
         //Parker
-        connectVertices(parker_ent_A35, A35_I);
+        connectVertices(parker_ent_A35, I_A35);
 
         addEntrance(parker, parker_ent_A35);
 
         //Robert Schultz
-        connectVertices(rob_schutlz_ent_A14, A14_M);
+        connectVertices(rob_schutlz_ent_A14, M_A14);
 
         addEntrance(robert_schultz, rob_schutlz_ent_A14);
 
         //Robson
-        connectVertices(robson_ent_AD, AD_Z);
+        connectVertices(robson_ent_AD, Z_AD);
 
         addEntrance(robson, robson_ent_AD);
 
         //Russel
-        connectVertices(russel_ent_AW, AW_AL);
-        connectVertices(russel_ent_AY, AAJ_AY);
+        connectVertices(russel_ent_AW, AL_AW);
+        connectVertices(russel_ent_AY, AY_AAJ);
 
         addEntrance(russel, russel_ent_AW);
         addEntrance(russel, russel_ent_AY);
 
         //St Johns
-        connectVertices(st_john_ent_C, D_C);
+        connectVertices(st_john_ent_C, C_D);
         connectVertices(st_john_ent_A46, A45_A46);
-        connectVertices(st_john_ent_A24_A23, A24_A23_A22);
-        connectVertices(rob_schult_st_johns_ent_A22_A19, A22_A19);
+        connectVertices(st_john_ent_A24_A23, A22_A23_A24);
+        connectVertices(rob_schult_st_johns_ent_A22_A19, A19_A22);
 
         addEntrance(st_johns, st_john_ent_C);
         addEntrance(st_johns, st_john_ent_A46);
@@ -680,16 +689,16 @@ public class MapGraph {
         addEntrance(robert_schultz, rob_schult_st_johns_ent_A22_A19);
 
         //St Pauls
-        connectVertices(st_pauls_ent_A, D_A);
-        connectVertices(st_pauls_ent_A16, A18_A16_A15);
+        connectVertices(st_pauls_ent_A, A_D);
+        connectVertices(st_pauls_ent_A16, A15_A16_A18);
 
         addEntrance(st_pauls, st_pauls_ent_A);
         addEntrance(st_pauls, st_pauls_ent_A16);
 
         //Tier
         connectVertices(tier_ent_AJ, AJ_AL);
-        connectVertices(tier_ent_A59, A59_AL);
-        connectVertices(tier_ent_AI, AI_W);
+        connectVertices(tier_ent_A59, AL_A59);
+        connectVertices(tier_ent_AI, W_AI);
 
         addEntrance(tier, tier_ent_AJ);
         addEntrance(tier, tier_ent_A59);
@@ -702,8 +711,8 @@ public class MapGraph {
 
         //University Centre
         connectVertices(uni_centre_ent_T, T_A50_A51);
-        connectVertices(uni_centre_ent_AM, AM_S);
-        connectVertices(uni_centre_ent_A29, A30_A29);
+        connectVertices(uni_centre_ent_AM, S_AM);
+        connectVertices(uni_centre_ent_A29, A29_A30);
         connectVertices(uni_centre_ent_AS, AS_AT);
 
         addEntrance(uni_centre, uni_centre_ent_T);

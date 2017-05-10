@@ -18,7 +18,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import java.util.ArrayList;
 
 /**
  * Created by Artem on 2017-04-21.
@@ -35,21 +38,45 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private String startLocation;
     private String destinationLocation;
     private Route route;
+    private ArrayList<Polyline> routeLines;
+    private int currInstructionPos;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        previousDirection = (ImageView) view.findViewById(R.id.previous_direction);
-        //set onClickListener
-
-        nextDirection = (ImageView) view.findViewById(R.id.next_direction);
-        //set onClickListener
+        campusMap = new MapGraph();
+        routeLines = new ArrayList<>();
+        currInstructionPos = 0;
 
         currentDirections = (TextView) view.findViewById(R.id.current_directions);
 
-        campusMap = new MapGraph();
+        previousDirection = (ImageView) view.findViewById(R.id.previous_direction);
+        previousDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currInstructionPos > 0 && currInstructionPos < routeLines.size())
+                {
+                    currInstructionPos--;
+                    currentDirections.setText(route.getInstructionAt(currInstructionPos).getInstructions());
+                    routeLines.get(currInstructionPos).setVisible(true);
+                }
+            }
+        });
+
+        nextDirection = (ImageView) view.findViewById(R.id.next_direction);
+        nextDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currInstructionPos + 1 < routeLines.size())
+                {
+                    currInstructionPos++;
+                    currentDirections.setText(route.getInstructionAt(currInstructionPos).getInstructions());
+                    routeLines.get(currInstructionPos - 1).setVisible(false); //make the instruction before this not visible anymore
+                }
+            }
+        });
 
         MainActivity activity = (MainActivity) getActivity();
         startLocation = activity.getStartLocation();
@@ -96,7 +123,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 currLine = new PolylineOptions().add(startPoint)
                         .add(endPoint);
 
-                googleMap.addPolyline(currLine); //todo save the polyline so it can be hidden or reused later
+                routeLines.add(googleMap.addPolyline(currLine));
                 currInstruction = route.getNextInstruction();
             }
         }

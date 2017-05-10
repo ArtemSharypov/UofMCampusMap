@@ -20,6 +20,18 @@ public class Route {
         routeLength = 0;
     }
 
+    public Edge getInstructionAt(int pos)
+    {
+        Edge edge = null;
+
+        if(pos < route.size() && pos >= 0)
+        {
+            edge = route.get(pos);
+        }
+
+        return edge;
+    }
+
     public Edge getFirstInstruction()
     {
         if(route.size() > 0)
