@@ -40,7 +40,7 @@ public class RoutePlannerFragment extends Fragment {
         fromBuilding = (Spinner) view.findViewById(R.id.from_building);
         fromBuilding.setAdapter(fromBuildingAdapter);
 
-        ArrayAdapter<CharSequence> toBuildingAdapter =
+        final ArrayAdapter<CharSequence> toBuildingAdapter =
                 ArrayAdapter.createFromResource(this.getActivity(), R.array.building_options, android.R.layout.simple_spinner_item);
         toBuildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -62,9 +62,11 @@ public class RoutePlannerFragment extends Fragment {
         findRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //get current option from building
-                //get current option from to building
-                //set those in the activity
+                MainActivity activity = (MainActivity) getActivity();
+
+                activity.passStartLocation(fromBuilding.getSelectedItem().toString());
+                activity.passDestinationLocation(toBuilding.getSelectedItem().toString());
+
                 getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }
         });
