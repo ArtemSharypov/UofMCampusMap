@@ -16,13 +16,6 @@ public class Edge {
         calculateWeight();
     }
 
-    public Edge(Vertex source, Vertex destination, double weight)
-    {
-        this.source = source;
-        this.destination = destination;
-        this.weight = weight;
-    }
-
     private void calculateWeight()
     {
         this.weight = source.getDistanceFrom(destination);
@@ -41,4 +34,9 @@ public class Edge {
         return destination;
     }
 
+    //todo implement this fully
+    public String getInstructions()
+    {
+        return "" + weight;
+    }
 }
