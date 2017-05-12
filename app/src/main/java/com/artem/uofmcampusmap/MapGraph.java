@@ -48,7 +48,7 @@ public class MapGraph {
         Vertex agriculture_ent_AAP = new Vertex(agriculture, new LatLng(49.807100, -97.135065));
 
         String agri_engineer = "Agricultural Engineering";
-        Vertex agri_engineer_ent_A36 = new Vertex(agri_engineer, new LatLng(49.807397, -97.134141));
+        Vertex agri_engineer_ent_A36 = new Vertex(agri_engineer, new LatLng(49.807406, -97.134132));
         Vertex agri_engineer_ent_A37 = new Vertex(agri_engineer, new LatLng(49.807491, -97.133790));
 
         String animal_sci = "Animal Science / Entomology";
@@ -244,7 +244,7 @@ public class MapGraph {
         Vertex AG_A54 = new Vertex(new LatLng(49.809604, -97.131482));
         Vertex AJ_AL = new Vertex(new LatLng(49.808791, -97.130653));
         Vertex AK_AL = new Vertex(new LatLng(49.808964, -97.130162));
-        Vertex AL_AW = new Vertex(new LatLng(49.807411, -97.134860));
+        Vertex AL_AW = new Vertex(new LatLng(49.807426, -97.134807));
         Vertex AL_AV = new Vertex(new LatLng(49.807799, -97.133741));
         Vertex AL_AAN = new Vertex(new LatLng(49.807194, -97.135541));
         Vertex AL_A11 = new Vertex(new LatLng(49.808419, -97.131737));
@@ -263,7 +263,7 @@ public class MapGraph {
         Vertex AR_A30 = new Vertex(new LatLng(49.808771, -97.134822));
         Vertex AS_AT = new Vertex(new LatLng(49.808753, -97.135040));
         Vertex AT_AAA_AAM_A41 = new Vertex(new LatLng(49.808734, -97.135606));
-        Vertex AW_AL2 = new Vertex(new LatLng(49.807432, -97.134804));
+        Vertex AW_AL2 = new Vertex(new LatLng(49.807294, -97.134684));
         Vertex AY_AAJ = new Vertex(new LatLng(49.808297, -97.135545));
         Vertex A1_A8_A9 = new Vertex(new LatLng(49.809073, -97.132298));
         Vertex A2_A3_A30 = new Vertex(new LatLng(49.808936, -97.131622));
@@ -304,12 +304,12 @@ public class MapGraph {
         Vertex AAY_A7_A8 = new Vertex(new LatLng(49.808895, -97.132538));
         Vertex AAY_A53 = new Vertex(new LatLng(49.808967, -97.132845));
         Vertex AAZ_A1_A2 = new Vertex(new LatLng(49.809086, -97.131898));
-        Vertex AL2_AAP = new Vertex(new LatLng(49.807148, -97.135114));
+        Vertex AL2_AAP = new Vertex(new LatLng(49.807151, -97.135103));
         Vertex AL2_AAQ = new Vertex(new LatLng(49.807007, -97.135533));
         Vertex AL2_AAR = new Vertex(new LatLng(49.806269, -97.137642));
         Vertex AL2_A25 = new Vertex(new LatLng(49.806084, -97.138131));
         Vertex AL2_A27 = new Vertex(new LatLng(49.805955, -97.138535));
-        Vertex AL2_A36 = new Vertex(new LatLng(49.807462, -97.134166));
+        Vertex AL2_A36 = new Vertex(new LatLng(49.807465, -97.134170));
         Vertex AL2_A37 = new Vertex(new LatLng(49.807552, -97.133820));
         Vertex AL2_A38 = new Vertex(new LatLng(49.807714, -97.133368));
         Vertex AL2_A39 = new Vertex(new LatLng(49.808686, -97.130599));

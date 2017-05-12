@@ -78,15 +78,9 @@ public class Vertex {
         double distance = 0;
         double latDistance;
         double longDistance;
-        final double FEET_PER_DEGREE_LATITUDE = 364861; //from https://msi.nga.mil/MSISiteContent/StaticFiles/Calculators/degree.html at 49
-        final double FEET_PER_DEGREE_LONGITUDE = 240065;
 
         latDistance = Math.abs(Math.abs(vertex.getPosition().latitude) - Math.abs(position.latitude));
-        latDistance = latDistance * FEET_PER_DEGREE_LATITUDE;
-
         longDistance = Math.abs(Math.abs(vertex.getPosition().longitude) - Math.abs(position.longitude));
-        longDistance = longDistance * FEET_PER_DEGREE_LONGITUDE;
-
         distance = Math.sqrt(Math.exp(latDistance) + Math.exp(longDistance));
 
         return distance;
