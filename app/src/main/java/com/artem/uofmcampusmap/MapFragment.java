@@ -1,13 +1,14 @@
 package com.artem.uofmcampusmap;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,9 +32,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private MapView mMapView;
     private GoogleMap googleMap;
-    private ImageView previousDirection;
-    private ImageView nextDirection;
-    private TextView currentDirections;
+    private ImageView prevInstruction;
+    private ImageView nextInstruction;
+    private TextView instructionsTextView;
+    private LinearLayout instructionsLinLayout;
     private MapGraph campusMap;
     private String startLocation;
     private String destinationLocation;
@@ -50,30 +52,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         routeLines = new ArrayList<>();
         currInstructionPos = 0;
 
-        currentDirections = (TextView) view.findViewById(R.id.current_directions);
+        instructionsTextView = (TextView) view.findViewById(R.id.current_instructions);
+        instructionsLinLayout = (LinearLayout) view.findViewById(R.id.instructions_layout);
 
-        previousDirection = (ImageView) view.findViewById(R.id.previous_direction);
-        previousDirection.setOnClickListener(new View.OnClickListener() {
+        prevInstruction = (ImageView) view.findViewById(R.id.prev_instruction);
+        prevInstruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(currInstructionPos > 0 && currInstructionPos < routeLines.size())
                 {
                     currInstructionPos--;
-                    currentDirections.setText(route.getInstructionAt(currInstructionPos).getInstructions());
+                    instructionsTextView.setText(route.getInstructionAt(currInstructionPos).getInstructions());
                     routeLines.get(currInstructionPos).setVisible(true);
                 }
             }
         });
 
-        nextDirection = (ImageView) view.findViewById(R.id.next_direction);
-        nextDirection.setOnClickListener(new View.OnClickListener() {
+        nextInstruction = (ImageView) view.findViewById(R.id.next_instruction);
+        nextInstruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(currInstructionPos + 1 < routeLines.size())
                 {
+                    routeLines.get(currInstructionPos).setVisible(false);
                     currInstructionPos++;
-                    currentDirections.setText(route.getInstructionAt(currInstructionPos).getInstructions());
-                    routeLines.get(currInstructionPos - 1).setVisible(false); //make the instruction before this not visible anymore
+                    instructionsTextView.setText(route.getInstructionAt(currInstructionPos).getInstructions());
                 }
             }
         });
@@ -85,6 +88,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         if(!startLocation.equals(" ") && !destinationLocation.equals(" "))
         {
             route = campusMap.findRoute(startLocation, destinationLocation);
+
+            if(route != null)
+            {
+                instructionsTextView.setText(route.getFirstInstruction().getInstructions());
+                instructionsLinLayout.setVisibility(View.VISIBLE);
+            }
         }
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
@@ -121,7 +130,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 startPoint = (currInstruction.getSource()).getPosition();
                 endPoint = (currInstruction.getDestination()).getPosition();
                 currLine = new PolylineOptions().add(startPoint)
-                        .add(endPoint);
+                        .add(endPoint)
+                        .color(Color.RED);
 
                 routeLines.add(googleMap.addPolyline(currLine));
                 currInstruction = route.getNextInstruction();
@@ -155,6 +165,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     public void setUpMap()
     {
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         centerMap();
         addBuildingMarkers();
         drawRouteOnMap();

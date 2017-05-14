@@ -73,15 +73,18 @@ public class Vertex {
         this.h = getDistanceFrom(endPoint);
     }
 
+    //todo make it a valid distance in feet, but not important since stuff will be changed to include inside buildings
+    //todo fix it properly
     public double getDistanceFrom(Vertex vertex)
     {
-        double distance = 0;
+        double distance;
         double latDistance;
         double longDistance;
 
         latDistance = Math.abs(Math.abs(vertex.getPosition().latitude) - Math.abs(position.latitude));
         longDistance = Math.abs(Math.abs(vertex.getPosition().longitude) - Math.abs(position.longitude));
-        distance = Math.sqrt(Math.exp(latDistance) + Math.exp(longDistance));
+        //distance = Math.sqrt(Math.exp(latDistance) + Math.exp(longDistance));
+        distance = latDistance + longDistance;
 
         return distance;
     }

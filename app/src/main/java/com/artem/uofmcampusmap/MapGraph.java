@@ -38,9 +38,49 @@ public class MapGraph {
         startEndLocations.put(keyName, entrancesList);
     }
 
+    private void connectVertices(Vertex vertex1, Vertex vertex2)
+    {
+        vertex1.addConnection(vertex2);
+        vertex2.addConnection(vertex1);
+    }
+
+    public Route findRoute(String startLocation, String endLocation)
+    {
+        Route route = null;
+        Route prevRoute;
+        ArrayList<Vertex> entrances;
+        ArrayList<Vertex> exits;
+        RouteFinder routeFinder = new RouteFinder();
+
+        if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
+        {
+            entrances = startEndLocations.get(startLocation);
+            exits = startEndLocations.get(endLocation);
+
+            //Find the shortest path from all entrances of a building to another buildings exits
+            for(Vertex currEntrance: entrances)
+            {
+                for(Vertex currExit: exits)
+                {
+                    prevRoute = routeFinder.findRoute(currEntrance, currExit);
+
+                    if(route == null)
+                    {
+                        route = prevRoute;
+                    }
+                    else if(prevRoute != null && prevRoute.currRouteQuicker(route))
+                    {
+                        route = prevRoute;
+                    }
+                }
+            }
+        }
+
+        return route;
+    }
+
     private void populateGraph()
     {
-        //todo: add paths that skip past other connections
         //todo: find a way to easily use the strings from resources without the extra package infos
         //Entrances
         String agriculture = "Agriculture";
@@ -99,7 +139,7 @@ public class MapGraph {
         String eitc1 = "EITC E1";
         String eitc2 = "EITC E2";
         String eitc3 = "EITC E3";
-        Vertex eitc1_eitc2_ent_AV = new Vertex(eitc1 + " " + eitc2, new LatLng(49.808242, -97.134007));
+        Vertex eitc1_eitc3_ent_AV = new Vertex(eitc1 + " " + eitc2, new LatLng(49.808242, -97.134007));
         Vertex eitc1_ent_AQ = new Vertex(eitc1, new LatLng(49.808455, -97.133076));
         Vertex eitc2_ent_AP = new Vertex(eitc2, new LatLng(49.808647, -97.133253));
         Vertex eitc2_ent_A31 = new Vertex(eitc2, new LatLng(49.808954, -97.133421));
@@ -200,7 +240,7 @@ public class MapGraph {
         Vertex Q_S = new Vertex(new LatLng(49.810502, -97.134322));
         Vertex R_S = new Vertex(new LatLng(49.810356, -97.134215));
         Vertex S_U = new Vertex(new LatLng(49.810097, -97.134001));
-        Vertex S_AL = new Vertex(new LatLng(49.808216, -97.132490));
+        Vertex S_AL = new Vertex(new LatLng(49.808202, -97.132459));
         Vertex S_AM = new Vertex(new LatLng(49.809366, -97.133421));
         Vertex S_AO_AAV = new Vertex(new LatLng(49.809091, -97.133163));
         Vertex S_AP = new Vertex(new LatLng(49.808764, -97.132921));
@@ -291,12 +331,12 @@ public class MapGraph {
         Vertex AAF_A27 = new Vertex(new LatLng(49.807250, -97.139614));
         Vertex AAF_LP2_LP3 = new Vertex(new LatLng(49.808369, -97.136263));
         Vertex AAG_AAH = new Vertex(new LatLng(49.808004, -97.136044));
-        Vertex AAG_A32 = new Vertex(new LatLng(49.808053, -97.136251));
+        Vertex AAG_A32 = new Vertex(new LatLng(49.808053, -97.136251)); //todo connect this point to others for quicker route
         Vertex AAH_AAJ = new Vertex(new LatLng(49.808173, -97.135956));
         Vertex AAH_AAI = new Vertex(new LatLng(49.807683, -97.136191));
         Vertex AAJ_AAM = new Vertex(new LatLng(49.808351, -97.135394));
         Vertex AAK_AAM = new Vertex(new LatLng(49.808485, -97.135491));
-        Vertex AAK_LP3_LP4 = new Vertex(new LatLng(49.808386, -97.135833));
+        Vertex AAK_LP3_LP4 = new Vertex(new LatLng(49.808323, -97.135943));
         Vertex AAT_AAW = new Vertex(new LatLng(49.810221, -97.132566));
         Vertex AAT_AAU = new Vertex(new LatLng(49.809871, -97.133596));
         Vertex AAV_A52 = new Vertex(new LatLng(49.809436, -97.132023));
@@ -318,7 +358,7 @@ public class MapGraph {
         Vertex A39_A40 = new Vertex(new LatLng(49.808638, -97.130480));
         Vertex LP1_LP2 = new Vertex(new LatLng(49.808490, -97.136255));
         Vertex LP1_LP5_LP6 = new Vertex(new LatLng(49.808573, -97.136018));
-        Vertex LP4_LP5 = new Vertex(new LatLng(49.808503, -97.135880));
+        Vertex LP4_LP5 = new Vertex(new LatLng(49.808448, -97.135856));
 
         //connections start with initial single letter vertex
         connectVertices(A_D, B_D);
@@ -843,7 +883,7 @@ public class MapGraph {
 
         //Architecture 2
         connectVertices(archi2_ent_AAI, AAH_AAI);
-        connectVertices(archi2_ent_A32, AAG_A32);
+        connectVertices(archi2_ent_A32, AAG_AAH);
         connectVertices(archi2_ent_AAI, fac_music_ent_AAI);
 
         addEntrance(architecture2, archi2_ent_AAI);
@@ -918,18 +958,18 @@ public class MapGraph {
         addEntrance(elizabeth_dafoe, eli_dafoe_lib_ent_Y_AE);
 
         //EITC 1 / 2 / 3
-        connectVertices(eitc1_eitc2_ent_AV, AL_AV);
+        connectVertices(eitc1_eitc3_ent_AV, AL_AV);
         connectVertices(eitc1_ent_AQ, S_AQ);
         connectVertices(eitc2_ent_AP, S_AP);
         connectVertices(eitc2_ent_A31, AO_A31);
         connectVertices(eitc2_ent_A31, S_AO_AAV);
         connectVertices(eitc3_ent_AU, AO_AU);
 
-        addEntrance(eitc1, eitc1_eitc2_ent_AV);
+        addEntrance(eitc1, eitc1_eitc3_ent_AV);
         addEntrance(eitc1, eitc1_ent_AQ);
-        addEntrance(eitc2, eitc1_eitc2_ent_AV);
         addEntrance(eitc2, eitc2_ent_AP);
         addEntrance(eitc2, eitc2_ent_A31);
+        addEntrance(eitc3, eitc1_eitc3_ent_AV);
         addEntrance(eitc3, eitc3_ent_AU);
 
         //Extended Education
@@ -1027,7 +1067,7 @@ public class MapGraph {
         connectVertices(tier_ent_AJ, AL2_A39);
 
         addEntrance(tier, tier_ent_AJ);
-        addEntrance(tier, tier_ent_A59);
+        //addEntrance(tier, tier_ent_A59);
         addEntrance(tier, tier_ent_AI);
 
         //University College
@@ -1052,46 +1092,5 @@ public class MapGraph {
         connectVertices(wallace_ent, E_F_G);
 
         addEntrance(wallace, wallace_ent);
-    }
-
-    private void connectVertices(Vertex vertex1, Vertex vertex2)
-    {
-        vertex1.addConnection(vertex2);
-        vertex2.addConnection(vertex1);
-    }
-
-    public Route findRoute(String startLocation, String endLocation)
-    {
-        Route route = null;
-        Route prevRoute;
-        ArrayList<Vertex> entrances;
-        ArrayList<Vertex> exits;
-        RouteFinder routeFinder = new RouteFinder();
-
-        if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
-        {
-            entrances = startEndLocations.get(startLocation);
-            exits = startEndLocations.get(endLocation);
-
-            //Find the shortest path from all entrances of a building to another buildings exits
-            for(Vertex currEntrance: entrances)
-            {
-                for(Vertex currExit: exits)
-                {
-                    prevRoute = routeFinder.findRoute(currEntrance, currExit);
-
-                    if(route == null)
-                    {
-                        route = prevRoute;
-                    }
-                    else if(prevRoute != null && prevRoute.currRouteQuicker(route))
-                    {
-                        route = prevRoute;
-                    }
-                }
-            }
-        }
-
-        return route;
     }
 }

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigate"
+            android:title="@string/navigate"
+            android:checked="false"/>
+        ....
+        <item
+            android:id="@+id/campus_map"
+            android:title="@string/campus_map"
+            android:checked="false"/>
+
+        <item android:title="Building Layouts">
+            <menu>
+                <item
+                    android:id="@+id/agriculture"
+                    android:checked="false"
+                    android:title="@string/agriculture" />
+
+                <item
+                    android:id="@+id/agri_engineer"
+                    android:checked="false"
+                    android:title="@string/agr_engineer" />
+
+                <item
+                    android:id="@+id/allen"
+                    android:checked="false"
+                    android:title="@string/allen" />
+
+                <item
+                    android:id="@+id/animal_sci"
+                    android:checked="false"
+                    android:title="@string/animal_sci" />
+
+                <item
+                    android:id="@+id/architecture"
+                    android:checked="false"
+                    android:title="@string/archi_2" />
+
+                <item
+                    android:id="@+id/armes"
+                    android:checked="false"
+                    android:title="@string/armes" />
+
+                <item
+                    android:id="@+id/artlab"
+                    android:checked="false"
+                    android:title="@string/art_lab" />
+
+                <item
+                    android:id="@+id/bio_sci"
+                    android:checked="false"
+                    android:title="@string/bio_sci" />
+
+                <item
+                    android:id="@+id/buller"
+                    android:checked="false"
+                    android:title="@string/buller" />
+
+                <item
+                    android:id="@+id/dairy_sci"
+                    android:checked="false"
+                    android:title="@string/dairy_science" />
+
+                <item
+                    android:id="@+id/drake_centre"
+                    android:checked="false"
+                    android:title="@string/drake_centre" />
+
+                <item
+                    android:id="@+id/duff_roblin"
+                    android:checked="false"
+                    android:title="@string/duff_roblin" />
+
+                <item
+                    android:id="@+id/education"
+                    android:checked="false"
+                    android:title="@string/education" />
+
+                <item
+                    android:id="@+id/eitc_e1"
+                    android:checked="false"
+                    android:title="@string/eitc_e1" />
+
+                <item
+                    android:id="@+id/eitc_e2"
+                    android:checked="false"
+                    android:title="@string/eitc_e2" />
+
+                <item
+                    android:id="@+id/eitc_e3"
+                    android:checked="false"
+                    android:title="@string/eitc_e3" />
+
+                <item
+                    android:id="@+id/elizabeth_dafoe"
+                    android:checked="false"
+                    android:title="@string/elizabeth_dafoe" />
+
+                <item
+                    android:id="@+id/ext_education"
+                    android:checked="false"
+                    android:title="@string/ext_education" />
+
+                <item
+                    android:id="@+id/fac_music"
+                    android:checked="false"
+                    android:title="@string/fac_music" />
+
+                <item
+                    android:id="@+id/fletcher"
+                    android:checked="false"
+                    android:title="@string/fletcher" />
+
+                <item
+                    android:id="@+id/frank_kennedy"
+                    android:checked="false"
+                    android:title="@string/frank_kennedy" />
+
+                <item
+                    android:id="@+id/helen_glass"
+                    android:checked="false"
+                    android:title="@string/helen_glass" />
+
+                <item
+                    android:id="@+id/human_eco"
+                    android:checked="false"
+                    android:title="@string/human_ecology" />
+
+                <item
+                    android:id="@+id/isbister"
+                    android:checked="false"
+                    android:title="@string/isbister" />
+
+                <item
+                    android:id="@+id/machray"
+                    android:checked="false"
+                    android:title="@string/machray" />
+
+                <item
+                    android:id="@+id/music_annex"
+                    android:checked="false"
+                    android:title="@string/music_2" />
+
+                <item
+                    android:id="@+id/parker"
+                    android:checked="false"
+                    android:title="@string/parker" />
+
+                <item
+                    android:id="@+id/plant_sci"
+                    android:checked="false"
+                    android:title="@string/plant_sci" />
+
+                <item
+                    android:id="@+id/robert_schultz"
+                    android:checked="false"
+                    android:title="@string/robert_schultz" />
+
+                <item
+                    android:id="@+id/robson"
+                    android:checked="false"
+                    android:title="@string/robson" />
+
+                <item
+                    android:id="@+id/russel"
+                    android:checked="false"
+                    android:title="@string/russel" />
+
+                <item
+                    android:id="@+id/stanley_paul"
+                    android:checked="false"
+                    android:title="@string/stanley_paul" />
+
+                <item
+                    android:id="@+id/st_johns"
+                    android:checked="false"
+                    android:title="@string/st_johns" />
+
+                <item
+                    android:id="@+id/st_pauls"
+                    android:checked="false"
+                    android:title="@string/st_pauls" />
+
+                <item
+                    android:id="@+id/tier"
+                    android:checked="false"
+                    android:title="@string/tier" />
+
+                <item
+                    android:id="@+id/uni_centre"
+                    android:checked="false"
+                    android:title="@string/uni_centre" />
+
+                <item
+                    android:id="@+id/uni_college"
+                    android:checked="false"
+                    android:title="@string/uni_college" />
+
+                <item
+                    android:id="@+id/wallace"
+                    android:checked="false"
+                    android:title="@string/wallace" />
+            </menu>
+        </item>
+
+        <item android:title="Tunnel Layouts">
+            <menu>
+                <item
+                    android:id="@+id/tunnel_1"
+                    android:checked="false"
+                    android:title="Sample Tunnel Name" />
+            </menu>
+        </item>
+    </group>
+</menu>
