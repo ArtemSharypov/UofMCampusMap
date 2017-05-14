@@ -16,12 +16,14 @@
 
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="RobotoButtonStyle" parent="android:Widget.Button">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">25sp</item>
     </style>
 
     <style name="RobotoSpinnerStyle" parent="android:Widget.Spinner.DropDown">
@@ -29,4 +31,12 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="NavDrawerTextStyle" parent="Base.TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.NavigationView" >
+        <item name="android:listDivider">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
+    </style>
 </resources>

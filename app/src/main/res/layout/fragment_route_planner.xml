@@ -11,17 +11,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="44dp"
         android:text="From Building"
-        android:textSize="17sp" />
+        style="@style/RobotoTextViewStyle" />
 
     <Spinner
         android:id="@+id/from_building"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/from_title"
-        android:layout_toRightOf="@+id/prefer_tunnel_title"
-        android:layout_toEndOf="@+id/prefer_tunnel_title" />
+        android:layout_toEndOf="@+id/prefer_tunnel_title"
+        android:layout_toRightOf="@+id/prefer_tunnel_title" />
 
     <Spinner
         android:id="@+id/to_building"
@@ -37,10 +37,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/from_title"
-        android:layout_marginTop="117dp"
+        android:layout_below="@+id/from_building"
+        android:layout_marginTop="115dp"
         android:text="To Building"
-        android:textSize="17sp" />
+        style="@style/RobotoTextViewStyle" />
 
     <TextView
         android:id="@+id/prefer_tunnel_title"
@@ -51,7 +51,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="130dp"
         android:text="Prefer Tunnels?"
-        android:textSize="17sp" />
+        style="@style/RobotoTextViewStyle"/>
 
     <CheckBox
         android:id="@+id/prefer_tunnels_check"
@@ -79,15 +79,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Cancel"
-            android:textAppearance="@android:style/TextAppearance.Large" />
+            style="@style/RobotoButtonStyle"/>
 
         <Button
             android:id="@+id/find_route_button"
+            style="@style/RobotoButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Find Route"
-            android:textAppearance="@android:style/TextAppearance.Large" />
+            android:text="Find Route" />
 
     </LinearLayout>
 

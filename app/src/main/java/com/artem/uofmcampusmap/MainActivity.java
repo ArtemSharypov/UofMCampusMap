@@ -2,8 +2,11 @@ package com.artem.uofmcampusmap;
 
 import android.app.FragmentTransaction;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.app.FragmentManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,19 +20,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity implements PassRouteData{
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }
-
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private String[] optionTitles;
+    private NavigationView navigationView;
     private String startLocation;
     private String destinationLocation;
 
@@ -41,11 +35,14 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
         startLocation = "";
         destinationLocation = "";
 
-        optionTitles = getResources().getStringArray(R.array.drawer_options);
-
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.nav_drawer_single_item, optionTitles));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                selectDrawerItem(menuItem);
+                return true;
+            }
+        });
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,15 +55,12 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Menu");
-                getSupportActionBar().setDisplayShowTitleEnabled(true);
                 invalidateOptionsMenu();
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
                 invalidateOptionsMenu();
             }
         };
@@ -77,36 +71,36 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        MapFragment mapFragment = new MapFragment();
-        FragmentManager fragmentManager = getFragmentManager();
+        if(savedInstanceState == null)
+        {
+            MapFragment mapFragment = new MapFragment();
+            FragmentManager fragmentManager = getFragmentManager();
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.main_frame_layout, mapFragment);
-        fragmentTransaction.commit();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.main_frame_layout, mapFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     //On click item for items in the nav drawer.
-    private void selectItem(int position) {
-        String stringClicked = (String) mDrawerList.getItemAtPosition(position);
-        String campusMapString = getResources().getString(R.string.campus_map);
-        String navigateString = getResources().getString(R.string.navigate);
+    private void selectDrawerItem(MenuItem menuItem) {
 
-        if(stringClicked.equals(campusMapString))
+        switch(menuItem.getItemId())
         {
-            //Map fragment should be at the very bottom of the stack if there is one
-            if(getFragmentManager().getBackStackEntryCount() > 0)
-            {
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            }
-        }
-        else if(stringClicked.equals(navigateString))
-        {
-            switchToRoutePlanner();
-        }
+            case R.id.campus_map:
+                //Map fragment should be at the very bottom of the stack if there is one
+                if(getFragmentManager().getBackStackEntryCount() > 0)
+                {
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+                break;
+            case R.id.navigate:
+                switchToRoutePlanner();
+                break;
 
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        }
+        menuItem.setChecked(true);
+        mDrawerLayout.closeDrawers();
     }
 
     //Switch current fragment to the RoutePlannerFragment
@@ -171,7 +165,11 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
 
     @Override
     public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() > 0)
+        if(this.mDrawerLayout.isDrawerOpen(GravityCompat.START))
+        {
+            this.mDrawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else if(getFragmentManager().getBackStackEntryCount() > 0)
         {
             getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
