@@ -1,11 +1,11 @@
 package com.artem.uofmcampusmap;
 
-import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.app.FragmentManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,9 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity implements PassRouteData{
     private Toolbar toolbar;
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
         if(savedInstanceState == null)
         {
             MapFragment mapFragment = new MapFragment();
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getSupportFragmentManager();
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.main_frame_layout, mapFragment);
@@ -97,6 +94,14 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
             case R.id.navigate:
                 switchToRoutePlanner();
                 break;
+            case R.id.armes:
+                BuildingLayoutFragment buildingLayoutFragment = new BuildingLayoutFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame_layout, buildingLayoutFragment);
+                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.commit();
 
         }
         menuItem.setChecked(true);
@@ -107,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
     private void switchToRoutePlanner()
     {
         RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame_layout, routePlannerFragment);
@@ -155,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
         {
             case R.id.navigate_button:
                 switchToRoutePlanner();
-
                 return true;
 
             default:
