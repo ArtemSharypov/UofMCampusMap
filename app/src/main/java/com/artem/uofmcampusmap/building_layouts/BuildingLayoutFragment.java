@@ -1,4 +1,4 @@
-package com.artem.uofmcampusmap;
+package com.artem.uofmcampusmap.building_layouts;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,10 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.artem.uofmcampusmap.R;
+import com.artem.uofmcampusmap.building_layouts.armes.ArmesFloor1Fragment;
+import com.artem.uofmcampusmap.building_layouts.armes.ArmesFloor2Fragment;
 
 import java.util.ArrayList;
 
@@ -47,7 +50,10 @@ public class BuildingLayoutFragment extends Fragment{
 
             if(buildingName.equals("armes"))
             {
-                return new ArmesFloor1Fragment();
+                if(position == 0)
+                   return new ArmesFloor1Fragment();
+                else if(position == 1)
+                    return new ArmesFloor2Fragment();
             }
 
             return null;
@@ -72,10 +78,9 @@ public class BuildingLayoutFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_building_layout, container, false);
 
-        ArrayList<String> buildingFloors = new ArrayList<>(); //todo make this have the proper floors
-        buildingFloors.add("ayo 1");
-        buildingFloors.add("ayo 2");
-        buildingFloors.add("THE MADMAN 3");
+        ArrayList<String> buildingFloors = new ArrayList<>(); //todo make this have the proper floors (could just have this added in adapter already)
+        buildingFloors.add("Floor 1");
+        buildingFloors.add("Floor 2");
 
         buildingName = "armes";
 
@@ -84,7 +89,7 @@ public class BuildingLayoutFragment extends Fragment{
 
         tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-        
+
         return view;
     }
 }

@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.artem.uofmcampusmap.building_layouts.BuildingLayoutFragment;
+
 public class MainActivity extends AppCompatActivity implements PassRouteData{
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -81,23 +83,23 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
 
     //On click item for items in the nav drawer.
     private void selectDrawerItem(MenuItem menuItem) {
-
         switch(menuItem.getItemId())
         {
             case R.id.campus_map:
                 //Map fragment should be at the very bottom of the stack if there is one
-                if(getFragmentManager().getBackStackEntryCount() > 0)
+                if(getSupportFragmentManager().getBackStackEntryCount() > 0)
                 {
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 }
+
                 break;
             case R.id.navigate:
                 switchToRoutePlanner();
                 break;
             case R.id.armes:
                 BuildingLayoutFragment buildingLayoutFragment = new BuildingLayoutFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
 
+                FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame_layout, buildingLayoutFragment);
                 fragmentTransaction.addToBackStack("MapFragment");
@@ -173,9 +175,9 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
         {
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
         }
-        else if(getFragmentManager().getBackStackEntryCount() > 0)
+        else if(getSupportFragmentManager().getBackStackEntryCount() > 0)
         {
-            getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
         else
         {
