@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/fac_music_floor3"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="132dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>

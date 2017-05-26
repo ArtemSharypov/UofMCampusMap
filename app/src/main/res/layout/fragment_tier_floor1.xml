@@ -12,5 +12,5 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="132dp" />
+        android:layout_alignParentBottom="true" />
 </RelativeLayout>
