@@ -47,7 +47,7 @@
                 <item
                     android:id="@+id/artlab"
                     android:checked="false"
-                    android:title="@string/art_lab" />
+                    android:title="@string/artlab" />
 
                 <item
                     android:id="@+id/bio_sci"
@@ -115,11 +115,6 @@
                     android:title="@string/fletcher" />
 
                 <item
-                    android:id="@+id/frank_kennedy"
-                    android:checked="false"
-                    android:title="@string/frank_kennedy" />
-
-                <item
                     android:id="@+id/helen_glass"
                     android:checked="false"
                     android:title="@string/helen_glass" />
@@ -142,7 +137,7 @@
                 <item
                     android:id="@+id/music_annex"
                     android:checked="false"
-                    android:title="@string/music_2" />
+                    android:title="@string/music_annex" />
 
                 <item
                     android:id="@+id/parker"
@@ -168,11 +163,6 @@
                     android:id="@+id/russel"
                     android:checked="false"
                     android:title="@string/russel" />
-
-                <item
-                    android:id="@+id/stanley_paul"
-                    android:checked="false"
-                    android:title="@string/stanley_paul" />
 
                 <item
                     android:id="@+id/st_johns"

@@ -18,13 +18,14 @@ import android.view.View;
 
 import com.artem.uofmcampusmap.building_layouts.BuildingLayoutFragment;
 
-public class MainActivity extends AppCompatActivity implements PassRouteData{
+public class MainActivity extends AppCompatActivity implements PassRouteData, PassBuildingData{
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private String startLocation;
     private String destinationLocation;
+    private String currBuilding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,18 +97,164 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
             case R.id.navigate:
                 switchToRoutePlanner();
                 break;
+            case R.id.agriculture:
+                this.currBuilding = getResources().getString(R.string.agriculture);
+                switchToBuildingLayouts();
+                break;
+            case R.id.agri_engineer:
+                this.currBuilding = getResources().getString(R.string.agr_engineer);
+                switchToBuildingLayouts();
+                break;
+            case R.id.allen:
+                this.currBuilding = getResources().getString(R.string.allen);
+                switchToBuildingLayouts();
+                break;
+            case R.id.animal_sci:
+                this.currBuilding = getResources().getString(R.string.animal_sci);
+                switchToBuildingLayouts();
+                break;
+            case R.id.architecture:
+                this.currBuilding = getResources().getString(R.string.archi_2);
+                switchToBuildingLayouts();
+                break;
             case R.id.armes:
-                BuildingLayoutFragment buildingLayoutFragment = new BuildingLayoutFragment();
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame_layout, buildingLayoutFragment);
-                fragmentTransaction.addToBackStack("MapFragment");
-                fragmentTransaction.commit();
-
+                this.currBuilding = getResources().getString(R.string.armes);
+                switchToBuildingLayouts();
+                break;
+            case R.id.artlab:
+                this.currBuilding = getResources().getString(R.string.artlab);
+                switchToBuildingLayouts();
+                break;
+            case R.id.bio_sci:
+                this.currBuilding = getResources().getString(R.string.bio_sci);
+                switchToBuildingLayouts();
+                break;
+            case R.id.buller:
+                this.currBuilding = getResources().getString(R.string.buller);
+                switchToBuildingLayouts();
+                break;
+            case R.id.dairy_sci:
+                this.currBuilding = getResources().getString(R.string.dairy_science);
+                switchToBuildingLayouts();
+                break;
+            case R.id.drake_centre:
+                this.currBuilding = getResources().getString(R.string.drake_centre);
+                switchToBuildingLayouts();
+                break;
+            case R.id.duff_roblin:
+                this.currBuilding = getResources().getString(R.string.duff_roblin);
+                switchToBuildingLayouts();
+                break;
+            case R.id.education:
+                this.currBuilding = getResources().getString(R.string.education);
+                switchToBuildingLayouts();
+                break;
+            case R.id.eitc_e1:
+                this.currBuilding = getResources().getString(R.string.eitc_e1);
+                switchToBuildingLayouts();
+                break;
+            case R.id.eitc_e2:
+                this.currBuilding = getResources().getString(R.string.eitc_e2);
+                switchToBuildingLayouts();
+                break;
+            case R.id.eitc_e3:
+                this.currBuilding = getResources().getString(R.string.eitc_e3);
+                switchToBuildingLayouts();
+                break;
+            case R.id.elizabeth_dafoe:
+                this.currBuilding = getResources().getString(R.string.elizabeth_dafoe);
+                switchToBuildingLayouts();
+                break;
+            case R.id.ext_education:
+                this.currBuilding = getResources().getString(R.string.ext_education);
+                switchToBuildingLayouts();
+                break;
+            case R.id.fac_music:
+                this.currBuilding = getResources().getString(R.string.fac_music);
+                switchToBuildingLayouts();
+                break;
+            case R.id.fletcher:
+                this.currBuilding = getResources().getString(R.string.fletcher);
+                switchToBuildingLayouts();
+                break;
+            case R.id.helen_glass:
+                this.currBuilding = getResources().getString(R.string.helen_glass);
+                switchToBuildingLayouts();
+                break;
+            case R.id.human_eco:
+                this.currBuilding = getResources().getString(R.string.human_ecology);
+                switchToBuildingLayouts();
+                break;
+            case R.id.isbister:
+                this.currBuilding = getResources().getString(R.string.isbister);
+                switchToBuildingLayouts();
+                break;
+            case R.id.machray:
+                this.currBuilding = getResources().getString(R.string.machray);
+                switchToBuildingLayouts();
+                break;
+            case R.id.music_annex:
+                this.currBuilding = getResources().getString(R.string.music_annex);
+                switchToBuildingLayouts();
+                break;
+            case R.id.parker:
+                this.currBuilding = getResources().getString(R.string.parker);
+                switchToBuildingLayouts();
+                break;
+            case R.id.plant_sci:
+                this.currBuilding = getResources().getString(R.string.plant_sci);
+                switchToBuildingLayouts();
+                break;
+            case R.id.robert_schultz:
+                this.currBuilding = getResources().getString(R.string.robert_schultz);
+                switchToBuildingLayouts();
+                break;
+            case R.id.robson:
+                this.currBuilding = getResources().getString(R.string.robson);
+                switchToBuildingLayouts();
+                break;
+            case R.id.russel:
+                this.currBuilding = getResources().getString(R.string.russel);
+                switchToBuildingLayouts();
+                break;
+            case R.id.st_johns:
+                this.currBuilding = getResources().getString(R.string.st_johns);
+                switchToBuildingLayouts();
+                break;
+            case R.id.st_pauls:
+                this.currBuilding = getResources().getString(R.string.st_pauls);
+                switchToBuildingLayouts();
+                break;
+            case R.id.tier:
+                this.currBuilding = getResources().getString(R.string.tier);
+                switchToBuildingLayouts();
+                break;
+            case R.id.uni_centre:
+                this.currBuilding = getResources().getString(R.string.uni_centre);
+                switchToBuildingLayouts();
+                break;
+            case R.id.uni_college:
+                this.currBuilding = getResources().getString(R.string.uni_college);
+                switchToBuildingLayouts();
+                break;
+            case R.id.wallace:
+                this.currBuilding = getResources().getString(R.string.wallace);
+                switchToBuildingLayouts();
+                break;
         }
         menuItem.setChecked(true);
         mDrawerLayout.closeDrawers();
+    }
+
+    private void switchToBuildingLayouts()
+    {
+        BuildingLayoutFragment buildingLayoutFragment = new BuildingLayoutFragment();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame_layout, buildingLayoutFragment);
+        fragmentTransaction.addToBackStack("MapFragment");
+        fragmentTransaction.commit();
     }
 
     //Switch current fragment to the RoutePlannerFragment
@@ -195,5 +342,15 @@ public class MainActivity extends AppCompatActivity implements PassRouteData{
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void setCurrBuilding(String currBuilding) {
+        this.currBuilding = currBuilding;
+    }
+
+    @Override
+    public String getCurrBuilding() {
+        return currBuilding;
     }
 }
