@@ -2,7 +2,6 @@ package com.artem.uofmcampusmap.building_layouts;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +10,144 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
 
 import com.artem.uofmcampusmap.MainActivity;
 import com.artem.uofmcampusmap.R;
+import com.artem.uofmcampusmap.building_layouts.agri_engineer.Agri_Engineer_Floor1;
+import com.artem.uofmcampusmap.building_layouts.agri_engineer.Agri_Engineer_Floor2;
+import com.artem.uofmcampusmap.building_layouts.agriculture.Agriculture_Floor2;
+import com.artem.uofmcampusmap.building_layouts.agriculture.Agriculture_Floor3;
+import com.artem.uofmcampusmap.building_layouts.allen.Allen_Floor1;
+import com.artem.uofmcampusmap.building_layouts.allen.Allen_Floor2;
+import com.artem.uofmcampusmap.building_layouts.allen.Allen_Floor3;
+import com.artem.uofmcampusmap.building_layouts.allen.Allen_Floor4;
+import com.artem.uofmcampusmap.building_layouts.allen.Allen_Floor5;
+import com.artem.uofmcampusmap.building_layouts.animal_science.Animal_Sci_Floor0;
+import com.artem.uofmcampusmap.building_layouts.animal_science.Animal_Sci_Floor1;
+import com.artem.uofmcampusmap.building_layouts.animal_science.Animal_Sci_Floor2;
+import com.artem.uofmcampusmap.building_layouts.architecture_2.Architecture2_Floor1;
+import com.artem.uofmcampusmap.building_layouts.architecture_2.Architecture2_Floor2;
+import com.artem.uofmcampusmap.building_layouts.architecture_2.Architecture2_Floor3;
+import com.artem.uofmcampusmap.building_layouts.architecture_2.Architecture2_Floor4;
 import com.artem.uofmcampusmap.building_layouts.armes.ArmesFloor1Fragment;
 import com.artem.uofmcampusmap.building_layouts.armes.ArmesFloor2Fragment;
+import com.artem.uofmcampusmap.building_layouts.artlab.Artlab_Floor1;
+import com.artem.uofmcampusmap.building_layouts.artlab.Artlab_Floor2;
+import com.artem.uofmcampusmap.building_layouts.artlab.Artlab_Floor3;
+import com.artem.uofmcampusmap.building_layouts.artlab.Artlab_Floor4;
+import com.artem.uofmcampusmap.building_layouts.bio_science.Bio_Sci_Floor1;
+import com.artem.uofmcampusmap.building_layouts.bio_science.Bio_Sci_Floor2;
+import com.artem.uofmcampusmap.building_layouts.bio_science.Bio_Sci_Floor3;
+import com.artem.uofmcampusmap.building_layouts.bio_science.Bio_Sci_Floor4;
+import com.artem.uofmcampusmap.building_layouts.buller.Buller_Floor1;
+import com.artem.uofmcampusmap.building_layouts.buller.Buller_Floor2;
+import com.artem.uofmcampusmap.building_layouts.buller.Buller_Floor3;
+import com.artem.uofmcampusmap.building_layouts.buller.Buller_Floor4;
+import com.artem.uofmcampusmap.building_layouts.buller.Buller_Floor5;
+import com.artem.uofmcampusmap.building_layouts.dairy_science.Dairy_Sci_Floor0;
+import com.artem.uofmcampusmap.building_layouts.dairy_science.Dairy_Sci_Floor1;
+import com.artem.uofmcampusmap.building_layouts.dairy_science.Dairy_Sci_Floor2;
+import com.artem.uofmcampusmap.building_layouts.drake.Drake_Floor1;
+import com.artem.uofmcampusmap.building_layouts.drake.Drake_Floor2;
+import com.artem.uofmcampusmap.building_layouts.drake.Drake_Floor3;
+import com.artem.uofmcampusmap.building_layouts.drake.Drake_Floor4;
+import com.artem.uofmcampusmap.building_layouts.drake.Drake_Floor5;
+import com.artem.uofmcampusmap.building_layouts.drake.Drake_Floor6;
+import com.artem.uofmcampusmap.building_layouts.duff_roblin.Duff_Roblin_Floor1;
+import com.artem.uofmcampusmap.building_layouts.duff_roblin.Duff_Roblin_Floor2;
+import com.artem.uofmcampusmap.building_layouts.duff_roblin.Duff_Roblin_Floor3;
+import com.artem.uofmcampusmap.building_layouts.duff_roblin.Duff_Roblin_Floor4;
+import com.artem.uofmcampusmap.building_layouts.education.Education_Floor1;
+import com.artem.uofmcampusmap.building_layouts.education.Education_Floor2;
+import com.artem.uofmcampusmap.building_layouts.education.Education_Floor3;
+import com.artem.uofmcampusmap.building_layouts.education.Education_Floor4;
+import com.artem.uofmcampusmap.building_layouts.eitc_e1.EITC_E1_Floor2;
+import com.artem.uofmcampusmap.building_layouts.eitc_e1.EITC_E1_Floor3;
+import com.artem.uofmcampusmap.building_layouts.eitc_e1.EITC_E1_Floor4;
+import com.artem.uofmcampusmap.building_layouts.eitc_e1.EITC_E1_Floor5;
+import com.artem.uofmcampusmap.building_layouts.eitc_e2.EITC_E2_Floor1;
+import com.artem.uofmcampusmap.building_layouts.eitc_e2.EITC_E2_Floor2;
+import com.artem.uofmcampusmap.building_layouts.eitc_e2.EITC_E2_Floor3;
+import com.artem.uofmcampusmap.building_layouts.eitc_e2.EITC_E2_Floor4;
+import com.artem.uofmcampusmap.building_layouts.eitc_e2.EITC_E2_Floor5;
+import com.artem.uofmcampusmap.building_layouts.eitc_e2.EITC_E2_Floor6;
+import com.artem.uofmcampusmap.building_layouts.eitc_e3.EITC_E3_Floor1;
+import com.artem.uofmcampusmap.building_layouts.eitc_e3.EITC_E3_Floor2;
+import com.artem.uofmcampusmap.building_layouts.eitc_e3.EITC_E3_Floor3;
+import com.artem.uofmcampusmap.building_layouts.eitc_e3.EITC_E3_Floor4;
+import com.artem.uofmcampusmap.building_layouts.eitc_e3.EITC_E3_Floor5;
+import com.artem.uofmcampusmap.building_layouts.eitc_e3.EITC_E3_Floor6;
+import com.artem.uofmcampusmap.building_layouts.elizabeth_dafoe_lib.Eli_Dafoe_Floor0;
+import com.artem.uofmcampusmap.building_layouts.elizabeth_dafoe_lib.Eli_Dafoe_Floor1;
+import com.artem.uofmcampusmap.building_layouts.elizabeth_dafoe_lib.Eli_Dafoe_Floor2;
+import com.artem.uofmcampusmap.building_layouts.elizabeth_dafoe_lib.Eli_Dafoe_Floor3;
+import com.artem.uofmcampusmap.building_layouts.extended_education.Ext_Education_Floor1;
+import com.artem.uofmcampusmap.building_layouts.faculty_of_music.Fac_Of_Music_Floor1;
+import com.artem.uofmcampusmap.building_layouts.faculty_of_music.Fac_Of_Music_Floor2;
+import com.artem.uofmcampusmap.building_layouts.faculty_of_music.Fac_Of_Music_Floor3;
+import com.artem.uofmcampusmap.building_layouts.fletcher.Fletcher_Floor1;
+import com.artem.uofmcampusmap.building_layouts.fletcher.Fletcher_Floor2;
+import com.artem.uofmcampusmap.building_layouts.fletcher.Fletcher_Floor3;
+import com.artem.uofmcampusmap.building_layouts.fletcher.Fletcher_Floor4;
+import com.artem.uofmcampusmap.building_layouts.fletcher.Fletcher_Floor5;
+import com.artem.uofmcampusmap.building_layouts.fletcher.Fletcher_Floor6;
+import com.artem.uofmcampusmap.building_layouts.helen_glass.Helen_Glass_Floor1;
+import com.artem.uofmcampusmap.building_layouts.helen_glass.Helen_Glass_Floor2;
+import com.artem.uofmcampusmap.building_layouts.helen_glass.Helen_Glass_Floor3;
+import com.artem.uofmcampusmap.building_layouts.helen_glass.Helen_Glass_Floor4;
+import com.artem.uofmcampusmap.building_layouts.isbister.Isbister_Floor1;
+import com.artem.uofmcampusmap.building_layouts.isbister.Isbister_Floor2;
+import com.artem.uofmcampusmap.building_layouts.isbister.Isbister_Floor3;
+import com.artem.uofmcampusmap.building_layouts.isbister.Isbister_Floor4;
+import com.artem.uofmcampusmap.building_layouts.machray.Machray_Floor1;
+import com.artem.uofmcampusmap.building_layouts.machray.Machray_Floor2;
+import com.artem.uofmcampusmap.building_layouts.machray.Machray_Floor3;
+import com.artem.uofmcampusmap.building_layouts.machray.Machray_Floor4;
+import com.artem.uofmcampusmap.building_layouts.machray.Machray_Floor5;
+import com.artem.uofmcampusmap.building_layouts.music_annex_2.Music_Annex_Floor1;
+import com.artem.uofmcampusmap.building_layouts.parker.Parker_Floor1;
+import com.artem.uofmcampusmap.building_layouts.parker.Parker_Floor2;
+import com.artem.uofmcampusmap.building_layouts.parker.Parker_Floor3;
+import com.artem.uofmcampusmap.building_layouts.parker.Parker_Floor4;
+import com.artem.uofmcampusmap.building_layouts.parker.Parker_Floor5;
+import com.artem.uofmcampusmap.building_layouts.plant_science.Plant_Sci_Floor0;
+import com.artem.uofmcampusmap.building_layouts.plant_science.Plant_Sci_Floor1;
+import com.artem.uofmcampusmap.building_layouts.plant_science.Plant_Sci_Floor2;
+import com.artem.uofmcampusmap.building_layouts.plant_science.Plant_Sci_Floor3;
+import com.artem.uofmcampusmap.building_layouts.robert_schultz.Robert_Schultz_Floor1;
+import com.artem.uofmcampusmap.building_layouts.robson.Robson_Floor1;
+import com.artem.uofmcampusmap.building_layouts.robson.Robson_Floor2;
+import com.artem.uofmcampusmap.building_layouts.robson.Robson_Floor3;
+import com.artem.uofmcampusmap.building_layouts.robson.Robson_Floor4;
+import com.artem.uofmcampusmap.building_layouts.russel.Russel_Floor1;
+import com.artem.uofmcampusmap.building_layouts.russel.Russel_Floor2;
+import com.artem.uofmcampusmap.building_layouts.russel.Russel_Floor3;
+import com.artem.uofmcampusmap.building_layouts.st_johns.St_Johns_Floor1;
+import com.artem.uofmcampusmap.building_layouts.st_johns.St_Johns_Floor2;
+import com.artem.uofmcampusmap.building_layouts.st_johns.St_Johns_Floor3;
+import com.artem.uofmcampusmap.building_layouts.st_pauls.St_Pauls_Floor1;
+import com.artem.uofmcampusmap.building_layouts.st_pauls.St_Pauls_Floor2;
+import com.artem.uofmcampusmap.building_layouts.st_pauls.St_Pauls_Floor3;
+import com.artem.uofmcampusmap.building_layouts.tier.Tier_Floor1;
+import com.artem.uofmcampusmap.building_layouts.tier.Tier_Floor2;
+import com.artem.uofmcampusmap.building_layouts.tier.Tier_Floor3;
+import com.artem.uofmcampusmap.building_layouts.tier.Tier_Floor4;
+import com.artem.uofmcampusmap.building_layouts.tier.Tier_Floor5;
+import com.artem.uofmcampusmap.building_layouts.tier.Tier_Floor6;
+import com.artem.uofmcampusmap.building_layouts.university_centre.Uni_Centre_Floor1;
+import com.artem.uofmcampusmap.building_layouts.university_centre.Uni_Centre_Floor2;
+import com.artem.uofmcampusmap.building_layouts.university_centre.Uni_Centre_Floor3;
+import com.artem.uofmcampusmap.building_layouts.university_centre.Uni_Centre_Floor4;
+import com.artem.uofmcampusmap.building_layouts.university_centre.Uni_Centre_Floor5;
+import com.artem.uofmcampusmap.building_layouts.university_college.Uni_College_Floor1;
+import com.artem.uofmcampusmap.building_layouts.university_college.Uni_College_Floor2;
+import com.artem.uofmcampusmap.building_layouts.university_college.Uni_College_Floor3;
+import com.artem.uofmcampusmap.building_layouts.university_college.Uni_College_Floor4;
+import com.artem.uofmcampusmap.building_layouts.wallace.Wallace_Floor1;
+import com.artem.uofmcampusmap.building_layouts.wallace.Wallace_Floor2;
+import com.artem.uofmcampusmap.building_layouts.wallace.Wallace_Floor3;
+import com.artem.uofmcampusmap.building_layouts.wallace.Wallace_Floor4;
+import com.artem.uofmcampusmap.building_layouts.wallace.Wallace_Floor5;
 
 import java.util.ArrayList;
 
@@ -47,25 +178,54 @@ public class BuildingLayoutFragment extends Fragment{
         public Fragment getItem(int position) {
             Fragment fragment = null;
 
-            if(buildingName.equals(getResources().getString(R.string.agriculture)))
+            if(buildingName.equals(getResources().getString(R.string.agr_engineer)))
             {
-
+                if(position == 0)
+                    fragment = new Agri_Engineer_Floor1();
+                else if(position == 1)
+                    fragment = new Agri_Engineer_Floor2();
             }
-            else if(buildingName.equals(getResources().getString(R.string.agr_engineer)))
+            else if(buildingName.equals(getResources().getString(R.string.agriculture)))
             {
-
+                if(position == 0)
+                    fragment = new Agriculture_Floor2();
+                else if(position == 1)
+                    fragment = new Agriculture_Floor2();
+                else if(position == 2)
+                    fragment = new Agriculture_Floor3();
             }
             else if(buildingName.equals(getResources().getString(R.string.allen)))
             {
-
+                if(position == 0)
+                    fragment = new Allen_Floor1();
+                else if(position == 1)
+                    fragment = new Allen_Floor2();
+                else if(position == 2)
+                    fragment = new Allen_Floor3();
+                else if(position == 3)
+                    fragment = new Allen_Floor4();
+                else if(position == 4)
+                    fragment = new Allen_Floor5();
             }
             else if(buildingName.equals(getResources().getString(R.string.animal_sci)))
             {
-
+                if(position == 0)
+                    fragment = new Animal_Sci_Floor0();
+                else if(position == 1)
+                    fragment = new Animal_Sci_Floor1();
+                else if(position == 2)
+                    fragment = new Animal_Sci_Floor2();
             }
             else if(buildingName.equals(getResources().getString(R.string.archi_2)))
             {
-
+                if(position == 0)
+                    fragment = new Architecture2_Floor1();
+                else if(position == 1)
+                    fragment = new Architecture2_Floor2();
+                else if(position == 2)
+                    fragment = new Architecture2_Floor3();
+                else if(position == 3)
+                    fragment = new Architecture2_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.armes)))
             {
@@ -76,123 +236,328 @@ public class BuildingLayoutFragment extends Fragment{
             }
             else if(buildingName.equals(getResources().getString(R.string.artlab)))
             {
-
+                if(position == 0)
+                    fragment = new Artlab_Floor1();
+                else if(position == 1)
+                    fragment = new Artlab_Floor2();
+                else if(position == 2)
+                    fragment = new Artlab_Floor3();
+                else if(position == 3)
+                    fragment = new Artlab_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.bio_sci)))
             {
-
+                if(position == 0)
+                    fragment = new Bio_Sci_Floor1();
+                else if(position == 1)
+                    fragment = new Bio_Sci_Floor2();
+                else if(position == 2)
+                    fragment = new Bio_Sci_Floor3();
+                else if(position == 3)
+                    fragment = new Bio_Sci_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.buller)))
             {
-
+                if(position == 0)
+                    fragment = new Buller_Floor1();
+                else if(position == 1)
+                    fragment = new Buller_Floor2();
+                else if(position == 2)
+                    fragment = new Buller_Floor3();
+                else if(position == 3)
+                    fragment = new Buller_Floor4();
+                else if(position == 4)
+                    fragment = new Buller_Floor5();
             }
             else if(buildingName.equals(getResources().getString(R.string.dairy_science)))
             {
-
-            }else if(buildingName.equals(getResources().getString(R.string.drake_centre)))
+                if(position == 0)
+                    fragment = new Dairy_Sci_Floor0();
+                else if(position == 1)
+                    fragment = new Dairy_Sci_Floor1();
+                else if(position == 2)
+                    fragment = new Dairy_Sci_Floor2();
+            }
+            else if(buildingName.equals(getResources().getString(R.string.drake_centre)))
             {
-
+                if(position == 0)
+                    fragment = new Drake_Floor1();
+                else if(position == 1)
+                    fragment = new Drake_Floor2();
+                else if(position == 2)
+                    fragment = new Drake_Floor3();
+                else if(position == 3)
+                    fragment = new Drake_Floor4();
+                else if(position == 4)
+                    fragment = new Drake_Floor5();
+                else if(position == 5)
+                    fragment = new Drake_Floor6();
             }
             else if(buildingName.equals(getResources().getString(R.string.duff_roblin)))
             {
-
+                if(position == 0)
+                    fragment = new Duff_Roblin_Floor1();
+                else if(position == 1)
+                    fragment = new Duff_Roblin_Floor2();
+                else if(position == 2)
+                    fragment = new Duff_Roblin_Floor3();
+                else if(position == 3)
+                    fragment = new Duff_Roblin_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.education)))
             {
-
+                if(position == 0)
+                    fragment = new Education_Floor1();
+                else if(position == 1)
+                    fragment = new Education_Floor2();
+                else if(position == 2)
+                    fragment = new Education_Floor3();
+                else if(position == 3)
+                    fragment = new Education_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.eitc_e1)))
             {
-
+                if(position == 0)
+                    fragment = new EITC_E1_Floor2();
+                else if(position == 1)
+                    fragment = new EITC_E1_Floor3();
+                else if(position == 2)
+                    fragment = new EITC_E1_Floor4();
+                else if(position == 3)
+                    fragment = new EITC_E1_Floor5();
             }
             else if(buildingName.equals(getResources().getString(R.string.eitc_e2)))
             {
-
+                if(position == 0)
+                    fragment = new EITC_E2_Floor1();
+                else if(position == 1)
+                    fragment = new EITC_E2_Floor2();
+                else if(position == 2)
+                    fragment = new EITC_E2_Floor3();
+                else if(position == 3)
+                    fragment = new EITC_E2_Floor4();
+                else if(position == 4)
+                    fragment = new EITC_E2_Floor5();
+                else if(position == 5)
+                    fragment = new EITC_E2_Floor6();
             }
             else if(buildingName.equals(getResources().getString(R.string.eitc_e3)))
             {
-
+                if(position == 0)
+                    fragment = new EITC_E3_Floor1();
+                else if(position == 1)
+                    fragment = new EITC_E3_Floor2();
+                else if(position == 2)
+                    fragment = new EITC_E3_Floor3();
+                else if(position == 3)
+                    fragment = new EITC_E3_Floor4();
+                else if(position == 4)
+                    fragment = new EITC_E3_Floor5();
+                else if(position == 5)
+                    fragment = new EITC_E3_Floor6();
             }
             else if(buildingName.equals(getResources().getString(R.string.elizabeth_dafoe)))
             {
-
+                if(position == 0)
+                    fragment = new Eli_Dafoe_Floor0();
+                else if(position == 1)
+                    fragment = new Eli_Dafoe_Floor1();
+                else if(position == 2)
+                    fragment = new Eli_Dafoe_Floor2();
+                else if(position == 3)
+                    fragment = new Eli_Dafoe_Floor3();
             }
             else if(buildingName.equals(getResources().getString(R.string.ext_education)))
             {
-
+                if(position == 0)
+                    fragment = new Ext_Education_Floor1();
             }
             else if(buildingName.equals(getResources().getString(R.string.fac_music)))
             {
-
-            }
-            else if(buildingName.equals(getResources().getString(R.string.fac_music)))
-            {
-
+                if(position == 0)
+                    fragment = new Fac_Of_Music_Floor1();
+                else if(position == 1)
+                    fragment = new Fac_Of_Music_Floor2();
+                else if(position == 2)
+                    fragment = new Fac_Of_Music_Floor3();
             }
             else if(buildingName.equals(getResources().getString(R.string.fletcher)))
             {
-
-            }else if(buildingName.equals(getResources().getString(R.string.helen_glass)))
+                if(position == 0)
+                    fragment = new Fletcher_Floor1();
+                else if(position == 1)
+                    fragment = new Fletcher_Floor2();
+                else if(position == 2)
+                    fragment = new Fletcher_Floor3();
+                else if(position == 3)
+                    fragment = new Fletcher_Floor4();
+                else if(position == 4)
+                    fragment = new Fletcher_Floor5();
+                else if(position == 5)
+                    fragment = new Fletcher_Floor6();
+            }
+            else if(buildingName.equals(getResources().getString(R.string.helen_glass)))
             {
-
-            }else if(buildingName.equals(getResources().getString(R.string.human_ecology)))
+                if(position == 0)
+                    fragment = new Helen_Glass_Floor1();
+                else if(position == 1)
+                    fragment = new Helen_Glass_Floor2();
+                else if(position == 2)
+                    fragment = new Helen_Glass_Floor3();
+                else if(position == 3)
+                    fragment = new Helen_Glass_Floor4();
+            }
+            else if(buildingName.equals(getResources().getString(R.string.human_ecology)))
             {
-
+               //todo implement this part
             }
             else if(buildingName.equals(getResources().getString(R.string.isbister)))
             {
-
+                if(position == 0)
+                    fragment = new Isbister_Floor1();
+                else if(position == 1)
+                    fragment = new Isbister_Floor2();
+                else if(position == 2)
+                    fragment = new Isbister_Floor3();
+                else if(position == 3)
+                    fragment = new Isbister_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.machray)))
             {
-
+                if(position == 0)
+                    fragment = new Machray_Floor1();
+                else if(position == 1)
+                    fragment = new Machray_Floor2();
+                else if(position == 2)
+                    fragment = new Machray_Floor3();
+                else if(position == 3)
+                    fragment = new Machray_Floor4();
+                else if(position == 4)
+                    fragment = new Machray_Floor5();
             }
             else if(buildingName.equals(getResources().getString(R.string.music_annex)))
             {
-
+                if(position == 0)
+                    fragment = new Music_Annex_Floor1();
             }
             else if(buildingName.equals(getResources().getString(R.string.parker)))
             {
-
+                if(position == 0)
+                    fragment = new Parker_Floor1();
+                else if(position == 1)
+                    fragment = new Parker_Floor2();
+                else if(position == 2)
+                    fragment = new Parker_Floor3();
+                else if(position == 3)
+                    fragment = new Parker_Floor4();
+                else if(position == 4)
+                    fragment = new Parker_Floor5();
             }
             else if(buildingName.equals(getResources().getString(R.string.plant_sci)))
             {
-
+                if(position == 0)
+                    fragment = new Plant_Sci_Floor0();
+                else if(position == 1)
+                    fragment = new Plant_Sci_Floor1();
+                else if(position == 2)
+                    fragment = new Plant_Sci_Floor2();
+                else if(position == 3)
+                    fragment = new Plant_Sci_Floor3();
             }
             else if(buildingName.equals(getResources().getString(R.string.robert_schultz)))
             {
-
+                if(position == 0)
+                    fragment = new Robert_Schultz_Floor1();
             }
             else if(buildingName.equals(getResources().getString(R.string.robson)))
             {
-
+                if(position == 0)
+                    fragment = new Robson_Floor1();
+                else if(position == 1)
+                    fragment = new Robson_Floor2();
+                else if(position == 2)
+                    fragment = new Robson_Floor3();
+                else if(position == 3)
+                    fragment = new Robson_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.russel)))
             {
-
+                if(position == 0)
+                    fragment = new Russel_Floor1();
+                else if(position == 1)
+                    fragment = new Russel_Floor2();
+                else if(position == 2)
+                    fragment = new Russel_Floor3();
             }
             else if(buildingName.equals(getResources().getString(R.string.st_johns)))
             {
-
-            }else if(buildingName.equals(getResources().getString(R.string.st_pauls)))
+                if(position == 0)
+                    fragment = new St_Johns_Floor1();
+                else if(position == 1)
+                    fragment = new St_Johns_Floor2();
+                else if(position == 2)
+                    fragment = new St_Johns_Floor3();
+            }
+            else if(buildingName.equals(getResources().getString(R.string.st_pauls)))
             {
-
+                if(position == 0)
+                    fragment = new St_Pauls_Floor1();
+                else if(position == 1)
+                    fragment = new St_Pauls_Floor2();
+                else if(position == 2)
+                    fragment = new St_Pauls_Floor3();
             }
             else if(buildingName.equals(getResources().getString(R.string.tier)))
             {
-
+                if(position == 0)
+                    fragment = new Tier_Floor1();
+                else if(position == 1)
+                    fragment = new Tier_Floor2();
+                else if(position == 2)
+                    fragment = new Tier_Floor3();
+                else if(position == 3)
+                    fragment = new Tier_Floor4();
+                else if(position == 4)
+                    fragment = new Tier_Floor5();
+                else if(position == 5)
+                    fragment = new Tier_Floor6();
             }
             else if(buildingName.equals(getResources().getString(R.string.uni_centre)))
             {
-
+                if(position == 0)
+                    fragment = new Uni_Centre_Floor1();
+                else if(position == 1)
+                    fragment = new Uni_Centre_Floor2();
+                else if(position == 2)
+                    fragment = new Uni_Centre_Floor3();
+                else if(position == 3)
+                    fragment = new Uni_Centre_Floor4();
+                else if(position == 4)
+                    fragment = new Uni_Centre_Floor5();
             }
             else if(buildingName.equals(getResources().getString(R.string.uni_college)))
             {
-
+                if(position == 0)
+                    fragment = new Uni_College_Floor1();
+                else if(position == 1)
+                    fragment = new Uni_College_Floor2();
+                else if(position == 2)
+                    fragment = new Uni_College_Floor3();
+                else if(position == 3)
+                    fragment = new Uni_College_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.wallace)))
             {
-
+                if(position == 0)
+                    fragment = new Wallace_Floor1();
+                else if(position == 1)
+                    fragment = new Wallace_Floor2();
+                else if(position == 2)
+                    fragment = new Wallace_Floor3();
+                else if(position == 3)
+                    fragment = new Wallace_Floor4();
+                else if(position == 4)
+                    fragment = new Wallace_Floor5();
             }
 
             return fragment;
@@ -231,89 +596,89 @@ public class BuildingLayoutFragment extends Fragment{
     {
         ArrayList<String> floors = null;
 
-        if(buildingName.equals(getResources().getString(R.string.agriculture)))
+        if(buildingName.equals(getResources().getString(R.string.agr_engineer)))
         {
-            floors = createFloorNames(1, 2);
+            floors = createFloorNamesFrom(1, 3);
         }
-        else if(buildingName.equals(getResources().getString(R.string.agr_engineer)))
+        else if(buildingName.equals(getResources().getString(R.string.agriculture)))
         {
-            floors = createFloorNames(1, 3);
+            floors = createFloorNamesFrom(1, 2);
         }
         else if(buildingName.equals(getResources().getString(R.string.allen)))
         {
-            floors = createFloorNames(1, 5);
+            floors = createFloorNamesFrom(1, 5);
         }
         else if(buildingName.equals(getResources().getString(R.string.animal_sci)))
         {
-            floors = createFloorNames(0, 2);
+            floors = createFloorNamesFrom(0, 2);
         }
         else if(buildingName.equals(getResources().getString(R.string.archi_2)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.armes)))
         {
-            floors = createFloorNames(1, 2);
+            floors = createFloorNamesFrom(1, 2);
         }
         else if(buildingName.equals(getResources().getString(R.string.artlab)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.bio_sci)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.buller)))
         {
-            floors = createFloorNames(1, 5);
+            floors = createFloorNamesFrom(1, 5);
         }
         else if(buildingName.equals(getResources().getString(R.string.dairy_science)))
         {
-            floors = createFloorNames(0, 2);
+            floors = createFloorNamesFrom(0, 2);
         }
         else if(buildingName.equals(getResources().getString(R.string.drake_centre)))
         {
-            floors = createFloorNames(1, 6);
+            floors = createFloorNamesFrom(1, 6);
         }
         else if(buildingName.equals(getResources().getString(R.string.duff_roblin)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.education)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.eitc_e1)))
         {
-            floors = createFloorNames(2, 5);
+            floors = createFloorNamesFrom(2, 5);
         }
         else if(buildingName.equals(getResources().getString(R.string.eitc_e2)))
         {
-            floors = createFloorNames(1, 6);
+            floors = createFloorNamesFrom(1, 6);
         }
         else if(buildingName.equals(getResources().getString(R.string.eitc_e3)))
         {
-            floors = createFloorNames(1, 6);
+            floors = createFloorNamesFrom(1, 6);
         }
         else if(buildingName.equals(getResources().getString(R.string.elizabeth_dafoe)))
         {
-            floors = createFloorNames(0, 3);
+            floors = createFloorNamesFrom(0, 3);
         }
         else if(buildingName.equals(getResources().getString(R.string.ext_education)))
         {
-            floors = createFloorNames(1, 1);
+            floors = createFloorNamesFrom(1, 1);
         }
         else if(buildingName.equals(getResources().getString(R.string.fac_music)))
         {
-            floors = createFloorNames(1, 3);
+            floors = createFloorNamesFrom(1, 3);
         }
         else if(buildingName.equals(getResources().getString(R.string.fletcher)))
         {
-            floors = createFloorNames(1, 6);
+            floors = createFloorNamesFrom(1, 6);
         }
         else if(buildingName.equals(getResources().getString(R.string.helen_glass)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.human_ecology)))
         {
@@ -321,64 +686,64 @@ public class BuildingLayoutFragment extends Fragment{
         }
         else if(buildingName.equals(getResources().getString(R.string.isbister)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.machray)))
         {
-            floors = createFloorNames(1, 5);
+            floors = createFloorNamesFrom(1, 5);
         }
         else if(buildingName.equals(getResources().getString(R.string.music_annex)))
         {
-            floors = createFloorNames(1, 1);
+            floors = createFloorNamesFrom(1, 1);
         }
         else if(buildingName.equals(getResources().getString(R.string.parker)))
         {
-            floors = createFloorNames(1, 5);
+            floors = createFloorNamesFrom(1, 5);
         }
         else if(buildingName.equals(getResources().getString(R.string.plant_sci)))
         {
-            floors = createFloorNames(0, 3);
+            floors = createFloorNamesFrom(0, 3);
         }
         else if(buildingName.equals(getResources().getString(R.string.robert_schultz)))
         {
-            floors = createFloorNames(1, 1);
+            floors = createFloorNamesFrom(1, 1);
         }
         else if(buildingName.equals(getResources().getString(R.string.robson)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.russel)))
         {
-            floors = createFloorNames(1, 3);
+            floors = createFloorNamesFrom(1, 3);
         }
         else if(buildingName.equals(getResources().getString(R.string.st_johns)))
         {
-            floors = createFloorNames(1, 3);
+            floors = createFloorNamesFrom(1, 3);
         }else if(buildingName.equals(getResources().getString(R.string.st_pauls)))
         {
-            floors = createFloorNames(1, 3);
+            floors = createFloorNamesFrom(1, 3);
         }
         else if(buildingName.equals(getResources().getString(R.string.tier)))
         {
-            floors = createFloorNames(1, 6);
+            floors = createFloorNamesFrom(1, 6);
         }
         else if(buildingName.equals(getResources().getString(R.string.uni_centre)))
         {
-            floors = createFloorNames(1, 5);
+            floors = createFloorNamesFrom(1, 5);
         }
         else if(buildingName.equals(getResources().getString(R.string.uni_college)))
         {
-            floors = createFloorNames(1, 4);
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.wallace)))
         {
-            floors = createFloorNames(1, 5);
+            floors = createFloorNamesFrom(1, 5);
         }
 
         return floors;
     }
 
-    private ArrayList<String> createFloorNames(int start, int end)
+    private ArrayList<String> createFloorNamesFrom(int start, int end)
     {
         ArrayList<String> floors = new ArrayList<>();
 
