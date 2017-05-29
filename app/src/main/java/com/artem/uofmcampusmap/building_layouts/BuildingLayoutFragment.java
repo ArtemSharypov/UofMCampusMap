@@ -178,6 +178,7 @@ public class BuildingLayoutFragment extends Fragment{
         public Fragment getItem(int position) {
             Fragment fragment = null;
 
+            //todo overall improve how images are processed / showed to speed it up
             if(buildingName.equals(getResources().getString(R.string.agr_engineer)))
             {
                 if(position == 0)
@@ -580,9 +581,6 @@ public class BuildingLayoutFragment extends Fragment{
 
         ArrayList<String> buildingFloors = populateFloorNames();
 
-        MainActivity activity = (MainActivity) getActivity();
-        buildingName = activity.getCurrBuilding();
-
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         viewPager.setAdapter(new BuildingFragmentPagerAdapter(getChildFragmentManager(), buildingFloors));
 
@@ -594,15 +592,18 @@ public class BuildingLayoutFragment extends Fragment{
 
     private ArrayList<String> populateFloorNames()
     {
+        MainActivity activity = (MainActivity) getActivity();
+        buildingName = activity.getCurrBuilding();
+
         ArrayList<String> floors = null;
 
         if(buildingName.equals(getResources().getString(R.string.agr_engineer)))
         {
-            floors = createFloorNamesFrom(1, 3);
+            floors = createFloorNamesFrom(1, 2);
         }
         else if(buildingName.equals(getResources().getString(R.string.agriculture)))
         {
-            floors = createFloorNamesFrom(1, 2);
+            floors = createFloorNamesFrom(1, 3);
         }
         else if(buildingName.equals(getResources().getString(R.string.allen)))
         {

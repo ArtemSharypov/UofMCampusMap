@@ -1,6 +1,7 @@
 package com.artem.uofmcampusmap;
 
 import android.content.res.Configuration;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.artem.uofmcampusmap.building_layouts.BuildingLayoutFragment;
+import com.artem.uofmcampusmap.building_layouts.tunnels.Agri_AnimalSci_Tunnel;
+import com.artem.uofmcampusmap.building_layouts.tunnels.Archi2_ExtEduc_Tunnel;
+import com.artem.uofmcampusmap.building_layouts.tunnels.Dafoe_DuffRoblin_UniCollege_Tunnel;
+import com.artem.uofmcampusmap.building_layouts.tunnels.Robson_UniCollege_Tunnel;
+import com.artem.uofmcampusmap.building_layouts.tunnels.Russel_Archi2_Tunnel;
+import com.artem.uofmcampusmap.building_layouts.tunnels.Tier_Artlab_Tunnel;
+import com.artem.uofmcampusmap.building_layouts.tunnels.Wallace_Parker_Tunnel;
 
 public class MainActivity extends AppCompatActivity implements PassRouteData, PassBuildingData{
     private Toolbar toolbar;
@@ -80,10 +88,30 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
             fragmentTransaction.add(R.id.main_frame_layout, mapFragment);
             fragmentTransaction.commit();
         }
+        else
+        {
+            currBuilding = savedInstanceState.getString("currBuilding");
+            startLocation = savedInstanceState.getString("startLocation");
+            destinationLocation = savedInstanceState.getString("destinationLocation");
+        }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("currBuilding", currBuilding);
+        outState.putString("startLocation", startLocation);
+        outState.putString("destinationLocation", destinationLocation);
+    }
+
+
 
     //On click item for items in the nav drawer.
     private void selectDrawerItem(MenuItem menuItem) {
+        FragmentManager fragmentManager;
+        FragmentTransaction fragmentTransaction;
+
         switch(menuItem.getItemId())
         {
             case R.id.campus_map:
@@ -240,6 +268,76 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
             case R.id.wallace:
                 this.currBuilding = getResources().getString(R.string.wallace);
                 switchToBuildingLayouts();
+                break;
+            case R.id.agri_animal_sci:
+                Agri_AnimalSci_Tunnel agri_animalSci_tunnel = new Agri_AnimalSci_Tunnel();
+
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame_layout, agri_animalSci_tunnel);
+                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.archi2_ext_educ:
+                Archi2_ExtEduc_Tunnel archi2_extEduc_tunnel = new Archi2_ExtEduc_Tunnel();
+
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame_layout, archi2_extEduc_tunnel);
+                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.dafoe_duff_roblin_uni_college:
+                Dafoe_DuffRoblin_UniCollege_Tunnel dafoe_duffRoblin_uniCollege_tunnel = new Dafoe_DuffRoblin_UniCollege_Tunnel();
+
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame_layout, dafoe_duffRoblin_uniCollege_tunnel);
+                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.robson_uni_college:
+                Robson_UniCollege_Tunnel robson_uniCollege_tunnel = new Robson_UniCollege_Tunnel();
+
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame_layout, robson_uniCollege_tunnel);
+                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.russel_archi2:
+                Russel_Archi2_Tunnel russel_archi2_tunnel = new Russel_Archi2_Tunnel();
+
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame_layout, russel_archi2_tunnel);
+                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.tier_artlab:
+                Tier_Artlab_Tunnel tier_artlab_tunnel = new Tier_Artlab_Tunnel();
+
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame_layout, tier_artlab_tunnel);
+                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.commit();
+
+                break;
+            case R.id.wallace_parker:
+                Wallace_Parker_Tunnel wallace_parker_tunnel = new Wallace_Parker_Tunnel();
+
+                fragmentManager = getSupportFragmentManager();
+                fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.main_frame_layout, wallace_parker_tunnel);
+                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.commit();
+
                 break;
         }
         menuItem.setChecked(true);
