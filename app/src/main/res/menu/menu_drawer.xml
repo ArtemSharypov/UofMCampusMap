@@ -6,7 +6,7 @@
             android:id="@+id/navigate"
             android:title="@string/navigate"
             android:checked="false"/>
-        ....
+
         <item
             android:id="@+id/campus_map"
             android:title="@string/campus_map"
@@ -47,7 +47,7 @@
                 <item
                     android:id="@+id/artlab"
                     android:checked="false"
-                    android:title="@string/art_lab" />
+                    android:title="@string/artlab" />
 
                 <item
                     android:id="@+id/bio_sci"
@@ -115,11 +115,6 @@
                     android:title="@string/fletcher" />
 
                 <item
-                    android:id="@+id/frank_kennedy"
-                    android:checked="false"
-                    android:title="@string/frank_kennedy" />
-
-                <item
                     android:id="@+id/helen_glass"
                     android:checked="false"
                     android:title="@string/helen_glass" />
@@ -142,7 +137,7 @@
                 <item
                     android:id="@+id/music_annex"
                     android:checked="false"
-                    android:title="@string/music_2" />
+                    android:title="@string/music_annex" />
 
                 <item
                     android:id="@+id/parker"
@@ -168,11 +163,6 @@
                     android:id="@+id/russel"
                     android:checked="false"
                     android:title="@string/russel" />
-
-                <item
-                    android:id="@+id/stanley_paul"
-                    android:checked="false"
-                    android:title="@string/stanley_paul" />
 
                 <item
                     android:id="@+id/st_johns"
@@ -209,9 +199,39 @@
         <item android:title="Tunnel Layouts">
             <menu>
                 <item
-                    android:id="@+id/tunnel_1"
+                    android:id="@+id/agri_animal_sci"
                     android:checked="false"
-                    android:title="Sample Tunnel Name" />
+                    android:title="Agriculture / Animal Science" />
+
+                <item
+                    android:id="@+id/archi2_ext_educ"
+                    android:checked="false"
+                    android:title="Archi2 / Ext Education" />
+
+                <item
+                    android:id="@+id/dafoe_duff_roblin_uni_college"
+                    android:checked="false"
+                    android:title="Dafoe / Duff Roblin / Uni College" />
+
+                <item
+                    android:id="@+id/robson_uni_college"
+                    android:checked="false"
+                    android:title="Uni College / Robson"/>
+
+                <item
+                    android:id="@+id/russel_archi2"
+                    android:checked="false"
+                    android:title="Russel / Architecture 2" />
+
+                <item
+                    android:id="@+id/tier_artlab"
+                    android:checked="false"
+                    android:title="Tier / Artlab" />
+
+                <item
+                    android:id="@+id/wallace_parker"
+                    android:checked="false"
+                    android:title="Wallace / Parker" />
             </menu>
         </item>
     </group>

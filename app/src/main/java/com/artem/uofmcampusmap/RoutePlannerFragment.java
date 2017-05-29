@@ -1,10 +1,9 @@
 package com.artem.uofmcampusmap;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,7 +23,6 @@ public class RoutePlannerFragment extends Fragment {
 
     private Spinner fromBuilding;
     private Spinner toBuilding;
-    private CheckBox preferTunnelsBox;
     private Button cancelButton;
     private Button findRouteButton;
 
@@ -46,8 +44,6 @@ public class RoutePlannerFragment extends Fragment {
 
         toBuilding = (Spinner) view.findViewById(R.id.to_building);
         toBuilding.setAdapter(toBuildingAdapter);
-
-        preferTunnelsBox = (CheckBox) view.findViewById(R.id.prefer_tunnels_check);
 
         cancelButton = (Button) view.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {

@@ -15,7 +15,7 @@
     <string name="animal_sci">Animal Science / Entomology</string>
     <string name="archi_2">Architecture 2</string>
     <string name="armes">Armes</string>
-    <string name="art_lab">Artlab</string>
+    <string name="artlab">Artlab</string>
     <string name="bio_sci">Biological Science</string>
     <string name="buller">Buller</string>
     <string name="dairy_science">Dairy Science</string>
@@ -34,13 +34,12 @@
     <string name="human_ecology">Human Ecology</string>
     <string name="isbister">Isbister</string>
     <string name="machray">Machray</string>
-    <string name="music_2">Music Annex 2</string>
+    <string name="music_annex">Music Annex 2</string>
     <string name="parker">Parker</string>
     <string name="plant_sci">Plant Science</string>
     <string name="robert_schultz">Robert Schultz Theatre</string>
     <string name="robson">Robson</string>
     <string name="russel">Russel</string>
-    <string name="stanley_paul">Stanley Paul Centre</string>
     <string name="st_johns">St.Johns College</string>
     <string name="st_pauls">St.Pauls College</string>
     <string name="tier">Tier</string>
@@ -55,7 +54,7 @@
         <item>@string/animal_sci</item>
         <item>@string/archi_2</item>
         <item>@string/armes</item>
-        <item>@string/art_lab</item>
+        <item>@string/artlab</item>
         <item>@string/bio_sci</item>
         <item>@string/buller</item>
         <item>@string/dairy_science</item>

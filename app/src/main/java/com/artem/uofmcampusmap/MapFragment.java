@@ -3,7 +3,7 @@ package com.artem.uofmcampusmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -154,7 +154,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
+
+        if(mMapView != null)
+            mMapView.onDestroy();
     }
 
     @Override
@@ -206,7 +208,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         googleMap.addMarker(new MarkerOptions().position(armes).title(getResources().getString(R.string.armes)));
 
         LatLng art_lab = new LatLng(49.808568, -97.130191);
-        googleMap.addMarker(new MarkerOptions().position(art_lab).title(getResources().getString(R.string.art_lab)));
+        googleMap.addMarker(new MarkerOptions().position(art_lab).title(getResources().getString(R.string.artlab)));
 
         LatLng bio_sci = new LatLng(49.810222, -97.134779);
         googleMap.addMarker(new MarkerOptions().position(bio_sci).title(getResources().getString(R.string.bio_sci)));
@@ -263,7 +265,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         googleMap.addMarker(new MarkerOptions().position(machray).title(getResources().getString(R.string.machray)));
 
         LatLng music_2 = new LatLng(49.807759, -97.134333);
-        googleMap.addMarker(new MarkerOptions().position(music_2).title(getResources().getString(R.string.music_2)));
+        googleMap.addMarker(new MarkerOptions().position(music_2).title(getResources().getString(R.string.music_annex)));
 
         LatLng parker = new LatLng(49.811239, -97.134531);
         googleMap.addMarker(new MarkerOptions().position(parker).title(getResources().getString(R.string.parker)));
@@ -279,9 +281,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         LatLng russel = new LatLng(49.808051, -97.135293);
         googleMap.addMarker(new MarkerOptions().position(russel).title(getResources().getString(R.string.russel)));
-
-        LatLng stanley_paul = new LatLng(49.807977, -97.134038);
-        googleMap.addMarker(new MarkerOptions().position(stanley_paul).title(getResources().getString(R.string.stanley_paul)));
 
         LatLng st_johns = new LatLng(49.810565, -97.136832);
         googleMap.addMarker(new MarkerOptions().position(st_johns).title(getResources().getString(R.string.st_johns)));

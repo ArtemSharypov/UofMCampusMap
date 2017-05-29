@@ -20,8 +20,10 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/from_title"
-        android:layout_toEndOf="@+id/prefer_tunnel_title"
-        android:layout_toRightOf="@+id/prefer_tunnel_title" />
+        android:layout_toRightOf="@+id/from_title"
+        android:layout_toEndOf="@+id/from_title"
+        android:layout_marginLeft="44dp"
+        android:layout_marginStart="44dp" />
 
     <Spinner
         android:id="@+id/to_building"
@@ -35,34 +37,12 @@
         android:id="@+id/to_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/from_building"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="45dp"
         android:text="To Building"
-        style="@style/RobotoTextViewStyle" />
-
-    <TextView
-        android:id="@+id/prefer_tunnel_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
+        style="@style/RobotoTextViewStyle"
+        android:layout_below="@+id/from_building"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="130dp"
-        android:text="Prefer Tunnels?"
-        style="@style/RobotoTextViewStyle"/>
-
-    <CheckBox
-        android:id="@+id/prefer_tunnels_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/prefer_tunnel_title"
-        android:layout_alignBottom="@+id/prefer_tunnel_title"
-        android:layout_toRightOf="@+id/prefer_tunnel_title"
-        android:layout_toEndOf="@+id/prefer_tunnel_title"
-        android:layout_marginLeft="82dp"
-        android:layout_marginStart="82dp" />
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:layout_width="match_parent"
