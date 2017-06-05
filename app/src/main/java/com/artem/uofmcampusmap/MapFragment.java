@@ -36,7 +36,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private ImageView nextInstruction;
     private TextView instructionsTextView;
     private LinearLayout instructionsLinLayout;
-    private MapGraph campusMap;
+    //private MapGraph campusMap;
+    private MapNavigationMesh campusMap;
     private String startLocation;
     private String destinationLocation;
     private Route route;
@@ -48,7 +49,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        campusMap = new MapGraph();
+        //campusMap = new MapGraph();
+        campusMap = new MapNavigationMesh();
         routeLines = new ArrayList<>();
         currInstructionPos = 0;
 
