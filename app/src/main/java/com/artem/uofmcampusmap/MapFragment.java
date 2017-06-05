@@ -36,7 +36,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private ImageView nextInstruction;
     private TextView instructionsTextView;
     private LinearLayout instructionsLinLayout;
-    //private MapGraph campusMap;
     private MapNavigationMesh campusMap;
     private String startLocation;
     private String destinationLocation;
@@ -49,7 +48,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        //campusMap = new MapGraph();
         campusMap = new MapNavigationMesh();
         routeLines = new ArrayList<>();
         currInstructionPos = 0;
@@ -122,6 +120,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         LatLng endPoint;
         Edge currInstruction;
         PolylineOptions currLine;
+        Vertex source;
+        Vertex destination;
 
         if(route != null && route.getRouteLength() > 0 && googleMap != null)
         {
@@ -129,13 +129,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
             while(currInstruction != null)
             {
-                startPoint = (currInstruction.getSource()).getPosition();
-                endPoint = (currInstruction.getDestination()).getPosition();
-                currLine = new PolylineOptions().add(startPoint)
-                        .add(endPoint)
-                        .color(Color.RED);
+                source = currInstruction.getSource();
+                destination = currInstruction.getDestination();
 
-                routeLines.add(googleMap.addPolyline(currLine));
+                if(source instanceof OutdoorVertex && destination instanceof OutdoorVertex)
+                {
+                    startPoint = ((OutdoorVertex) source).getPosition();
+                    endPoint = ((OutdoorVertex) destination).getPosition();
+                    currLine = new PolylineOptions().add(startPoint)
+                            .add(endPoint)
+                            .color(Color.RED);
+
+                    routeLines.add(googleMap.addPolyline(currLine));
+                }
+
                 currInstruction = route.getNextInstruction();
             }
         }

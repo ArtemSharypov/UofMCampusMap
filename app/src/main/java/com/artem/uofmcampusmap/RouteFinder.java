@@ -22,9 +22,17 @@ public class RouteFinder {
 
         if(start != null && end != null)
         {
-            source = new Vertex(start);
+            if(start instanceof IndoorVertex)
+                source = new IndoorVertex((IndoorVertex) start);
+            else
+                source = new OutdoorVertex((OutdoorVertex) start);
+
+            if(end instanceof IndoorVertex)
+                destination = new IndoorVertex((IndoorVertex) end);
+            else
+                destination = new OutdoorVertex((OutdoorVertex) end);
+
             source.setG(0);
-            destination = new Vertex(end);
             closedList = new ArrayList<>();
             openList = new ArrayList<>();
 
@@ -107,7 +115,11 @@ public class RouteFinder {
 
             for(Vertex currConnection: connections)
             {
-                childVertex = new Vertex(currConnection);
+                if(currConnection instanceof IndoorVertex)
+                    childVertex = new IndoorVertex((IndoorVertex) currConnection);
+                else
+                    childVertex = new OutdoorVertex((OutdoorVertex) currConnection);
+
                 childVertex.setParent(parent);
                 childVertex.setG(parent.getG() + parent.getDistanceFrom(childVertex));
                 childVertex.calculateH(destination);
