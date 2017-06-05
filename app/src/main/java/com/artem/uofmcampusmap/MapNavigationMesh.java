@@ -215,11 +215,12 @@ public class MapNavigationMesh
         WalkableZone education_north_ent = new WalkableZone(new LatLng(49.809193, -97.136623), new LatLng(49.809237, -97.136483), new LatLng(49.809045, -97.136514), new LatLng(49.809091, -97.136383));
         education_north_ent.setConnectors(null, new LatLng(49.809142, -97.136583), new LatLng(49.809199, -97.136452), null);
 
-        addEntrance("Education", education_north_ent.getLeftMiddle());
+        //todo turn this on later once inside navigation works
+        //addEntrance("Education", education_north_ent.getLeftMiddle());
 
         //leftMid
         WalkableZone eitc_e1_east_ent = new WalkableZone(new LatLng(49.808477, -97.133103), new LatLng(49.808586, -97.132744), new LatLng(49.808452, -97.133072), new LatLng(49.808553, -97.132706));
-        eitc_e1_east_ent.setConnectors(new LatLng(49.808571, -97.132774), new LatLng(49.808453, -97.133077), null, new LatLng(49.808453, -97.133077));
+        eitc_e1_east_ent.setConnectors(new LatLng(49.808571, -97.132774), new LatLng(49.808453, -97.133077), null, new LatLng(49.808541, -97.132743));
 
         addEntrance("EITC E1", eitc_e1_east_ent.getLeftMiddle());
 
@@ -991,8 +992,8 @@ public class MapNavigationMesh
         dr.setLeftMiddle(dq.getRightMiddle());
 
         WalkableZone ds = new WalkableZone(new LatLng(49.811623, -97.135949), new LatLng(49.811559, -97.135283), new LatLng(49.811545, -97.135899), new LatLng(49.811501, -97.135308));
-        ds.setBottomMiddle(dr.getTopMiddle());
         ds.setTopMiddle(wallace.getBottomMiddle());
+        ds.setBottomMiddle(dr.getTopMiddle());
         ds.setRightMiddle(new LatLng(49.811553, -97.135272));
 
         WalkableZone dt = new WalkableZone(new LatLng(49.811662, -97.135257), new LatLng(49.811695, -97.135034), new LatLng(49.811542, -97.135286), new LatLng(49.811622, -97.135047));
@@ -1075,7 +1076,5 @@ public class MapNavigationMesh
         ej.setTopMiddle(ei.getBottomMiddle());
         ej.setBottomMiddle(bv.getTopMiddle());
         ej.setRightMiddle(helen_glass.getLeftMiddle());
-
-        // = new WalkableZone(new LatLng(), new LatLng(), new LatLng(), new LatLng());
     }
 }
