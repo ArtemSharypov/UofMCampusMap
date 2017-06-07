@@ -5,8 +5,8 @@ package com.artem.uofmcampusmap;
  */
 
 public class XYPoint {
-    private double x;
-    private double y;
+    private double x; //West/East distance from the 0 point, in METRES
+    private double y; //North/South distance from the 0 point, in METRES
 
     public XYPoint(double x, double y)
     {
@@ -19,7 +19,7 @@ public class XYPoint {
         double dist = 0;
 
         double tempX = Math.abs(this.x - otherPoint.getX());
-        double tempY = Math.abs(this.y = otherPoint.getY());
+        double tempY = Math.abs(this.y - otherPoint.getY());
 
         dist = Math.exp(tempX) + Math.exp(tempY);
         dist = Math.sqrt(dist);
