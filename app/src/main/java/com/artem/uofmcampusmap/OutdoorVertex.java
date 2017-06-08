@@ -10,7 +10,7 @@ public class OutdoorVertex extends Vertex
 {
     private LatLng position;
 
-    OutdoorVertex(LatLng pos, XYPoint xyPos)
+    OutdoorVertex(LatLng pos, XYPos xyPos)
     {
         super(xyPos);
         this.position = pos;

@@ -7,14 +7,14 @@ import java.util.ArrayList;
  */
 
 public abstract class Vertex {
-    private XYPoint xyPos;
+    private XYPos xyPos;
     private ArrayList<Vertex> connections;
     private double g; //cost from the parent vertex
     private double h; //estimated cost from this to the destination
     private double f; //total cost (g+h)
     private Vertex parent;
 
-    public Vertex(XYPoint xyPos) {
+    public Vertex(XYPos xyPos) {
         this.xyPos = xyPos;
         connections = new ArrayList<>();
     }
@@ -28,7 +28,7 @@ public abstract class Vertex {
         connections.add(vertexConnection);
     }
 
-    public XYPoint getXYPos() {
+    public XYPos getXYPos() {
         return xyPos;
     }
 
@@ -70,7 +70,7 @@ public abstract class Vertex {
     public boolean equals(Vertex vertex)
     {
         boolean areEqual = false;
-        XYPoint posToCompare;
+        XYPos posToCompare;
 
         if(vertex != null)
         {

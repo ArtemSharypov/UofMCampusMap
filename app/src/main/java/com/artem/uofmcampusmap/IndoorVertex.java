@@ -11,7 +11,7 @@ public class IndoorVertex extends Vertex
     private String id;
     //todo add variables for elevators / stairs that are used for getting distance from when they are on different floors
 
-    IndoorVertex(String buildingName, String id, XYPoint xyPos, int floor)
+    IndoorVertex(String buildingName, String id, XYPos xyPos, int floor)
     {
         super(xyPos);
         this.building = buildingName;

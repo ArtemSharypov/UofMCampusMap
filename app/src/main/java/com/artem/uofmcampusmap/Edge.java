@@ -7,7 +7,7 @@ package com.artem.uofmcampusmap;
 public class Edge {
     private Vertex source;
     private Vertex destination;
-    private double weight;
+    private double weight; //todo switch to integer potentially?
 
     public Edge(Vertex source, Vertex destination)
     {
@@ -37,6 +37,6 @@ public class Edge {
     //todo implement this fully
     public String getInstructions()
     {
-        return "" + weight;
+        return "" + weight + "m";
     }
 }
