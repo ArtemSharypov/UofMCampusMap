@@ -5,9 +5,9 @@ package com.artem.uofmcampusmap;
  */
 
 public class StairsElevatorVertex extends IndoorVertex {
-    public StairsElevatorVertex(String buildingName, String id, XYPos xyPos, int floor)
+    public StairsElevatorVertex(String buildingName, XYPos xyPos, int floor)
     {
-        super(buildingName, id, xyPos, floor);
+        super(buildingName, xyPos, floor);
     }
 
     @Override
