@@ -38,7 +38,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private LinearLayout instructionsLinLayout;
     private MapNavigationMesh campusMap;
     private String startLocation;
+    private String startRoom;
     private String destinationLocation;
+    private String destinationRoom;
     private Route route;
     private ArrayList<Polyline> routeLines;
     private int currInstructionPos;
@@ -83,11 +85,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         MainActivity activity = (MainActivity) getActivity();
         startLocation = activity.getStartLocation();
+        startRoom = activity.getStartRoom();
         destinationLocation = activity.getDestinationLocation();
+        destinationRoom = activity.getDestinationRoom();
 
-        if(!startLocation.equals(" ") && !destinationLocation.equals(" "))
+        if(!startLocation.equals("") && !destinationLocation.equals(""))
         {
-            route = campusMap.findRoute(startLocation, destinationLocation);
+            route = campusMap.findRoute(startLocation, startRoom, destinationLocation, destinationRoom);
 
             if(route != null)
             {

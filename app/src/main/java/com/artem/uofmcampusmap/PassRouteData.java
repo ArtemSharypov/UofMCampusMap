@@ -8,7 +8,11 @@ public interface PassRouteData {
 
     void passStartLocation(String source);
     String getStartLocation();
+    void passStartRoom(String room);
+    String getStartRoom();
     void passDestinationLocation(String destination);
     String getDestinationLocation();
+    void passDestinationRoom(String room);
+    String getDestinationRoom();
 
 }

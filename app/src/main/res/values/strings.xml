@@ -84,4 +84,13 @@
         <item>@string/wallace</item>
     </string-array>
 
+    <string-array name="armes_rooms">
+        <item>111</item>
+        <item>115</item>
+        <item>200</item>
+        <item>201</item>
+        <item>204</item>
+        <item>205</item>
+        <item>208</item>
+    </string-array>
 </resources>

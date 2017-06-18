@@ -1,5 +1,6 @@
 package com.artem.uofmcampusmap;
 
+import com.artem.uofmcampusmap.buildings.armes.ArmesIndoorConnections;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class MapNavigationMesh
 {
     private ArrayList<WalkableZone> walkableZones; //todo implement this with zone sections
     private HashMap<String, ArrayList<Vertex>> startEndLocations;
+    private ArmesIndoorConnections armesIndoorConnections;
 
     public MapNavigationMesh()
     {
@@ -37,7 +39,39 @@ public class MapNavigationMesh
         startEndLocations.put(keyName, entrancesList);
     }
 
-    public Route findRoute(String startLocation, String endLocation)
+    //So find route will work like
+    //Initial Call to find a route
+    //Initial call then leads to finding the best entrances/exits between the two places
+    //Then if the start is indoor, find a path from the indoor path to the first exit
+        //the indoor routing will start at the start room, and then keep going down until it reaches the required level for exit
+    //then there is a call from the exit, to the second destination entrance
+    //if the destination is within the building it will do a call to find a path there
+        //again the indoor routing will be from the entrance, but then go up level by level until a path is made
+
+    //for indoor level navigation, it will just call the same methods. It will have the start location, and return an end location
+    //that will be added into the route
+    //also will have a method for them that will take a stairs vertex, then find the stairs vertex for the destination floor and connect
+    //them and then return the ending stairs vertex that can then be used
+
+    private Route navigateIndoors(IndoorVertex startLocation, IndoorVertex destinationLocation)
+    {
+        //Check if theyre on the same floor
+        //if not then make a path from startLocation to the stairs on that level
+            //then from the stairs from the first level, connect them to the stairs on the destination level
+            //then make a path from the stairs on destination level to the destination location
+        //else if they are on the same level just make a path from destination to the end
+
+        //then return the route that is from startLocation to the destinationLocation
+    }
+
+    //Find a vertex that connects to the stairs that is to the desired floor
+    private IndoorVertex findStairsConnectionFrom(IndoorVertex startStairs, int destinationFloor)
+    {
+        //go through each connection in startstairs until it has the destination floor
+        //else return null
+    }
+
+    public Route findRoute(String startLocation, String startRoom, String endLocation, String endRoom)
     {
         Route route = null;
         Route prevRoute;
@@ -1167,5 +1201,8 @@ public class MapNavigationMesh
         ej.setTop(ei.getBottom());
         ej.setBottom(bv.getTop());
         ej.setRight(helen_glass.getLeft());
+
+        armesIndoorConnections = new ArmesIndoorConnections();
+        //todo add connections to indoor armes
     }
 }

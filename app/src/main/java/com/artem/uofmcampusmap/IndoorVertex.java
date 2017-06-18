@@ -27,18 +27,12 @@ public class IndoorVertex extends Vertex
 
 
     @Override
-    public double getDistanceFrom(Vertex vertex) {
+    public double getDistanceFrom(Vertex destinationVertex) {
         double distance = 0;
 
-        if(vertex instanceof IndoorVertex)
+        if(destinationVertex instanceof IndoorVertex)
         {
-            //if they are diff buildings, then go to the lowest floor that has an exit unless they have a connection
-            //then if lowest floor already use the super distance from
-            //check if they are on diff floors, if so then use the reference to the closest stair/elevator to base distance on
-        }
-        else
-        {
-            distance = super.getDistanceFrom(vertex);
+            distance = getXYPos().getDistanceFrom(destinationVertex.getXYPos());
         }
 
         return distance;

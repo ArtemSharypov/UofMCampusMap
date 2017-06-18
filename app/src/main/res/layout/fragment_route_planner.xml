@@ -6,43 +6,99 @@
 
     <TextView
         android:id="@+id/from_title"
+        style="@style/RobotoTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="44dp"
-        android:text="From Building"
-        style="@style/RobotoTextViewStyle" />
+        android:text="From" />
 
     <Spinner
         android:id="@+id/from_building"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/from_title"
-        android:layout_toRightOf="@+id/from_title"
-        android:layout_toEndOf="@+id/from_title"
-        android:layout_marginLeft="44dp"
-        android:layout_marginStart="44dp" />
+        android:layout_below="@+id/from_building_tv"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Spinner
         android:id="@+id/to_building"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/to_title"
-        android:layout_alignLeft="@+id/from_building"
-        android:layout_alignStart="@+id/from_building" />
+        android:layout_below="@+id/to_building_tv"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/to_title"
+        style="@style/RobotoTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:text="To Building"
-        style="@style/RobotoTextViewStyle"
-        android:layout_below="@+id/from_building"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/from_building"
+        android:layout_marginTop="45dp"
+        android:text="To" />
+
+    <TextView
+        android:id="@+id/from_building_tv"
+        style="@style/RobotoTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/from_title"
+        android:text="Building" />
+
+    <TextView
+        android:id="@+id/from_room_tv"
+        style="@style/RobotoTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Room"
+        android:layout_above="@+id/from_building"
+        android:layout_toRightOf="@+id/from_building"
+        android:layout_toEndOf="@+id/from_building"
+        android:layout_marginLeft="62dp"
+        android:layout_marginStart="62dp" />
+
+    <Spinner
+        android:id="@+id/from_room"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/from_room_tv"
+        android:layout_alignStart="@+id/from_room_tv"
+        android:layout_below="@+id/from_room_tv" />
+
+    <TextView
+        android:id="@+id/to_building_tv"
+        style="@style/RobotoTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/from_building_tv"
+        android:layout_alignRight="@+id/from_building_tv"
+        android:layout_below="@+id/to_title"
+        android:text="Building" />
+
+    <TextView
+        android:id="@+id/to_room_tv"
+        style="@style/RobotoTextViewStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/to_building"
+        android:layout_alignLeft="@+id/from_room"
+        android:layout_alignStart="@+id/from_room"
+        android:text="Room" />
+
+    <Spinner
+        android:id="@+id/to_room"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/to_room_tv"
+        android:layout_alignStart="@+id/to_room_tv"
+        android:layout_below="@+id/to_room_tv" />
 
     <LinearLayout
         android:layout_width="match_parent"

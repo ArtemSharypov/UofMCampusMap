@@ -1,7 +1,6 @@
 package com.artem.uofmcampusmap.buildings.armes;
 
 import com.artem.uofmcampusmap.IndoorVertex;
-import com.artem.uofmcampusmap.StairsElevatorVertex;
 import com.artem.uofmcampusmap.Vertex;
 import com.artem.uofmcampusmap.XYPos;
 
@@ -39,7 +38,7 @@ public class ArmesIndoorConnections {
         IndoorVertex _12_125 = new IndoorVertex(building, new XYPos(-54.8, 164.5), 2);
         IndoorVertex _131_112 = new IndoorVertex(building, new XYPos(-18.5, 160.7), 2); //room 208
         IndoorVertex _162_112 = new IndoorVertex(building, new XYPos(-8.9, 160.7), 2); //room 208
-        StairsElevatorVertex _156_125 = new StairsElevatorVertex(building, new XYPos(-10.9 , 164.5), 2); //right stairs
+        IndoorVertex _156_125 = new IndoorVertex(building, new XYPos(-10.9 , 164.5), 2); //right stairs
         IndoorVertex _162_118 = new IndoorVertex(building, new XYPos(-8.9, 162.6), 2);
         IndoorVertex _131_118 = new IndoorVertex(building, new XYPos(-18.5, 162.6), 2);
         IndoorVertex _12_187 = new IndoorVertex(building, new XYPos(-54.8, 183.6), 2);
@@ -48,7 +47,7 @@ public class ArmesIndoorConnections {
         IndoorVertex _31_118 = new IndoorVertex(building, new XYPos(-49, 162.6), 2);
         IndoorVertex _31_51 = new IndoorVertex(building, new XYPos(-49, 142), 2);
         IndoorVertex _31_137 = new IndoorVertex(building, new XYPos(-49, 168.4), 2);//rm 201
-        StairsElevatorVertex _37_126 = new StairsElevatorVertex(building, new XYPos(-47, 164.9), 2); //left stairs
+        IndoorVertex _37_126 = new IndoorVertex(building, new XYPos(-47, 164.9), 2); //left stairs
         IndoorVertex _50_51 = new IndoorVertex(building, new XYPos(-43.2, 142), 2);
         IndoorVertex _31_112 = new IndoorVertex(building, new XYPos(-49, 160.7), 2); //rm 200
         IndoorVertex _50_137 = new IndoorVertex(building, new XYPos(-43.2, 168.4), 2); //rm 201
@@ -145,7 +144,7 @@ public class ArmesIndoorConnections {
         IndoorVertex _71_120 = new IndoorVertex(building, new XYPos(), 1);
         IndoorVertex _71_95 = new IndoorVertex(building, new XYPos(), 1); //rm 204
         IndoorVertex _56_132 = new IndoorVertex(building, new XYPos(), 1);
-        StairsElevatorVertex _56_126 = new StairsElevatorVertex(building, new XYPos(), 1); //left stairs
+        IndoorVertex _56_126 = new IndoorVertex(building, new XYPos(), 1); //left stairs
         IndoorVertex _56_120 = new IndoorVertex(building, new XYPos(), 1);
         IndoorVertex _99_120 = new IndoorVertex(building, new XYPos(), 1);
         IndoorVertex _87_156 = new IndoorVertex(building, new XYPos(), 1); //rm 205
@@ -154,7 +153,7 @@ public class ArmesIndoorConnections {
         IndoorVertex _93_138 = new IndoorVertex(building, new XYPos(), 1); //rm 115
         IndoorVertex _130_156 = new IndoorVertex(building, new XYPos(), 1); //rm 111
         IndoorVertex _120_138 = new IndoorVertex(building, new XYPos(), 1); //rm 115
-        StairsElevatorVertex _130_126 = new StairsElevatorVertex(building, new XYPos(), 1); //right stairs
+        IndoorVertex _130_126 = new IndoorVertex(building, new XYPos(), 1); //right stairs
         IndoorVertex _130_132 = new IndoorVertex(building, new XYPos(), 1);
         IndoorVertex _163_95 = new IndoorVertex(building, new XYPos(), 1); //rm 208
 
