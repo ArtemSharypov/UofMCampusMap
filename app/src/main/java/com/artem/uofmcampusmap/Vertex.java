@@ -1,37 +1,26 @@
 package com.artem.uofmcampusmap;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 
 /**
  * Created by Artem on 2017-04-28.
  */
 
-public class Vertex {
-    private String name;
-    private LatLng position;
+public abstract class Vertex {
+    private XYPos xyPos;
     private ArrayList<Vertex> connections;
     private double g; //cost from the parent vertex
     private double h; //estimated cost from this to the destination
     private double f; //total cost (g+h)
     private Vertex parent;
 
-    public Vertex(String name, LatLng position) {
-        this.name = name;
-        this.position = position;
-        connections = new ArrayList<>();
-    }
-
-    public Vertex(LatLng position) {
-        this.name = "";
-        this.position = position;
+    public Vertex(XYPos xyPos) {
+        this.xyPos = xyPos;
         connections = new ArrayList<>();
     }
 
     public Vertex(Vertex vertexToCopy) {
-        this.name = vertexToCopy.getName();
-        this.position = vertexToCopy.getPosition();
+        this.xyPos = vertexToCopy.getXYPos();
         connections = new ArrayList<>(vertexToCopy.getConnections());
     }
 
@@ -39,18 +28,8 @@ public class Vertex {
         connections.add(vertexConnection);
     }
 
-    public boolean hasConnection(Vertex vertex)
-    {
-        boolean connects = false;
-
-        for (Vertex currConnection : connections) {
-            if (currConnection.equals(vertex)) {
-                connects = true;
-                break;
-            }
-        }
-
-        return connects;
+    public XYPos getXYPos() {
+        return xyPos;
     }
 
     public void calculateF() {
@@ -65,33 +44,15 @@ public class Vertex {
         this.g = g;
     }
 
-    public double getH() {
-        return h;
-    }
-
     public void calculateH(Vertex endPoint) {
         this.h = getDistanceFrom(endPoint);
     }
 
-    //todo make it a valid distance in feet, but not important since stuff will be changed to include inside buildings
-    //todo fix it properly
     public double getDistanceFrom(Vertex vertex)
     {
-        double distance;
-        double latDistance;
-        double longDistance;
-
-        latDistance = Math.abs(Math.abs(vertex.getPosition().latitude) - Math.abs(position.latitude));
-        longDistance = Math.abs(Math.abs(vertex.getPosition().longitude) - Math.abs(position.longitude));
-        //distance = Math.sqrt(Math.exp(latDistance) + Math.exp(longDistance));
-        distance = latDistance + longDistance;
+        double distance = xyPos.getDistanceFrom(vertex.getXYPos());
 
         return distance;
-    }
-
-    public void setH(double h)
-    {
-        this.h = h;
     }
 
     public double getF() {
@@ -109,13 +70,13 @@ public class Vertex {
     public boolean equals(Vertex vertex)
     {
         boolean areEqual = false;
-        LatLng posToCompare;
+        XYPos posToCompare;
 
         if(vertex != null)
         {
-            posToCompare = vertex.getPosition();
+            posToCompare = vertex.getXYPos();
 
-            if(position.latitude == posToCompare.latitude && position.longitude == posToCompare.longitude)
+            if(xyPos.getX() == posToCompare.getX() && xyPos.getY() == posToCompare.getY())
             {
                 areEqual = true;
             }
@@ -152,15 +113,4 @@ public class Vertex {
         return connections;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LatLng getPosition() {
-        return position;
-    }
 }

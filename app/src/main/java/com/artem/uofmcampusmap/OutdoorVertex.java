@@ -6,10 +6,23 @@ import com.google.android.gms.maps.model.LatLng;
  * Created by Artem on 2017-05-29.
  */
 
-public class OutdoorVertex extends Vertex {
+public class OutdoorVertex extends Vertex
+{
+    private LatLng position;
 
-    OutdoorVertex(String name, LatLng location)
+    OutdoorVertex(LatLng pos, XYPos xyPos)
     {
-        super(name, location);
+        super(xyPos);
+        this.position = pos;
+    }
+
+    OutdoorVertex(OutdoorVertex vertex)
+    {
+        super(vertex);
+        this.position = vertex.getPosition();
+    }
+
+    public LatLng getPosition() {
+        return position;
     }
 }

@@ -1,7 +1,6 @@
 package com.artem.uofmcampusmap;
 
 import android.content.res.Configuration;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -17,14 +16,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.artem.uofmcampusmap.building_layouts.BuildingLayoutFragment;
-import com.artem.uofmcampusmap.building_layouts.tunnels.Agri_AnimalSci_Tunnel;
-import com.artem.uofmcampusmap.building_layouts.tunnels.Archi2_ExtEduc_Tunnel;
-import com.artem.uofmcampusmap.building_layouts.tunnels.Dafoe_DuffRoblin_UniCollege_Tunnel;
-import com.artem.uofmcampusmap.building_layouts.tunnels.Robson_UniCollege_Tunnel;
-import com.artem.uofmcampusmap.building_layouts.tunnels.Russel_Archi2_Tunnel;
-import com.artem.uofmcampusmap.building_layouts.tunnels.Tier_Artlab_Tunnel;
-import com.artem.uofmcampusmap.building_layouts.tunnels.Wallace_Parker_Tunnel;
+import com.artem.uofmcampusmap.buildings.BuildingLayoutFragment;
+import com.artem.uofmcampusmap.buildings.tunnels.Agri_AnimalSci_Tunnel;
+import com.artem.uofmcampusmap.buildings.tunnels.Archi2_ExtEduc_Tunnel;
+import com.artem.uofmcampusmap.buildings.tunnels.Dafoe_DuffRoblin_UniCollege_Tunnel;
+import com.artem.uofmcampusmap.buildings.tunnels.Robson_UniCollege_Tunnel;
+import com.artem.uofmcampusmap.buildings.tunnels.Russel_Archi2_Tunnel;
+import com.artem.uofmcampusmap.buildings.tunnels.Tier_Artlab_Tunnel;
+import com.artem.uofmcampusmap.buildings.tunnels.Wallace_Parker_Tunnel;
 
 public class MainActivity extends AppCompatActivity implements PassRouteData, PassBuildingData{
     private Toolbar toolbar;

@@ -9,174 +9,170 @@ import com.google.android.gms.maps.model.LatLng;
 public class WalkableZone
 {
     //Used to define the shape of the zone, any can be null
-    private Vertex topLeftCorner;
-    private Vertex topRightCorner;
-    private Vertex bottomLeftCorner;
-    private Vertex bottomRightCorner;
+    private LatLng topLeftCorner;
+    private LatLng topRightCorner;
+    private LatLng bottomLeftCorner;
+    private LatLng bottomRightCorner;
 
     //Used as part of the connections
-    private Vertex topMiddle;
-    private Vertex leftMiddle;
-    private Vertex rightMiddle;
-    private Vertex bottomMiddle;
+    private Vertex top;
+    private Vertex left;
+    private Vertex right;
+    private Vertex bottom;
 
     public WalkableZone(LatLng topLeft, LatLng topRight, LatLng bottomLeft, LatLng bottomRight)
     {
-        this.topLeftCorner = new Vertex(topLeft);
-        this.topRightCorner = new Vertex(topRight);
-        this.bottomLeftCorner = new Vertex(bottomLeft);
-        this.bottomRightCorner = new Vertex(bottomRight);
-    }
-
-    public void setConnectors(LatLng topMiddle, LatLng leftMiddle, LatLng rightMiddle, LatLng bottomMiddle)
-    {
-        if(topMiddle != null)
-            this.topMiddle = new Vertex(topMiddle);
-
-        if(leftMiddle != null)
-            this.leftMiddle = new Vertex(leftMiddle);
-
-        if(rightMiddle != null)
-            this.rightMiddle = new Vertex(rightMiddle);
-
-        if(bottomMiddle != null)
-            this.bottomMiddle = new Vertex(bottomMiddle);
-
-        topConnections();
-        leftConnections();
-        rightConnections();
-        bottomConnections();
+        this.topLeftCorner = topLeft;
+        this.topRightCorner = topRight;
+        this.bottomLeftCorner = bottomLeft;
+        this.bottomRightCorner = bottomRight;
     }
 
     private void topConnections()
     {
-        connectToTop(this.leftMiddle);
-        connectToTop(this.rightMiddle);
-        connectToTop(this.bottomMiddle);
+        connectToTop(this.left);
+        connectToTop(this.right);
+        connectToTop(this.bottom);
     }
 
     private void leftConnections()
     {
-        connectToLeft(this.topMiddle);
-        connectToLeft(this.rightMiddle);
-        connectToLeft(this.bottomMiddle);
+        connectToLeft(this.top);
+        connectToLeft(this.right);
+        connectToLeft(this.bottom);
     }
 
     private void rightConnections()
     {
-        connectToRight(this.topMiddle);
-        connectToRight(this.leftMiddle);
-        connectToRight(this.bottomMiddle);
+        connectToRight(this.top);
+        connectToRight(this.left);
+        connectToRight(this.bottom);
     }
 
     private void bottomConnections()
     {
-        connectToBottom(this.topMiddle);
-        connectToBottom(this.leftMiddle);
-        connectToBottom(this.rightMiddle);
+        connectToBottom(this.top);
+        connectToBottom(this.left);
+        connectToBottom(this.right);
     }
 
     private void connectToRight(Vertex vertexToConnect)
     {
-        if(vertexToConnect != null && rightMiddle != null)
+        if(vertexToConnect != null && right != null)
         {
-            vertexToConnect.addConnection(rightMiddle);
-            rightMiddle.addConnection(vertexToConnect);
+            vertexToConnect.addConnection(right);
+            right.addConnection(vertexToConnect);
         }
     }
 
     private void connectToTop(Vertex vertexToConnect)
     {
-        if(vertexToConnect != null && topMiddle != null)
+        if(vertexToConnect != null && top != null)
         {
-            vertexToConnect.addConnection(topMiddle);
-            topMiddle.addConnection(vertexToConnect);
+            vertexToConnect.addConnection(top);
+            top.addConnection(vertexToConnect);
         }
     }
 
     private void connectToLeft(Vertex vertexToConnect)
     {
-        if(vertexToConnect != null && leftMiddle != null)
+        if(vertexToConnect != null && left != null)
         {
-            vertexToConnect.addConnection(leftMiddle);
-            leftMiddle.addConnection(vertexToConnect);
+            vertexToConnect.addConnection(left);
+            left.addConnection(vertexToConnect);
         }
     }
 
     private void connectToBottom(Vertex vertexToConnect)
     {
-        if(vertexToConnect != null && bottomMiddle != null)
+        if(vertexToConnect != null && bottom != null)
         {
-            vertexToConnect.addConnection(bottomMiddle);
-            bottomMiddle.addConnection(vertexToConnect);
+            vertexToConnect.addConnection(bottom);
+            bottom.addConnection(vertexToConnect);
         }
     }
 
-    public void setTopMiddle(Vertex topMiddle) {
-        this.topMiddle = topMiddle;
+    public void setTop(Vertex top) {
+        this.top = top;
         topConnections();
     }
 
-    public void setTopMiddle(LatLng topMiddle) {
-        if(topMiddle != null)
+    public void setTop(LatLng top, XYPos xyPos) {
+        if(top != null)
         {
-            this.topMiddle = new Vertex(topMiddle);
+            this.top = new OutdoorVertex(top, xyPos);
             topConnections();
         }
     }
 
-    public void setLeftMiddle(Vertex leftMiddle) {
-        this.leftMiddle = leftMiddle;
+    public void setLeft(Vertex left) {
+        this.left = left;
         leftConnections();
     }
 
-    public void setLeftMiddle(LatLng leftMiddle)
+    public void setLeft(LatLng pos, XYPos xyPos)
     {
-        if(leftMiddle != null) {
-            this.leftMiddle = new Vertex(leftMiddle);
+        if(pos != null) {
+            this.left = new OutdoorVertex(pos, xyPos);
             leftConnections();
         }
     }
 
-    public void setRightMiddle(Vertex rightMiddle) {
-        this.rightMiddle = rightMiddle;
+    public void setRight(Vertex right) {
+        this.right = right;
         rightConnections();
     }
 
-    public void setRightMiddle(LatLng rightMiddle) {
-        if(rightMiddle != null)
+    public void setRight(LatLng pos, XYPos xyPos) {
+        if(pos != null)
         {
-            this.rightMiddle = new Vertex(rightMiddle);
+            this.right = new OutdoorVertex(pos, xyPos);
             rightConnections();
         }
     }
 
-    public void setBottomMiddle(Vertex bottomMiddle) {
-        this.bottomMiddle = bottomMiddle;
+    public void setBottom(Vertex bottom) {
+        this.bottom = bottom;
         bottomConnections();
     }
 
-    public void setBottomMiddle(LatLng bottomMiddle) {
-        if(bottomMiddle != null)
+    public void setBottom(LatLng pos, XYPos xyPos) {
+        if(pos != null)
         {
-            this.bottomMiddle = new Vertex(bottomMiddle);
+            this.bottom = new OutdoorVertex(pos, xyPos);
             bottomConnections();
         }
     }
 
-    public Vertex getTopMiddle() {
-        return topMiddle;
+    public Vertex getTop() {
+        return top;
     }
 
-    public Vertex getLeftMiddle() {
-        return leftMiddle;
+    public Vertex getLeft() {
+        return left;
     }
 
-    public Vertex getRightMiddle() {
-        return rightMiddle;
+    public Vertex getRight() {
+        return right;
     }
 
-    public Vertex getBottomMiddle() {
-        return bottomMiddle;
+    public Vertex getBottom() {
+        return bottom;
+    }
+
+    public LatLng getTopLeftCorner() {
+        return topLeftCorner;
+    }
+
+    public LatLng getTopRightCorner() {
+        return topRightCorner;
+    }
+
+    public LatLng getBottomLeftCorner() {
+        return bottomLeftCorner;
+    }
+
+    public LatLng getBottomRightCorner() {
+        return bottomRightCorner;
     }
 }
