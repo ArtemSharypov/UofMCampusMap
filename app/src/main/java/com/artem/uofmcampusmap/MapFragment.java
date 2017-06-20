@@ -74,6 +74,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         nextInstruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //todo fix this part so that indoor instructions actually show because else it wont actually work cause stuff
                 if(currInstructionPos + 1 < routeLines.size())
                 {
                     routeLines.get(currInstructionPos).setVisible(false);

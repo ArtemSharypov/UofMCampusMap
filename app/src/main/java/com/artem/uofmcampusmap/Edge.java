@@ -7,7 +7,7 @@ package com.artem.uofmcampusmap;
 public class Edge {
     private Vertex source;
     private Vertex destination;
-    private double weight; //todo switch to integer potentially?
+    private int weight;
 
     public Edge(Vertex source, Vertex destination)
     {
@@ -21,7 +21,7 @@ public class Edge {
         this.weight = source.getDistanceFrom(destination);
     }
 
-    public double getWeight()
+    public int getWeight()
     {
         return weight;
     }
@@ -37,6 +37,17 @@ public class Edge {
     //todo implement this fully
     public String getInstructions()
     {
-        return "" + weight + "m";
+        String toString = "" + weight;
+
+        if(source instanceof IndoorVertex)
+        {
+            toString += " feet";
+        }
+        else
+        {
+            toString += "m";
+        }
+
+        return toString;
     }
 }

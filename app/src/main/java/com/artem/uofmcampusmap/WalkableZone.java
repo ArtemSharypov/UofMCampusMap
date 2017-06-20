@@ -56,7 +56,7 @@ public class WalkableZone
         connectToBottom(this.right);
     }
 
-    private void connectToRight(Vertex vertexToConnect)
+    public void connectToRight(Vertex vertexToConnect)
     {
         if(vertexToConnect != null && right != null)
         {
@@ -65,7 +65,7 @@ public class WalkableZone
         }
     }
 
-    private void connectToTop(Vertex vertexToConnect)
+    public void connectToTop(Vertex vertexToConnect)
     {
         if(vertexToConnect != null && top != null)
         {
@@ -74,7 +74,7 @@ public class WalkableZone
         }
     }
 
-    private void connectToLeft(Vertex vertexToConnect)
+    public void connectToLeft(Vertex vertexToConnect)
     {
         if(vertexToConnect != null && left != null)
         {
@@ -83,7 +83,7 @@ public class WalkableZone
         }
     }
 
-    private void connectToBottom(Vertex vertexToConnect)
+    public void connectToBottom(Vertex vertexToConnect)
     {
         if(vertexToConnect != null && bottom != null)
         {
@@ -97,10 +97,10 @@ public class WalkableZone
         topConnections();
     }
 
-    public void setTop(LatLng top, XYPos xyPos) {
+    public void setTop(LatLng top) {
         if(top != null)
         {
-            this.top = new OutdoorVertex(top, xyPos);
+            this.top = new OutdoorVertex(top);
             topConnections();
         }
     }
@@ -110,10 +110,10 @@ public class WalkableZone
         leftConnections();
     }
 
-    public void setLeft(LatLng pos, XYPos xyPos)
+    public void setLeft(LatLng pos)
     {
         if(pos != null) {
-            this.left = new OutdoorVertex(pos, xyPos);
+            this.left = new OutdoorVertex(pos);
             leftConnections();
         }
     }
@@ -123,10 +123,10 @@ public class WalkableZone
         rightConnections();
     }
 
-    public void setRight(LatLng pos, XYPos xyPos) {
+    public void setRight(LatLng pos) {
         if(pos != null)
         {
-            this.right = new OutdoorVertex(pos, xyPos);
+            this.right = new OutdoorVertex(pos);
             rightConnections();
         }
     }
@@ -136,10 +136,10 @@ public class WalkableZone
         bottomConnections();
     }
 
-    public void setBottom(LatLng pos, XYPos xyPos) {
+    public void setBottom(LatLng pos) {
         if(pos != null)
         {
-            this.bottom = new OutdoorVertex(pos, xyPos);
+            this.bottom = new OutdoorVertex(pos);
             bottomConnections();
         }
     }

@@ -117,8 +117,10 @@ public class RouteFinder {
             {
                 if(currConnection instanceof IndoorVertex)
                     childVertex = new IndoorVertex((IndoorVertex) currConnection);
-                else
+                else if(currConnection instanceof OutdoorVertex)
                     childVertex = new OutdoorVertex((OutdoorVertex) currConnection);
+                else
+                    childVertex = currConnection;
 
                 childVertex.setParent(parent);
                 childVertex.setG(parent.getG() + parent.getDistanceFrom(childVertex));

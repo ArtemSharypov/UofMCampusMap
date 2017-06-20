@@ -14,15 +14,15 @@ public class XYPos {
         this.y = y;
     }
 
-    public double getDistanceFrom(XYPos otherPoint)
+    public int getDistanceFrom(XYPos otherPoint)
     {
-        double dist = 0;
+        int dist = 0;
 
-        double tempX = Math.abs(this.x - otherPoint.getX());
-        double tempY = Math.abs(this.y - otherPoint.getY());
+        int tempX = (int) Math.abs(this.x - otherPoint.getX());
+        int tempY = (int) Math.abs(this.y - otherPoint.getY());
 
-        dist = Math.pow(tempX, 2) + Math.pow(tempY, 2);
-        dist = Math.sqrt(dist);
+        dist = (int) (Math.pow(tempX, 2) + Math.pow(tempY, 2));
+        dist = (int) Math.sqrt(dist);
 
         return dist;
     }

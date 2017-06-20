@@ -57,14 +57,14 @@
         style="@style/RobotoTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Room"
         android:layout_above="@+id/from_building"
-        android:layout_toRightOf="@+id/from_building"
-        android:layout_toEndOf="@+id/from_building"
         android:layout_marginLeft="62dp"
-        android:layout_marginStart="62dp" />
+        android:layout_marginStart="62dp"
+        android:layout_toEndOf="@+id/from_building"
+        android:layout_toRightOf="@+id/from_building"
+        android:text="Room" />
 
-    <Spinner
+    <EditText
         android:id="@+id/from_room"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         android:layout_alignStart="@+id/from_room"
         android:text="Room" />
 
-    <Spinner
+    <EditText
         android:id="@+id/to_room"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
