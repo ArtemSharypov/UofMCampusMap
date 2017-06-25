@@ -36,7 +36,6 @@ public class ArmesIndoorConnections {
         populateConnections();
     }
 
-    //todo fix the connections that have ~51 as their Y cause its messed
     public void populateConnections()
     {
         //floor 2
@@ -50,43 +49,43 @@ public class ArmesIndoorConnections {
         IndoorVertex _12_37 = new IndoorVertex(building, new XYPos(12.5, 37.5), 2);
         IndoorVertex _22_118 = new IndoorVertex(building, new XYPos(22.5, 118.75), 2);
         IndoorVertex _31_118 = new IndoorVertex(building, new XYPos(31.25, 118.75), 2);
-        IndoorVertex _31_51 = new IndoorVertex(building, new XYPos(31.25, 51.25), 2);
+        IndoorVertex _31_131 = new IndoorVertex(building, new XYPos(31.25, 131.25), 2);
         IndoorVertex _31_137 = new IndoorVertex(building, new XYPos(31.25, 137.5), 2);//rm 201
-        IndoorVertex leftStairsFloor2 = new IndoorVertex(building, new XYPos(37.5, 126.25), 2);
-        IndoorVertex _50_51 = new IndoorVertex(building, new XYPos(50, 51.25), 2);
+        IndoorVertex leftStairsFloor2 = new IndoorVertex(building, new XYPos(37.5, 125), 2);
+        IndoorVertex _50_131 = new IndoorVertex(building, new XYPos(50, 131.25), 2);
         IndoorVertex _31_112 = new IndoorVertex(building, new XYPos(31.25, 112.5), 2); //rm 200
         IndoorVertex _50_137 = new IndoorVertex(building, new XYPos(50, 137.5), 2); //rm 201
-        IndoorVertex _62_51 = new IndoorVertex(building, new XYPos(62.5, 51.25), 2);
+        IndoorVertex _62_131 = new IndoorVertex(building, new XYPos(62.5, 131.25), 2);
         IndoorVertex _62_118 = new IndoorVertex(building, new XYPos(62.5, 118.75), 2);
         IndoorVertex _62_137 = new IndoorVertex(building, new XYPos(62.5, 137.5), 2);//rm 205
         IndoorVertex _85_137 = new IndoorVertex(building, new XYPos(85, 137.5), 2); //rm 205
-        IndoorVertex _85_51 = new IndoorVertex(building, new XYPos(85, 51.25), 2);
+        IndoorVertex _85_131 = new IndoorVertex(building, new XYPos(85, 131.25), 2);
         IndoorVertex _62_112 = new IndoorVertex(building, new XYPos(62.5, 112.5), 2); //rm200
         IndoorVertex _85_118 = new IndoorVertex(building, new XYPos(85, 118.75), 2);
         IndoorVertex _85_112 = new IndoorVertex(building, new XYPos(85, 112.5), 2); //rm 204
         IndoorVertex _108_118 = new IndoorVertex(building, new XYPos(108.5, 118.75), 2);
         IndoorVertex _108_112 = new IndoorVertex(building, new XYPos(108.5, 112.5), 2);//rm 204
-        IndoorVertex _162_51 = new IndoorVertex(building, new XYPos(162.5, 51.25), 2);
-        IndoorVertex _22_51 = new IndoorVertex(building, new XYPos(22.5, 51.25), 2);
-        IndoorVertex _131_51 = new IndoorVertex(building, new XYPos(131.25, 51.25), 2);
+        IndoorVertex _162_131 = new IndoorVertex(building, new XYPos(162.5, 131.25), 2);
+        IndoorVertex _22_131 = new IndoorVertex(building, new XYPos(22.5, 131.25), 2);
+        IndoorVertex _131_131 = new IndoorVertex(building, new XYPos(131.25, 131.25), 2);
 
         northWestEntrance = new IndoorVertex(building, new XYPos(0, 187.5), 2);
         southWestEntrance = new IndoorVertex(building, new XYPos(0, 37.5), 2);
 
-        IndoorVertex allen_connect_north = new IndoorVertex(building, new XYPos(0, 51.25), 2);
+        IndoorVertex allen_connect_north = new IndoorVertex(building, new XYPos(0, 131.25), 2);
         IndoorVertex allen_connect_south = new IndoorVertex(building, new XYPos(0, 118.75), 2);
 
         allenConnections.add(allen_connect_north);
         allenConnections.add(allen_connect_south);
 
-        IndoorVertex machray_connect_north = new IndoorVertex(building, new XYPos(173, 51), 2);
-        IndoorVertex machray_connect_south = new IndoorVertex(building, new XYPos(173, 118), 2);
+        IndoorVertex machray_connect_north = new IndoorVertex(building, new XYPos(173.75, 131.25), 2);
+        IndoorVertex machray_connect_south = new IndoorVertex(building, new XYPos(173.75, 118.75), 2);
 
         machrayConnections.add(machray_connect_north);
         machrayConnections.add(machray_connect_south);
 
-        bullerConnection = new IndoorVertex(building, new XYPos(15, 6.25), 2); //todo check this
-        parkerConnection = new IndoorVertex(building, new XYPos(11.25, 206.25), 2);
+        bullerConnection = new IndoorVertex(building, new XYPos(15, 6.25), 2);
+        parkerConnection = new IndoorVertex(building, new XYPos(12.5, 206.25), 2);
 
         //floor 2 connections
         connectVertex(bullerConnection, southWestEntrance);
@@ -99,39 +98,39 @@ public class ArmesIndoorConnections {
         connectVertex(allen_connect_north, _12_125);
         connectVertex(allen_connect_south, _12_125);
         connectVertex(_12_125, _22_118);
-        connectVertex(_12_125, _22_51);
-        connectVertex(_22_51, _31_51);
-        connectVertex(_22_51, leftStairsFloor2);
+        connectVertex(_12_125, _22_131);
+        connectVertex(_22_131, _31_131);
+        connectVertex(_22_131, leftStairsFloor2);
         connectVertex(_22_118, leftStairsFloor2);
         connectVertex(_22_118, _31_118);
         connectVertex(_31_118, _31_112);
         connectVertex(_31_118, leftStairsFloor2);
         connectVertex(_31_118, _62_118);
-        connectVertex(_31_118, _31_51);
-        connectVertex(_31_51, leftStairsFloor2);
-        connectVertex(_31_51, _31_137);
-        connectVertex(_31_51, _50_51);
-        connectVertex(_50_51, _50_137);
-        connectVertex(_50_51, _62_51);
-        connectVertex(_62_51, _62_118);
-        connectVertex(_62_51, _62_137);
-        connectVertex(_62_51, _85_51);
+        connectVertex(_31_118, _31_131);
+        connectVertex(_31_131, leftStairsFloor2);
+        connectVertex(_31_131, _31_137);
+        connectVertex(_31_131, _50_131);
+        connectVertex(_50_131, _50_137);
+        connectVertex(_50_131, _62_131);
+        connectVertex(_62_131, _62_118);
+        connectVertex(_62_131, _62_137);
+        connectVertex(_62_131, _85_131);
         connectVertex(_62_118, _62_112);
         connectVertex(_62_118, _85_118);
         connectVertex(_85_118, _85_112);
-        connectVertex(_85_118, _85_51);
+        connectVertex(_85_118, _85_131);
         connectVertex(_85_118, _108_118);
         connectVertex(_108_118, _108_112);
         connectVertex(_108_118, _131_118);
         connectVertex(_131_118, _131_112);
         connectVertex(_131_118, _162_118);
-        connectVertex(_131_118, _131_51);
-        connectVertex(_131_51, _162_51);
-        connectVertex(_131_51, _85_51);
-        connectVertex(_85_51, _85_137);
-        connectVertex(_162_51, machray_connect_north);
-        connectVertex(_162_51, rightStairsFloor2);
-        connectVertex(_162_51, _162_118);
+        connectVertex(_131_118, _131_131);
+        connectVertex(_131_131, _162_131);
+        connectVertex(_131_131, _85_131);
+        connectVertex(_85_131, _85_137);
+        connectVertex(_162_131, machray_connect_north);
+        connectVertex(_162_131, rightStairsFloor2);
+        connectVertex(_162_131, _162_118);
         connectVertex(machray_connect_north, rightStairsFloor2);
         connectVertex(_162_118, _162_112);
         connectVertex(_162_118, rightStairsFloor2);
@@ -180,7 +179,6 @@ public class ArmesIndoorConnections {
         firstFloorStairs.add(rightStairsFloor1);
 
         //floor 1 connections
-        //todo add connections
         connectVertex(parkerConnectionTunnel, _10_126);
         connectVertex(allenConnectionTunnel, _10_126);
         connectVertex(_10_126, _18_130);

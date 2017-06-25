@@ -34,18 +34,32 @@ public class Edge {
         return destination;
     }
 
-    //todo implement this fully
+    //todo implement this fully (as in turn left etc)
     public String getInstructions()
     {
         String toString = "" + weight;
 
         if(source instanceof IndoorVertex)
         {
-            toString += " feet";
+            if(destination instanceof OutdoorVertex)
+            {
+                toString = "Exit the building";
+            }
+            else
+                {
+                toString += " feet";
+            }
         }
         else
         {
-            toString += "m";
+            if(destination instanceof IndoorVertex)
+            {
+                toString = "Enter " + ((IndoorVertex) destination).getBuilding();
+            }
+            else
+            {
+                toString += "m";
+            }
         }
 
         return toString;

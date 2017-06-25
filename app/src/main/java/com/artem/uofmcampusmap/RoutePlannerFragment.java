@@ -71,7 +71,7 @@ public class RoutePlannerFragment extends Fragment {
             public void onClick(View v) {
                 MainActivity activity = (MainActivity) getActivity();
 
-                //todo implement a check if there is such a room for the building locations entered
+                //todo implement a check if there is such a room for the building locations entered, if not make a toast
                 activity.passStartLocation(fromBuilding.getSelectedItem().toString());
                 activity.passStartRoom(fromRoom.getText().toString().trim());
 

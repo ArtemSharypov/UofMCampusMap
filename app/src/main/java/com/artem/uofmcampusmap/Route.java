@@ -37,8 +37,6 @@ public class Route {
         return route.size();
     }
 
-    //todo for this and next instruction implement the check for indoorvertex's, to see what building it currently is in.
-    //when the source is a building, switch to that floor/layout and draw in the lines as needed for that layout
     public Edge getFirstInstruction()
     {
         if(route.size() > 0)
