@@ -4,13 +4,19 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.artem.uofmcampusmap.buildings.DisplayIndoorRoutes;
+import com.artem.uofmcampusmap.buildings.armes.ArmesFloor1Fragment;
+import com.artem.uofmcampusmap.buildings.armes.ArmesFloor2Fragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -31,6 +37,7 @@ import java.util.ArrayList;
 public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     private MapView mMapView;
+    private FrameLayout indoorBuildingFragHolder;
     private GoogleMap googleMap;
     private ImageView prevInstruction;
     private ImageView nextInstruction;
@@ -38,10 +45,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private LinearLayout instructionsLinLayout;
     private MapNavigationMesh campusMap;
     private String startLocation;
+    private String startRoom;
     private String destinationLocation;
+    private String destinationRoom;
+    private String currLocation;
+    private int currFloor;
     private Route route;
     private ArrayList<Polyline> routeLines;
     private int currInstructionPos;
+    private int currOutsideLine; //The current position within routeLines for outside polylines
 
     @Nullable
     @Override
@@ -51,6 +63,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         campusMap = new MapNavigationMesh();
         routeLines = new ArrayList<>();
         currInstructionPos = 0;
+        currOutsideLine = 0;
+        currFloor = 0;
+        currLocation = "";
+
+        indoorBuildingFragHolder = (FrameLayout) view.findViewById(R.id.indoor_building_frag_holder);
 
         instructionsTextView = (TextView) view.findViewById(R.id.current_instructions);
         instructionsLinLayout = (LinearLayout) view.findViewById(R.id.instructions_layout);
@@ -59,11 +76,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         prevInstruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currInstructionPos > 0 && currInstructionPos < routeLines.size())
+                if(currInstructionPos > 0)
                 {
                     currInstructionPos--;
-                    instructionsTextView.setText(route.getInstructionAt(currInstructionPos).getInstructions());
-                    routeLines.get(currInstructionPos).setVisible(true);
+                    Edge currInstruction = route.getInstructionAt(currInstructionPos);
+                    instructionsTextView.setText(currInstruction.getInstructions());
+
+                    if(currInstruction.getSource() instanceof OutdoorVertex)
+                    {
+                        if(mMapView.getVisibility() == View.GONE)
+                        {
+                            mMapView.setVisibility(View.VISIBLE);
+                            mMapView.onResume();
+                            indoorBuildingFragHolder.setVisibility(View.GONE);
+                            currLocation = "";
+
+                        }
+                        else if(currOutsideLine > 0)
+                        {
+                            currOutsideLine--;
+                            routeLines.get(currOutsideLine).setVisible(true);
+                        }
+                    }
+                    else if(currInstruction.getSource() instanceof IndoorVertex)
+                    {
+                        handleIndoorSource(currInstruction, false);
+                    }
+
                 }
             }
         });
@@ -72,29 +111,43 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         nextInstruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currInstructionPos + 1 < routeLines.size())
+                if(currInstructionPos + 1 < route.getNumInstructions())
                 {
-                    routeLines.get(currInstructionPos).setVisible(false);
+                    Edge currInstruction = route.getInstructionAt(currInstructionPos);
                     currInstructionPos++;
-                    instructionsTextView.setText(route.getInstructionAt(currInstructionPos).getInstructions());
+
+                    instructionsTextView.setText(currInstruction.getInstructions());
+
+                    if(currInstruction.getSource() instanceof OutdoorVertex)
+                    {
+                        if(mMapView.getVisibility() == View.GONE)
+                        {
+                            mMapView.setVisibility(View.VISIBLE);
+                            mMapView.onResume();
+                            indoorBuildingFragHolder.setVisibility(View.GONE);
+                            currLocation = "";
+
+                        }
+                        else if(currOutsideLine < route.getNumInstructions() && currOutsideLine < routeLines.size())
+                        {
+                            routeLines.get(currOutsideLine).setVisible(false);
+                            currOutsideLine++;
+                        }
+
+                    }
+                    else if(currInstruction.getSource() instanceof IndoorVertex)
+                    {
+                        handleIndoorSource(currInstruction, true);
+                    }
                 }
             }
         });
 
         MainActivity activity = (MainActivity) getActivity();
         startLocation = activity.getStartLocation();
+        startRoom = activity.getStartRoom();
         destinationLocation = activity.getDestinationLocation();
-
-        if(!startLocation.equals(" ") && !destinationLocation.equals(" "))
-        {
-            route = campusMap.findRoute(startLocation, destinationLocation);
-
-            if(route != null)
-            {
-                instructionsTextView.setText(route.getFirstInstruction().getInstructions());
-                instructionsLinLayout.setVisibility(View.VISIBLE);
-            }
-        }
+        destinationRoom = activity.getDestinationRoom();
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -111,7 +164,150 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         mMapView.getMapAsync(this);
 
+        if(!startLocation.equals("") && !destinationLocation.equals(""))
+        {
+            route = campusMap.findRoute(startLocation, startRoom, destinationLocation, destinationRoom);
+
+            if(route != null)
+            {
+                Edge firstInstruction = route.getFirstInstruction();
+
+                instructionsTextView.setText(firstInstruction.getInstructions());
+                instructionsLinLayout.setVisibility(View.VISIBLE);
+
+                if(firstInstruction.getSource() instanceof IndoorVertex)
+                {
+                    handleIndoorSource(firstInstruction, true);
+                }
+
+            }
+        }
+
         return view;
+    }
+
+    //needs a true/false if its next or previous
+    //also needs to be a edge so that the displaying works
+    private void handleIndoorSource(Edge edgeWithIndoorV, boolean isNextInstruc)
+    {
+        IndoorVertex indoorSource;
+
+        if(edgeWithIndoorV.getSource() instanceof IndoorVertex)
+        {
+            indoorSource = (IndoorVertex) edgeWithIndoorV.getSource();
+            String currBuilding = indoorSource.getBuilding();
+            int currFloor = indoorSource.getFloor();
+            DisplayIndoorRoutes childFrag = (DisplayIndoorRoutes) getChildFragmentManager().findFragmentById(R.id.indoor_building_frag_holder);
+
+            //todo probably clean this logic up a little
+            if(indoorBuildingFragHolder.getVisibility() == View.VISIBLE)
+            {
+                if(currBuilding.equals(currLocation))
+                {
+                    if(currFloor != this.currFloor)
+                    {
+                        switchViewToBuilding(currBuilding, currFloor);
+
+                        if(childFrag != null)
+                        {
+                            if(isNextInstruc)
+                            {
+                                childFrag.showAllIndoorPaths(currInstructionPos, route);
+                            }
+                            else
+                            {
+                                childFrag.displayIndoorRoute(edgeWithIndoorV);
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        if(childFrag != null)
+                        {
+                            if(isNextInstruc)
+                            {
+                                childFrag.hideIndoorPath(edgeWithIndoorV);
+                            }
+                            else
+                            {
+                                childFrag.displayIndoorRoute(edgeWithIndoorV);
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    switchViewToBuilding(currBuilding, currFloor);
+
+                    if(childFrag != null)
+                    {
+                        if(isNextInstruc)
+                        {
+                            childFrag.showAllIndoorPaths(currInstructionPos, route);
+                        }
+                        else
+                        {
+                            childFrag.displayIndoorRoute(edgeWithIndoorV);
+                        }
+
+                    }
+                }
+            }
+            else
+            {
+
+                indoorBuildingFragHolder.setVisibility(View.VISIBLE);
+                mMapView.setVisibility(View.GONE);
+                mMapView.onPause();
+
+                switchViewToBuilding(currBuilding, currFloor);
+
+                if(childFrag != null)
+                {
+                    if(isNextInstruc)
+                    {
+                        childFrag.showAllIndoorPaths(currInstructionPos, route);
+                    }
+                    else
+                    {
+                        childFrag.displayIndoorRoute(edgeWithIndoorV);
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void switchViewToBuilding(String buildingName, int floorNumber)
+    {
+        if(buildingName.equals(getResources().getString(R.string.armes)))
+        {
+            currLocation = buildingName;
+            currFloor = floorNumber;
+            FragmentManager childFragManager = getChildFragmentManager();
+            FragmentTransaction childFragTrans;
+
+            if(currFloor == 1)
+            {
+                ArmesFloor1Fragment armesFloor1Fragment = new ArmesFloor1Fragment();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.indoor_building_frag_holder, armesFloor1Fragment);
+                childFragTrans.addToBackStack("Armes1");
+                childFragTrans.commit();
+            }
+            else if(currFloor == 2)
+            {
+                ArmesFloor2Fragment armesFloor2Fragment = new ArmesFloor2Fragment();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.indoor_building_frag_holder, armesFloor2Fragment);
+                childFragTrans.addToBackStack("Armes1");
+                childFragTrans.commit();
+            }
+        }
     }
 
     private void drawRouteOnMap()

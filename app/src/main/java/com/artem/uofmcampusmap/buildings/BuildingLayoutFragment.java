@@ -178,7 +178,6 @@ public class BuildingLayoutFragment extends Fragment{
         public Fragment getItem(int position) {
             Fragment fragment = null;
 
-            //todo overall improve how images are processed / showed to speed it up
             if(buildingName.equals(getResources().getString(R.string.agr_engineer)))
             {
                 if(position == 0)
