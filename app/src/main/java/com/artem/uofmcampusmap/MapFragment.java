@@ -79,7 +79,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 if(currInstructionPos > 0)
                 {
                     currInstructionPos--;
-                    Edge currInstruction = route.getInstructionAt(currInstructionPos);
+                    Instruction currInstruction = route.getInstructionAt(currInstructionPos);
                     instructionsTextView.setText(currInstruction.getInstructions());
 
                     if(currInstruction.getSource() instanceof OutdoorVertex)
@@ -113,7 +113,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             public void onClick(View v) {
                 if(currInstructionPos + 1 < route.getNumInstructions())
                 {
-                    Edge currInstruction = route.getInstructionAt(currInstructionPos);
+                    Instruction currInstruction = route.getInstructionAt(currInstructionPos);
                     currInstructionPos++;
 
                     instructionsTextView.setText(currInstruction.getInstructions());
@@ -143,7 +143,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             }
         });
 
-        MainActivity activity = (MainActivity) getActivity();
+        PassRouteData activity = (PassRouteData) getActivity();
         startLocation = activity.getStartLocation();
         startRoom = activity.getStartRoom();
         destinationLocation = activity.getDestinationLocation();
@@ -170,10 +170,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
             if(route != null)
             {
-                Edge firstInstruction = route.getFirstInstruction();
+                Instruction firstInstruction = route.getFirstInstruction();
 
                 instructionsTextView.setText(firstInstruction.getInstructions());
                 instructionsLinLayout.setVisibility(View.VISIBLE);
+
+                activity.passRoute(route);
+                activity.setCurrInstructionPos(currInstructionPos);
 
                 if(firstInstruction.getSource() instanceof IndoorVertex)
                 {
@@ -188,13 +191,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
     //needs a true/false if its next or previous
     //also needs to be a edge so that the displaying works
-    private void handleIndoorSource(Edge edgeWithIndoorV, boolean isNextInstruc)
+    private void handleIndoorSource(Instruction instructionWithIndoorV, boolean isNextInstruc)
     {
         IndoorVertex indoorSource;
 
-        if(edgeWithIndoorV.getSource() instanceof IndoorVertex)
+        if(instructionWithIndoorV.getSource() instanceof IndoorVertex)
         {
-            indoorSource = (IndoorVertex) edgeWithIndoorV.getSource();
+            indoorSource = (IndoorVertex) instructionWithIndoorV.getSource();
             String currBuilding = indoorSource.getBuilding();
             int currFloor = indoorSource.getFloor();
             DisplayIndoorRoutes childFrag = (DisplayIndoorRoutes) getChildFragmentManager().findFragmentById(R.id.indoor_building_frag_holder);
@@ -207,52 +210,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     if(currFloor != this.currFloor)
                     {
                         switchViewToBuilding(currBuilding, currFloor);
-
-                        if(childFrag != null)
-                        {
-                            if(isNextInstruc)
-                            {
-                                childFrag.showAllIndoorPaths(currInstructionPos, route);
-                            }
-                            else
-                            {
-                                childFrag.displayIndoorRoute(edgeWithIndoorV);
-                            }
-
-                        }
                     }
                     else
                     {
                         if(childFrag != null)
                         {
-                            if(isNextInstruc)
-                            {
-                                childFrag.hideIndoorPath(edgeWithIndoorV);
-                            }
-                            else
-                            {
-                                childFrag.displayIndoorRoute(edgeWithIndoorV);
-                            }
+                            PassRouteData activity = (PassRouteData) getActivity();
+                            activity.setCurrInstructionPos(currInstructionPos);
 
+                            childFrag.updateDisplayedRoute();
                         }
                     }
                 }
                 else
                 {
                     switchViewToBuilding(currBuilding, currFloor);
-
-                    if(childFrag != null)
-                    {
-                        if(isNextInstruc)
-                        {
-                            childFrag.showAllIndoorPaths(currInstructionPos, route);
-                        }
-                        else
-                        {
-                            childFrag.displayIndoorRoute(edgeWithIndoorV);
-                        }
-
-                    }
                 }
             }
             else
@@ -263,19 +235,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 mMapView.onPause();
 
                 switchViewToBuilding(currBuilding, currFloor);
-
-                if(childFrag != null)
-                {
-                    if(isNextInstruc)
-                    {
-                        childFrag.showAllIndoorPaths(currInstructionPos, route);
-                    }
-                    else
-                    {
-                        childFrag.displayIndoorRoute(edgeWithIndoorV);
-                    }
-
-                }
             }
         }
     }
@@ -314,7 +273,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     {
         LatLng startPoint;
         LatLng endPoint;
-        Edge currInstruction;
+        Instruction currInstruction;
         PolylineOptions currLine;
         Vertex source;
         Vertex destination;
