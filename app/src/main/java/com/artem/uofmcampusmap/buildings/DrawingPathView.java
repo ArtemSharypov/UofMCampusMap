@@ -34,7 +34,7 @@ public class DrawingPathView extends View {
 
     public DrawingPathView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-         initialize();
+        initialize();
     }
 
     private void initialize()
@@ -51,10 +51,12 @@ public class DrawingPathView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        for(int i = linePos; i < pathsToDraw.size(); i++)
+        if(linePos >= 0 && linePos < pathsToDraw.size())
         {
-            Line line = pathsToDraw.get(i);
-            canvas.drawLine(line.getSourceX(), line.getSourceY(), line.getDestX(), line.getDestY(), paint);
+            for (int i = linePos; i < pathsToDraw.size(); i++) {
+                Line line = pathsToDraw.get(i);
+                canvas.drawLine(line.getSourceX(), line.getSourceY(), line.getDestX(), line.getDestY(), paint);
+            }
         }
     }
 

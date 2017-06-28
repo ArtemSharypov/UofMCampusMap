@@ -51,11 +51,12 @@ public class MapNavigationMesh
         else //Different floors, find the closest stairs
         {
             //todo once other buildings are added, make the indoor connections call specific
+
             //Find the closest stairs to the starting room, then find a route from it to them
             IndoorVertex closestStairs = armesIndoorConnections.getClosestStairsToRoom(startLocation);
             Route routeStartToStairs = routeFinder.findRoute(startLocation, closestStairs);
 
-            //Stairs that will connect to the closest stairs, that will now be on the same level as the
+            //Stairs that will connect to the closest stairs, that will now be on the same level as the destination
             IndoorVertex destinationFloorStairs = findStairsConnectionFrom(closestStairs, destinationLocation.getFloor());
 
             //From the stairs on the destination level to the destination itself
@@ -95,6 +96,7 @@ public class MapNavigationMesh
         return connection;
     }
 
+    //todo need to clean up this logic for creating routes due to repeating things
     public Route findRoute(String startLocation, String startRoom, String endLocation, String endRoom)
     {
         Route route = null;
@@ -111,67 +113,80 @@ public class MapNavigationMesh
 
         if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
         {
-            startBuildingExits = startEndLocations.get(startLocation);
-            endBuildingEntrances = startEndLocations.get(endLocation);
-            int tempDist;
-            int bestDist = Integer.MAX_VALUE;
-
-            //Find the best entrance/exit combination between all entrance/exits
-            for(Vertex start : startBuildingExits)
+            if(startLocation.equals(endLocation))
             {
-                for(Vertex destination : endBuildingEntrances)
+                if(!startRoom.equals(endRoom))
                 {
-                    tempDist = start.getDistanceFrom(destination);
-
-                    if(tempDist < bestDist)
+                    if (startLocation.equals("Armes"))
                     {
-                        startBuildingExit = (OutdoorVertex) start;
-                        endBuildingEntrance = (OutdoorVertex) destination;
-                        bestDist = tempDist;
+                        startRoomVertex = armesIndoorConnections.findRoom(startRoom);
+                    }
+
+                    if (endLocation.equals("Armes"))
+                    {
+                        endRoomVertex = armesIndoorConnections.findRoom(endRoom);
+                    }
+
+                    if (startRoomVertex != null && endRoomVertex != null)
+                    {
+                        route = navigateIndoors(startRoomVertex, endRoomVertex);
                     }
                 }
             }
-
-            //todo switch this to resources & maybe a method to seperate them (aka finding the room vertex's) to clean it up more
-            if(startLocation.equals("Armes"))
-            {
-                startRoomVertex = armesIndoorConnections.findRoom(startRoom);
-            }
-
-            if(endLocation.equals("Armes"))
-            {
-                endRoomVertex = armesIndoorConnections.findRoom(endRoom);
-            }
-
-            if(startRoomVertex != null)
-            {
-                IndoorVertex indoorStartExit = indoorVertexConnectionTo(startBuildingExit);
-                startRoomToExit = navigateIndoors(startRoomVertex, indoorStartExit);
-            }
-
-            //Create a route from the exit to the entrance
-            exitToEntrance = routeFinder.findRoute(startBuildingExit, endBuildingEntrance);
-
-            if(endRoomVertex != null)
-            {
-                IndoorVertex indoorEndEntrance = indoorVertexConnectionTo(endBuildingEntrance);
-                entranceToEndRoom = navigateIndoors(indoorEndEntrance, endRoomVertex);
-            }
-
-            //Combine all the seperate routes into one single route
-            if(startRoomToExit != null)
-            {
-                startRoomToExit.combineRoutes(exitToEntrance);
-                route = startRoomToExit;
-            }
             else
             {
-                route = exitToEntrance;
-            }
+                startBuildingExits = startEndLocations.get(startLocation);
+                endBuildingEntrances = startEndLocations.get(endLocation);
+                int tempDist;
+                int bestDist = Integer.MAX_VALUE;
 
-            if(exitToEntrance != null)
-            {
-                route.combineRoutes(entranceToEndRoom);
+                //todo fix this for the armes/machray entrance, because there isn't an actual indoor path if its to start from indoors
+                //Find the best entrance/exit combination between all entrance/exits
+                for (Vertex start : startBuildingExits) {
+                    for (Vertex destination : endBuildingEntrances) {
+                        tempDist = start.getDistanceFrom(destination);
+
+                        if (tempDist < bestDist) {
+                            startBuildingExit = (OutdoorVertex) start;
+                            endBuildingEntrance = (OutdoorVertex) destination;
+                            bestDist = tempDist;
+                        }
+                    }
+                }
+
+                //todo switch this to resources & maybe a method to seperate them (aka finding the room vertex's) to clean it up more
+                if (startLocation.equals("Armes")) {
+                    startRoomVertex = armesIndoorConnections.findRoom(startRoom);
+                }
+
+                if (endLocation.equals("Armes")) {
+                    endRoomVertex = armesIndoorConnections.findRoom(endRoom);
+                }
+
+                if (startRoomVertex != null) {
+                    IndoorVertex indoorStartExit = indoorVertexConnectionTo(startBuildingExit);
+                    startRoomToExit = navigateIndoors(startRoomVertex, indoorStartExit);
+                }
+
+                //Create a route from the exit to the entrance
+                exitToEntrance = routeFinder.findRoute(startBuildingExit, endBuildingEntrance);
+
+                if (endRoomVertex != null) {
+                    IndoorVertex indoorEndEntrance = indoorVertexConnectionTo(endBuildingEntrance);
+                    entranceToEndRoom = navigateIndoors(indoorEndEntrance, endRoomVertex);
+                }
+
+                //Combine all the seperate routes into one single route
+                if (startRoomToExit != null) {
+                    startRoomToExit.combineRoutes(exitToEntrance);
+                    route = startRoomToExit;
+                } else {
+                    route = exitToEntrance;
+                }
+
+                if (exitToEntrance != null) {
+                    route.combineRoutes(entranceToEndRoom);
+                }
             }
         }
 

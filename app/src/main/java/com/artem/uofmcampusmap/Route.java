@@ -100,7 +100,7 @@ public class Route {
 
     private void addInstructionToStart(Instruction instruction)
     {
-        if(instruction != null)
+        if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
         {
             route.add(0, instruction);
             routeLength += instruction.getWeight();
@@ -110,7 +110,7 @@ public class Route {
 
     private void addInstructionToEnd(Instruction instruction)
     {
-        if(instruction != null)
+        if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
         {
             route.add(instruction);
             routeLength += instruction.getWeight();

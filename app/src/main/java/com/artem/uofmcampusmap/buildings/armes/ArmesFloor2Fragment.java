@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.artem.uofmcampusmap.Instruction;
 import com.artem.uofmcampusmap.IndoorVertex;
+import com.artem.uofmcampusmap.OutdoorVertex;
 import com.artem.uofmcampusmap.PassRouteData;
 import com.artem.uofmcampusmap.R;
 import com.artem.uofmcampusmap.Route;
@@ -238,6 +239,39 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayIndoorRoutes
         drawingPathsView.invalidate();
     }
 
+    private boolean stairsInstruction(Instruction instruction)
+    {
+        IndoorVertex source;
+        IndoorVertex dest;
+        boolean isStairsInstruc = false;
+
+        if(instruction.getSource() instanceof IndoorVertex && instruction.getDestination() instanceof IndoorVertex)
+        {
+            source = (IndoorVertex) instruction.getSource();
+            dest = (IndoorVertex) instruction.getDestination();
+
+            if(source.getFloor() != dest.getFloor())
+            {
+                isStairsInstruc = true;
+            }
+        }
+
+        return isStairsInstruc;
+    }
+
+    private boolean entranceOrExitInstruc(Instruction instruction)
+    {
+        boolean entranceExitInstruc = false;
+
+        if((instruction.getDestination() instanceof OutdoorVertex && instruction.getSource() instanceof IndoorVertex) ||
+                (instruction.getDestination() instanceof IndoorVertex && instruction.getSource() instanceof OutdoorVertex))
+        {
+            entranceExitInstruc = true;
+        }
+
+        return entranceExitInstruc;
+    }
+
     @Override
     public void displayIndoorRoute() {
         PassRouteData activity = (PassRouteData) getActivity();
@@ -253,7 +287,6 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayIndoorRoutes
 
             if(checkIfValidInstruc(currInstruction))
             {
-                startPosOfIndoors--;
                 Line line = createLine(currInstruction);
 
                 if(line != null)
@@ -263,8 +296,13 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayIndoorRoutes
             }
             else
             {
-                break;
+                if(!entranceOrExitInstruc(currInstruction) && !stairsInstruction(currInstruction))
+                {
+                    break;
+                }
             }
+
+            startPosOfIndoors--;
         }
 
         drawingPathsView.setPosWithinRoute(startPosOfIndoors + 1);
@@ -273,7 +311,7 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayIndoorRoutes
         currInstructionPos++;
         currInstruction = route.getInstructionAt(currInstructionPos);
 
-        while(checkIfValidInstruc(currInstruction))
+        while(currInstruction != null && checkIfValidInstruc(currInstruction))
         {
             Line line = createLine(currInstruction);
 

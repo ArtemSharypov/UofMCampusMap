@@ -87,6 +87,9 @@ public class ArmesIndoorConnections {
         bullerConnection = new IndoorVertex(building, new XYPos(15, 6.25), 2);
         parkerConnection = new IndoorVertex(building, new XYPos(12.5, 206.25), 2);
 
+        secondFloorStairs.add(leftStairsFloor2);
+        secondFloorStairs.add(rightStairsFloor2);
+
         //floor 2 connections
         connectVertex(bullerConnection, southWestEntrance);
         connectVertex(southWestEntrance, _12_37);
@@ -140,7 +143,7 @@ public class ArmesIndoorConnections {
         //floor 1
         IndoorVertex _163_120 = new IndoorVertex(building, new XYPos(163.75, 120), 1);
         IndoorVertex _10_126 = new IndoorVertex(building, new XYPos(10, 126.25), 1);
-        IndoorVertex _18_130 = new IndoorVertex(building, new XYPos(18.75, 130), 1);
+        IndoorVertex _18_132 = new IndoorVertex(building, new XYPos(18.75, 132.5), 1);
         IndoorVertex _18_156 = new IndoorVertex(building, new XYPos(18.75, 156.25), 1); //rm 201
         IndoorVertex _18_122 = new IndoorVertex(building, new XYPos(18.75, 122.5), 1);
         IndoorVertex _18_95 = new IndoorVertex(building, new XYPos(18.75, 95), 1);
@@ -149,7 +152,7 @@ public class ArmesIndoorConnections {
         IndoorVertex _56_132 = new IndoorVertex(building, new XYPos(56.25, 132.5), 1);
         IndoorVertex leftStairsFloor1 = new IndoorVertex(building, new XYPos(56.25, 126.25), 1);
         IndoorVertex _56_120 = new IndoorVertex(building, new XYPos(56.25, 120), 1);
-        IndoorVertex _99_120 = new IndoorVertex(building, new XYPos(99.4, 120), 1);
+        IndoorVertex _130_120 = new IndoorVertex(building, new XYPos(130, 120), 1);
         IndoorVertex _87_156 = new IndoorVertex(building, new XYPos(87.5, 156.25), 1); //rm 205
         IndoorVertex _92_156 = new IndoorVertex(building, new XYPos(92.5, 156.25), 1); //rm 111
         IndoorVertex _87_132 = new IndoorVertex(building, new XYPos(87.5, 132.5), 1);
@@ -167,11 +170,13 @@ public class ArmesIndoorConnections {
         //floor 1 rooms/stairs
         ArrayList<IndoorVertex> rm115 = new ArrayList<>();
         rm115.add(_93_138);
+        rm115.add(_120_138);
 
         rooms.put("115", rm115);
 
         ArrayList<IndoorVertex> rm111 = new ArrayList<>();
         rm111.add(_130_156);
+        rm111.add(_92_156);
 
         rooms.put("111", rm111);
 
@@ -181,17 +186,17 @@ public class ArmesIndoorConnections {
         //floor 1 connections
         connectVertex(parkerConnectionTunnel, _10_126);
         connectVertex(allenConnectionTunnel, _10_126);
-        connectVertex(_10_126, _18_130);
+        connectVertex(_10_126, _18_132);
         connectVertex(_10_126, _18_122);
-        connectVertex(_18_130, _18_122);
-        connectVertex(_18_130, _18_156);
-        connectVertex(_18_130, _56_132);
+        connectVertex(_18_132, _18_122);
+        connectVertex(_18_132, _18_156);
+        connectVertex(_18_132, _56_132);
         connectVertex(_18_122, _18_95);
         connectVertex(_18_122, _56_120);
         connectVertex(machrayConnectionTunnel, _163_120);
         connectVertex(machrayConnectionTunnel, _130_132);
         connectVertex(_163_120, _163_95);
-        connectVertex(_163_120, _99_120);
+        connectVertex(_163_120, _130_120);
         connectVertex(_56_132, leftStairsFloor1);
         connectVertex(_56_132, _71_120);
         connectVertex(_56_132, _87_132);
@@ -199,9 +204,9 @@ public class ArmesIndoorConnections {
         connectVertex(leftStairsFloor1, _71_120);
         connectVertex(leftStairsFloor1, _87_132);
         connectVertex(_56_120, _71_120);
-        connectVertex(_56_120, _99_120);
+        connectVertex(_56_120, _130_120);
         connectVertex(_71_120, _71_95);
-        connectVertex(_71_120, _99_120);
+        connectVertex(_71_120, _130_120);
         connectVertex(_71_120, _87_132);
         connectVertex(_87_132, _87_156);
         connectVertex(_87_132, _92_156);
@@ -215,7 +220,7 @@ public class ArmesIndoorConnections {
         connectVertex(_130_156, _130_132);
         connectVertex(_120_138, _130_132);
         connectVertex(_130_132, rightStairsFloor1);
-        connectVertex(rightStairsFloor1, _99_120);
+        connectVertex(rightStairsFloor1, _130_120);
 
         //remaining rooms
         ArrayList<IndoorVertex> rm200 = new ArrayList<>();
@@ -243,8 +248,8 @@ public class ArmesIndoorConnections {
         rooms.put("205", rm205);
 
         ArrayList<IndoorVertex> rm208 = new ArrayList<>();
-        rm208.add(_131_118);
-        rm208.add(_162_118);
+        rm208.add(_131_112);
+        rm208.add(_162_112);
 
         rooms.put("208", rm208);
 
@@ -310,11 +315,18 @@ public class ArmesIndoorConnections {
         int bestDistance = Integer.MAX_VALUE;
         int tempDistance;
         ArrayList<IndoorVertex> allStairs = new ArrayList<>();
-        allStairs.addAll(firstFloorStairs);
-        allStairs.addAll(secondFloorStairs);
 
         if(room != null)
         {
+            if(room.getFloor() == 1)
+            {
+                allStairs.addAll(firstFloorStairs);
+            }
+            else
+            {
+                allStairs.addAll(secondFloorStairs);
+            }
+
             for(IndoorVertex stairs : allStairs)
             {
                 tempDistance = room.getDistanceFrom(stairs);

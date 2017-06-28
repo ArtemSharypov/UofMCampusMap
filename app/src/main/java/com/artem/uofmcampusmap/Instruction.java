@@ -46,8 +46,17 @@ public class Instruction {
                 toString = "Exit the building";
             }
             else
+            {
+                if(((IndoorVertex) source).getFloor() == ((IndoorVertex) destination).getFloor())
                 {
-                toString += " feet";
+                    toString += " feet";
+                }
+                else
+                {
+                    toString = "Walk up ";
+                    toString += Math.max(((IndoorVertex) source).getFloor(), ((IndoorVertex) destination).getFloor());
+                    toString += " floors.";
+                }
             }
         }
         else
