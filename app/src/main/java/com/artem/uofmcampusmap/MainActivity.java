@@ -31,8 +31,12 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     private DrawerLayout mDrawerLayout;
     private NavigationView navigationView;
     private String startLocation;
+    private String startRoom;
     private String destinationLocation;
+    private String destinationRoom;
     private String currBuilding;
+    private int currInstructionPos;
+    private Route currRoute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         setContentView(R.layout.activity_main);
 
         startLocation = "";
+        startRoom = "";
         destinationLocation = "";
+        destinationRoom = "";
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -103,8 +109,6 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         outState.putString("startLocation", startLocation);
         outState.putString("destinationLocation", destinationLocation);
     }
-
-
 
     //On click item for items in the nav drawer.
     private void selectDrawerItem(MenuItem menuItem) {
@@ -269,6 +273,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 switchToBuildingLayouts();
                 break;
             case R.id.agri_animal_sci:
+                resetFields();
+
                 Agri_AnimalSci_Tunnel agri_animalSci_tunnel = new Agri_AnimalSci_Tunnel();
 
                 fragmentManager = getSupportFragmentManager();
@@ -279,6 +285,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 break;
             case R.id.archi2_ext_educ:
+                resetFields();
+
                 Archi2_ExtEduc_Tunnel archi2_extEduc_tunnel = new Archi2_ExtEduc_Tunnel();
 
                 fragmentManager = getSupportFragmentManager();
@@ -289,6 +297,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 break;
             case R.id.dafoe_duff_roblin_uni_college:
+                resetFields();
+
                 Dafoe_DuffRoblin_UniCollege_Tunnel dafoe_duffRoblin_uniCollege_tunnel = new Dafoe_DuffRoblin_UniCollege_Tunnel();
 
                 fragmentManager = getSupportFragmentManager();
@@ -299,6 +309,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 break;
             case R.id.robson_uni_college:
+                resetFields();
+
                 Robson_UniCollege_Tunnel robson_uniCollege_tunnel = new Robson_UniCollege_Tunnel();
 
                 fragmentManager = getSupportFragmentManager();
@@ -309,6 +321,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 break;
             case R.id.russel_archi2:
+                resetFields();
+
                 Russel_Archi2_Tunnel russel_archi2_tunnel = new Russel_Archi2_Tunnel();
 
                 fragmentManager = getSupportFragmentManager();
@@ -319,6 +333,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 break;
             case R.id.tier_artlab:
+                resetFields();
+
                 Tier_Artlab_Tunnel tier_artlab_tunnel = new Tier_Artlab_Tunnel();
 
                 fragmentManager = getSupportFragmentManager();
@@ -329,6 +345,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 break;
             case R.id.wallace_parker:
+                resetFields();
+
                 Wallace_Parker_Tunnel wallace_parker_tunnel = new Wallace_Parker_Tunnel();
 
                 fragmentManager = getSupportFragmentManager();
@@ -343,11 +361,21 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         mDrawerLayout.closeDrawers();
     }
 
+    private void resetFields()
+    {
+        startRoom = "";
+        startLocation = "";
+        destinationLocation = "";
+        destinationRoom = "";
+    }
+
     private void switchToBuildingLayouts()
     {
-        BuildingLayoutFragment buildingLayoutFragment = new BuildingLayoutFragment();
+        resetFields();
 
+        BuildingLayoutFragment buildingLayoutFragment = new BuildingLayoutFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame_layout, buildingLayoutFragment);
         fragmentTransaction.addToBackStack("MapFragment");
@@ -357,6 +385,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     //Switch current fragment to the RoutePlannerFragment
     private void switchToRoutePlanner()
     {
+        resetFields();
+
         RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -377,6 +407,16 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     }
 
     @Override
+    public void passStartRoom(String room) {
+        this.startRoom = room;
+    }
+
+    @Override
+    public String getStartRoom() {
+        return startRoom;
+    }
+
+    @Override
     public void passDestinationLocation(String destination) {
         destinationLocation = destination;
     }
@@ -384,6 +424,44 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     @Override
     public String getDestinationLocation() {
         return destinationLocation;
+    }
+
+    @Override
+    public void passDestinationRoom(String room) {
+        this.destinationRoom = room;
+    }
+
+    @Override
+    public String getDestinationRoom() {
+        return destinationRoom;
+    }
+
+    @Override
+    public int getCurrInstructionPos() {
+        return currInstructionPos;
+    }
+
+    @Override
+    public void setCurrInstructionPos(int currInstructionPos) {
+        this.currInstructionPos = currInstructionPos;
+    }
+
+    public Route getRoute() {
+        return currRoute;
+    }
+
+    public void passRoute(Route currRoute) {
+        this.currRoute = currRoute;
+    }
+
+    @Override
+    public void setCurrBuilding(String currBuilding) {
+        this.currBuilding = currBuilding;
+    }
+
+    @Override
+    public String getCurrBuilding() {
+        return currBuilding;
     }
 
     @Override
@@ -439,15 +517,5 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void setCurrBuilding(String currBuilding) {
-        this.currBuilding = currBuilding;
-    }
-
-    @Override
-    public String getCurrBuilding() {
-        return currBuilding;
     }
 }

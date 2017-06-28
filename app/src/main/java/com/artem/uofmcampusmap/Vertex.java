@@ -7,29 +7,22 @@ import java.util.ArrayList;
  */
 
 public abstract class Vertex {
-    private XYPos xyPos;
     private ArrayList<Vertex> connections;
     private double g; //cost from the parent vertex
     private double h; //estimated cost from this to the destination
     private double f; //total cost (g+h)
     private Vertex parent;
 
-    public Vertex(XYPos xyPos) {
-        this.xyPos = xyPos;
+    public Vertex() {
         connections = new ArrayList<>();
     }
 
     public Vertex(Vertex vertexToCopy) {
-        this.xyPos = vertexToCopy.getXYPos();
         connections = new ArrayList<>(vertexToCopy.getConnections());
     }
 
     public void addConnection(Vertex vertexConnection) {
         connections.add(vertexConnection);
-    }
-
-    public XYPos getXYPos() {
-        return xyPos;
     }
 
     public void calculateF() {
@@ -48,12 +41,7 @@ public abstract class Vertex {
         this.h = getDistanceFrom(endPoint);
     }
 
-    public double getDistanceFrom(Vertex vertex)
-    {
-        double distance = xyPos.getDistanceFrom(vertex.getXYPos());
-
-        return distance;
-    }
+    public abstract int getDistanceFrom(Vertex vertex);
 
     public double getF() {
         return f;
@@ -67,23 +55,7 @@ public abstract class Vertex {
         this.parent = parent;
     }
 
-    public boolean equals(Vertex vertex)
-    {
-        boolean areEqual = false;
-        XYPos posToCompare;
-
-        if(vertex != null)
-        {
-            posToCompare = vertex.getXYPos();
-
-            if(xyPos.getX() == posToCompare.getX() && xyPos.getY() == posToCompare.getY())
-            {
-                areEqual = true;
-            }
-        }
-
-        return areEqual;
-    }
+    public abstract boolean equals(Vertex vertex);
 
     @Override
     public boolean equals(Object obj) {

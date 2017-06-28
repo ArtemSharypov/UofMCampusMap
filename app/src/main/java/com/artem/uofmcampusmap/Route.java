@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Route {
-    private ArrayList<Edge> route;
+    private ArrayList<Instruction> route;
     private int currInstruction;
     private int maxInstructions;
     private double routeLength;
@@ -20,21 +20,24 @@ public class Route {
         routeLength = 0;
     }
 
-    public Edge getInstructionAt(int pos)
+    public Instruction getInstructionAt(int pos)
     {
-        Edge edge = null;
+        Instruction instruction = null;
 
         if(pos < route.size() && pos >= 0)
         {
-            edge = route.get(pos);
+            instruction = route.get(pos);
         }
 
-        return edge;
+        return instruction;
     }
 
-    //todo for this and next instruction implement the check for indoorvertex's, to see what building it currently is in.
-    //when the source is a building, switch to that floor/layout and draw in the lines as needed for that layout
-    public Edge getFirstInstruction()
+    public int getNumInstructions()
+    {
+        return route.size();
+    }
+
+    public Instruction getFirstInstruction()
     {
         if(route.size() > 0)
         {
@@ -45,17 +48,17 @@ public class Route {
         return route.get(0);
     }
 
-    public Edge getNextInstruction()
+    public Instruction getNextInstruction()
     {
-        Edge currEdge = null;
+        Instruction currInstruction = null;
 
-        if(currInstruction < maxInstructions)
+        if(this.currInstruction < maxInstructions)
         {
-            currEdge = route.get(currInstruction);
-            currInstruction++;
+            currInstruction = route.get(this.currInstruction);
+            this.currInstruction++;
         }
 
-        return currEdge;
+        return currInstruction;
     }
 
     public boolean currRouteQuicker(Route route)
@@ -75,7 +78,7 @@ public class Route {
         Route reversedRoute = null;
         Vertex currVertex;
         Vertex prevVertex;
-        Edge edgeToAdd;
+        Instruction instructionToAdd;
 
         if(endVertex != null)
         {
@@ -84,8 +87,8 @@ public class Route {
             reversedRoute = new Route();
 
             while (currVertex != null) {
-                edgeToAdd = new Edge(currVertex, prevVertex);
-                reversedRoute.addInstructionToStart(edgeToAdd);
+                instructionToAdd = new Instruction(currVertex, prevVertex);
+                reversedRoute.addInstructionToStart(instructionToAdd);
 
                 prevVertex = currVertex;
                 currVertex = currVertex.getParent();
@@ -95,12 +98,22 @@ public class Route {
         return reversedRoute;
     }
 
-    private void addInstructionToStart(Edge edge)
+    private void addInstructionToStart(Instruction instruction)
     {
-        if(edge != null)
+        if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
         {
-            route.add(0, edge);
-            routeLength += edge.getWeight();
+            route.add(0, instruction);
+            routeLength += instruction.getWeight();
+            maxInstructions++;
+        }
+    }
+
+    private void addInstructionToEnd(Instruction instruction)
+    {
+        if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
+        {
+            route.add(instruction);
+            routeLength += instruction.getWeight();
             maxInstructions++;
         }
     }
@@ -108,5 +121,29 @@ public class Route {
     public double getRouteLength()
     {
         return routeLength;
+    }
+
+    //Adds the second route onto this route and just return a new route
+    public void combineRoutes(Route routeToCombine)
+    {
+        if(routeToCombine != null)
+        {
+            //Only connect the two routes if they actually have more than one instruction
+            if(this.maxInstructions > 0 && routeToCombine.maxInstructions > 0)
+            {
+                Instruction firstInstruc = routeToCombine.route.get(0);
+                Instruction thisLastInstruc = route.get(maxInstructions - 1);
+
+                //Connect the end destination of this, with the starting location of the second route
+                Instruction connection = new Instruction(thisLastInstruc.getDestination(), firstInstruc.getSource());
+                this.addInstructionToEnd(connection);
+            }
+
+            //Add any other instructions from the second route into this one
+            for(Instruction instruction : routeToCombine.route)
+            {
+                this.addInstructionToEnd(instruction);
+            }
+        }
     }
 }

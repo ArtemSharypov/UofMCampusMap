@@ -10,10 +10,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * Created by Artem on 2017-04-22.
@@ -22,7 +27,9 @@ import android.widget.Spinner;
 public class RoutePlannerFragment extends Fragment {
 
     private Spinner fromBuilding;
+    private EditText fromRoom;
     private Spinner toBuilding;
+    private EditText toRoom;
     private Button cancelButton;
     private Button findRouteButton;
 
@@ -31,12 +38,14 @@ public class RoutePlannerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route_planner, container, false);
 
-        ArrayAdapter<CharSequence> fromBuildingAdapter =
+        final ArrayAdapter<CharSequence> fromBuildingAdapter =
                 ArrayAdapter.createFromResource(this.getActivity(), R.array.building_options, android.R.layout.simple_spinner_item);
         fromBuildingAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         fromBuilding = (Spinner) view.findViewById(R.id.from_building);
         fromBuilding.setAdapter(fromBuildingAdapter);
+
+        fromRoom = (EditText) view.findViewById(R.id.from_room);
 
         final ArrayAdapter<CharSequence> toBuildingAdapter =
                 ArrayAdapter.createFromResource(this.getActivity(), R.array.building_options, android.R.layout.simple_spinner_item);
@@ -44,6 +53,8 @@ public class RoutePlannerFragment extends Fragment {
 
         toBuilding = (Spinner) view.findViewById(R.id.to_building);
         toBuilding.setAdapter(toBuildingAdapter);
+
+        toRoom = (EditText) view.findViewById(R.id.to_room);
 
         cancelButton = (Button) view.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -60,8 +71,13 @@ public class RoutePlannerFragment extends Fragment {
             public void onClick(View v) {
                 MainActivity activity = (MainActivity) getActivity();
 
+                //todo implement a check if there is such a room for the building locations entered, if not make a toast
                 activity.passStartLocation(fromBuilding.getSelectedItem().toString());
+                activity.passStartRoom(fromRoom.getText().toString().trim());
+
                 activity.passDestinationLocation(toBuilding.getSelectedItem().toString());
+                activity.passDestinationRoom(toRoom.getText().toString().trim());
+
 
                 getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             }

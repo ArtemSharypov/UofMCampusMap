@@ -109,22 +109,40 @@ public class RouteFinder {
         ArrayList<Vertex> successors = new ArrayList<>();
         Vertex childVertex;
 
+        boolean parentIsIndoor = false;
+        IndoorVertex parentIndoor = null;
+        boolean childIsIndoor = false;
+
         if(parent != null)
         {
+            if(parent instanceof IndoorVertex){
+                parentIsIndoor = true;
+                parentIndoor = (IndoorVertex) parent;
+            }
+
             connections = parent.getConnections();
 
             for(Vertex currConnection: connections)
             {
                 if(currConnection instanceof IndoorVertex)
+                {
                     childVertex = new IndoorVertex((IndoorVertex) currConnection);
-                else
+                    childIsIndoor = true;
+                }
+                else if(currConnection instanceof OutdoorVertex)
                     childVertex = new OutdoorVertex((OutdoorVertex) currConnection);
+                else
+                    childVertex = currConnection;
 
-                childVertex.setParent(parent);
-                childVertex.setG(parent.getG() + parent.getDistanceFrom(childVertex));
-                childVertex.calculateH(destination);
-                childVertex.calculateF();
-                successors.add(childVertex);
+                if(((childIsIndoor && parentIsIndoor)&& ((IndoorVertex)childVertex).getFloor() == parentIndoor.getFloor()) ||
+                        childVertex instanceof OutdoorVertex)
+                {
+                    childVertex.setParent(parent);
+                    childVertex.setG(parent.getG() + parent.getDistanceFrom(childVertex));
+                    childVertex.calculateH(destination);
+                    childVertex.calculateF();
+                    successors.add(childVertex);
+                }
             }
         }
 
