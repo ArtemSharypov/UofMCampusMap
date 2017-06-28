@@ -8,12 +8,12 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         app:srcCompat="@drawable/armes_floor2" />
 
-    <ImageView
+    <com.artem.uofmcampusmap.buildings.DrawingPathView
         android:id="@+id/lines_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@android:color/transparent" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

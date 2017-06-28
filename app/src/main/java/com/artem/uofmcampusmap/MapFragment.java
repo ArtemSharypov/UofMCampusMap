@@ -55,6 +55,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     private int currInstructionPos;
     private int currOutsideLine; //The current position within routeLines for outside polylines
 
+    //todo REALLY need to split up the map fragment and building layouts being shown, causes problems with re-doing navigation
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,8 +80,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 if(currInstructionPos > 0)
                 {
                     currInstructionPos--;
-                    Edge currInstruction = route.getInstructionAt(currInstructionPos);
+
+                    Instruction currInstruction = route.getInstructionAt(currInstructionPos);
                     instructionsTextView.setText(currInstruction.getInstructions());
+
+                    PassRouteData activity = (PassRouteData) getActivity();
+                    activity.setCurrInstructionPos(currInstructionPos);
 
                     if(currInstruction.getSource() instanceof OutdoorVertex)
                     {
@@ -100,9 +105,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     }
                     else if(currInstruction.getSource() instanceof IndoorVertex)
                     {
-                        handleIndoorSource(currInstruction, false);
+                        handleIndoorSource(currInstruction);
                     }
-
                 }
             }
         });
@@ -113,10 +117,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
             public void onClick(View v) {
                 if(currInstructionPos + 1 < route.getNumInstructions())
                 {
-                    Edge currInstruction = route.getInstructionAt(currInstructionPos);
                     currInstructionPos++;
 
+                    Instruction currInstruction = route.getInstructionAt(currInstructionPos);
                     instructionsTextView.setText(currInstruction.getInstructions());
+
+                    PassRouteData activity = (PassRouteData) getActivity();
+                    activity.setCurrInstructionPos(currInstructionPos);
 
                     if(currInstruction.getSource() instanceof OutdoorVertex)
                     {
@@ -137,13 +144,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                     }
                     else if(currInstruction.getSource() instanceof IndoorVertex)
                     {
-                        handleIndoorSource(currInstruction, true);
+                        handleIndoorSource(currInstruction);
                     }
                 }
             }
         });
 
-        MainActivity activity = (MainActivity) getActivity();
+        PassRouteData activity = (PassRouteData) getActivity();
         startLocation = activity.getStartLocation();
         startRoom = activity.getStartRoom();
         destinationLocation = activity.getDestinationLocation();
@@ -170,14 +177,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
             if(route != null)
             {
-                Edge firstInstruction = route.getFirstInstruction();
+                Instruction firstInstruction = route.getFirstInstruction();
 
                 instructionsTextView.setText(firstInstruction.getInstructions());
                 instructionsLinLayout.setVisibility(View.VISIBLE);
 
+                activity.passRoute(route);
+                activity.setCurrInstructionPos(currInstructionPos);
+
                 if(firstInstruction.getSource() instanceof IndoorVertex)
                 {
-                    handleIndoorSource(firstInstruction, true);
+                    handleIndoorSource(firstInstruction);
                 }
 
             }
@@ -186,18 +196,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         return view;
     }
 
-    //needs a true/false if its next or previous
-    //also needs to be a edge so that the displaying works
-    private void handleIndoorSource(Edge edgeWithIndoorV, boolean isNextInstruc)
+    private void handleIndoorSource(Instruction instructionWithIndoorV)
     {
         IndoorVertex indoorSource;
 
-        if(edgeWithIndoorV.getSource() instanceof IndoorVertex)
+        if(instructionWithIndoorV.getSource() instanceof IndoorVertex)
         {
-            indoorSource = (IndoorVertex) edgeWithIndoorV.getSource();
+            indoorSource = (IndoorVertex) instructionWithIndoorV.getSource();
             String currBuilding = indoorSource.getBuilding();
             int currFloor = indoorSource.getFloor();
             DisplayIndoorRoutes childFrag = (DisplayIndoorRoutes) getChildFragmentManager().findFragmentById(R.id.indoor_building_frag_holder);
+            PassRouteData activity = (PassRouteData) getActivity();
 
             //todo probably clean this logic up a little
             if(indoorBuildingFragHolder.getVisibility() == View.VISIBLE)
@@ -206,76 +215,35 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
                 {
                     if(currFloor != this.currFloor)
                     {
+                        activity.passRoute(route);
+
                         switchViewToBuilding(currBuilding, currFloor);
-
-                        if(childFrag != null)
-                        {
-                            if(isNextInstruc)
-                            {
-                                childFrag.showAllIndoorPaths(currInstructionPos, route);
-                            }
-                            else
-                            {
-                                childFrag.displayIndoorRoute(edgeWithIndoorV);
-                            }
-
-                        }
                     }
                     else
                     {
                         if(childFrag != null)
                         {
-                            if(isNextInstruc)
-                            {
-                                childFrag.hideIndoorPath(edgeWithIndoorV);
-                            }
-                            else
-                            {
-                                childFrag.displayIndoorRoute(edgeWithIndoorV);
-                            }
-
+                            activity = (PassRouteData) getActivity();
+                            childFrag.updateDisplayedRoute();
                         }
                     }
                 }
                 else
                 {
+                    activity.passRoute(route);
+
                     switchViewToBuilding(currBuilding, currFloor);
-
-                    if(childFrag != null)
-                    {
-                        if(isNextInstruc)
-                        {
-                            childFrag.showAllIndoorPaths(currInstructionPos, route);
-                        }
-                        else
-                        {
-                            childFrag.displayIndoorRoute(edgeWithIndoorV);
-                        }
-
-                    }
                 }
             }
             else
             {
-
                 indoorBuildingFragHolder.setVisibility(View.VISIBLE);
                 mMapView.setVisibility(View.GONE);
                 mMapView.onPause();
 
+                activity.passRoute(route);
+
                 switchViewToBuilding(currBuilding, currFloor);
-
-                if(childFrag != null)
-                {
-                    if(isNextInstruc)
-                    {
-                        childFrag.showAllIndoorPaths(currInstructionPos, route);
-                    }
-                    else
-                    {
-                        childFrag.displayIndoorRoute(edgeWithIndoorV);
-                    }
-
-                }
             }
         }
     }
@@ -314,7 +282,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     {
         LatLng startPoint;
         LatLng endPoint;
-        Edge currInstruction;
+        Instruction currInstruction;
         PolylineOptions currLine;
         Vertex source;
         Vertex destination;

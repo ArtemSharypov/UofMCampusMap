@@ -4,12 +4,12 @@ package com.artem.uofmcampusmap;
  * Created by Artem on 2017-04-28.
  */
 
-public class Edge {
+public class Instruction {
     private Vertex source;
     private Vertex destination;
     private int weight;
 
-    public Edge(Vertex source, Vertex destination)
+    public Instruction(Vertex source, Vertex destination)
     {
         this.source = source;
         this.destination = destination;
@@ -46,8 +46,26 @@ public class Edge {
                 toString = "Exit the building";
             }
             else
+            {
+                IndoorVertex sourceIndoor = (IndoorVertex) source;
+                IndoorVertex destIndoor = (IndoorVertex) destination;
+                if(sourceIndoor.getFloor() == destIndoor.getFloor())
                 {
-                toString += " feet";
+                    toString += " feet";
+                }
+                else
+                {
+                    if(sourceIndoor.getFloor() > destIndoor.getFloor())
+                    {
+                        toString = "Go up ";
+                    }
+                    else
+                    {
+                        toString = "Go down ";
+                    }
+                    toString += Math.max(((IndoorVertex) source).getFloor(), ((IndoorVertex) destination).getFloor());
+                    toString += " floors.";
+                }
             }
         }
         else

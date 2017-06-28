@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     private String destinationLocation;
     private String destinationRoom;
     private String currBuilding;
+    private int currInstructionPos;
+    private Route currRoute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -435,6 +437,34 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     }
 
     @Override
+    public int getCurrInstructionPos() {
+        return currInstructionPos;
+    }
+
+    @Override
+    public void setCurrInstructionPos(int currInstructionPos) {
+        this.currInstructionPos = currInstructionPos;
+    }
+
+    public Route getRoute() {
+        return currRoute;
+    }
+
+    public void passRoute(Route currRoute) {
+        this.currRoute = currRoute;
+    }
+
+    @Override
+    public void setCurrBuilding(String currBuilding) {
+        this.currBuilding = currBuilding;
+    }
+
+    @Override
+    public String getCurrBuilding() {
+        return currBuilding;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
@@ -487,15 +517,5 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void setCurrBuilding(String currBuilding) {
-        this.currBuilding = currBuilding;
-    }
-
-    @Override
-    public String getCurrBuilding() {
-        return currBuilding;
     }
 }
