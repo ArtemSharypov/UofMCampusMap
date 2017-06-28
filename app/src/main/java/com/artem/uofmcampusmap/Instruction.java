@@ -47,13 +47,22 @@ public class Instruction {
             }
             else
             {
-                if(((IndoorVertex) source).getFloor() == ((IndoorVertex) destination).getFloor())
+                IndoorVertex sourceIndoor = (IndoorVertex) source;
+                IndoorVertex destIndoor = (IndoorVertex) destination;
+                if(sourceIndoor.getFloor() == destIndoor.getFloor())
                 {
                     toString += " feet";
                 }
                 else
                 {
-                    toString = "Walk up ";
+                    if(sourceIndoor.getFloor() > destIndoor.getFloor())
+                    {
+                        toString = "Go up ";
+                    }
+                    else
+                    {
+                        toString = "Go down ";
+                    }
                     toString += Math.max(((IndoorVertex) source).getFloor(), ((IndoorVertex) destination).getFloor());
                     toString += " floors.";
                 }
