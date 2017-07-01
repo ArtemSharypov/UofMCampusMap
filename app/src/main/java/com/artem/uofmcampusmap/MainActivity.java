@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         if(savedInstanceState == null)
         {
-            MapFragment mapFragment = new MapFragment();
+            NavigationFragment mapFragment = new NavigationFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame_layout, agri_animalSci_tunnel);
-                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.addToBackStack("NavigationFragment");
                 fragmentTransaction.commit();
 
                 break;
@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame_layout, archi2_extEduc_tunnel);
-                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.addToBackStack("NavigationFragment");
                 fragmentTransaction.commit();
 
                 break;
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame_layout, dafoe_duffRoblin_uniCollege_tunnel);
-                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.addToBackStack("NavigationFragment");
                 fragmentTransaction.commit();
 
                 break;
@@ -316,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame_layout, robson_uniCollege_tunnel);
-                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.addToBackStack("NavigationFragment");
                 fragmentTransaction.commit();
 
                 break;
@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame_layout, russel_archi2_tunnel);
-                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.addToBackStack("NavigationFragment");
                 fragmentTransaction.commit();
 
                 break;
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame_layout, tier_artlab_tunnel);
-                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.addToBackStack("NavigationFragment");
                 fragmentTransaction.commit();
 
                 break;
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 fragmentManager = getSupportFragmentManager();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.main_frame_layout, wallace_parker_tunnel);
-                fragmentTransaction.addToBackStack("MapFragment");
+                fragmentTransaction.addToBackStack("NavigationFragment");
                 fragmentTransaction.commit();
 
                 break;
@@ -378,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame_layout, buildingLayoutFragment);
-        fragmentTransaction.addToBackStack("MapFragment");
+        fragmentTransaction.addToBackStack("NavigationFragment");
         fragmentTransaction.commit();
     }
 
@@ -392,7 +392,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame_layout, routePlannerFragment);
-        fragmentTransaction.addToBackStack("MapFragment");
+        fragmentTransaction.addToBackStack("NavigationFragment");
         fragmentTransaction.commit();
     }
 

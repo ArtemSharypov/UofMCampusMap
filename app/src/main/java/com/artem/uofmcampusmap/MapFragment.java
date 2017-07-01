@@ -4,19 +4,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.artem.uofmcampusmap.buildings.DisplayIndoorRoutes;
-import com.artem.uofmcampusmap.buildings.armes.ArmesFloor1Fragment;
-import com.artem.uofmcampusmap.buildings.armes.ArmesFloor2Fragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -24,6 +15,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -31,130 +23,25 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 
 /**
- * Created by Artem on 2017-04-21.
+ * Created by Artem on 2017-06-28.
  */
 
-public class MapFragment extends Fragment implements OnMapReadyCallback{
+public class MapFragment extends Fragment implements OnMapReadyCallback, DisplayRoute {
 
-    private MapView mMapView;
-    private FrameLayout indoorBuildingFragHolder;
     private GoogleMap googleMap;
-    private ImageView prevInstruction;
-    private ImageView nextInstruction;
-    private TextView instructionsTextView;
-    private LinearLayout instructionsLinLayout;
-    private MapNavigationMesh campusMap;
-    private String startLocation;
-    private String startRoom;
-    private String destinationLocation;
-    private String destinationRoom;
-    private String currLocation;
-    private int currFloor;
-    private Route route;
+    private MapView mMapView;
     private ArrayList<Polyline> routeLines;
-    private int currInstructionPos;
-    private int currOutsideLine; //The current position within routeLines for outside polylines
+    private ArrayList<Marker> mapMarkers;
+    private int lastPosInRoute; //Last position that was used to update the route
+    private int currPosInLines;
 
-    //todo REALLY need to split up the map fragment and building layouts being shown, causes problems with re-doing navigation
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-        campusMap = new MapNavigationMesh();
         routeLines = new ArrayList<>();
-        currInstructionPos = 0;
-        currOutsideLine = 0;
-        currFloor = 0;
-        currLocation = "";
-
-        indoorBuildingFragHolder = (FrameLayout) view.findViewById(R.id.indoor_building_frag_holder);
-
-        instructionsTextView = (TextView) view.findViewById(R.id.current_instructions);
-        instructionsLinLayout = (LinearLayout) view.findViewById(R.id.instructions_layout);
-
-        prevInstruction = (ImageView) view.findViewById(R.id.prev_instruction);
-        prevInstruction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currInstructionPos > 0)
-                {
-                    currInstructionPos--;
-
-                    Instruction currInstruction = route.getInstructionAt(currInstructionPos);
-                    instructionsTextView.setText(currInstruction.getInstructions());
-
-                    PassRouteData activity = (PassRouteData) getActivity();
-                    activity.setCurrInstructionPos(currInstructionPos);
-
-                    if(currInstruction.getSource() instanceof OutdoorVertex)
-                    {
-                        if(mMapView.getVisibility() == View.GONE)
-                        {
-                            mMapView.setVisibility(View.VISIBLE);
-                            mMapView.onResume();
-                            indoorBuildingFragHolder.setVisibility(View.GONE);
-                            currLocation = "";
-
-                        }
-                        else if(currOutsideLine > 0)
-                        {
-                            currOutsideLine--;
-                            routeLines.get(currOutsideLine).setVisible(true);
-                        }
-                    }
-                    else if(currInstruction.getSource() instanceof IndoorVertex)
-                    {
-                        handleIndoorSource(currInstruction);
-                    }
-                }
-            }
-        });
-
-        nextInstruction = (ImageView) view.findViewById(R.id.next_instruction);
-        nextInstruction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currInstructionPos + 1 < route.getNumInstructions())
-                {
-                    currInstructionPos++;
-
-                    Instruction currInstruction = route.getInstructionAt(currInstructionPos);
-                    instructionsTextView.setText(currInstruction.getInstructions());
-
-                    PassRouteData activity = (PassRouteData) getActivity();
-                    activity.setCurrInstructionPos(currInstructionPos);
-
-                    if(currInstruction.getSource() instanceof OutdoorVertex)
-                    {
-                        if(mMapView.getVisibility() == View.GONE)
-                        {
-                            mMapView.setVisibility(View.VISIBLE);
-                            mMapView.onResume();
-                            indoorBuildingFragHolder.setVisibility(View.GONE);
-                            currLocation = "";
-
-                        }
-                        else if(currOutsideLine < route.getNumInstructions() && currOutsideLine < routeLines.size())
-                        {
-                            routeLines.get(currOutsideLine).setVisible(false);
-                            currOutsideLine++;
-                        }
-
-                    }
-                    else if(currInstruction.getSource() instanceof IndoorVertex)
-                    {
-                        handleIndoorSource(currInstruction);
-                    }
-                }
-            }
-        });
-
-        PassRouteData activity = (PassRouteData) getActivity();
-        startLocation = activity.getStartLocation();
-        startRoom = activity.getStartRoom();
-        destinationLocation = activity.getDestinationLocation();
-        destinationRoom = activity.getDestinationRoom();
+        mapMarkers = new ArrayList<>();
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -171,114 +58,44 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
         mMapView.getMapAsync(this);
 
-        if(!startLocation.equals("") && !destinationLocation.equals(""))
-        {
-            route = campusMap.findRoute(startLocation, startRoom, destinationLocation, destinationRoom);
-
-            if(route != null)
-            {
-                Instruction firstInstruction = route.getFirstInstruction();
-
-                instructionsTextView.setText(firstInstruction.getInstructions());
-                instructionsLinLayout.setVisibility(View.VISIBLE);
-
-                activity.passRoute(route);
-                activity.setCurrInstructionPos(currInstructionPos);
-
-                if(firstInstruction.getSource() instanceof IndoorVertex)
-                {
-                    handleIndoorSource(firstInstruction);
-                }
-
-            }
-        }
-
         return view;
     }
 
-    private void handleIndoorSource(Instruction instructionWithIndoorV)
+
+    @Override
+    public void updateDisplayedRoute()
     {
-        IndoorVertex indoorSource;
+        PassRouteData activity = (PassRouteData) getActivity();
+        int currRoutePos = activity.getCurrInstructionPos();
 
-        if(instructionWithIndoorV.getSource() instanceof IndoorVertex)
+        if(currRoutePos >= 0)
         {
-            indoorSource = (IndoorVertex) instructionWithIndoorV.getSource();
-            String currBuilding = indoorSource.getBuilding();
-            int currFloor = indoorSource.getFloor();
-            DisplayIndoorRoutes childFrag = (DisplayIndoorRoutes) getChildFragmentManager().findFragmentById(R.id.indoor_building_frag_holder);
-            PassRouteData activity = (PassRouteData) getActivity();
+            int linePos = currRoutePos - lastPosInRoute;
+            lastPosInRoute = currRoutePos;
 
-            //todo probably clean this logic up a little
-            if(indoorBuildingFragHolder.getVisibility() == View.VISIBLE)
+            if(linePos > 0)
             {
-                if(currBuilding.equals(currLocation))
+                //means that next was pressed
+                if(currPosInLines + 1 < routeLines.size())
                 {
-                    if(currFloor != this.currFloor)
-                    {
-                        activity.passRoute(route);
-
-                        switchViewToBuilding(currBuilding, currFloor);
-                    }
-                    else
-                    {
-                        if(childFrag != null)
-                        {
-                            activity = (PassRouteData) getActivity();
-                            childFrag.updateDisplayedRoute();
-                        }
-                    }
-                }
-                else
-                {
-                    activity.passRoute(route);
-
-                    switchViewToBuilding(currBuilding, currFloor);
+                    routeLines.get(currPosInLines).setVisible(false);
+                    currPosInLines++;
                 }
             }
             else
             {
-                indoorBuildingFragHolder.setVisibility(View.VISIBLE);
-                mMapView.setVisibility(View.GONE);
-                mMapView.onPause();
-
-                activity.passRoute(route);
-
-                switchViewToBuilding(currBuilding, currFloor);
+                //means that previous was pressed
+                if(currPosInLines > 0)
+                {
+                    currPosInLines--;
+                    routeLines.get(currPosInLines).setVisible(true);
+                }
             }
         }
     }
 
-    private void switchViewToBuilding(String buildingName, int floorNumber)
-    {
-        if(buildingName.equals(getResources().getString(R.string.armes)))
-        {
-            currLocation = buildingName;
-            currFloor = floorNumber;
-            FragmentManager childFragManager = getChildFragmentManager();
-            FragmentTransaction childFragTrans;
-
-            if(currFloor == 1)
-            {
-                ArmesFloor1Fragment armesFloor1Fragment = new ArmesFloor1Fragment();
-
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.indoor_building_frag_holder, armesFloor1Fragment);
-                childFragTrans.addToBackStack("Armes1");
-                childFragTrans.commit();
-            }
-            else if(currFloor == 2)
-            {
-                ArmesFloor2Fragment armesFloor2Fragment = new ArmesFloor2Fragment();
-
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.indoor_building_frag_holder, armesFloor2Fragment);
-                childFragTrans.addToBackStack("Armes1");
-                childFragTrans.commit();
-            }
-        }
-    }
-
-    private void drawRouteOnMap()
+    @Override
+    public void displayRoute()
     {
         LatLng startPoint;
         LatLng endPoint;
@@ -286,13 +103,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         PolylineOptions currLine;
         Vertex source;
         Vertex destination;
+        PassRouteData activity = (PassRouteData) getActivity();
+        int currRoutePos = activity.getCurrInstructionPos();
+        Route route = activity.getRoute();
 
         if(route != null && route.getRouteLength() > 0 && googleMap != null)
         {
-            currInstruction = route.getFirstInstruction();
+            lastPosInRoute = currRoutePos;
+            currPosInLines = 0;
 
-            while(currInstruction != null)
+            while(currRoutePos < route.getNumInstructions())
             {
+                currInstruction = route.getInstructionAt(currRoutePos);
                 source = currInstruction.getSource();
                 destination = currInstruction.getDestination();
 
@@ -306,8 +128,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
 
                     routeLines.add(googleMap.addPolyline(currLine));
                 }
+                else if(source instanceof IndoorVertex && destination instanceof IndoorVertex)
+                {
+                    break;
+                }
 
-                currInstruction = route.getNextInstruction();
+                currRoutePos++;
             }
         }
     }
@@ -328,8 +154,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
     public void onDestroy() {
         super.onDestroy();
 
-        if(mMapView != null)
+        if(mMapView != null) {
+            //remove all markers/lines to prevent a memory leak
+            mapMarkers.clear();
+            routeLines.clear();
+
             mMapView.onDestroy();
+        }
     }
 
     @Override
@@ -343,7 +174,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         centerMap();
         addBuildingMarkers();
-        drawRouteOnMap();
+        displayRoute();
     }
 
     private void centerMap()
@@ -363,114 +194,151 @@ public class MapFragment extends Fragment implements OnMapReadyCallback{
         //todo make custom markers that just say the building name, over the building its meant to represent. maybe turn off onClicks for them
 
         LatLng agriculture = new LatLng(49.806950, -97.135443);
-        googleMap.addMarker(new MarkerOptions().position(agriculture).title(getResources().getString(R.string.agriculture)));
+        Marker agri = googleMap.addMarker(new MarkerOptions().position(agriculture).title(getResources().getString(R.string.agriculture)));
+        mapMarkers.add(agri);
 
         LatLng agr_engineering = new LatLng(49.807355, -97.133847);
-        googleMap.addMarker(new MarkerOptions().position(agr_engineering).title(getResources().getString(R.string.agr_engineer)));
+        Marker agri_eng = googleMap.addMarker(new MarkerOptions().position(agr_engineering).title(getResources().getString(R.string.agr_engineer)));
+        mapMarkers.add(agri_eng);
 
         LatLng allen = new LatLng(49.810686, -97.134651);
-        googleMap.addMarker(new MarkerOptions().position(allen).title(getResources().getString(R.string.allen)));
+        Marker allenMarker = googleMap.addMarker(new MarkerOptions().position(allen).title(getResources().getString(R.string.allen)));
+        mapMarkers.add(allenMarker);
 
         LatLng animal_sci = new LatLng(49.806048, -97.137872);
-        googleMap.addMarker(new MarkerOptions().position(animal_sci).title(getResources().getString(R.string.animal_sci)));
+        Marker animalSci = googleMap.addMarker(new MarkerOptions().position(animal_sci).title(getResources().getString(R.string.animal_sci)));
+        mapMarkers.add(animalSci);
 
         LatLng archi_2 = new LatLng(49.807834, -97.136534);
-        googleMap.addMarker(new MarkerOptions().position(archi_2).title(getResources().getString(R.string.archi_2)));
+        Marker archi2M = googleMap.addMarker(new MarkerOptions().position(archi_2).title(getResources().getString(R.string.archi_2)));
+        mapMarkers.add(archi2M);
 
         LatLng armes = new LatLng(49.810900, -97.133801);
-        googleMap.addMarker(new MarkerOptions().position(armes).title(getResources().getString(R.string.armes)));
+        Marker armesM = googleMap.addMarker(new MarkerOptions().position(armes).title(getResources().getString(R.string.armes)));
+        mapMarkers.add(armesM);
 
         LatLng art_lab = new LatLng(49.808568, -97.130191);
-        googleMap.addMarker(new MarkerOptions().position(art_lab).title(getResources().getString(R.string.artlab)));
+        Marker artlabM = googleMap.addMarker(new MarkerOptions().position(art_lab).title(getResources().getString(R.string.artlab)));
+        mapMarkers.add(artlabM);
 
         LatLng bio_sci = new LatLng(49.810222, -97.134779);
-        googleMap.addMarker(new MarkerOptions().position(bio_sci).title(getResources().getString(R.string.bio_sci)));
+        Marker bioSciM = googleMap.addMarker(new MarkerOptions().position(bio_sci).title(getResources().getString(R.string.bio_sci)));
+        mapMarkers.add(bioSciM);
 
         LatLng buller = new LatLng(49.810516, -97.133458);
-        googleMap.addMarker(new MarkerOptions().position(buller).title(getResources().getString(R.string.buller)));
+        Marker bullerM = googleMap.addMarker(new MarkerOptions().position(buller).title(getResources().getString(R.string.buller)));
+        mapMarkers.add(bullerM);
 
         LatLng dairy_sci = new LatLng(49.807553, -97.133297);
-        googleMap.addMarker(new MarkerOptions().position(dairy_sci).title(getResources().getString(R.string.dairy_science)));
+        Marker dairySciM = googleMap.addMarker(new MarkerOptions().position(dairy_sci).title(getResources().getString(R.string.dairy_science)));
+        mapMarkers.add(dairySciM);
 
         LatLng drake_centre = new LatLng(49.808066, -97.130061);
-        googleMap.addMarker(new MarkerOptions().position(drake_centre).title(getResources().getString(R.string.drake_centre)));
+        Marker drakeCentreM = googleMap.addMarker(new MarkerOptions().position(drake_centre).title(getResources().getString(R.string.drake_centre)));
+        mapMarkers.add(drakeCentreM);
 
         LatLng duff_roblin = new LatLng(49.811029, -97.132555);
-        googleMap.addMarker(new MarkerOptions().position(duff_roblin).title(getResources().getString(R.string.duff_roblin)));
+        Marker duffRobM = googleMap.addMarker(new MarkerOptions().position(duff_roblin).title(getResources().getString(R.string.duff_roblin)));
+        mapMarkers.add(duffRobM);
 
         LatLng education = new LatLng(49.808682, -97.136705);
-        googleMap.addMarker(new MarkerOptions().position(education).title(getResources().getString(R.string.education)));
+        Marker educM = googleMap.addMarker(new MarkerOptions().position(education).title(getResources().getString(R.string.education)));
+        mapMarkers.add(educM);
 
         LatLng eitc_e1 = new LatLng(49.8082972, -97.1334759);
-        googleMap.addMarker(new MarkerOptions().position(eitc_e1).title(getResources().getString(R.string.eitc_e1)));
+        Marker eitcE1M= googleMap.addMarker(new MarkerOptions().position(eitc_e1).title(getResources().getString(R.string.eitc_e1)));
+        mapMarkers.add(eitcE1M);
 
         LatLng eitc_e2 = new LatLng(49.8086711, -97.1336891);
-        googleMap.addMarker(new MarkerOptions().position(eitc_e2).title(getResources().getString(R.string.eitc_e2)));
+        Marker eitcE2M = googleMap.addMarker(new MarkerOptions().position(eitc_e2).title(getResources().getString(R.string.eitc_e2)));
+        mapMarkers.add(eitcE2M);
 
         LatLng eitc_e3 = new LatLng(49.8083665, -97.1344375);
-        googleMap.addMarker(new MarkerOptions().position(eitc_e3).title(getResources().getString(R.string.eitc_e3)));
+        Marker eitcE3M= googleMap.addMarker(new MarkerOptions().position(eitc_e3).title(getResources().getString(R.string.eitc_e3)));
+        mapMarkers.add(eitcE3M);
 
         LatLng elizabeth_dafoe = new LatLng(49.8102360, -97.1316754);
-        googleMap.addMarker(new MarkerOptions().position(elizabeth_dafoe).title(getResources().getString(R.string.elizabeth_dafoe)));
+        Marker eliDafoeM= googleMap.addMarker(new MarkerOptions().position(elizabeth_dafoe).title(getResources().getString(R.string.elizabeth_dafoe)));
+        mapMarkers.add(eliDafoeM);
 
         LatLng ext_education = new LatLng(49.807408, -97.138650);
-        googleMap.addMarker(new MarkerOptions().position(ext_education).title(getResources().getString(R.string.ext_education)));
+        Marker extEducM= googleMap.addMarker(new MarkerOptions().position(ext_education).title(getResources().getString(R.string.ext_education)));
+        mapMarkers.add(extEducM);
 
         LatLng fac_music = new LatLng(49.807224, -97.135906);
-        googleMap.addMarker(new MarkerOptions().position(fac_music).title(getResources().getString(R.string.fac_music)));
+        Marker facMusicM = googleMap.addMarker(new MarkerOptions().position(fac_music).title(getResources().getString(R.string.fac_music)));
+        mapMarkers.add(facMusicM);
 
         LatLng fletcher = new LatLng(49.809714, -97.130965);
-        googleMap.addMarker(new MarkerOptions().position(fletcher).title(getResources().getString(R.string.fletcher)));
+        Marker fletcherM = googleMap.addMarker(new MarkerOptions().position(fletcher).title(getResources().getString(R.string.fletcher)));
+        mapMarkers.add(fletcherM);
 
         LatLng frank_kennedy = new LatLng(49.806954, -97.138744);
-        googleMap.addMarker(new MarkerOptions().position(frank_kennedy).title(getResources().getString(R.string.frank_kennedy)));
+        Marker frankKenM= googleMap.addMarker(new MarkerOptions().position(frank_kennedy).title(getResources().getString(R.string.frank_kennedy)));
+        mapMarkers.add(frankKenM);
 
         LatLng helen_glass = new LatLng(49.809063, -97.135516);
-        googleMap.addMarker(new MarkerOptions().position(helen_glass).title(getResources().getString(R.string.helen_glass)));
+        Marker helenGlassM = googleMap.addMarker(new MarkerOptions().position(helen_glass).title(getResources().getString(R.string.helen_glass)));
+        mapMarkers.add(helenGlassM);
 
         LatLng human_ecology = new LatLng(49.810734, -97.132233);
-        googleMap.addMarker(new MarkerOptions().position(human_ecology).title(getResources().getString(R.string.human_ecology)));
+        Marker humanEcoM = googleMap.addMarker(new MarkerOptions().position(human_ecology).title(getResources().getString(R.string.human_ecology)));
+        mapMarkers.add(humanEcoM);
 
         LatLng istbister = new LatLng(49.809384, -97.130538);
-        googleMap.addMarker(new MarkerOptions().position(istbister).title(getResources().getString(R.string.isbister)));
+        Marker isbisterM =  googleMap.addMarker(new MarkerOptions().position(istbister).title(getResources().getString(R.string.isbister)));
+        mapMarkers.add(isbisterM);
 
         LatLng machray = new LatLng(49.811170, -97.133385);
-        googleMap.addMarker(new MarkerOptions().position(machray).title(getResources().getString(R.string.machray)));
+        Marker machrayM = googleMap.addMarker(new MarkerOptions().position(machray).title(getResources().getString(R.string.machray)));
+        mapMarkers.add(machrayM);
 
         LatLng music_2 = new LatLng(49.807759, -97.134333);
-        googleMap.addMarker(new MarkerOptions().position(music_2).title(getResources().getString(R.string.music_annex)));
+        Marker music2M = googleMap.addMarker(new MarkerOptions().position(music_2).title(getResources().getString(R.string.music_annex)));
+        mapMarkers.add(music2M);
 
         LatLng parker = new LatLng(49.811239, -97.134531);
-        googleMap.addMarker(new MarkerOptions().position(parker).title(getResources().getString(R.string.parker)));
+        Marker parkerM = googleMap.addMarker(new MarkerOptions().position(parker).title(getResources().getString(R.string.parker)));
+        mapMarkers.add(parkerM);
 
         LatLng plant_sci = new LatLng(49.806870, -97.134641);
-        googleMap.addMarker(new MarkerOptions().position(plant_sci).title(getResources().getString(R.string.plant_sci)));
+        Marker plantSciM = googleMap.addMarker(new MarkerOptions().position(plant_sci).title(getResources().getString(R.string.plant_sci)));
+        mapMarkers.add(plantSciM);
 
         LatLng robert_schultz = new LatLng(49.810074, -97.136627);
-        googleMap.addMarker(new MarkerOptions().position(robert_schultz).title(getResources().getString(R.string.robert_schultz)));
+        Marker robSchultzM = googleMap.addMarker(new MarkerOptions().position(robert_schultz).title(getResources().getString(R.string.robert_schultz)));
+        mapMarkers.add(robSchultzM);
 
         LatLng robson = new LatLng(49.811844, -97.130639);
-        googleMap.addMarker(new MarkerOptions().position(robson).title(getResources().getString(R.string.robson)));
+        Marker robsonM = googleMap.addMarker(new MarkerOptions().position(robson).title(getResources().getString(R.string.robson)));
+        mapMarkers.add(robsonM);
 
         LatLng russel = new LatLng(49.808051, -97.135293);
-        googleMap.addMarker(new MarkerOptions().position(russel).title(getResources().getString(R.string.russel)));
+        Marker russelM= googleMap.addMarker(new MarkerOptions().position(russel).title(getResources().getString(R.string.russel)));
+        mapMarkers.add(russelM);
 
         LatLng st_johns = new LatLng(49.810565, -97.136832);
-        googleMap.addMarker(new MarkerOptions().position(st_johns).title(getResources().getString(R.string.st_johns)));
+        Marker stJohnsM = googleMap.addMarker(new MarkerOptions().position(st_johns).title(getResources().getString(R.string.st_johns)));
+        mapMarkers.add(stJohnsM);
 
         LatLng st_pauls = new LatLng(49.810266, -97.137926);
-        googleMap.addMarker(new MarkerOptions().position(st_pauls).title(getResources().getString(R.string.st_pauls)));
+        Marker stPaulsM = googleMap.addMarker(new MarkerOptions().position(st_pauls).title(getResources().getString(R.string.st_pauls)));
+        mapMarkers.add(stPaulsM);
 
         LatLng tier = new LatLng(49.809219, -97.130942);
-        googleMap.addMarker(new MarkerOptions().position(tier).title(getResources().getString(R.string.tier)));
+        Marker tierM = googleMap.addMarker(new MarkerOptions().position(tier).title(getResources().getString(R.string.tier)));
+        mapMarkers.add(tierM);
 
         LatLng uni_centre = new LatLng(49.8094187, -97.1347299);
-        googleMap.addMarker(new MarkerOptions().position(uni_centre).title(getResources().getString(R.string.uni_centre)));
+        Marker uniCentreM= googleMap.addMarker(new MarkerOptions().position(uni_centre).title(getResources().getString(R.string.uni_centre)));
+        mapMarkers.add(uniCentreM);
 
         LatLng uni_college = new LatLng(49.811203, -97.131089);
-        googleMap.addMarker(new MarkerOptions().position(uni_college).title(getResources().getString(R.string.uni_college)));
+        Marker uniCollegeM = googleMap.addMarker(new MarkerOptions().position(uni_college).title(getResources().getString(R.string.uni_college)));
+        mapMarkers.add(uniCollegeM);
 
         LatLng wallace = new LatLng(49.811757, -97.135920);
-        googleMap.addMarker(new MarkerOptions().position(wallace).title(getResources().getString(R.string.wallace)));
+        Marker wallaceM = googleMap.addMarker(new MarkerOptions().position(wallace).title(getResources().getString(R.string.wallace)));
+        mapMarkers.add(wallaceM);
     }
 }

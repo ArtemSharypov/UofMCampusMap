@@ -14,7 +14,7 @@ import com.artem.uofmcampusmap.PassRouteData;
 import com.artem.uofmcampusmap.R;
 import com.artem.uofmcampusmap.Route;
 import com.artem.uofmcampusmap.Vertex;
-import com.artem.uofmcampusmap.buildings.DisplayIndoorRoutes;
+import com.artem.uofmcampusmap.DisplayRoute;
 import com.artem.uofmcampusmap.buildings.DrawingPathView;
 import com.artem.uofmcampusmap.buildings.Line;
 
@@ -22,7 +22,7 @@ import com.artem.uofmcampusmap.buildings.Line;
  * Created by Artem on 2017-05-15.
  */
 
-public class ArmesFloor1Fragment extends Fragment implements DisplayIndoorRoutes {
+public class ArmesFloor1Fragment extends Fragment implements DisplayRoute {
     private DrawingPathView drawingPathsView;
 
     @Nullable
@@ -31,7 +31,7 @@ public class ArmesFloor1Fragment extends Fragment implements DisplayIndoorRoutes
         View view = inflater.inflate(R.layout.fragment_armes_floor1, container, false);
 
         drawingPathsView = (DrawingPathView) view.findViewById(R.id.lines_view);
-        displayIndoorRoute();
+        displayRoute();
 
         return view;
     }
@@ -226,7 +226,7 @@ public class ArmesFloor1Fragment extends Fragment implements DisplayIndoorRoutes
     }
 
     @Override
-    public void displayIndoorRoute() {
+    public void displayRoute() {
         PassRouteData activity = (PassRouteData) getActivity();
         int currInstructionPos = activity.getCurrInstructionPos();
         Route route = activity.getRoute();
