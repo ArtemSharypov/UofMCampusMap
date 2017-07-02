@@ -8,14 +8,14 @@ import java.util.ArrayList;
 
 public class Route {
     private ArrayList<Instruction> route;
-    private int currInstruction;
+    private ArrayList<String> directions;
     private int maxInstructions;
     private double routeLength;
 
     Route()
     {
         route = new ArrayList<>();
-        currInstruction = 0;
+        directions = new ArrayList<>();
         maxInstructions = 0;
         routeLength = 0;
     }
@@ -32,33 +32,21 @@ public class Route {
         return instruction;
     }
 
+    public String getDirectionsAt(int pos)
+    {
+        String direction = "";
+
+        if(pos < directions.size() && pos >= 0)
+        {
+            direction = directions.get(pos);
+        }
+
+        return  direction;
+    }
+
     public int getNumInstructions()
     {
         return route.size();
-    }
-
-    public Instruction getFirstInstruction()
-    {
-        if(route.size() > 0)
-        {
-            maxInstructions = route.size();
-            currInstruction = 1;
-        }
-
-        return route.get(0);
-    }
-
-    public Instruction getNextInstruction()
-    {
-        Instruction currInstruction = null;
-
-        if(this.currInstruction < maxInstructions)
-        {
-            currInstruction = route.get(this.currInstruction);
-            this.currInstruction++;
-        }
-
-        return currInstruction;
     }
 
     public boolean currRouteQuicker(Route route)
@@ -88,6 +76,7 @@ public class Route {
 
             while (currVertex != null) {
                 instructionToAdd = new Instruction(currVertex, prevVertex);
+                reversedRoute.addDirectionToStart(instructionToAdd);
                 reversedRoute.addInstructionToStart(instructionToAdd);
 
                 prevVertex = currVertex;
@@ -96,6 +85,65 @@ public class Route {
         }
 
         return reversedRoute;
+    }
+
+    private String createTurnDirections(int prevDirection, int currDirection)
+    {
+        String turnDirections = "";
+
+        if(prevDirection != currDirection)
+        {
+            if(prevDirection == Vertex.NORTH)
+            {
+                turnDirections = createNorthDirectionTo(currDirection);
+            }
+            else if(currDirection == Vertex.NORTH)
+            {
+                turnDirections = createNorthDirectionTo(prevDirection);
+            }
+            else if(prevDirection == Vertex.SOUTH)
+            {
+                turnDirections = createSouthDirectionTo(currDirection);
+            }
+            else if(currDirection == Vertex.NORTH)
+            {
+                turnDirections = createSouthDirectionTo(prevDirection);
+            }
+        }
+
+        return turnDirections;
+    }
+
+    private String createNorthDirectionTo(int secDirection)
+    {
+        String turnDirection = " and turn ";
+
+        if(secDirection == Vertex.EAST)
+        {
+            turnDirection += "right.";
+        }
+        else if(secDirection == Vertex.WEST)
+        {
+            turnDirection += "left.";
+        }
+
+        return turnDirection;
+    }
+
+    private String createSouthDirectionTo(int secDirection)
+    {
+        String turnDirection = " and turn ";
+
+        if(secDirection == Vertex.EAST)
+        {
+            turnDirection += "left.";
+        }
+        else if(secDirection == Vertex.WEST)
+        {
+            turnDirection += "right.";
+        }
+
+        return turnDirection;
     }
 
     private void addInstructionToStart(Instruction instruction)
@@ -108,6 +156,25 @@ public class Route {
         }
     }
 
+    private void addDirectionToStart(Instruction instruction)
+    {
+        String directionToAdd = instruction.getTextDirections();
+
+        if(route.size() > 0)
+        {
+            int currDirection = instruction.getCurrDirection();
+            int previousDirection = route.get(0).getCurrDirection();
+
+            if (previousDirection >= 0) {
+                if (currDirection != previousDirection) {
+                    directionToAdd += createTurnDirections(previousDirection, currDirection);
+                }
+            }
+        }
+
+        directions.add(0, directionToAdd);
+    }
+
     private void addInstructionToEnd(Instruction instruction)
     {
         if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
@@ -116,6 +183,26 @@ public class Route {
             routeLength += instruction.getWeight();
             maxInstructions++;
         }
+    }
+
+    private void addDirectionToEnd(Instruction instruction)
+    {
+        int routeSize = route.size();
+        String directionToAdd = instruction.getTextDirections();
+
+        if(routeSize > 0)
+        {
+            int currDirection = instruction.getCurrDirection();
+            int previousDirection = route.get(routeSize - 1).getCurrDirection();
+
+            if (previousDirection >= 0) {
+                if (currDirection != previousDirection) {
+                    directionToAdd += createTurnDirections(previousDirection, currDirection);
+                }
+            }
+        }
+
+        directions.add(directionToAdd);
     }
 
     public double getRouteLength()
@@ -136,13 +223,15 @@ public class Route {
 
                 //Connect the end destination of this, with the starting location of the second route
                 Instruction connection = new Instruction(thisLastInstruc.getDestination(), firstInstruc.getSource());
-                this.addInstructionToEnd(connection);
+                addDirectionToEnd(connection);
+                addInstructionToEnd(connection);
             }
 
             //Add any other instructions from the second route into this one
             for(Instruction instruction : routeToCombine.route)
             {
-                this.addInstructionToEnd(instruction);
+                addDirectionToEnd(instruction);
+                addInstructionToEnd(instruction);
             }
         }
     }

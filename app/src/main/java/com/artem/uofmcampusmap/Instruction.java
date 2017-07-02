@@ -8,12 +8,22 @@ public class Instruction {
     private Vertex source;
     private Vertex destination;
     private int weight;
+    private int direction;
 
     public Instruction(Vertex source, Vertex destination)
     {
         this.source = source;
         this.destination = destination;
         calculateWeight();
+        findDirection();
+    }
+
+    private void findDirection()
+    {
+        if(source != null && destination != null)
+        {
+            direction = source.directionToVertexIs(destination);
+        }
     }
 
     private void calculateWeight()
@@ -34,10 +44,14 @@ public class Instruction {
         return destination;
     }
 
-    //todo implement this fully (as in turn left etc)
-    public String getInstructions()
+    public int getCurrDirection()
     {
-        String toString = "" + weight;
+        return direction;
+    }
+
+    public String getTextDirections()
+    {
+        String toString = "Go straight for " + weight;
 
         if(source instanceof IndoorVertex)
         {
@@ -82,4 +96,5 @@ public class Instruction {
 
         return toString;
     }
+
 }

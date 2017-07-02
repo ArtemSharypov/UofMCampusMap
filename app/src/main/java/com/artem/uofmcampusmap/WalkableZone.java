@@ -60,8 +60,8 @@ public class WalkableZone
     {
         if(vertexToConnect != null && right != null)
         {
-            vertexToConnect.addConnection(right);
-            right.addConnection(vertexToConnect);
+            vertexToConnect.addEastConnection(right);
+            right.addWestConnection(vertexToConnect);
         }
     }
 
@@ -69,8 +69,8 @@ public class WalkableZone
     {
         if(vertexToConnect != null && top != null)
         {
-            vertexToConnect.addConnection(top);
-            top.addConnection(vertexToConnect);
+            vertexToConnect.addNorthConnection(top);
+            top.addSouthConnection(vertexToConnect);
         }
     }
 
@@ -78,8 +78,8 @@ public class WalkableZone
     {
         if(vertexToConnect != null && left != null)
         {
-            vertexToConnect.addConnection(left);
-            left.addConnection(vertexToConnect);
+            vertexToConnect.addWestConnection(left);
+            left.addEastConnection(vertexToConnect);
         }
     }
 
@@ -87,8 +87,8 @@ public class WalkableZone
     {
         if(vertexToConnect != null && bottom != null)
         {
-            vertexToConnect.addConnection(bottom);
-            bottom.addConnection(vertexToConnect);
+            vertexToConnect.addSouthConnection(bottom);
+            bottom.addNorthConnection(vertexToConnect);
         }
     }
 
