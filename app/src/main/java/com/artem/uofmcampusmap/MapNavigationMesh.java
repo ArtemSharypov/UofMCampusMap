@@ -326,7 +326,7 @@ public class MapNavigationMesh
         bio_science_west_ent.setTop(new LatLng(49.810110, -97.135071));
         bio_science_west_ent.setRight(new LatLng(49.810090, -97.135044));
 
-        addEntrance("Biological Science", bio_science_east_ent.getRight());
+        addEntrance("Biological Science", bio_science_west_ent.getRight());
 
         //topMiddle is entrance
         WalkableZone buller_west_ent = new WalkableZone(new LatLng(49.810325, -97.133594), new LatLng(49.810342, -97.133531), new LatLng(49.810283, -97.133552), new LatLng(49.810300, -97.133482));

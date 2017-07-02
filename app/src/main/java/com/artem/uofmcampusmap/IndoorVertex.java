@@ -27,7 +27,6 @@ public class IndoorVertex extends Vertex
         this.position = vertex.getPosition();
     }
 
-
     @Override
     public int getDistanceFrom(Vertex destinationVertex) {
         int distance = 0;
@@ -59,6 +58,11 @@ public class IndoorVertex extends Vertex
         }
 
         return areEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (position.getX() + position.getY());
     }
 
     public XYPos getPosition() {

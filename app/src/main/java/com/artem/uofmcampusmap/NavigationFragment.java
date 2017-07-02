@@ -17,9 +17,6 @@ import com.artem.uofmcampusmap.buildings.armes.ArmesFloor1Fragment;
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor2Fragment;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.model.Polyline;
-
-import java.util.ArrayList;
 
 /**
  * Created by Artem on 2017-04-21.
@@ -70,7 +67,7 @@ public class NavigationFragment extends Fragment{
                     currInstructionPos--;
 
                     Instruction currInstruction = route.getInstructionAt(currInstructionPos);
-                    instructionsTextView.setText(currInstruction.getInstructions());
+                    instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
 
                     PassRouteData activity = (PassRouteData) getActivity();
                     activity.setCurrInstructionPos(currInstructionPos);
@@ -110,7 +107,7 @@ public class NavigationFragment extends Fragment{
                     currInstructionPos++;
 
                     Instruction currInstruction = route.getInstructionAt(currInstructionPos);
-                    instructionsTextView.setText(currInstruction.getInstructions());
+                    instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
 
                     PassRouteData activity = (PassRouteData) getActivity();
                     activity.setCurrInstructionPos(currInstructionPos);
@@ -154,9 +151,9 @@ public class NavigationFragment extends Fragment{
 
             if(route != null)
             {
-                Instruction firstInstruction = route.getFirstInstruction();
+                Instruction firstInstruction = route.getInstructionAt(0);
 
-                instructionsTextView.setText(firstInstruction.getInstructions());
+                instructionsTextView.setText(route.getDirectionsAt(0));
                 instructionsLinLayout.setVisibility(View.VISIBLE);
 
                 activity.passRoute(route);

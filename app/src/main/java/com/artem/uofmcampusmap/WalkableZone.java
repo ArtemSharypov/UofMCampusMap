@@ -56,11 +56,19 @@ public class WalkableZone
         connectToBottom(this.right);
     }
 
+    private void updateAllConnections()
+    {
+        topConnections();
+        bottomConnections();
+        leftConnections();
+        rightConnections();
+    }
+
     public void connectToRight(Vertex vertexToConnect)
     {
         if(vertexToConnect != null && right != null)
         {
-            vertexToConnect.addConnection(right);
+            vertexToConnect.addEastConnection(right);
             right.addConnection(vertexToConnect);
         }
     }
@@ -69,7 +77,7 @@ public class WalkableZone
     {
         if(vertexToConnect != null && top != null)
         {
-            vertexToConnect.addConnection(top);
+            vertexToConnect.addNorthConnection(top);
             top.addConnection(vertexToConnect);
         }
     }
@@ -78,7 +86,7 @@ public class WalkableZone
     {
         if(vertexToConnect != null && left != null)
         {
-            vertexToConnect.addConnection(left);
+            vertexToConnect.addWestConnection(left);
             left.addConnection(vertexToConnect);
         }
     }
@@ -87,60 +95,60 @@ public class WalkableZone
     {
         if(vertexToConnect != null && bottom != null)
         {
-            vertexToConnect.addConnection(bottom);
+            vertexToConnect.addSouthConnection(bottom);
             bottom.addConnection(vertexToConnect);
         }
     }
 
     public void setTop(Vertex top) {
         this.top = top;
-        topConnections();
+        updateAllConnections();
     }
 
     public void setTop(LatLng top) {
         if(top != null)
         {
             this.top = new OutdoorVertex(top);
-            topConnections();
+            updateAllConnections();
         }
     }
 
     public void setLeft(Vertex left) {
         this.left = left;
-        leftConnections();
+        updateAllConnections();
     }
 
     public void setLeft(LatLng pos)
     {
         if(pos != null) {
             this.left = new OutdoorVertex(pos);
-            leftConnections();
+            updateAllConnections();
         }
     }
 
     public void setRight(Vertex right) {
         this.right = right;
-        rightConnections();
+        updateAllConnections();
     }
 
     public void setRight(LatLng pos) {
         if(pos != null)
         {
             this.right = new OutdoorVertex(pos);
-            rightConnections();
+            updateAllConnections();
         }
     }
 
     public void setBottom(Vertex bottom) {
         this.bottom = bottom;
-        bottomConnections();
+        updateAllConnections();
     }
 
     public void setBottom(LatLng pos) {
         if(pos != null)
         {
             this.bottom = new OutdoorVertex(pos);
-            bottomConnections();
+            updateAllConnections();
         }
     }
 
