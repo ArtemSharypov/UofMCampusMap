@@ -1,6 +1,7 @@
 package com.artem.uofmcampusmap;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by Artem on 2017-05-01.
@@ -105,7 +106,7 @@ public class RouteFinder {
 
     private ArrayList<Vertex> generateSuccessors(Vertex parent, Vertex destination)
     {
-        ArrayList<Vertex> connections;
+        HashSet<Vertex> connections;
         ArrayList<Vertex> successors = new ArrayList<>();
         Vertex childVertex;
 

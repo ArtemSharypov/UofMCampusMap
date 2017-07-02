@@ -1,17 +1,17 @@
 package com.artem.uofmcampusmap;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by Artem on 2017-04-28.
  */
 
 public abstract class Vertex {
-    private ArrayList<Vertex> connections;
-    private ArrayList<Vertex> connectionsNorth;
-    private ArrayList<Vertex> connectionsSouth;
-    private ArrayList<Vertex> connectionsEast;
-    private ArrayList<Vertex> connectionsWest;
+    private HashSet<Vertex> connections;
+    private HashSet<Vertex> connectionsNorth;
+    private HashSet<Vertex> connectionsSouth;
+    private HashSet<Vertex> connectionsEast;
+    private HashSet<Vertex> connectionsWest;
     public static int NORTH = 1;
     public static int SOUTH = 2;
     public static int EAST = 3;
@@ -22,19 +22,19 @@ public abstract class Vertex {
     private Vertex parent;
 
     public Vertex() {
-        connections = new ArrayList<>();
-        connectionsNorth = new ArrayList<>();
-        connectionsSouth = new ArrayList<>();
-        connectionsWest = new ArrayList<>();
-        connectionsEast = new ArrayList<>();
+        connections = new HashSet<>();
+        connectionsNorth = new HashSet<>();
+        connectionsSouth = new HashSet<>();
+        connectionsWest = new HashSet<>();
+        connectionsEast = new HashSet<>();
     }
 
     public Vertex(Vertex vertexToCopy) {
-        connections = new ArrayList<>(vertexToCopy.getConnections());
-        connectionsNorth = new ArrayList<>(vertexToCopy.connectionsNorth);
-        connectionsSouth = new ArrayList<>(vertexToCopy.connectionsSouth);
-        connectionsWest = new ArrayList<>(vertexToCopy.connectionsWest);
-        connectionsEast = new ArrayList<>(vertexToCopy.connectionsEast);
+        connections = new HashSet<>(vertexToCopy.connections);
+        connectionsNorth = new HashSet<>(vertexToCopy.connectionsNorth);
+        connectionsSouth = new HashSet<>(vertexToCopy.connectionsSouth);
+        connectionsWest = new HashSet<>(vertexToCopy.connectionsWest);
+        connectionsEast = new HashSet<>(vertexToCopy.connectionsEast);
     }
 
     public void addConnection(Vertex vertexConnection) {
@@ -75,7 +75,7 @@ public abstract class Vertex {
 
     @Override
     public boolean equals(Object obj) {
-        boolean result = false;
+        boolean result;
 
         if(this == obj)
         {
@@ -97,7 +97,7 @@ public abstract class Vertex {
         return result;
     }
 
-    public ArrayList<Vertex> getConnections() {
+    public HashSet<Vertex> getConnections() {
         return connections;
     }
 
@@ -125,23 +125,25 @@ public abstract class Vertex {
         connections.add(vertex);
     }
 
-    public int directionToVertexIs(Vertex vertex)
+    //used as source -> destination
+    //returns the direction that must be taken to get from this to the destination
+    public int directionToVertexIs(Vertex destination)
     {
         int direction = 0;
 
-        if(connectionsNorth.contains(vertex))
+        if(connectionsNorth.contains(destination))
         {
             direction = NORTH;
         }
-        else if(connectionsSouth.contains(vertex))
+        else if(connectionsSouth.contains(destination))
         {
             direction = SOUTH;
         }
-        else if(connectionsEast.contains(vertex))
+        else if(connectionsEast.contains(destination))
         {
             direction = EAST;
         }
-        else if(connectionsWest.contains(vertex))
+        else if(connectionsWest.contains(destination))
         {
             direction = WEST;
         }

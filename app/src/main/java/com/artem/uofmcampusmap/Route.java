@@ -87,65 +87,6 @@ public class Route {
         return reversedRoute;
     }
 
-    private String createTurnDirections(int prevDirection, int currDirection)
-    {
-        String turnDirections = "";
-
-        if(prevDirection != currDirection)
-        {
-            if(prevDirection == Vertex.NORTH)
-            {
-                turnDirections = createNorthDirectionTo(currDirection);
-            }
-            else if(currDirection == Vertex.NORTH)
-            {
-                turnDirections = createNorthDirectionTo(prevDirection);
-            }
-            else if(prevDirection == Vertex.SOUTH)
-            {
-                turnDirections = createSouthDirectionTo(currDirection);
-            }
-            else if(currDirection == Vertex.NORTH)
-            {
-                turnDirections = createSouthDirectionTo(prevDirection);
-            }
-        }
-
-        return turnDirections;
-    }
-
-    private String createNorthDirectionTo(int secDirection)
-    {
-        String turnDirection = " and turn ";
-
-        if(secDirection == Vertex.EAST)
-        {
-            turnDirection += "right.";
-        }
-        else if(secDirection == Vertex.WEST)
-        {
-            turnDirection += "left.";
-        }
-
-        return turnDirection;
-    }
-
-    private String createSouthDirectionTo(int secDirection)
-    {
-        String turnDirection = " and turn ";
-
-        if(secDirection == Vertex.EAST)
-        {
-            turnDirection += "left.";
-        }
-        else if(secDirection == Vertex.WEST)
-        {
-            turnDirection += "right.";
-        }
-
-        return turnDirection;
-    }
-
     private void addInstructionToStart(Instruction instruction)
     {
         if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
@@ -162,17 +103,74 @@ public class Route {
 
         if(route.size() > 0)
         {
-            int currDirection = instruction.getCurrDirection();
-            int previousDirection = route.get(0).getCurrDirection();
+            Vertex source = instruction.getSource();
+            Vertex destination = instruction.getDestination();
+            int sourceToDestDirect = source.directionToVertexIs(destination);
+            int destToSourceDirect = destination.directionToVertexIs(source);
 
-            if (previousDirection >= 0) {
-                if (currDirection != previousDirection) {
-                    directionToAdd += createTurnDirections(previousDirection, currDirection);
-                }
-            }
+            String turnDirections = turnDirections(sourceToDestDirect, destToSourceDirect);
+            directionToAdd = turnDirections + directionToAdd;
         }
 
         directions.add(0, directionToAdd);
+    }
+
+    /*  For a source -> destination that is either North/South, then if destination -> source is either East/West it has to turn
+        accordingly to switch directions. Same goes for East/West then North/South.
+        Essentially means that the source is that direction from the destination in terms of N/S/W/E
+     */
+    private String turnDirections(int sourceToDestination, int destinationToSource)
+    {
+        String turnDirections = "";
+        final String left = "Turn left and ";
+        final String right = "Turn right and ";
+
+        if(sourceToDestination == Vertex.NORTH)
+        {
+            if(destinationToSource == Vertex.EAST)
+            {
+                turnDirections = right;
+            }
+            else if(destinationToSource == Vertex.WEST)
+            {
+                turnDirections = left;
+            }
+        }
+        else if(sourceToDestination == Vertex.SOUTH)
+        {
+            if(destinationToSource == Vertex.EAST)
+            {
+                turnDirections = left;
+            }
+            else if(destinationToSource == Vertex.WEST)
+            {
+                turnDirections = right;
+            }
+        }
+        else if(sourceToDestination == Vertex.WEST)
+        {
+            if(destinationToSource == Vertex.NORTH)
+            {
+                turnDirections = right;
+            }
+            else if(destinationToSource == Vertex.SOUTH)
+            {
+                turnDirections = left;
+            }
+        }
+        else if(sourceToDestination == Vertex.EAST)
+        {
+            if(destinationToSource == Vertex.NORTH)
+            {
+                turnDirections = left;
+            }
+            else if(destinationToSource == Vertex.SOUTH)
+            {
+                turnDirections = right;
+            }
+        }
+
+        return turnDirections;
     }
 
     private void addInstructionToEnd(Instruction instruction)
@@ -192,14 +190,13 @@ public class Route {
 
         if(routeSize > 0)
         {
-            int currDirection = instruction.getCurrDirection();
-            int previousDirection = route.get(routeSize - 1).getCurrDirection();
+            Vertex source = instruction.getSource();
+            Vertex destination = instruction.getDestination();
+            int sourceToDestDirect = source.directionToVertexIs(destination);
+            int destToSourceDirect = destination.directionToVertexIs(source);
 
-            if (previousDirection >= 0) {
-                if (currDirection != previousDirection) {
-                    directionToAdd += createTurnDirections(previousDirection, currDirection);
-                }
-            }
+            String turnDirections = turnDirections(sourceToDestDirect, destToSourceDirect);
+            directionToAdd = turnDirections + directionToAdd;
         }
 
         directions.add(directionToAdd);

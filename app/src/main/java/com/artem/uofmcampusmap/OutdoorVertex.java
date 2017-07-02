@@ -41,11 +41,29 @@ public class OutdoorVertex extends Vertex
         {
             outdoorVertex = (OutdoorVertex) vertex;
 
-            latDistance = Math.toRadians(position.latitude - outdoorVertex.getPosition().latitude);
-            lngDistance = Math.toRadians(position.longitude - outdoorVertex.getPosition().longitude);
+            distance = calculateDistanceFrom(outdoorVertex.getPosition());
+        }
+
+        return distance;
+    }
+
+    private int calculateDistanceFrom(LatLng location)
+    {
+        int distance = 0;
+        final double AVG_RADIUS_EARTH_KM = 6373;
+        final double KM_TO_M = 1000;
+        double latDistance;
+        double lngDistance;
+        double a;
+        double c;
+
+        if(location != null)
+        {
+            latDistance = Math.toRadians(position.latitude - location.latitude);
+            lngDistance = Math.toRadians(position.longitude - location.longitude);
 
             a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                    + Math.cos(Math.toRadians(position.latitude)) * Math.cos(Math.toRadians(outdoorVertex.getPosition().latitude))
+                    + Math.cos(Math.toRadians(position.latitude)) * Math.cos(Math.toRadians(location.latitude))
                     * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
 
             c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -65,12 +83,17 @@ public class OutdoorVertex extends Vertex
         {
             posToCompare = ((OutdoorVertex) vertex).getPosition();
 
-            if(position.latitude == posToCompare.latitude && position.longitude == posToCompare.longitude)
+            if(calculateDistanceFrom(posToCompare) == 0)
             {
                 areEqual = true;
             }
         }
 
         return areEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (position.latitude + position.longitude);
     }
 }
