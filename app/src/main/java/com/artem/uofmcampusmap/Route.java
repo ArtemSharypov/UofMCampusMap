@@ -91,9 +91,47 @@ public class Route {
     {
         if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
         {
-            route.add(0, instruction);
-            routeLength += instruction.getWeight();
-            maxInstructions++;
+            if(route.size() > 0)
+            {
+                Instruction nextInstruct = route.get(0);
+                int nextDirection = nextInstruct.getCurrDirection();
+                int currDirection = instruction.getCurrDirection();
+                Instruction optimizedInstruc;
+                Vertex source;
+                Vertex destination;
+
+                //Direction has to be one of North, East, West, or South. 0 means no specific one
+                if(currDirection != 0 && nextDirection == currDirection)
+                {
+                    source = instruction.getSource();
+                    destination = nextInstruct.getDestination();
+                    optimizedInstruc = new Instruction(source, destination, currDirection);
+
+                    //Remove the instruction and the direction that now gets skipped over
+                    route.remove(0);
+                    routeLength -= nextInstruct.getWeight();
+                    directions.remove(0); //Have to remove directions twice since the direction for this instruction has already been added
+                    directions.remove(0);
+
+                    //Add the now optimized instruction that skips over the un-necessary vertex, and update the directions to take
+                    route.add(0, optimizedInstruc);
+                    routeLength += optimizedInstruc.getWeight();
+                    addDirectionToStart(optimizedInstruc);
+
+                }
+                else
+                {
+                    route.add(0, instruction);
+                    routeLength += instruction.getWeight();
+                    maxInstructions++;
+                }
+            }
+            else
+            {
+                route.add(0, instruction);
+                routeLength += instruction.getWeight();
+                maxInstructions++;
+            }
         }
     }
 
@@ -177,18 +215,56 @@ public class Route {
     {
         if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
         {
-            route.add(instruction);
-            routeLength += instruction.getWeight();
-            maxInstructions++;
+            int routeSize = route.size();
+
+            if(routeSize > 0)
+            {
+                Instruction prevInstruction = route.get(routeSize -1);
+                int currDirection = instruction.getCurrDirection();
+                int prevDirection = prevInstruction.getCurrDirection();
+                Instruction optimizedInstruc;
+                Vertex source;
+                Vertex destination;
+
+                //Direction has to be one of North, East, West, or South. 0 means no specific one
+                if (prevDirection != 0 && currDirection == prevDirection)
+                {
+                    source = prevInstruction.getSource();
+                    destination = instruction.getDestination();
+                    optimizedInstruc = new Instruction(source, destination, currDirection);
+
+                    //Remove the instruction and the direction that now gets skipped over
+                    route.remove(routeSize-1);
+                    routeLength -= prevInstruction.getWeight();
+                    directions.remove(routeSize-1); //Have to remove directions twice since the direction for this instruction has already been added
+                    directions.remove(routeSize-1);
+
+                    //Add the now optimized instruction that skips over the un-necessary vertex, and update the directions to take
+                    route.add(optimizedInstruc);
+                    routeLength += optimizedInstruc.getWeight();
+                    addDirectionToEnd(optimizedInstruc);
+                }
+                else
+                {
+                    route.add(instruction);
+                    routeLength += instruction.getWeight();
+                    maxInstructions++;
+                }
+            }
+            else
+            {
+                route.add(instruction);
+                routeLength += instruction.getWeight();
+                maxInstructions++;
+            }
         }
     }
 
     private void addDirectionToEnd(Instruction instruction)
     {
-        int routeSize = route.size();
         String directionToAdd = instruction.getTextDirections();
 
-        if(routeSize > 0)
+        if(route.size() > 0)
         {
             Vertex source = instruction.getSource();
             Vertex destination = instruction.getDestination();
