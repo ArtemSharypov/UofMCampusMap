@@ -18,6 +18,15 @@ public class Instruction {
         findDirection();
     }
 
+    //Used for special case of route optimization, since the vertex's dont directly connect to eachother
+    public Instruction(Vertex source, Vertex destination, int direction)
+    {
+        this.source = source;
+        this.destination = destination;
+        this.direction = direction;
+        calculateWeight();
+    }
+
     private void findDirection()
     {
         if(source != null && destination != null)
