@@ -379,7 +379,7 @@ public class MapNavigationMesh
         education_south_ent.setRight(new LatLng(49.808696, -97.136074));
         education_south_ent.setBottom(new LatLng(49.808606, -97.136228));
 
-        addEntrance("education", education_south_ent.getTop());
+        addEntrance("Education", education_south_ent.getTop());
 
         //rightMid
         WalkableZone education_west_ent = new WalkableZone(new LatLng(49.808459, -97.137405), new LatLng(49.808490, -97.137321), new LatLng(49.808391, -97.137367), new LatLng(49.808426, -97.137259));

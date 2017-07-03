@@ -260,8 +260,42 @@ public class ArmesIndoorConnections {
 
     private void connectVertex(Vertex vertex1, Vertex vertex2)
     {
-        vertex1.addConnection(vertex2);
-        vertex2.addConnection(vertex1);
+        if(vertex1 instanceof IndoorVertex && vertex2 instanceof IndoorVertex)
+        {
+            IndoorVertex indoorV1 = (IndoorVertex) vertex1;
+            IndoorVertex indoorV2 = (IndoorVertex) vertex2;
+
+            if(indoorV1.getPosition().getX() > indoorV2.getPosition().getX())
+            {
+                indoorV1.addWestConnection(indoorV2);
+                indoorV2.addEastConnection(indoorV1);
+            }
+            else if(indoorV1.getPosition().getX() < indoorV2.getPosition().getX())
+            {
+                indoorV1.addEastConnection(indoorV2);
+                indoorV2.addWestConnection(indoorV1);
+            }
+            else if(indoorV1.getPosition().getY() > indoorV2.getPosition().getY())
+            {
+                indoorV1.addSouthConnection(indoorV2);
+                indoorV2.addNorthConnection(indoorV1);
+            }
+            else if(indoorV1.getPosition().getY() < indoorV2.getPosition().getY())
+            {
+                indoorV1.addNorthConnection(indoorV2);
+                indoorV2.addSouthConnection(indoorV1);
+            }
+            else
+            {
+                vertex1.addConnection(vertex2);
+                vertex2.addConnection(vertex1);
+            }
+        }
+        else
+        {
+            vertex1.addConnection(vertex2);
+            vertex2.addConnection(vertex1);
+        }
     }
 
     //todo make this better for rooms that have multi entrances or that have entrances on different floors
