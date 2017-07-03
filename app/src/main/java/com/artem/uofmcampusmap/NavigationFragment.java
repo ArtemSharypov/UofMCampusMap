@@ -15,21 +15,18 @@ import android.widget.TextView;
 
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor1Fragment;
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor2Fragment;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 
 /**
  * Created by Artem on 2017-04-21.
  */
 
 public class NavigationFragment extends Fragment{
-
-    private MapView mMapView;
     private FrameLayout fragHolder;
-    private GoogleMap googleMap;
     private ImageView prevInstruction;
     private ImageView nextInstruction;
     private TextView instructionsTextView;
+    private TextView distanceRemainingTV;
+    private TextView estTimeRemainingTV;
     private LinearLayout instructionsLinLayout;
     private MapNavigationMesh campusMap;
     private String startLocation;
@@ -40,9 +37,9 @@ public class NavigationFragment extends Fragment{
     private int currFloor;
     private Route route;
     private int currInstructionPos;
-    private final String OUTSIDE_ID = "Outdside";
+    private final String OUTSIDE_ID = "Outside";
+    private double remainingDistance;
 
-    //todo REALLY need to split up the map fragment and building layouts being shown, causes problems with re-doing navigation
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,6 +55,9 @@ public class NavigationFragment extends Fragment{
         instructionsTextView = (TextView) view.findViewById(R.id.current_instructions);
         instructionsLinLayout = (LinearLayout) view.findViewById(R.id.instructions_layout);
 
+        distanceRemainingTV = (TextView) view.findViewById(R.id.distance_remaining);
+        estTimeRemainingTV = (TextView)  view.findViewById(R.id.time_remaining);
+
         prevInstruction = (ImageView) view.findViewById(R.id.prev_instruction);
         prevInstruction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +68,12 @@ public class NavigationFragment extends Fragment{
 
                     Instruction currInstruction = route.getInstructionAt(currInstructionPos);
                     instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
+
+                    remainingDistance += currInstruction.getDistanceInMetres();
+
+                    //todo make this a method to make it cleaner?
+                    distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+                    estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
 
                     PassRouteData activity = (PassRouteData) getActivity();
                     activity.setCurrInstructionPos(currInstructionPos);
@@ -104,10 +110,16 @@ public class NavigationFragment extends Fragment{
             public void onClick(View v) {
                 if(currInstructionPos + 1 < route.getNumInstructions())
                 {
+                    remainingDistance -= route.getInstructionAt(currInstructionPos).getDistanceInMetres();
+
                     currInstructionPos++;
 
                     Instruction currInstruction = route.getInstructionAt(currInstructionPos);
                     instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
+
+                    //todo make this a method to make it cleaner?
+                    distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+                    estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
 
                     PassRouteData activity = (PassRouteData) getActivity();
                     activity.setCurrInstructionPos(currInstructionPos);
@@ -151,6 +163,12 @@ public class NavigationFragment extends Fragment{
 
             if(route != null)
             {
+                remainingDistance = route.getRouteLength();
+
+                //todo make this a method to make it cleaner?
+                distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+                estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
+
                 Instruction firstInstruction = route.getInstructionAt(0);
 
                 instructionsTextView.setText(route.getDirectionsAt(0));
@@ -178,6 +196,13 @@ public class NavigationFragment extends Fragment{
         }
 
         return view;
+    }
+
+    private int amountOfTime(double distance)
+    {
+        final double WALK_SPEED_METERS_PER_MIN = 66.67;
+
+        return (int) (distance / WALK_SPEED_METERS_PER_MIN) + 1;
     }
 
     private void switchToMapFrag()

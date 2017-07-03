@@ -7,14 +7,14 @@ package com.artem.uofmcampusmap;
 public class Instruction {
     private Vertex source;
     private Vertex destination;
-    private int weight;
+    private int distance;
     private int direction;
 
     public Instruction(Vertex source, Vertex destination)
     {
         this.source = source;
         this.destination = destination;
-        calculateWeight();
+        calculateDistance();
         findDirection();
     }
 
@@ -24,7 +24,7 @@ public class Instruction {
         this.source = source;
         this.destination = destination;
         this.direction = direction;
-        calculateWeight();
+        calculateDistance();
     }
 
     private void findDirection()
@@ -79,14 +79,27 @@ public class Instruction {
         return northSouth;
     }
 
-    private void calculateWeight()
+    private void calculateDistance()
     {
-        this.weight = source.getDistanceFrom(destination);
+        this.distance = source.getDistanceFrom(destination);
     }
 
-    public int getWeight()
+    public int getDistanceInMetres()
     {
-        return weight;
+        int metreDistance = distance;
+        final double METERS_PER_FEET = 0.3048;
+
+        if(source instanceof IndoorVertex && destination instanceof IndoorVertex)
+        {
+            metreDistance = (int) (distance * METERS_PER_FEET);
+        }
+
+        return metreDistance;
+    }
+
+    public int getDistance()
+    {
+        return distance;
     }
 
     public Vertex getSource() {
@@ -104,7 +117,7 @@ public class Instruction {
 
     public String getTextDirections()
     {
-        String toString = "Go straight for " + weight;
+        String toString = "Go straight for " + distance;
 
         if(source instanceof IndoorVertex)
         {

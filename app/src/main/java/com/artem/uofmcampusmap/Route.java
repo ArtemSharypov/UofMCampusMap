@@ -109,27 +109,27 @@ public class Route {
 
                     //Remove the instruction and the direction that now gets skipped over
                     route.remove(0);
-                    routeLength -= nextInstruct.getWeight();
+                    routeLength -= nextInstruct.getDistanceInMetres();
                     directions.remove(0); //Have to remove directions twice since the direction for this instruction has already been added
                     directions.remove(0);
 
                     //Add the now optimized instruction that skips over the un-necessary vertex, and update the directions to take
                     route.add(0, optimizedInstruc);
-                    routeLength += optimizedInstruc.getWeight();
+                    routeLength += optimizedInstruc.getDistanceInMetres();
                     addDirectionToStart(optimizedInstruc);
 
                 }
                 else
                 {
                     route.add(0, instruction);
-                    routeLength += instruction.getWeight();
+                    routeLength += instruction.getDistanceInMetres();
                     maxInstructions++;
                 }
             }
             else
             {
                 route.add(0, instruction);
-                routeLength += instruction.getWeight();
+                routeLength += instruction.getDistanceInMetres();
                 maxInstructions++;
             }
         }
@@ -235,26 +235,26 @@ public class Route {
 
                     //Remove the instruction and the direction that now gets skipped over
                     route.remove(routeSize-1);
-                    routeLength -= prevInstruction.getWeight();
+                    routeLength -= prevInstruction.getDistanceInMetres();
                     directions.remove(routeSize-1); //Have to remove directions twice since the direction for this instruction has already been added
                     directions.remove(routeSize-1);
 
                     //Add the now optimized instruction that skips over the un-necessary vertex, and update the directions to take
                     route.add(optimizedInstruc);
-                    routeLength += optimizedInstruc.getWeight();
+                    routeLength += optimizedInstruc.getDistanceInMetres();
                     addDirectionToEnd(optimizedInstruc);
                 }
                 else
                 {
                     route.add(instruction);
-                    routeLength += instruction.getWeight();
+                    routeLength += instruction.getDistanceInMetres();
                     maxInstructions++;
                 }
             }
             else
             {
                 route.add(instruction);
-                routeLength += instruction.getWeight();
+                routeLength += instruction.getDistanceInMetres();
                 maxInstructions++;
             }
         }
