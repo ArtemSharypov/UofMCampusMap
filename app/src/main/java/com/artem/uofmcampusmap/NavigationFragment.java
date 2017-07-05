@@ -21,10 +21,8 @@ import com.artem.uofmcampusmap.buildings.armes.ArmesFloor2Fragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
  * Created by Artem on 2017-04-21.
@@ -80,26 +78,15 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                     currInstructionPos--;
 
                     Instruction currInstruction = route.getInstructionAt(currInstructionPos);
-                    instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
-
                     remainingDistance += currInstruction.getDistanceInMetres();
 
-                    //todo make this a method to make it cleaner?
-                    distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
-                    estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
-
-                    PassRouteData activity = (PassRouteData) getActivity();
-                    activity.setCurrInstructionPos(currInstructionPos);
+                    updateShownInstruction();
+                    updateDistanceTimeRemaining();
+                    updateActivityRoutePos();
 
                     if(currInstruction.getSource() instanceof OutdoorVertex)
                     {
-                        if(!currLocation.equals(OUTSIDE_ID))
-                        {
-                            currLocation = OUTSIDE_ID;
-                            switchToMapFrag();
-
-                        }
-                        else
+                        if(currLocation.equals(OUTSIDE_ID))
                         {
                             DisplayRoute childFrag = (DisplayRoute) getChildFragmentManager().findFragmentById(R.id.frag_holder);
 
@@ -107,6 +94,11 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                             {
                                 childFrag.updateDisplayedRoute();
                             }
+                        }
+                        else
+                        {
+                            currLocation = OUTSIDE_ID;
+                            switchToMapFrag();
                         }
                     }
                     else if(currInstruction.getSource() instanceof IndoorVertex)
@@ -128,14 +120,10 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                     currInstructionPos++;
 
                     Instruction currInstruction = route.getInstructionAt(currInstructionPos);
-                    instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
 
-                    //todo make this a method to make it cleaner?
-                    distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
-                    estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
-
-                    PassRouteData activity = (PassRouteData) getActivity();
-                    activity.setCurrInstructionPos(currInstructionPos);
+                    updateShownInstruction();
+                    updateDistanceTimeRemaining();
+                    updateActivityRoutePos();
 
                     if(currInstruction.getSource() instanceof OutdoorVertex)
                     {
@@ -146,12 +134,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                         }
                         else
                         {
-                            DisplayRoute childFrag = (DisplayRoute) getChildFragmentManager().findFragmentById(R.id.frag_holder);
-
-                            if(childFrag != null)
-                            {
-                                childFrag.updateDisplayedRoute();
-                            }
+                            updateCurrDisplayedRoute();
                         }
 
                     }
@@ -169,16 +152,16 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         destinationLocation = activity.getDestinationLocation();
         destinationRoom = activity.getDestinationRoom();
 
-        if(checkPlayServices())
-        {
-            buildGoogleApiClient();
-        }
-
         switchToMapFrag();
         currLocation = OUTSIDE_ID;
 
         if(!startLocation.equals("") && !destinationLocation.equals(""))
         {
+            if(checkPlayServices() && googleApiClient != null)
+            {
+                buildGoogleApiClient();
+            }
+
             if(startLocation.equals(getResources().getString(R.string.curr_location)) ||
                     destinationLocation.equals(getResources().getString(R.string.curr_location)))
             {
@@ -192,18 +175,14 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             if(route != null)
             {
                 remainingDistance = route.getRouteLength();
-
-                //todo make this a method to make it cleaner?
-                distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
-                estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
-
                 Instruction firstInstruction = route.getInstructionAt(0);
 
-                instructionsTextView.setText(route.getDirectionsAt(0));
-                instructionsLinLayout.setVisibility(View.VISIBLE);
+                updateDistanceTimeRemaining();
+                updateShownInstruction();
+                updateActivityRoutePos();
+                updateActivityRoute(route);
 
-                activity.passRoute(route);
-                activity.setCurrInstructionPos(currInstructionPos);
+                instructionsLinLayout.setVisibility(View.VISIBLE);
 
                 if(firstInstruction.getSource() instanceof IndoorVertex)
                 {
@@ -215,12 +194,44 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         return view;
     }
 
+    private void updateCurrDisplayedRoute()
+    {
+        DisplayRoute childFrag = (DisplayRoute) getChildFragmentManager().findFragmentById(R.id.frag_holder);
+
+        if(childFrag != null)
+        {
+            childFrag.updateDisplayedRoute();
+        }
+    }
+
+    private void updateActivityRoute(Route route)
+    {
+        PassRouteData activity = (PassRouteData) getActivity();
+        activity.passRoute(route);
+    }
+
+    private void updateShownInstruction()
+    {
+        instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
+    }
+
+    private void updateDistanceTimeRemaining()
+    {
+        distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+        estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
+    }
+
+    private void updateActivityRoutePos()
+    {
+        PassRouteData activity = (PassRouteData) getActivity();
+        activity.setCurrInstructionPos(currInstructionPos);
+    }
+
     private boolean checkPlayServices()
     {
         int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
         boolean works = true;
 
-        //Checks that it worked
         if(resultCode != ConnectionResult.SUCCESS)
         {
             if(GoogleApiAvailability.getInstance().isUserResolvableError(resultCode))
@@ -266,12 +277,13 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         if(lastLocation != null)
         {
             LatLng gpsLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+            String gps = getResources().getString(R.string.curr_location);
 
-            if(startLocation.equals(getResources().getString(R.string.curr_location)))
+            if(startLocation.equals(gps))
             {
                 route = campusMap.findRoute(gpsLocation, destinationLocation, destinationRoom);
             }
-            else
+            else if(destinationLocation.equals(gps))
             {
                 route = campusMap.findRoute(startLocation, startRoom, gpsLocation);
             }
@@ -279,19 +291,14 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             if(route != null)
             {
                 remainingDistance = route.getRouteLength();
-
-                //todo make this a method to make it cleaner?
-                distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
-                estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
-
                 Instruction firstInstruction = route.getInstructionAt(0);
 
-                instructionsTextView.setText(route.getDirectionsAt(0));
-                instructionsLinLayout.setVisibility(View.VISIBLE);
+                updateActivityRoute(route);
+                updateActivityRoutePos();
+                updateShownInstruction();
+                updateDistanceTimeRemaining();
 
-                PassRouteData activity = (PassRouteData) getActivity();
-                activity.passRoute(route);
-                activity.setCurrInstructionPos(currInstructionPos);
+                instructionsLinLayout.setVisibility(View.VISIBLE);
 
                 if(firstInstruction.getSource() instanceof IndoorVertex)
                 {
@@ -339,39 +346,20 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             indoorSource = (IndoorVertex) instructionWithIndoorV.getSource();
             String currBuilding = indoorSource.getBuilding();
             int currFloor = indoorSource.getFloor();
-            DisplayRoute childFrag = (DisplayRoute) getChildFragmentManager().findFragmentById(R.id.frag_holder);
-            PassRouteData activity = (PassRouteData) getActivity();
 
-            //todo probably clean this logic up a little
-            if(!currLocation.equals(OUTSIDE_ID))
+            if(!currLocation.equals(OUTSIDE_ID) && currBuilding.equals(currLocation))
             {
-                if(currBuilding.equals(currLocation))
+                if(currFloor == this.currFloor)
                 {
-                    if(currFloor != this.currFloor)
-                    {
-                        activity.passRoute(route);
-
-                        switchViewToBuilding(currBuilding, currFloor);
-                    }
-                    else
-                    {
-                        if(childFrag != null)
-                        {
-                            childFrag.updateDisplayedRoute();
-                        }
-                    }
+                    updateCurrDisplayedRoute();
                 }
                 else
                 {
-                    activity.passRoute(route);
-
                     switchViewToBuilding(currBuilding, currFloor);
                 }
             }
             else
             {
-                activity.passRoute(route);
-
                 switchViewToBuilding(currBuilding, currFloor);
             }
         }

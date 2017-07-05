@@ -34,7 +34,6 @@ public class Instruction {
             int sourceToDestDirect = source.directionToVertexIs(destination);
             int destToSourceDirect = destination.directionToVertexIs(source);
 
-            //todo check properly if it properly works
             //Direction only matters for when the instruction goes north/south or east/west
             if(checkIfEastWest(sourceToDestDirect, destToSourceDirect) || checkIfNorthSouth(sourceToDestDirect, destToSourceDirect))
             {
