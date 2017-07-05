@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">UofM Campus Map</string>
 
+    <string name="distance_remaining">Distance Remaining: </string>
+    <string name="est_time">Estimated Time: </string>
+
     <string name="action_settings">Settings</string>
 
     <string name="drawer_open">Open navigation drawer</string>
@@ -8,6 +11,8 @@
 
     <string name="campus_map">Campus Map</string>
     <string name="navigate">Navigate</string>
+
+    <string name="curr_location">Current Location</string>
 
     <string name="agriculture">Agriculture</string>
     <string name="agr_engineer">Agricultural Engineering</string>
@@ -57,6 +62,7 @@
         <item>@string/artlab</item>
         <item>@string/bio_sci</item>
         <item>@string/buller</item>
+        <item>@string/curr_location</item>
         <item>@string/dairy_science</item>
         <item>@string/drake_centre</item>
         <item>@string/duff_roblin</item>

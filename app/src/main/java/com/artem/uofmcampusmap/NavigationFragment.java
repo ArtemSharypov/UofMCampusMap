@@ -1,6 +1,8 @@
 package com.artem.uofmcampusmap;
 
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,24 +14,29 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor1Fragment;
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor2Fragment;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 /**
  * Created by Artem on 2017-04-21.
  */
 
-public class NavigationFragment extends Fragment{
-
-    private MapView mMapView;
+public class NavigationFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
     private FrameLayout fragHolder;
-    private GoogleMap googleMap;
     private ImageView prevInstruction;
     private ImageView nextInstruction;
     private TextView instructionsTextView;
+    private TextView distanceRemainingTV;
+    private TextView estTimeRemainingTV;
     private LinearLayout instructionsLinLayout;
     private MapNavigationMesh campusMap;
     private String startLocation;
@@ -40,15 +47,18 @@ public class NavigationFragment extends Fragment{
     private int currFloor;
     private Route route;
     private int currInstructionPos;
-    private final String OUTSIDE_ID = "Outdside";
+    private final String OUTSIDE_ID = "Outside";
+    private double remainingDistance;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+    private GoogleApiClient googleApiClient;
+    private Location lastLocation = null;
 
-    //todo REALLY need to split up the map fragment and building layouts being shown, causes problems with re-doing navigation
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
-        campusMap = new MapNavigationMesh();
+        campusMap = new MapNavigationMesh(getResources());
         currInstructionPos = 0;
         currFloor = 0;
         currLocation = "";
@@ -57,6 +67,9 @@ public class NavigationFragment extends Fragment{
 
         instructionsTextView = (TextView) view.findViewById(R.id.current_instructions);
         instructionsLinLayout = (LinearLayout) view.findViewById(R.id.instructions_layout);
+
+        distanceRemainingTV = (TextView) view.findViewById(R.id.distance_remaining);
+        estTimeRemainingTV = (TextView)  view.findViewById(R.id.time_remaining);
 
         prevInstruction = (ImageView) view.findViewById(R.id.prev_instruction);
         prevInstruction.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +81,12 @@ public class NavigationFragment extends Fragment{
 
                     Instruction currInstruction = route.getInstructionAt(currInstructionPos);
                     instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
+
+                    remainingDistance += currInstruction.getDistanceInMetres();
+
+                    //todo make this a method to make it cleaner?
+                    distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+                    estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
 
                     PassRouteData activity = (PassRouteData) getActivity();
                     activity.setCurrInstructionPos(currInstructionPos);
@@ -104,10 +123,16 @@ public class NavigationFragment extends Fragment{
             public void onClick(View v) {
                 if(currInstructionPos + 1 < route.getNumInstructions())
                 {
+                    remainingDistance -= route.getInstructionAt(currInstructionPos).getDistanceInMetres();
+
                     currInstructionPos++;
 
                     Instruction currInstruction = route.getInstructionAt(currInstructionPos);
                     instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
+
+                    //todo make this a method to make it cleaner?
+                    distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+                    estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
 
                     PassRouteData activity = (PassRouteData) getActivity();
                     activity.setCurrInstructionPos(currInstructionPos);
@@ -144,13 +169,34 @@ public class NavigationFragment extends Fragment{
         destinationLocation = activity.getDestinationLocation();
         destinationRoom = activity.getDestinationRoom();
 
+        if(checkPlayServices())
+        {
+            buildGoogleApiClient();
+        }
+
+        switchToMapFrag();
+        currLocation = OUTSIDE_ID;
 
         if(!startLocation.equals("") && !destinationLocation.equals(""))
         {
-            route = campusMap.findRoute(startLocation, startRoom, destinationLocation, destinationRoom);
+            if(startLocation.equals(getResources().getString(R.string.curr_location)) ||
+                    destinationLocation.equals(getResources().getString(R.string.curr_location)))
+            {
+                findLocation();
+            }
+            else
+            {
+                route = campusMap.findRoute(startLocation, startRoom, destinationLocation, destinationRoom);
+            }
 
             if(route != null)
             {
+                remainingDistance = route.getRouteLength();
+
+                //todo make this a method to make it cleaner?
+                distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+                estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
+
                 Instruction firstInstruction = route.getInstructionAt(0);
 
                 instructionsTextView.setText(route.getDirectionsAt(0));
@@ -163,21 +209,114 @@ public class NavigationFragment extends Fragment{
                 {
                     handleIndoorSource(firstInstruction);
                 }
-                else
+            }
+        }
+
+        return view;
+    }
+
+    private boolean checkPlayServices()
+    {
+        int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
+        boolean works = true;
+
+        //Checks that it worked
+        if(resultCode != ConnectionResult.SUCCESS)
+        {
+            if(GoogleApiAvailability.getInstance().isUserResolvableError(resultCode))
+            {
+                GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), resultCode,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            }
+            else
+            {
+                getActivity().finish();
+            }
+
+            works = false;
+        }
+
+        return works;
+    }
+
+    private synchronized void buildGoogleApiClient()
+    {
+        googleApiClient = new GoogleApiClient.Builder(getContext())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API).build();
+
+        googleApiClient.connect();
+    }
+
+    private void findLocation()
+    {
+        try
+        {
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        }
+        catch(SecurityException error)
+        {
+            Toast.makeText(getContext(),
+                "Couldn't find the location, make sure GPS is enabled", Toast.LENGTH_LONG)
+                .show();
+        }
+
+        //Checks if there is a location that can be queried
+        if(lastLocation != null)
+        {
+            LatLng gpsLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+
+            if(startLocation.equals(getResources().getString(R.string.curr_location)))
+            {
+                route = campusMap.findRoute(gpsLocation, destinationLocation, destinationRoom);
+            }
+            else
+            {
+                route = campusMap.findRoute(startLocation, startRoom, gpsLocation);
+            }
+
+            if(route != null)
+            {
+                remainingDistance = route.getRouteLength();
+
+                //todo make this a method to make it cleaner?
+                distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+                estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
+
+                Instruction firstInstruction = route.getInstructionAt(0);
+
+                instructionsTextView.setText(route.getDirectionsAt(0));
+                instructionsLinLayout.setVisibility(View.VISIBLE);
+
+                PassRouteData activity = (PassRouteData) getActivity();
+                activity.passRoute(route);
+                activity.setCurrInstructionPos(currInstructionPos);
+
+                if(firstInstruction.getSource() instanceof IndoorVertex)
+                {
+                    handleIndoorSource(firstInstruction);
+                }
+                else if(!currLocation.equals(OUTSIDE_ID))
                 {
                     switchToMapFrag();
                     currLocation = OUTSIDE_ID;
                 }
-
             }
         }
         else
         {
-            switchToMapFrag();
-            currLocation = OUTSIDE_ID;
+            Toast.makeText(getContext(),
+                    "Couldn't find the location, make sure GPS is enabled", Toast.LENGTH_LONG)
+                    .show();
         }
+    }
 
-        return view;
+    private int amountOfTime(double distance)
+    {
+        final double WALK_SPEED_METERS_PER_MIN = 66.67;
+
+        return (int) (distance / WALK_SPEED_METERS_PER_MIN) + 1;
     }
 
     private void switchToMapFrag()
@@ -266,5 +405,33 @@ public class NavigationFragment extends Fragment{
                 childFragTrans.commit();
             }
         }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        try
+        {
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        }
+        catch(SecurityException error)
+        {
+            Toast.makeText(getContext(),
+                    "Couldn't find the location, make sure GPS is enabled", Toast.LENGTH_LONG)
+                    .show();
+        }
+
+        findLocation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        googleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(getContext(),
+                "Failed to connect", Toast.LENGTH_LONG)
+                .show();
     }
 }

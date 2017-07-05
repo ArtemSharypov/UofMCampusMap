@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.artem.uofmcampusmap.NavigationFragment">
+    tools:resources="com.artem.uofmcampusmap.NavigationFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:id="@+id/instructions_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.1"
         android:background="@color/colorPrimaryDark"
         android:orientation="horizontal"
         android:visibility="gone">
@@ -35,14 +35,34 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_action_back" />
 
-        <TextView
-            android:id="@+id/current_instructions"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3.5"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/distance_remaining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/time_remaining"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/current_instructions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/next_instruction"
