@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.artem.uofmcampusmap.NavigationFragment">
+    tools:resources="com.artem.uofmcampusmap.NavigationFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

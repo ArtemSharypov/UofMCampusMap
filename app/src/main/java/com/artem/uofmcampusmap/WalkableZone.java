@@ -168,19 +168,63 @@ public class WalkableZone
         return bottom;
     }
 
-    public LatLng getTopLeftCorner() {
-        return topLeftCorner;
+    public boolean zoneContainsLatLngPos(LatLng location)
+    {
+        boolean isWithin = false;
+        double highestLat;
+        double lowestLat;
+        double highestLong;
+        double lowestLong;
+
+        if(location != null)
+        {
+            highestLat = Math.max(Math.max(topLeftCorner.latitude, topRightCorner.latitude),
+                    Math.max(bottomLeftCorner.latitude, bottomRightCorner.latitude));
+
+            lowestLat = Math.min(Math.min(topLeftCorner.latitude, topRightCorner.latitude),
+                    Math.min(bottomLeftCorner.latitude, bottomRightCorner.latitude));
+
+            highestLong = Math.max(Math.max(topLeftCorner.longitude, topRightCorner.longitude),
+                Math.max(bottomLeftCorner.longitude, bottomRightCorner.longitude));
+
+            lowestLong = Math.min(Math.min(topLeftCorner.longitude, topRightCorner.longitude),
+                    Math.min(bottomLeftCorner.longitude, bottomRightCorner.longitude));
+
+            if(location.latitude >= lowestLat && location.latitude <= highestLat &&
+                    location.longitude >= lowestLong && location.longitude <= highestLong)
+            {
+                isWithin = true;
+            }
+        }
+
+        return isWithin;
     }
 
-    public LatLng getTopRightCorner() {
-        return topRightCorner;
-    }
+    //Used for connecting a vertex to all of the connections of this zone
+    //Specifically for when a location is within a zone to make finding an optimal route easier
+    public void connectVertexToZone(Vertex vertex)
+    {
+        if(vertex != null)
+        {
+            if(top != null)
+            {
+                vertex.addConnection(top);
+            }
 
-    public LatLng getBottomLeftCorner() {
-        return bottomLeftCorner;
-    }
+            if(left != null)
+            {
+                vertex.addConnection(left);
+            }
 
-    public LatLng getBottomRightCorner() {
-        return bottomRightCorner;
+            if(right != null)
+            {
+                vertex.addConnection(right);
+            }
+
+            if(bottom != null)
+            {
+                vertex.addConnection(bottom);
+            }
+        }
     }
 }

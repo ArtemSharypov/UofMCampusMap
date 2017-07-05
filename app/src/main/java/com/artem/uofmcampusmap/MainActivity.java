@@ -1,6 +1,7 @@
 package com.artem.uofmcampusmap;
 
 import android.content.res.Configuration;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -24,6 +25,9 @@ import com.artem.uofmcampusmap.buildings.tunnels.Robson_UniCollege_Tunnel;
 import com.artem.uofmcampusmap.buildings.tunnels.Russel_Archi2_Tunnel;
 import com.artem.uofmcampusmap.buildings.tunnels.Tier_Artlab_Tunnel;
 import com.artem.uofmcampusmap.buildings.tunnels.Wallace_Parker_Tunnel;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MainActivity extends AppCompatActivity implements PassRouteData, PassBuildingData{
     private Toolbar toolbar;
