@@ -267,12 +267,10 @@ public class ArmesIndoorConnections {
             IndoorVertex indoorV2 = (IndoorVertex) vertex2;
             XYPos secondPos = indoorV2.getPosition();
 
-            /*
             //todo need to make this checking better, else its not going to work for directions part of indoors
             //since turns need a north or south with a east or west
             //might have to be handled just in the route part, by checking if its an indoor connection then switching east->north
             //or such is a this type of turn instead of the normal way that its handled for outdoor ones
-
 
             if(firstPos.getX() > secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
             {
@@ -298,7 +296,7 @@ public class ArmesIndoorConnections {
             {
                 vertex1.addConnection(vertex2);
                 vertex2.addConnection(vertex1);
-            }*/
+            }
 
             vertex1.addConnection(vertex2);
             vertex2.addConnection(vertex1);
