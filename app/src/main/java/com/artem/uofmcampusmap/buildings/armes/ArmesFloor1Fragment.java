@@ -230,7 +230,6 @@ public class ArmesFloor1Fragment extends Fragment implements DisplayRoute {
         PassRouteData activity = (PassRouteData) getActivity();
         int currInstructionPos = activity.getCurrInstructionPos();
         Route route = activity.getRoute();
-
         int startPosOfIndoors = currInstructionPos;
         Instruction currInstruction;
 
@@ -261,19 +260,29 @@ public class ArmesFloor1Fragment extends Fragment implements DisplayRoute {
         drawingPathsView.updatePathPos(currInstructionPos);
 
         currInstructionPos++;
-        currInstruction = route.getInstructionAt(currInstructionPos);
 
-        while(currInstruction != null && checkIfValidInstruc(currInstruction))
+        while(currInstructionPos < route.getNumInstructions())
         {
-            Line line = createLine(currInstruction);
+            currInstruction = route.getInstructionAt(currInstructionPos);
 
-            if(line != null)
+            if(checkIfValidInstruc(currInstruction))
             {
-                drawingPathsView.addPathToEnd(line);
+                Line line = createLine(currInstruction);
+
+                if(line != null)
+                {
+                    drawingPathsView.addPathToEnd(line);
+                }
+            }
+            else
+            {
+                if(!entranceOrExitInstruc(currInstruction) && !stairsInstruction(currInstruction))
+                {
+                    break;
+                }
             }
 
             currInstructionPos++;
-            currInstruction = route.getInstructionAt(currInstructionPos);
         }
 
         drawingPathsView.invalidate();

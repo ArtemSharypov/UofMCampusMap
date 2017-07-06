@@ -88,12 +88,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                     {
                         if(currLocation.equals(OUTSIDE_ID))
                         {
-                            DisplayRoute childFrag = (DisplayRoute) getChildFragmentManager().findFragmentById(R.id.frag_holder);
-
-                            if(childFrag != null)
-                            {
-                                childFrag.updateDisplayedRoute();
-                            }
+                            updateCurrDisplayedRoute();
                         }
                         else
                         {
@@ -101,7 +96,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                             switchToMapFrag();
                         }
                     }
-                    else if(currInstruction.getSource() instanceof IndoorVertex)
+                    else
                     {
                         handleIndoorSource(currInstruction);
                     }
@@ -141,6 +136,20 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                     else if(currInstruction.getSource() instanceof IndoorVertex)
                     {
                         handleIndoorSource(currInstruction);
+                    }
+                }
+                else
+                {
+                    if(currInstructionPos + 1 == route.getNumInstructions())
+                    {
+                        remainingDistance -= route.getInstructionAt(currInstructionPos).getDistanceInMetres();
+                        currInstructionPos++;
+
+                        updateShownInstruction();
+                        updateDistanceTimeRemaining();
+                        updateActivityRoutePos();
+
+                        updateCurrDisplayedRoute();
                     }
                 }
             }
@@ -212,7 +221,14 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
 
     private void updateShownInstruction()
     {
-        instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
+        if(currInstructionPos < route.getNumInstructions())
+        {
+            instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
+        }
+        else
+        {
+            instructionsTextView.setText(getResources().getString(R.string.arrived_msg));
+        }
     }
 
     private void updateDistanceTimeRemaining()
@@ -365,6 +381,8 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         }
     }
 
+    //todo for this and map fragment might need to actually either CLEAR the stack or reuse them, because eventually
+    //its starting to cause a large amount of memory being used due to hard references of each and every fragment.
     private void switchViewToBuilding(String buildingName, int floorNumber)
     {
         if(buildingName.equals(getResources().getString(R.string.armes)))

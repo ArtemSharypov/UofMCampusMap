@@ -76,7 +76,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
             if(linePos > 0)
             {
                 //means that next was pressed
-                if(currPosInLines + 1 < routeLines.size())
+                if(currPosInLines < routeLines.size())
                 {
                     routeLines.get(currPosInLines).setVisible(false);
                     currPosInLines++;
