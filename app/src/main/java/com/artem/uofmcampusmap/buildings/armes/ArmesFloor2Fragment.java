@@ -245,7 +245,8 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
         IndoorVertex dest;
         boolean isStairsInstruc = false;
 
-        if(instruction.getSource() instanceof IndoorVertex && instruction.getDestination() instanceof IndoorVertex)
+        if(instruction.getSource() instanceof IndoorVertex && instruction.getDestination() instanceof IndoorVertex &&
+                ((IndoorVertex) instruction.getSource()).getFloor() == 2)
         {
             source = (IndoorVertex) instruction.getSource();
             dest = (IndoorVertex) instruction.getDestination();
@@ -277,7 +278,6 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
         PassRouteData activity = (PassRouteData) getActivity();
         int currInstructionPos = activity.getCurrInstructionPos();
         Route route = activity.getRoute();
-
         int startPosOfIndoors = currInstructionPos;
         Instruction currInstruction;
 
@@ -301,7 +301,6 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
                     break;
                 }
             }
-
             startPosOfIndoors--;
         }
 
@@ -309,19 +308,29 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
         drawingPathsView.updatePathPos(currInstructionPos);
 
         currInstructionPos++;
-        currInstruction = route.getInstructionAt(currInstructionPos);
 
-        while(currInstruction != null && checkIfValidInstruc(currInstruction))
+        while(currInstructionPos < route.getNumInstructions())
         {
-            Line line = createLine(currInstruction);
+            currInstruction = route.getInstructionAt(currInstructionPos);
 
-            if(line != null)
+            if(checkIfValidInstruc(currInstruction))
             {
-                drawingPathsView.addPathToEnd(line);
+                Line line = createLine(currInstruction);
+
+                if(line != null)
+                {
+                    drawingPathsView.addPathToEnd(line);
+                }
+            }
+            else
+            {
+                if(!entranceOrExitInstruc(currInstruction) && !stairsInstruction(currInstruction))
+                {
+                    break;
+                }
             }
 
             currInstructionPos++;
-            currInstruction = route.getInstructionAt(currInstructionPos);
         }
 
         drawingPathsView.invalidate();

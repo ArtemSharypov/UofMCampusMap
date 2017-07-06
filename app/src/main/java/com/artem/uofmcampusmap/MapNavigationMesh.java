@@ -1,14 +1,9 @@
 package com.artem.uofmcampusmap;
 
-import android.app.Activity;
 import android.content.res.Resources;
-import android.location.Location;
 
 import com.artem.uofmcampusmap.buildings.armes.ArmesIndoorConnections;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,15 +14,17 @@ import java.util.HashMap;
 
 public class MapNavigationMesh
 {
-    private ArrayList<WalkableZone> walkableZones; //todo implement this with proper/split zone sections
+    private ArrayList<WalkableZone> walkableZones;
     private HashMap<String, ArrayList<Vertex>> startEndLocations;
     private ArmesIndoorConnections armesIndoorConnections;
     private Resources resources;
+    private RouteFinder routeFinder;
 
     public MapNavigationMesh(Resources resources)
     {
         walkableZones = new ArrayList<>();
         startEndLocations = new HashMap<>();
+        routeFinder = new RouteFinder();
         this.resources = resources;
         populationMesh();
     }
@@ -52,7 +49,6 @@ public class MapNavigationMesh
     private Route navigateIndoors(IndoorVertex startLocation, IndoorVertex destinationLocation)
     {
         Route route;
-        RouteFinder routeFinder = new RouteFinder();
 
         if(startLocation.getFloor() == destinationLocation.getFloor())
         {
@@ -106,21 +102,16 @@ public class MapNavigationMesh
         return connection;
     }
 
-
-    //todo need to clean up this logic for creating routes due to repeating things
     public Route findRoute(String startLocation, String startRoom, String endLocation, String endRoom)
     {
         Route route = null;
         ArrayList<Vertex> startBuildingExits;
         OutdoorVertex startBuildingExit = null;
-        IndoorVertex startRoomVertex;
         ArrayList<Vertex> endBuildingEntrances;
         OutdoorVertex endBuildingEntrance = null;
-        IndoorVertex endRoomVertex;
-        RouteFinder routeFinder = new RouteFinder();
         Route exitToEntrance; //Consists of Outdoor vertex's doing the outdoor portion
-        Route startRoomToExit = null; //Indoor vertex's that connect start room to the buildings exit
-        Route entranceToEndRoom = null; //Indoor vertex's that connect the entrance to the destination room
+        Route startRoomToExit; //Indoor vertex's that connect start room to the buildings exit
+        Route entranceToEndRoom; //Indoor vertex's that connect the entrance to the destination room
 
         if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
         {
@@ -128,13 +119,7 @@ public class MapNavigationMesh
             {
                 if(!startRoom.equals(endRoom))
                 {
-                    startRoomVertex = findRoomVertex(startRoom);
-                    endRoomVertex = findRoomVertex(endRoom);
-
-                    if (startRoomVertex != null && endRoomVertex != null)
-                    {
-                        route = navigateIndoors(startRoomVertex, endRoomVertex);
-                    }
+                    route = routeSameBuildingRooms(startLocation, startRoom, endRoom);
                 }
             }
             else
@@ -158,22 +143,14 @@ public class MapNavigationMesh
                     }
                 }
 
-                //everything from here on could be the part of navigation indoors
-                startRoomVertex = findRoomVertex(startRoom);
-                endRoomVertex = findRoomVertex(endRoom);
+                //Route from the starting room, to the exit of the building
+                startRoomToExit = routeFromStartRoomToExit(startLocation, startRoom, startBuildingExit);
 
-                if (startRoomVertex != null) {
-                    IndoorVertex indoorStartExit = indoorVertexConnectionTo(startBuildingExit);
-                    startRoomToExit = navigateIndoors(startRoomVertex, indoorStartExit);
-                }
-
-                //Create a route from the exit to the entrance
+                //Create a route from the start buildings exit to the destination building entrances
                 exitToEntrance = routeFinder.findRoute(startBuildingExit, endBuildingEntrance);
 
-                if (endRoomVertex != null) {
-                    IndoorVertex indoorEndEntrance = indoorVertexConnectionTo(endBuildingEntrance);
-                    entranceToEndRoom = navigateIndoors(indoorEndEntrance, endRoomVertex);
-                }
+                //Route from the destination building entrance to the destination room
+                entranceToEndRoom = routeFromBuildingEntranceToDest(endLocation, endBuildingEntrance, endRoom);
 
                 //Combine all the seperate routes into one single route
                 if (startRoomToExit != null) {
@@ -184,7 +161,6 @@ public class MapNavigationMesh
                 }
 
                 route.combineRoutes(entranceToEndRoom);
-
             }
         }
 
@@ -195,13 +171,8 @@ public class MapNavigationMesh
     {
         Route route = null;
         OutdoorVertex currLocation = null;
-        IndoorVertex endRoomVertex;
-        OutdoorVertex endBuildingEntrance = null;
-        Route entranceToEndRoom = null;
-        RouteFinder routeFinder = new RouteFinder();
-        ArrayList<Vertex> endBuildingEntrances;
-        int tempDist;
-        int bestDist = Integer.MAX_VALUE;
+        OutdoorVertex endBuildingEntrance;
+        Route entranceToEndRoom;
 
         if(startEndLocations.containsKey(endLocation))
         {
@@ -216,32 +187,17 @@ public class MapNavigationMesh
 
             if(currLocation != null)
             {
-                endBuildingEntrances = startEndLocations.get(endLocation);
+                endBuildingEntrance = findBestEntranceExitTo(currLocation, endLocation);
 
-                //Find the best entrance from the current location
-                for (Vertex destination : endBuildingEntrances) {
-                    tempDist = currLocation.getDistanceFrom(destination);
+                //Create a route from the current location, to the destination building.
+                //Then create a route from the entrance to the destination room and combine them
+                route = routeFinder.findRoute(currLocation, endBuildingEntrance);
+                entranceToEndRoom = routeFromBuildingEntranceToDest(endLocation, endBuildingEntrance, endRoom);
 
-                    if (tempDist < bestDist) {
-                        endBuildingEntrance = (OutdoorVertex) destination;
-                        bestDist = tempDist;
-                    }
-                }
-
-                if(endBuildingEntrance != null)
+                if(route != null)
                 {
-                    //Create a route from the current location to the destination building
-                    route = routeFinder.findRoute(currLocation, endBuildingEntrance);
+                    route.combineRoutes(entranceToEndRoom);
                 }
-
-                endRoomVertex = findRoomVertex(endRoom);
-
-                if (endRoomVertex != null) {
-                    IndoorVertex indoorEndEntrance = indoorVertexConnectionTo(endBuildingEntrance);
-                    entranceToEndRoom = navigateIndoors(indoorEndEntrance, endRoomVertex);
-                }
-
-                route.combineRoutes(entranceToEndRoom);
             }
         }
 
@@ -252,16 +208,12 @@ public class MapNavigationMesh
     {
         Route route = null;
         OutdoorVertex currLocation = null;
-        IndoorVertex startRoomVertex;
-        OutdoorVertex startBuildingExit = null;
-        Route startLocationToCurr = null;
-        RouteFinder routeFinder = new RouteFinder();
-        ArrayList<Vertex> startBuildingExits;
-        int tempDist;
-        int bestDist = Integer.MAX_VALUE;
+        OutdoorVertex startBuildingExit;
+        Route startToCurrLocationRoute;
 
         if(startEndLocations.containsKey(startLocation))
         {
+            //todo split this up into seperate sections (aka walkable zones) to speed up checking the location
             for (WalkableZone currZone : walkableZones) {
                 if (currZone.zoneContainsLatLngPos(gpsEndLocation)) {
                     currLocation = new OutdoorVertex(gpsEndLocation);
@@ -273,53 +225,90 @@ public class MapNavigationMesh
 
             if(currLocation != null)
             {
-                startBuildingExits = startEndLocations.get(startLocation);
+                startBuildingExit = findBestEntranceExitTo(currLocation, startLocation);
 
-                //Find the best entrance from the current location
-                for (Vertex destination : startBuildingExits) {
-                    tempDist = currLocation.getDistanceFrom(destination);
+                route = routeFromStartRoomToExit(startLocation, startRoom, startBuildingExit);
+                startToCurrLocationRoute = routeFinder.findRoute(startBuildingExit, currLocation);
 
-                    if (tempDist < bestDist) {
-                        startBuildingExit = (OutdoorVertex) destination;
-                        bestDist = tempDist;
-                    }
-                }
-
-                startRoomVertex = findRoomVertex(startRoom);
-
-                if (startRoomVertex != null) {
-                    IndoorVertex indoorEndEntrance = indoorVertexConnectionTo(startBuildingExit);
-                    route = navigateIndoors(indoorEndEntrance, startRoomVertex);
-                }
-
-                if(startBuildingExit != null)
+                if (route != null)
                 {
-                    //Create a route from the start building to the current location
-                    if (route != null)
-                    {
-                        startLocationToCurr = routeFinder.findRoute(startBuildingExit, currLocation);
-                        route.combineRoutes(startLocationToCurr);
-                    }
-                    else
-                    {
-                        route = routeFinder.findRoute(startBuildingExit, currLocation);
-
-                    }
+                    route.combineRoutes(startToCurrLocationRoute);
                 }
-
-
+                else
+                {
+                    route = startToCurrLocationRoute;
+                }
             }
         }
-
 
         return route;
     }
 
-    private IndoorVertex findRoomVertex(String room)
+    private Route routeSameBuildingRooms(String building, String startRoom, String endRoom)
+    {
+        Route route = null;
+        IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
+        IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
+
+        if (startRoomVertex != null && endRoomVertex != null)
+        {
+            route = navigateIndoors(startRoomVertex, endRoomVertex);
+        }
+
+        return route;
+    }
+
+    private Route routeFromStartRoomToExit(String building, String startRoom, OutdoorVertex exitVertex)
+    {
+        Route route = null;
+        IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
+
+        if (startRoomVertex != null) {
+            IndoorVertex indoorStartExit = indoorVertexConnectionTo(exitVertex);
+            route  = navigateIndoors(startRoomVertex, indoorStartExit);
+        }
+
+        return route;
+    }
+
+    private Route routeFromBuildingEntranceToDest(String building, OutdoorVertex entranceVertex, String endRoom)
+    {
+        Route route = null;
+        IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
+
+        if (endRoomVertex != null) {
+            IndoorVertex indoorEndEntrance = indoorVertexConnectionTo(entranceVertex);
+            route = navigateIndoors(indoorEndEntrance, endRoomVertex);
+        }
+
+        return route;
+    }
+
+    private OutdoorVertex findBestEntranceExitTo(OutdoorVertex location, String building)
+    {
+        OutdoorVertex bestEntExit = null;
+        ArrayList<Vertex> endBuildingEntrances = startEndLocations.get(building);
+        int tempDist;
+        int bestDist = Integer.MAX_VALUE;
+
+        //Find the best entrance from the current location
+        for (Vertex destination : endBuildingEntrances) {
+            tempDist = location.getDistanceFrom(destination);
+
+            if (tempDist < bestDist) {
+                bestEntExit = (OutdoorVertex) destination;
+                bestDist = tempDist;
+            }
+        }
+
+        return bestEntExit;
+    }
+
+    private IndoorVertex findRoomVertex(String room, String building)
     {
         IndoorVertex roomVertex = null;
 
-        if (room.equals(resources.getString(R.string.armes))) {
+        if (building.equals(resources.getString(R.string.armes))) {
             roomVertex = armesIndoorConnections.findRoom(room);
         }
 

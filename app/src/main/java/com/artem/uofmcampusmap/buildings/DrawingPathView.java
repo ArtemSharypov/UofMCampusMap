@@ -58,6 +58,12 @@ public class DrawingPathView extends View {
                 canvas.drawLine(line.getSourceX(), line.getSourceY(), line.getDestX(), line.getDestY(), paint);
             }
         }
+        else
+        {
+            Paint clear = new Paint();
+            clear.setColor(Color.TRANSPARENT);
+            canvas.drawLine(0, 0, 0, 0, clear);
+        }
     }
 
     public void addPathToEnd(Line pathToAdd)

@@ -141,6 +141,11 @@ public class Route {
 
         if(route.size() > 0)
         {
+            //todo so for the directions, check if both source/destination are indoor vertex
+            //if they are, then get the instruction AFTER this one, and get the direction of that instruction, and get direction of this one
+            //then do it as currentInstrucDirection, nextInstrucDirection for a call on turn directions
+            //for directions adding at the end do it as the instruction before this one, then call it as prevInstructionDirection, currInstrucDirection
+
             Vertex source = instruction.getSource();
             Vertex destination = instruction.getDestination();
             int sourceToDestDirect = source.directionToVertexIs(destination);

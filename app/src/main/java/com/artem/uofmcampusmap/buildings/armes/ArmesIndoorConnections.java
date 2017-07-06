@@ -263,24 +263,31 @@ public class ArmesIndoorConnections {
         if(vertex1 instanceof IndoorVertex && vertex2 instanceof IndoorVertex)
         {
             IndoorVertex indoorV1 = (IndoorVertex) vertex1;
+            XYPos firstPos = indoorV1.getPosition();
             IndoorVertex indoorV2 = (IndoorVertex) vertex2;
+            XYPos secondPos = indoorV2.getPosition();
 
-            if(indoorV1.getPosition().getX() > indoorV2.getPosition().getX())
+            //todo need to make this checking better, else its not going to work for directions part of indoors
+            //since turns need a north or south with a east or west
+            //might have to be handled just in the route part, by checking if its an indoor connection then switching east->north
+            //or such is a this type of turn instead of the normal way that its handled for outdoor ones
+
+            if(firstPos.getX() > secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
             {
                 indoorV1.addWestConnection(indoorV2);
                 indoorV2.addEastConnection(indoorV1);
             }
-            else if(indoorV1.getPosition().getX() < indoorV2.getPosition().getX())
+            else if(firstPos.getX() < secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
             {
                 indoorV1.addEastConnection(indoorV2);
                 indoorV2.addWestConnection(indoorV1);
             }
-            else if(indoorV1.getPosition().getY() > indoorV2.getPosition().getY())
+            else if(firstPos.getY() > secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
             {
                 indoorV1.addSouthConnection(indoorV2);
                 indoorV2.addNorthConnection(indoorV1);
             }
-            else if(indoorV1.getPosition().getY() < indoorV2.getPosition().getY())
+            else if(firstPos.getY() < secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
             {
                 indoorV1.addNorthConnection(indoorV2);
                 indoorV2.addSouthConnection(indoorV1);
@@ -290,6 +297,10 @@ public class ArmesIndoorConnections {
                 vertex1.addConnection(vertex2);
                 vertex2.addConnection(vertex1);
             }
+
+            vertex1.addConnection(vertex2);
+            vertex2.addConnection(vertex1);
+
         }
         else
         {
