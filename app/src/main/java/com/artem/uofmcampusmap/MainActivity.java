@@ -204,10 +204,6 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 this.currBuilding = getResources().getString(R.string.ext_education);
                 switchToBuildingLayouts();
                 break;
-            case R.id.fac_music:
-                this.currBuilding = getResources().getString(R.string.fac_music);
-                switchToBuildingLayouts();
-                break;
             case R.id.fletcher:
                 this.currBuilding = getResources().getString(R.string.fletcher);
                 switchToBuildingLayouts();
@@ -226,10 +222,6 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 break;
             case R.id.machray:
                 this.currBuilding = getResources().getString(R.string.machray);
-                switchToBuildingLayouts();
-                break;
-            case R.id.music_annex:
-                this.currBuilding = getResources().getString(R.string.music_annex);
                 switchToBuildingLayouts();
                 break;
             case R.id.parker:

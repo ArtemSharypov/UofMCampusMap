@@ -82,9 +82,6 @@ import com.artem.uofmcampusmap.buildings.elizabeth_dafoe_lib.Eli_Dafoe_Floor1;
 import com.artem.uofmcampusmap.buildings.elizabeth_dafoe_lib.Eli_Dafoe_Floor2;
 import com.artem.uofmcampusmap.buildings.elizabeth_dafoe_lib.Eli_Dafoe_Floor3;
 import com.artem.uofmcampusmap.buildings.extended_education.Ext_Education_Floor1;
-import com.artem.uofmcampusmap.buildings.faculty_of_music.Fac_Of_Music_Floor1;
-import com.artem.uofmcampusmap.buildings.faculty_of_music.Fac_Of_Music_Floor2;
-import com.artem.uofmcampusmap.buildings.faculty_of_music.Fac_Of_Music_Floor3;
 import com.artem.uofmcampusmap.buildings.fletcher.Fletcher_Floor1;
 import com.artem.uofmcampusmap.buildings.fletcher.Fletcher_Floor2;
 import com.artem.uofmcampusmap.buildings.fletcher.Fletcher_Floor3;
@@ -104,7 +101,6 @@ import com.artem.uofmcampusmap.buildings.machray.Machray_Floor2;
 import com.artem.uofmcampusmap.buildings.machray.Machray_Floor3;
 import com.artem.uofmcampusmap.buildings.machray.Machray_Floor4;
 import com.artem.uofmcampusmap.buildings.machray.Machray_Floor5;
-import com.artem.uofmcampusmap.buildings.music_annex_2.Music_Annex_Floor1;
 import com.artem.uofmcampusmap.buildings.parker.Parker_Floor1;
 import com.artem.uofmcampusmap.buildings.parker.Parker_Floor2;
 import com.artem.uofmcampusmap.buildings.parker.Parker_Floor3;
@@ -372,15 +368,6 @@ public class BuildingLayoutFragment extends Fragment{
                 if(position == 0)
                     fragment = new Ext_Education_Floor1();
             }
-            else if(buildingName.equals(getResources().getString(R.string.fac_music)))
-            {
-                if(position == 0)
-                    fragment = new Fac_Of_Music_Floor1();
-                else if(position == 1)
-                    fragment = new Fac_Of_Music_Floor2();
-                else if(position == 2)
-                    fragment = new Fac_Of_Music_Floor3();
-            }
             else if(buildingName.equals(getResources().getString(R.string.fletcher)))
             {
                 if(position == 0)
@@ -434,11 +421,6 @@ public class BuildingLayoutFragment extends Fragment{
                     fragment = new Machray_Floor4();
                 else if(position == 4)
                     fragment = new Machray_Floor5();
-            }
-            else if(buildingName.equals(getResources().getString(R.string.music_annex)))
-            {
-                if(position == 0)
-                    fragment = new Music_Annex_Floor1();
             }
             else if(buildingName.equals(getResources().getString(R.string.parker)))
             {
