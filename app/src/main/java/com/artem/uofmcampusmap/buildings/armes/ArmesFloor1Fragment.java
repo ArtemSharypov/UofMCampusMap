@@ -192,39 +192,6 @@ public class ArmesFloor1Fragment extends Fragment implements DisplayRoute {
         drawingPathsView.invalidate();
     }
 
-    private boolean entranceOrExitInstruc(Instruction instruction)
-    {
-        boolean entranceExitInstruc = false;
-
-        if((instruction.getDestination() instanceof OutdoorVertex && instruction.getSource() instanceof IndoorVertex) ||
-                (instruction.getDestination() instanceof IndoorVertex && instruction.getSource() instanceof OutdoorVertex))
-        {
-            entranceExitInstruc = true;
-        }
-
-        return entranceExitInstruc;
-    }
-
-    private boolean stairsInstruction(Instruction instruction)
-    {
-        IndoorVertex source;
-        IndoorVertex dest;
-        boolean isStairsInstruc = false;
-
-        if(instruction.getSource() instanceof IndoorVertex && instruction.getDestination() instanceof IndoorVertex)
-        {
-            source = (IndoorVertex) instruction.getSource();
-            dest = (IndoorVertex) instruction.getDestination();
-
-            if(source.getFloor() != dest.getFloor())
-            {
-                isStairsInstruc = true;
-            }
-        }
-
-        return isStairsInstruc;
-    }
-
     @Override
     public void displayRoute() {
         PassRouteData activity = (PassRouteData) getActivity();
@@ -248,7 +215,7 @@ public class ArmesFloor1Fragment extends Fragment implements DisplayRoute {
             }
             else
             {
-                if(!entranceOrExitInstruc(currInstruction) && !stairsInstruction(currInstruction))
+                if(!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction())
                 {
                     break;
                 }
@@ -276,7 +243,7 @@ public class ArmesFloor1Fragment extends Fragment implements DisplayRoute {
             }
             else
             {
-                if(!entranceOrExitInstruc(currInstruction) && !stairsInstruction(currInstruction))
+                if(!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction())
                 {
                     break;
                 }
