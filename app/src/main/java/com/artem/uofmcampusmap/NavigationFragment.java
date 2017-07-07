@@ -178,7 +178,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             }
             else
             {
-                route = campusMap.findRoute(startLocation, startRoom, destinationLocation, destinationRoom);
+                route = campusMap.getRoute(startLocation, startRoom, destinationLocation, destinationRoom);
             }
 
             if(route != null)
@@ -297,11 +297,11 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
 
             if(startLocation.equals(gps))
             {
-                route = campusMap.findRoute(gpsLocation, destinationLocation, destinationRoom);
+                route = campusMap.getRoute(gpsLocation, destinationLocation, destinationRoom);
             }
             else if(destinationLocation.equals(gps))
             {
-                route = campusMap.findRoute(startLocation, startRoom, gpsLocation);
+                route = campusMap.getRoute(startLocation, startRoom, gpsLocation);
             }
 
             if(route != null)
@@ -339,7 +339,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
     {
         final double WALK_SPEED_METERS_PER_MIN = 66.67;
 
-        return (int) (distance / WALK_SPEED_METERS_PER_MIN) + 1;
+        return (int) Math.ceil(distance / WALK_SPEED_METERS_PER_MIN);
     }
 
     private void switchToMapFrag()

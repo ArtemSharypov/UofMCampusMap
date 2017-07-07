@@ -215,8 +215,7 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
         {
             indoorVertex = (IndoorVertex) vertex;
 
-            if(indoorVertex.getBuilding().equals(getResources().getString(R.string.armes))
-                    && indoorVertex.getFloor() == 2)
+            if(indoorVertex.getBuilding().equals(getResources().getString(R.string.armes)) && indoorVertex.getFloor() == 2)
             {
                 valid = true;
             }
@@ -237,40 +236,6 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
 
         drawingPathsView.updatePathPos(currInstructionPos);
         drawingPathsView.invalidate();
-    }
-
-    private boolean stairsInstruction(Instruction instruction)
-    {
-        IndoorVertex source;
-        IndoorVertex dest;
-        boolean isStairsInstruc = false;
-
-        if(instruction.getSource() instanceof IndoorVertex && instruction.getDestination() instanceof IndoorVertex &&
-                ((IndoorVertex) instruction.getSource()).getFloor() == 2)
-        {
-            source = (IndoorVertex) instruction.getSource();
-            dest = (IndoorVertex) instruction.getDestination();
-
-            if(source.getFloor() != dest.getFloor())
-            {
-                isStairsInstruc = true;
-            }
-        }
-
-        return isStairsInstruc;
-    }
-
-    private boolean entranceOrExitInstruc(Instruction instruction)
-    {
-        boolean entranceExitInstruc = false;
-
-        if((instruction.getDestination() instanceof OutdoorVertex && instruction.getSource() instanceof IndoorVertex) ||
-                (instruction.getDestination() instanceof IndoorVertex && instruction.getSource() instanceof OutdoorVertex))
-        {
-            entranceExitInstruc = true;
-        }
-
-        return entranceExitInstruc;
     }
 
     @Override
@@ -296,7 +261,7 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
             }
             else
             {
-                if(!entranceOrExitInstruc(currInstruction) && !stairsInstruction(currInstruction))
+                if(!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction())
                 {
                     break;
                 }
@@ -324,7 +289,7 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
             }
             else
             {
-                if(!entranceOrExitInstruc(currInstruction) && !stairsInstruction(currInstruction))
+                if(!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction())
                 {
                     break;
                 }

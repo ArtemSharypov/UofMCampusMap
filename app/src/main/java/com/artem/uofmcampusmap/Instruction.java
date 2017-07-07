@@ -27,6 +27,31 @@ public class Instruction {
         calculateDistance();
     }
 
+    public boolean isIndoorInstruction()
+    {
+        return source instanceof IndoorVertex && destination instanceof IndoorVertex;
+    }
+
+    public boolean isExitBuildingInstruction()
+    {
+        return source instanceof IndoorVertex && destination instanceof OutdoorVertex;
+    }
+
+    public boolean isStairsInstruction()
+    {
+        boolean isStairsInstruc = false;
+
+        if(isIndoorInstruction())
+        {
+            if(((IndoorVertex) source).getFloor() != ((IndoorVertex) destination).getFloor())
+            {
+                isStairsInstruc = true;
+            }
+        }
+
+        return isStairsInstruc;
+    }
+
     private void findDirection()
     {
         if(source != null && destination != null)
