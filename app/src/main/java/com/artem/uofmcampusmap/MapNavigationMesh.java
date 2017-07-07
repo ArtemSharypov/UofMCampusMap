@@ -63,7 +63,7 @@ public class MapNavigationMesh
             Route routeStartToStairs = routeFinder.findRoute(startLocation, closestStairs);
 
             //Stairs that will connect to the closest stairs, that will now be on the same level as the destination
-            IndoorVertex destinationFloorStairs = findStairsConnectionFrom(closestStairs, destinationLocation.getFloor());
+            IndoorVertex destinationFloorStairs = closestStairs.findStairsConnection(destinationLocation.getFloor());
 
             //From the stairs on the destination level to the destination itself
             Route secondStairsToDest = routeFinder.findRoute(destinationFloorStairs, destinationLocation);
@@ -76,33 +76,7 @@ public class MapNavigationMesh
         return route;
     }
 
-    //Find a vertex that connects to the stairs that is to the desired floor
-    private IndoorVertex findStairsConnectionFrom(IndoorVertex startStairs, int destinationFloor)
-    {
-        IndoorVertex connection = null;
-        IndoorVertex tempVertex;
-
-        //Find the other stairs connection to the stairs, only have to check for floor
-        //since nothing else should be cross floor connections that matter
-        for(Vertex vertex : startStairs.getConnections())
-        {
-            if(vertex instanceof IndoorVertex)
-            {
-                tempVertex = (IndoorVertex) vertex;
-
-                if(tempVertex.getFloor() == destinationFloor)
-                {
-                    connection = tempVertex;
-                    break;
-                }
-
-            }
-        }
-
-        return connection;
-    }
-
-    public Route findRoute(String startLocation, String startRoom, String endLocation, String endRoom)
+    public Route getRoute(String startLocation, String startRoom, String endLocation, String endRoom)
     {
         Route route = null;
         ArrayList<Vertex> startBuildingExits;
@@ -167,7 +141,7 @@ public class MapNavigationMesh
         return route;
     }
 
-    public Route findRoute(LatLng gpsStartLocation, String endLocation, String endRoom)
+    public Route getRoute(LatLng gpsStartLocation, String endLocation, String endRoom)
     {
         Route route = null;
         OutdoorVertex currLocation = null;
@@ -204,7 +178,7 @@ public class MapNavigationMesh
         return route;
     }
 
-    public Route findRoute(String startLocation, String startRoom, LatLng gpsEndLocation)
+    public Route getRoute(String startLocation, String startRoom, LatLng gpsEndLocation)
     {
         Route route = null;
         OutdoorVertex currLocation = null;
@@ -264,7 +238,7 @@ public class MapNavigationMesh
         IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
 
         if (startRoomVertex != null) {
-            IndoorVertex indoorStartExit = indoorVertexConnectionTo(exitVertex);
+            IndoorVertex indoorStartExit = exitVertex.findIndoorConnection();
             route  = navigateIndoors(startRoomVertex, indoorStartExit);
         }
 
@@ -277,7 +251,7 @@ public class MapNavigationMesh
         IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
 
         if (endRoomVertex != null) {
-            IndoorVertex indoorEndEntrance = indoorVertexConnectionTo(entranceVertex);
+            IndoorVertex indoorEndEntrance = entranceVertex.findIndoorConnection();
             route = navigateIndoors(indoorEndEntrance, endRoomVertex);
         }
 
@@ -313,27 +287,6 @@ public class MapNavigationMesh
         }
 
         return roomVertex;
-    }
-
-    //Find the closest (if there is one) indoor vertex that connects to the provided outdoor vertex
-    private IndoorVertex indoorVertexConnectionTo(OutdoorVertex outdoorVertex)
-    {
-        IndoorVertex indoorVertex = null;
-
-        if(outdoorVertex != null)
-        {
-            //Find the indoor vertex (if there is one), set it and break the loop once its found
-            for(Vertex vertex : outdoorVertex.getConnections())
-            {
-                if(vertex instanceof IndoorVertex)
-                {
-                    indoorVertex = (IndoorVertex) vertex;
-                    break;
-                }
-            }
-        }
-
-        return indoorVertex;
     }
 
     private void populationMesh()

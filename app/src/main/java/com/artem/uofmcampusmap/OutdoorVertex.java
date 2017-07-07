@@ -74,6 +74,24 @@ public class OutdoorVertex extends Vertex
         return distance;
     }
 
+    //Find the closest (if there is one) indoor vertex that connects to the provided outdoor vertex
+    public IndoorVertex findIndoorConnection()
+    {
+        IndoorVertex indoorVertex = null;
+
+        //Find the indoor vertex (if there is one), set it and break the loop once its found
+        for(Vertex vertex : getConnections())
+        {
+            if(vertex instanceof IndoorVertex)
+            {
+                indoorVertex = (IndoorVertex) vertex;
+                break;
+            }
+        }
+
+        return indoorVertex;
+    }
+
     public boolean equals(Vertex vertex)
     {
         boolean areEqual = false;

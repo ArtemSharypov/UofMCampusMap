@@ -215,8 +215,7 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
         {
             indoorVertex = (IndoorVertex) vertex;
 
-            if(indoorVertex.getBuilding().equals(getResources().getString(R.string.armes))
-                    && indoorVertex.getFloor() == 2)
+            if(indoorVertex.getBuilding().equals(getResources().getString(R.string.armes)) && indoorVertex.getFloor() == 2)
             {
                 valid = true;
             }
@@ -245,8 +244,7 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
         IndoorVertex dest;
         boolean isStairsInstruc = false;
 
-        if(instruction.getSource() instanceof IndoorVertex && instruction.getDestination() instanceof IndoorVertex &&
-                ((IndoorVertex) instruction.getSource()).getFloor() == 2)
+        if(instruction.isIndoorInstruction() && ((IndoorVertex) instruction.getSource()).getFloor() == 2)
         {
             source = (IndoorVertex) instruction.getSource();
             dest = (IndoorVertex) instruction.getDestination();

@@ -42,6 +42,32 @@ public class IndoorVertex extends Vertex
         return distance;
     }
 
+    //Find a vertex that connects to the stairs that is to the desired floor
+    public IndoorVertex findStairsConnection(int destinationFloor)
+    {
+        IndoorVertex connection = null;
+        IndoorVertex tempVertex;
+
+        //Find the other stairs connection to the stairs, only have to check for floor
+        //since nothing else should be cross floor connections that matter
+        for(Vertex vertex : getConnections())
+        {
+            if(vertex instanceof IndoorVertex)
+            {
+                tempVertex = (IndoorVertex) vertex;
+
+                if(tempVertex.getFloor() == destinationFloor)
+                {
+                    connection = tempVertex;
+                    break;
+                }
+
+            }
+        }
+
+        return connection;
+    }
+
     public boolean equals(Vertex vertex)
     {
         boolean areEqual = false;

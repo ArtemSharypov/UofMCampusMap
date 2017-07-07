@@ -27,6 +27,11 @@ public class Instruction {
         calculateDistance();
     }
 
+    public boolean isIndoorInstruction()
+    {
+        return source instanceof IndoorVertex && destination instanceof IndoorVertex;
+    }
+
     private void findDirection()
     {
         if(source != null && destination != null)

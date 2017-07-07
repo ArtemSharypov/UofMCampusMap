@@ -139,13 +139,24 @@ public class Route {
     {
         String directionToAdd = instruction.getTextDirections();
 
-        if(route.size() > 0)
+        if(instruction.isIndoorInstruction())
         {
-            //todo so for the directions, check if both source/destination are indoor vertex
-            //if they are, then get the instruction AFTER this one, and get the direction of that instruction, and get direction of this one
-            //then do it as currentInstrucDirection, nextInstrucDirection for a call on turn directions
-            //for directions adding at the end do it as the instruction before this one, then call it as prevInstructionDirection, currInstrucDirection
+            if(route.size() > 0)
+            {
+                Instruction nextInstruc = route.get(0);
 
+                if(nextInstruc.isIndoorInstruction())
+                {
+                    int nextInstrucDirection = nextInstruc.getCurrDirection();
+                    int currDirection = instruction.getCurrDirection();
+
+                    String turnDirections = turnDirections(currDirection, nextInstrucDirection);
+                    directionToAdd = turnDirections + directionToAdd;
+                }
+            }
+        }
+        else
+        {
             Vertex source = instruction.getSource();
             Vertex destination = instruction.getDestination();
             int sourceToDestDirect = source.directionToVertexIs(destination);
@@ -162,52 +173,52 @@ public class Route {
         accordingly to switch directions. Same goes for East/West then North/South.
         Essentially means that the source is that direction from the destination in terms of N/S/W/E
      */
-    private String turnDirections(int sourceToDestination, int destinationToSource)
+    private String turnDirections(int firstDirection, int secondDirection)
     {
         String turnDirections = "";
         final String left = "Turn left and ";
         final String right = "Turn right and ";
 
-        if(sourceToDestination == Vertex.NORTH)
+        if(firstDirection == Vertex.NORTH)
         {
-            if(destinationToSource == Vertex.EAST)
+            if(secondDirection == Vertex.EAST)
             {
                 turnDirections = right;
             }
-            else if(destinationToSource == Vertex.WEST)
+            else if(secondDirection == Vertex.WEST)
             {
                 turnDirections = left;
             }
         }
-        else if(sourceToDestination == Vertex.SOUTH)
+        else if(firstDirection == Vertex.SOUTH)
         {
-            if(destinationToSource == Vertex.EAST)
+            if(secondDirection == Vertex.EAST)
             {
                 turnDirections = left;
             }
-            else if(destinationToSource == Vertex.WEST)
+            else if(secondDirection == Vertex.WEST)
             {
                 turnDirections = right;
             }
         }
-        else if(sourceToDestination == Vertex.WEST)
+        else if(firstDirection == Vertex.WEST)
         {
-            if(destinationToSource == Vertex.NORTH)
+            if(secondDirection == Vertex.NORTH)
             {
                 turnDirections = right;
             }
-            else if(destinationToSource == Vertex.SOUTH)
+            else if(secondDirection == Vertex.SOUTH)
             {
                 turnDirections = left;
             }
         }
-        else if(sourceToDestination == Vertex.EAST)
+        else if(firstDirection == Vertex.EAST)
         {
-            if(destinationToSource == Vertex.NORTH)
+            if(secondDirection == Vertex.NORTH)
             {
                 turnDirections = left;
             }
-            else if(destinationToSource == Vertex.SOUTH)
+            else if(secondDirection == Vertex.SOUTH)
             {
                 turnDirections = right;
             }
@@ -268,8 +279,25 @@ public class Route {
     private void addDirectionToEnd(Instruction instruction)
     {
         String directionToAdd = instruction.getTextDirections();
+        int routeSize = route.size();
 
-        if(route.size() > 0)
+        if(instruction.isIndoorInstruction())
+        {
+            if(routeSize > 0)
+            {
+                Instruction prevInstruc = route.get(routeSize -1);
+
+                if(prevInstruc.isIndoorInstruction())
+                {
+                    int prevInstrucDirection = prevInstruc.getCurrDirection();
+                    int currDirection = instruction.getCurrDirection();
+
+                    String turnDirections = turnDirections(prevInstrucDirection, currDirection);
+                    directionToAdd = turnDirections + directionToAdd;
+                }
+            }
+        }
+        else
         {
             Vertex source = instruction.getSource();
             Vertex destination = instruction.getDestination();
@@ -279,7 +307,6 @@ public class Route {
             String turnDirections = turnDirections(sourceToDestDirect, destToSourceDirect);
             directionToAdd = turnDirections + directionToAdd;
         }
-
         directions.add(directionToAdd);
     }
 
