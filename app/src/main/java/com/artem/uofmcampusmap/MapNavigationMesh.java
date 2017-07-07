@@ -566,13 +566,13 @@ public class MapNavigationMesh
         addEntrance("Extended Education", ext_education_east_ent.getLeft());
         walkableZones.add(ext_education_east_ent);
 
+        //todo rename the fac of music to something else since its been moved
         //bottomMid
         WalkableZone fac_of_music_north_end = new WalkableZone(new LatLng(49.807664, -97.136246), new LatLng(49.807698, -97.136129), new LatLng(49.807333, -97.136082), new LatLng(49.807384, -97.135890));
         fac_of_music_north_end.setTop(new LatLng(49.807675, -97.136190));
         fac_of_music_north_end.setLeft(new LatLng(49.807400, -97.136108));
         fac_of_music_north_end.setBottom(new LatLng(49.807369, -97.135997));
 
-        addEntrance("Faculty of Music", fac_of_music_north_end.getBottom());
         walkableZones.add(fac_of_music_north_end);
 
         //leftMid
@@ -580,7 +580,6 @@ public class MapNavigationMesh
         fac_of_music_south_end.setLeft(new LatLng(49.807171, -97.135752));
         fac_of_music_south_end.setRight(new LatLng(49.807197, -97.135675));
 
-        addEntrance("Faculty of Music", fac_of_music_south_end.getLeft());
         walkableZones.add(fac_of_music_south_end);
 
         //rightMid
