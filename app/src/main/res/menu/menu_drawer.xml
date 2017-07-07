@@ -105,11 +105,6 @@
                     android:title="@string/ext_education" />
 
                 <item
-                    android:id="@+id/fac_music"
-                    android:checked="false"
-                    android:title="@string/fac_music" />
-
-                <item
                     android:id="@+id/fletcher"
                     android:checked="false"
                     android:title="@string/fletcher" />
@@ -133,11 +128,6 @@
                     android:id="@+id/machray"
                     android:checked="false"
                     android:title="@string/machray" />
-
-                <item
-                    android:id="@+id/music_annex"
-                    android:checked="false"
-                    android:title="@string/music_annex" />
 
                 <item
                     android:id="@+id/parker"

@@ -265,10 +265,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         Marker extEducM= googleMap.addMarker(new MarkerOptions().position(ext_education).title(getResources().getString(R.string.ext_education)));
         mapMarkers.add(extEducM);
 
-        LatLng fac_music = new LatLng(49.807224, -97.135906);
-        Marker facMusicM = googleMap.addMarker(new MarkerOptions().position(fac_music).title(getResources().getString(R.string.fac_music)));
-        mapMarkers.add(facMusicM);
-
         LatLng fletcher = new LatLng(49.809714, -97.130965);
         Marker fletcherM = googleMap.addMarker(new MarkerOptions().position(fletcher).title(getResources().getString(R.string.fletcher)));
         mapMarkers.add(fletcherM);
@@ -292,10 +288,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         LatLng machray = new LatLng(49.811170, -97.133385);
         Marker machrayM = googleMap.addMarker(new MarkerOptions().position(machray).title(getResources().getString(R.string.machray)));
         mapMarkers.add(machrayM);
-
-        LatLng music_2 = new LatLng(49.807759, -97.134333);
-        Marker music2M = googleMap.addMarker(new MarkerOptions().position(music_2).title(getResources().getString(R.string.music_annex)));
-        mapMarkers.add(music2M);
 
         LatLng parker = new LatLng(49.811239, -97.134531);
         Marker parkerM = googleMap.addMarker(new MarkerOptions().position(parker).title(getResources().getString(R.string.parker)));

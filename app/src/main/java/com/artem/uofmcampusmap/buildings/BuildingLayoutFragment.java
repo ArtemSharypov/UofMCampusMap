@@ -650,10 +650,6 @@ public class BuildingLayoutFragment extends Fragment{
         {
             floors = createFloorNamesFrom(1, 1);
         }
-        else if(buildingName.equals(getResources().getString(R.string.fac_music)))
-        {
-            floors = createFloorNamesFrom(1, 3);
-        }
         else if(buildingName.equals(getResources().getString(R.string.fletcher)))
         {
             floors = createFloorNamesFrom(1, 6);
@@ -673,10 +669,6 @@ public class BuildingLayoutFragment extends Fragment{
         else if(buildingName.equals(getResources().getString(R.string.machray)))
         {
             floors = createFloorNamesFrom(1, 5);
-        }
-        else if(buildingName.equals(getResources().getString(R.string.music_annex)))
-        {
-            floors = createFloorNamesFrom(1, 1);
         }
         else if(buildingName.equals(getResources().getString(R.string.parker)))
         {

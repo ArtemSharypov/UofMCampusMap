@@ -11,5 +11,6 @@
         app:srcCompat="@drawable/uni_centre_floor2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:scaleType="center"/>
 </RelativeLayout>

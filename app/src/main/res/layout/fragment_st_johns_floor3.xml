@@ -13,5 +13,6 @@
         android:adjustViewBounds="false"
         app:srcCompat="@drawable/st_johns_floor3"
         android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:scaleType="center"/>
 </RelativeLayout>
