@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
+        android:scaleType="center"
         app:srcCompat="@drawable/armes_floor1" />
 
     <com.artem.uofmcampusmap.buildings.DrawingPathView

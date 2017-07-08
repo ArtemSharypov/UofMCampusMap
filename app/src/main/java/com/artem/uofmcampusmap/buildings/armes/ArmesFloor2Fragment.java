@@ -15,6 +15,7 @@ import com.artem.uofmcampusmap.R;
 import com.artem.uofmcampusmap.Route;
 import com.artem.uofmcampusmap.Vertex;
 import com.artem.uofmcampusmap.DisplayRoute;
+import com.artem.uofmcampusmap.buildings.DrawIndoorPathsFragment;
 import com.artem.uofmcampusmap.buildings.DrawingPathView;
 import com.artem.uofmcampusmap.buildings.Line;
 
@@ -22,7 +23,7 @@ import com.artem.uofmcampusmap.buildings.Line;
  * Created by Artem on 2017-05-15.
  */
 
-public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
+public class ArmesFloor2Fragment extends DrawIndoorPathsFragment {
 
     /* temp DP points for 768x1280, dpi is 318, or 318/160 = 1.9875
         Calculate pixel size for this one
@@ -81,8 +82,6 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
         173/131 - 316, 254 - 629, 505
      */
 
-    private DrawingPathView drawingPathsView;
-
     //todo change the floor image as a constant size, changing depending on if it goes from mdpi or such
     //then can just use pixels offset as needed
     @Nullable
@@ -90,234 +89,84 @@ public class ArmesFloor2Fragment extends Fragment implements DisplayRoute {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_armes_floor2, container, false);
 
-        drawingPathsView = (DrawingPathView) view.findViewById(R.id.lines_view);
+        DrawingPathView drawingPathsView = (DrawingPathView) view.findViewById(R.id.lines_view);
+        setDrawingPathView(drawingPathsView);
+
+        setBuilding(getResources().getString(R.string.armes));
+        setFloor(2);
+
         displayRoute();
 
         return view;
     }
 
     //These pixel positions are the DEFAULT current ones for a 768x1280 image size currently
-    //needs to be changed to a standard image size and then fixed depending on the screens resolution
-    //todo switch default to 1280
-    private int findXPixelFor(double xCoordinate)
-    {
+    //todo switch default to 1080*1920
+    @Override
+    protected int findXPixelFor(double xCoordinate) {
         int xPixelPos = -1;
 
-        if(xCoordinate == 0)
-        {
+        if (xCoordinate == 0) {
             xPixelPos = 207;
-        }
-        else if(xCoordinate == 12.5)
-        {
+        } else if (xCoordinate == 12.5) {
             xPixelPos = 233;
-        }
-        else if(xCoordinate == 15)
-        {
+        } else if (xCoordinate == 15) {
             xPixelPos = 243;
-        }
-        else if(xCoordinate == 22.5)
-        {
+        } else if (xCoordinate == 22.5) {
             xPixelPos = 255;
-        }
-        else if(xCoordinate == 31.25)
-        {
+        } else if (xCoordinate == 31.25) {
             xPixelPos = 279;
-        }
-        else if(xCoordinate == 37.5)
-        {
+        } else if (xCoordinate == 37.5) {
             xPixelPos = 297;
-        }
-        else if(xCoordinate == 50)
-        {
+        } else if (xCoordinate == 50) {
             xPixelPos = 324;
-        }
-        else if(xCoordinate == 62.5)
-        {
+        } else if (xCoordinate == 62.5) {
             xPixelPos = 362;
-        }
-        else if(xCoordinate == 85)
-        {
+        } else if (xCoordinate == 85) {
             xPixelPos = 416;
-        }
-        else if(xCoordinate == 108.5)
-        {
+        } else if (xCoordinate == 108.5) {
             xPixelPos = 474;
-        }
-        else if(xCoordinate == 131.25)
-        {
+        } else if (xCoordinate == 131.25) {
             xPixelPos = 527;
-        }
-        else if(xCoordinate == 156.25)
-        {
+        } else if (xCoordinate == 156.25) {
             xPixelPos = 591;
-        }
-        else if(xCoordinate == 162.5)
-        {
+        } else if (xCoordinate == 162.5) {
             xPixelPos = 599;
-        }
-        else if(xCoordinate == 173.75)
-        {
+        } else if (xCoordinate == 173.75) {
             xPixelPos = 629;
         }
+
+        scaleXPixelPos(xPixelPos);
 
         return xPixelPos;
     }
 
     //These pixel positions are the DEFAULT current ones for a 768x1280 image size currently
-    //needs to be changed to a standard image size and then fixed depending on the screens resolution
-    //todo switch default to 720x1280
-    private int findYPixelFor(double yCoordinate)
-    {
+    //todo switch default to 1080*1920
+    @Override
+    protected int findYPixelFor(double yCoordinate) {
         int yPixelPos = -1;
 
-        if(yCoordinate == 37.5)
-        {
+        if (yCoordinate == 37.5) {
             yPixelPos = 730;
-        }
-        else if(yCoordinate == 112.5)
-        {
+        } else if (yCoordinate == 112.5) {
             yPixelPos = 537;
-        }
-        else if(yCoordinate == 118.75)
-        {
+        } else if (yCoordinate == 118.75) {
             yPixelPos = 525;
-        }
-        else if(yCoordinate == 125)
-        {
+        } else if (yCoordinate == 125) {
             yPixelPos = 515;
-        }
-        else if(yCoordinate == 131.25)
-        {
+        } else if (yCoordinate == 131.25) {
             yPixelPos = 505;
-        }
-        else if(yCoordinate == 137.5)
-        {
+        } else if (yCoordinate == 137.5) {
             yPixelPos = 491;
-        }
-        else if(yCoordinate == 187.5)
-        {
+        } else if (yCoordinate == 187.5) {
             yPixelPos = 348;
-        }
-        else if(yCoordinate == 206.25)
-        {
+        } else if (yCoordinate == 206.25) {
             yPixelPos = 309;
         }
 
+        scaleYPixelPos(yPixelPos);
+
         return yPixelPos;
-    }
-
-    private boolean checkIfValidVertex(Vertex vertex)
-    {
-        boolean valid = false;
-        IndoorVertex indoorVertex;
-
-        if(vertex instanceof IndoorVertex)
-        {
-            indoorVertex = (IndoorVertex) vertex;
-
-            if(indoorVertex.getBuilding().equals(getResources().getString(R.string.armes)) && indoorVertex.getFloor() == 2)
-            {
-                valid = true;
-            }
-        }
-
-        return valid;
-    }
-
-    private boolean checkIfValidInstruc(Instruction instruction)
-    {
-        return checkIfValidVertex(instruction.getSource()) && checkIfValidVertex(instruction.getDestination());
-    }
-
-    @Override
-    public void updateDisplayedRoute() {
-        PassRouteData activity = (PassRouteData) getActivity();
-        int currInstructionPos = activity.getCurrInstructionPos();
-
-        drawingPathsView.updatePathPos(currInstructionPos);
-        drawingPathsView.invalidate();
-    }
-
-    @Override
-    public void displayRoute() {
-        PassRouteData activity = (PassRouteData) getActivity();
-        int currInstructionPos = activity.getCurrInstructionPos();
-        Route route = activity.getRoute();
-        int startPosOfIndoors = currInstructionPos;
-        Instruction currInstruction;
-
-        while(startPosOfIndoors >= 0)
-        {
-            currInstruction = route.getInstructionAt(startPosOfIndoors);
-
-            if(checkIfValidInstruc(currInstruction))
-            {
-                Line line = createLine(currInstruction);
-
-                if(line != null)
-                {
-                    drawingPathsView.addPathToStart(line);
-                }
-            }
-            else
-            {
-                if(!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction())
-                {
-                    break;
-                }
-            }
-            startPosOfIndoors--;
-        }
-
-        drawingPathsView.setPosWithinRoute(startPosOfIndoors + 1);
-        drawingPathsView.updatePathPos(currInstructionPos);
-
-        currInstructionPos++;
-
-        while(currInstructionPos < route.getNumInstructions())
-        {
-            currInstruction = route.getInstructionAt(currInstructionPos);
-
-            if(checkIfValidInstruc(currInstruction))
-            {
-                Line line = createLine(currInstruction);
-
-                if(line != null)
-                {
-                    drawingPathsView.addPathToEnd(line);
-                }
-            }
-            else
-            {
-                if(!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction())
-                {
-                    break;
-                }
-            }
-
-            currInstructionPos++;
-        }
-
-        drawingPathsView.invalidate();
-    }
-
-    //todo move into a abstract super class?
-    private Line createLine(Instruction instructionToUse)
-    {
-        IndoorVertex source = (IndoorVertex) instructionToUse.getSource();
-        IndoorVertex destination = (IndoorVertex) instructionToUse.getDestination();
-        Line line = null;
-
-        int sourceX = findXPixelFor(source.getPosition().getX());
-        int sourceY = findYPixelFor(source.getPosition().getY());
-        int destX = findXPixelFor(destination.getPosition().getX());
-        int destY = findYPixelFor(destination.getPosition().getY());
-
-        if(sourceX >= 0 && sourceY >= 0 && destX >= 0 && destY >= 0)
-        {
-            line = new Line(sourceX, sourceY, destX, destY);
-        }
-
-        return line;
     }
 }

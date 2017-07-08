@@ -11,5 +11,6 @@
         app:srcCompat="@drawable/allen_floor5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:scaleType="center"/>
 </RelativeLayout>

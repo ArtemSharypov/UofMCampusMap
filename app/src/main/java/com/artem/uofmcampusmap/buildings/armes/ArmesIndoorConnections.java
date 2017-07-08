@@ -11,7 +11,8 @@ import java.util.HashMap;
  * Created by Artem on 2017-06-08.
  */
 
-public class ArmesIndoorConnections {
+public class ArmesIndoorConnections
+{
     private HashMap<String, ArrayList<IndoorVertex>> rooms;
     private ArrayList<IndoorVertex> allenConnections;
     private IndoorVertex allenConnectionTunnel;
@@ -266,11 +267,6 @@ public class ArmesIndoorConnections {
             XYPos firstPos = indoorV1.getPosition();
             IndoorVertex indoorV2 = (IndoorVertex) vertex2;
             XYPos secondPos = indoorV2.getPosition();
-
-            //todo need to make this checking better, else its not going to work for directions part of indoors
-            //since turns need a north or south with a east or west
-            //might have to be handled just in the route part, by checking if its an indoor connection then switching east->north
-            //or such is a this type of turn instead of the normal way that its handled for outdoor ones
 
             if(firstPos.getX() > secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
             {
