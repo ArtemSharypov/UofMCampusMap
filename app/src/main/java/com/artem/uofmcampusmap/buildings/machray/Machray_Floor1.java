@@ -35,12 +35,119 @@ public class Machray_Floor1 extends DrawIndoorPathsFragment
     @Override
     protected int findXPixelFor(double xCoordinate)
     {
-        return 0;
+        int xPixel = 0;
+
+        if(xCoordinate == 0)
+        {
+
+        }
+        else if(xCoordinate == 41.25)
+        {
+
+        }
+        else if(xCoordinate == 50)
+        {
+
+        }
+        else if(xCoordinate == 56.25)
+        {
+
+        }
+        else if(xCoordinate == 90)
+        {
+
+        }
+        else if(xCoordinate == 93.75)
+        {
+
+        }
+        else if(xCoordinate == 97.5)
+        {
+
+        }
+        else if(xCoordinate == 108)
+        {
+
+        }
+        else if(xCoordinate == 110)
+        {
+
+        }
+        else if(xCoordinate == 120)
+        {
+
+        }
+        else if(xCoordinate == 162.5)
+        {
+
+        }
+        else if(xCoordinate == 165)
+        {
+
+        }
+        else if(xCoordinate == 168.75)
+        {
+
+        }
+
+
+        return xPixel;
     }
 
     @Override
     protected int findYPixelFor(double yCoordinate)
     {
-        return 0;
+        int yPixel = 0;
+
+        if(yCoordinate == -37.5)
+        {
+
+        }
+        else if(yCoordinate == 21.88)
+        {
+
+        }
+        else if(yCoordinate == 27.5)
+        {
+
+        }
+        else if(yCoordinate == 28.13)
+        {
+
+        }
+        else if(yCoordinate == 31.25)
+        {
+
+        }
+        else if(yCoordinate == 40)
+        {
+
+        }
+        else if(yCoordinate == 51.25)
+        {
+
+        }
+        else if(yCoordinate == 72.5)
+        {
+
+        }
+        else if(yCoordinate == 75)
+        {
+
+        }
+        else if(yCoordinate == 80)
+        {
+
+        }
+        else if(yCoordinate == 81.25)
+        {
+
+        }
+        else if(yCoordinate == 87.5)
+        {
+
+        }
+
+        return yPixel;
     }
 }
