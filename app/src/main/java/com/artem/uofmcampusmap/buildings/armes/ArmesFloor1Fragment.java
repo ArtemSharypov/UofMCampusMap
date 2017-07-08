@@ -112,6 +112,8 @@ public class ArmesFloor1Fragment extends DrawIndoorPathsFragment {
             xPixelPos = 598;
         }
 
+        scaleXPixelPos(xPixelPos);
+
         return xPixelPos;
     }
 
@@ -164,6 +166,8 @@ public class ArmesFloor1Fragment extends DrawIndoorPathsFragment {
         {
             yPixelPos = 325;
         }
+
+        scaleYPixelPos(yPixelPos);
 
         return yPixelPos;
     }

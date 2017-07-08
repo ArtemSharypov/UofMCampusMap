@@ -70,6 +70,8 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
             xPixel = 545;
         }
 
+        scaleXPixelPos(xPixel);
+
         return xPixel;
     }
 
@@ -103,6 +105,8 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
         {
             yPixel = 1170;
         }
+
+        scaleYPixelPos(yPixel);
 
         return yPixel;
     }

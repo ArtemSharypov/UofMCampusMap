@@ -136,6 +136,8 @@ public class ArmesFloor2Fragment extends DrawIndoorPathsFragment {
             xPixelPos = 629;
         }
 
+        scaleXPixelPos(xPixelPos);
+
         return xPixelPos;
     }
 
@@ -162,6 +164,8 @@ public class ArmesFloor2Fragment extends DrawIndoorPathsFragment {
         } else if (yCoordinate == 206.25) {
             yPixelPos = 309;
         }
+
+        scaleYPixelPos(yPixelPos);
 
         return yPixelPos;
     }
