@@ -36,12 +36,66 @@ public class Machray_Floor2 extends DrawIndoorPathsFragment
     @Override
     protected int findXPixelFor(double xCoordinate)
     {
-        return 0;
+        int xPixel = 0;
+
+        if(xCoordinate == 0)
+        {
+
+        }
+        else if(xCoordinate == 30.24)
+        {
+
+        }
+        else if(xCoordinate == 44.19)
+        {
+
+        }
+        else if(xCoordinate == 49.43)
+        {
+
+        }
+        else if(xCoordinate == 80.25)
+        {
+
+        }
+
+        return xPixel;
     }
 
     @Override
     protected int findYPixelFor(double yCoordinate)
     {
-        return 0;
+        int yPixel = 0;
+
+        if(yCoordinate == 97.11)
+        {
+
+        }
+        else if(yCoordinate == 151.19)
+        {
+
+        }
+        else if(yCoordinate == 154.1)
+        {
+
+        }
+        else if(yCoordinate == 158.75)
+        {
+
+        }
+        else if(yCoordinate == 160.49)
+        {
+
+        }
+        else if(yCoordinate == 173.29)
+        {
+
+        }
+        else if(yCoordinate == 179.65)
+        {
+
+        }
+
+        return yPixel;
     }
 }

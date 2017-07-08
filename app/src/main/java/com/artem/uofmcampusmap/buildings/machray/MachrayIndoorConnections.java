@@ -152,16 +152,45 @@ public class MachrayIndoorConnections
         IndoorVertex stairsFloor2 = new IndoorVertex(building, new XYPos(49.43, 160.49), 2);
         IndoorVertex elevatorFloor2 = new IndoorVertex(building, new XYPos(44.19, 151.19), 2);
 
+        IndoorVertex stairsFloor3 = new IndoorVertex(building, new XYPos(33.75, 28.13), 3);
+        IndoorVertex elevatorFloor3 = new IndoorVertex(building, new XYPos(28.75, 37.5), 3);
+
+        IndoorVertex stairsFloor4 = new IndoorVertex(building, new XYPos(33.75, 28.13), 4);
+        IndoorVertex elevatorFloor4 = new IndoorVertex(building, new XYPos(28.75, 37.5), 4);
+
+        IndoorVertex stairsFloor5 = new IndoorVertex(building, new XYPos(33.75, 28.13), 5);
+        IndoorVertex elevatorFloor5 = new IndoorVertex(building, new XYPos(28.75, 37.5), 5);
+
         //Stair connections to one another
         connectVertex(stairsFloor1, stairsFloor2);
+        connectVertex(stairsFloor1, stairsFloor3);
+        connectVertex(stairsFloor1, stairsFloor4);
+        connectVertex(stairsFloor1, stairsFloor5);
+        connectVertex(stairsFloor2, stairsFloor3);
+        connectVertex(stairsFloor2, stairsFloor4);
+        connectVertex(stairsFloor2, stairsFloor5);
+        connectVertex(stairsFloor3, stairsFloor4);
+        connectVertex(stairsFloor3, stairsFloor5);
+        connectVertex(stairsFloor4, stairsFloor5);
 
         //Elevator connections to one another
         connectVertex(elevatorFloor1, elevatorFloor2);
+        connectVertex(elevatorFloor1, elevatorFloor3);
+        connectVertex(elevatorFloor1, elevatorFloor4);
+        connectVertex(elevatorFloor1, elevatorFloor5);
+        connectVertex(elevatorFloor2, elevatorFloor3);
+        connectVertex(elevatorFloor2, elevatorFloor4);
+        connectVertex(elevatorFloor2, elevatorFloor5);
+        connectVertex(elevatorFloor3, elevatorFloor4);
+        connectVertex(elevatorFloor3, elevatorFloor5);
+        connectVertex(elevatorFloor4, elevatorFloor5);
 
         //Creation of each floors connections
         createFloor1Connections(stairsFloor1, elevatorFloor1);
         createFloor2Connections(stairsFloor2, elevatorFloor2);
-
+        createFloor3Connections(stairsFloor3, elevatorFloor3);
+        createFloor4Connections(stairsFloor4, elevatorFloor4);
+        createFloor5Connections(stairsFloor5, elevatorFloor5);
     }
 
     private void createFloor1Connections(IndoorVertex stairs, IndoorVertex elevator)
@@ -310,46 +339,94 @@ public class MachrayIndoorConnections
     private void createFloor3Connections(IndoorVertex stairs1, IndoorVertex elevator)
     {
         //Points
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
-        IndoorVertex _ = new IndoorVertex(building, new XYPos(), 3);
+        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(18.75, 28.13), 3);
+        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(18.75, 71.88), 3);
+        IndoorVertex _35_71 = new IndoorVertex(building, new XYPos(35, 71.88), 3);
+        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(11.25, 71.88), 3);
+        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(28.75, 28.13), 3);
+        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(28.75, 21.88), 3);
+        IndoorVertex _72_21 = new IndoorVertex(building, new XYPos(72.5, 21.88), 3);
+        IndoorVertex _47_71 = new IndoorVertex(building, new XYPos(47.5, 71.88), 3);
+        IndoorVertex _85_26 = new IndoorVertex(building, new XYPos(85, 26.88), 3);
+        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(28.75, 34.38), 3);
+        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(18.75, 34.38), 3);
 
         //Rooms
 
         //Connections between points
-
+        connectVertex(stairs1, _28_28);
+        connectVertex(_28_28, _28_21);
+        connectVertex(_28_28, _18_28);
+        connectVertex(_28_28, _28_34);
+        connectVertex(_18_28, _18_34);
+        connectVertex(_18_34, _28_34);
+        connectVertex(_18_34, _18_71);
+        connectVertex(_18_71, _11_71);
+        connectVertex(_18_71, _35_71);
+        connectVertex(_35_71, _47_71);
+        connectVertex(_28_21, _72_21);
+        connectVertex(_72_21, _85_26);
+        connectVertex(_28_34, elevator);
     }
 
     private void createFloor4Connections(IndoorVertex stairs1, IndoorVertex elevator)
     {
-        //IndoorVertex _ = new IndoorVertex(building, new XYPos(), 4);
-
         //Points
+        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(18.75, 28.13), 4);
+        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(18.75, 71.88), 4);
+        IndoorVertex _35_71 = new IndoorVertex(building, new XYPos(35, 71.88), 4);
+        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(11.25, 71.88), 4);
+        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(28.75, 28.13), 4);
+        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(28.75, 21.88), 4);
+        IndoorVertex _47_71 = new IndoorVertex(building, new XYPos(47.5, 71.88), 4);
+        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(28.75, 34.38), 4);
+        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(18.75, 34.38), 4);
+        IndoorVertex _84_23 = new IndoorVertex(building, new XYPos(84.38, 23.13), 4);
+        IndoorVertex _59_21 = new IndoorVertex(building, new XYPos(59.38, 21.88), 4);
 
         //Rooms
 
         //Connections between points
+        connectVertex(stairs1, _28_28);
+        connectVertex(_28_28, _28_21);
+        connectVertex(_28_28, _18_28);
+        connectVertex(_28_28, _28_34);
+        connectVertex(_18_28, _18_34);
+        connectVertex(_18_34, _28_34);
+        connectVertex(_18_34, _18_71);
+        connectVertex(_18_71, _11_71);
+        connectVertex(_18_71, _35_71);
+        connectVertex(_35_71, _47_71);
+        connectVertex(_28_34, elevator);
+        connectVertex(_59_21, _84_23);
+        connectVertex(_28_21, _59_21);
     }
 
     private void createFloor5Connections(IndoorVertex stairs1, IndoorVertex elevator)
     {
-        //IndoorVertex _ = new IndoorVertex(building, new XYPos(), 5);
-
         //Points
+        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(18.75, 28.13), 5);
+        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(18.75, 71.88), 5);
+        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(11.25, 71.88), 5);
+        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(28.75, 28.13), 5);
+        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(28.75, 21.88), 5);
+        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(28.75, 34.38), 5);
+        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(18.75, 34.38), 5);
+        IndoorVertex _42_71 = new IndoorVertex(building, new XYPos(42.5, 71.88), 5);
 
         //Rooms
 
         //Connections between points
+        connectVertex(stairs1, _28_28);
+        connectVertex(_28_28, _28_21);
+        connectVertex(_28_28, _18_28);
+        connectVertex(_28_28, _28_34);
+        connectVertex(_18_28, _18_34);
+        connectVertex(_18_34, _28_34);
+        connectVertex(_18_34, _18_71);
+        connectVertex(_18_71, _11_71);
+        connectVertex(_18_71, _42_71);
+        connectVertex(_28_34, elevator);
     }
 
     public IndoorVertex getExit() {
