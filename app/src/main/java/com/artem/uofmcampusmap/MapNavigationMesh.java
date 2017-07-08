@@ -3,6 +3,7 @@ package com.artem.uofmcampusmap;
 import android.content.res.Resources;
 
 import com.artem.uofmcampusmap.buildings.armes.ArmesIndoorConnections;
+import com.artem.uofmcampusmap.buildings.machray.MachrayIndoorConnections;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class MapNavigationMesh
     private ArrayList<WalkableZone> walkableZones;
     private HashMap<String, ArrayList<Vertex>> startEndLocations;
     private ArmesIndoorConnections armesIndoorConnections;
+    private MachrayIndoorConnections machrayIndoorConnections;
     private Resources resources;
     private RouteFinder routeFinder;
 
@@ -284,6 +286,10 @@ public class MapNavigationMesh
 
         if (building.equals(resources.getString(R.string.armes))) {
             roomVertex = armesIndoorConnections.findRoom(room);
+        }
+        else if(building.equals(resources.getString(R.string.machray)))
+        {
+            roomVertex = machrayIndoorConnections.findRoom(room);
         }
 
         return roomVertex;
@@ -1727,5 +1733,17 @@ public class MapNavigationMesh
 
         IndoorVertex swArmesEnt = armesIndoorConnections.getSouthWestEntrance();
         allen_armes.connectToRight(swArmesEnt);
+
+        machrayIndoorConnections = new MachrayIndoorConnections();
+
+        IndoorVertex machrayEnt = machrayIndoorConnections.getExit();
+        armes_machray.connectToTop(machrayEnt);
+
+        connectBuildingsTogether();
+    }
+
+    private void connectBuildingsTogether()
+    {
+        //todo implement this for machray -> armes and machray <- armes
     }
 }

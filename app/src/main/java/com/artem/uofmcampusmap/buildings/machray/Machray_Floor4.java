@@ -31,6 +31,7 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
         return view;
     }
 
+    //Default for a 1080x1920 resolution
     @Override
     protected int findXPixelFor(double xCoordinate)
     {
@@ -38,40 +39,41 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
 
         if(xCoordinate == 11.25)
         {
-
+            xPixel = 95;
         }
         else if(xCoordinate == 18.75)
         {
-
+            xPixel = 130;
         }
         else if(xCoordinate == 28.75)
         {
-
+            xPixel = 200;
         }
         else if(xCoordinate == 33.75)
         {
-
+            xPixel = 231;
         }
         else if(xCoordinate == 35)
         {
-
+            xPixel = 240;
         }
         else if(xCoordinate == 47.5)
         {
-
+            xPixel = 305;
         }
         else if(xCoordinate == 59.38)
         {
-
+            xPixel = 392;
         }
         else if(xCoordinate == 84.38)
         {
-
+            xPixel = 545;
         }
 
         return xPixel;
     }
 
+    //Default for a 1080x1920 resolution
     @Override
     protected int findYPixelFor(double yCoordinate)
     {
@@ -79,27 +81,27 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
 
         if(yCoordinate == 21.88)
         {
-
+            yPixel = 1505;
         }
         else if(yCoordinate == 23.13)
         {
-
+            yPixel = 1480;
         }
         else if(yCoordinate == 28.13)
         {
-
+            yPixel = 1450;
         }
         else if(yCoordinate == 34.38)
         {
-
+            yPixel = 1415;
         }
         else if(yCoordinate == 37.5)
         {
-
+            yPixel = 1390;
         }
         else if(yCoordinate == 71.88)
         {
-
+            yPixel = 1170;
         }
 
         return yPixel;

@@ -206,7 +206,7 @@ public class MachrayIndoorConnections
         IndoorVertex _137_77 = new IndoorVertex(building, new XYPos(137.5, 77.5), 1);
         IndoorVertex room_108 = new IndoorVertex(building, new XYPos(97.5, 87.5), 1);
         IndoorVertex room_111 = new IndoorVertex(building, new XYPos(120, 81.25), 1);
-        IndoorVertex room_112 = new IndoorVertex(building, new XYPos(108.75, 75), 1);
+        IndoorVertex room_112 = new IndoorVertex(building, new XYPos(110, 75), 1);
         IndoorVertex _165_21 = new IndoorVertex(building, new XYPos(165, 21.88), 1);
         IndoorVertex room_115 = new IndoorVertex(building, new XYPos(168.75, 51.25), 1);
         IndoorVertex room_113_rightSide = new IndoorVertex(building, new XYPos(162.5, 27.5), 1);
