@@ -56,6 +56,11 @@ public class DrawingPathView extends View {
             for (int i = linePos; i < pathsToDraw.size(); i++) {
                 Line line = pathsToDraw.get(i);
                 canvas.drawLine(line.getSourceX(), line.getSourceY(), line.getDestX(), line.getDestY(), paint);
+
+                if(i == linePos)
+                {
+                    drawCurrLocation(line.getSourceX(), line.getSourceY(), canvas);
+                }
             }
         }
         else
@@ -66,6 +71,31 @@ public class DrawingPathView extends View {
             clear.setColor(Color.TRANSPARENT);
             canvas.drawLine(0, 0, 0, 0, clear);
         }
+    }
+
+    //Draws an X where the user currently is, with an offset of 3 up, down, left, and right
+    private void drawCurrLocation(int sourceX, int sourceY, Canvas canvas)
+    {
+        Paint locatPaint = new Paint();
+        locatPaint.setColor(Color.GREEN);
+        locatPaint.setStyle(Paint.Style.STROKE);
+        locatPaint.setStrokeWidth(6);
+
+        final int LINE_OFFSET = 9;
+
+        int topLeftX = sourceX - LINE_OFFSET;
+        int bottomRightX = sourceX + LINE_OFFSET;
+        int topLeftY = sourceY + LINE_OFFSET;
+        int bottomRightY = sourceY - LINE_OFFSET;
+
+        canvas.drawLine(topLeftX, topLeftY, bottomRightX, bottomRightY, locatPaint);
+
+        int topRightX = sourceX + LINE_OFFSET;
+        int bottomLeftX = sourceX - LINE_OFFSET;
+        int topRightY = sourceY + LINE_OFFSET;
+        int bottomLeftY = sourceY - LINE_OFFSET;
+
+        canvas.drawLine(topRightX, topRightY, bottomLeftX, bottomLeftY, locatPaint);
     }
 
     public void addPathToEnd(Line pathToAdd)

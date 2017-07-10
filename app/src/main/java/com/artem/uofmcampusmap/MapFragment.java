@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -34,6 +35,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
     private ArrayList<Marker> mapMarkers;
     private int lastPosInRoute; //Last position that was used to update the route
     private int currPosInLines;
+    private Marker currLocation;
+    private Route route;
 
     @Nullable
     @Override
@@ -82,6 +85,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
                 {
                     routeLines.get(currPosInLines).setVisible(false);
                     currPosInLines++;
+
+                    Instruction currInstruc = route.getInstructionAt(currRoutePos);
+
+                    //check where to move the marker
+                    if(currInstruc != null)
+                    {
+                        OutdoorVertex source = (OutdoorVertex) currInstruc.getSource();
+
+                        if(source != null)
+                        {
+                            if(currLocation == null)
+                            {
+                                currLocation = googleMap.addMarker(new MarkerOptions().position(source.getPosition())
+                                        .title(getResources().getString(R.string.curr_location))
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                            }
+                            else
+                            {
+                                currLocation.setPosition(source.getPosition());
+                            }
+                        }
+                    }
+
+                    if(currPosInLines >= routeLines.size())
+                    {
+                        currLocation.setVisible(false);
+                    }
                 }
             }
             else
@@ -91,6 +121,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
                 {
                     currPosInLines--;
                     routeLines.get(currPosInLines).setVisible(true);
+
+                    Instruction currInstruc = route.getInstructionAt(currRoutePos);
+
+                    //check where to move the marker
+                    if(currInstruc != null)
+                    {
+                        OutdoorVertex source = (OutdoorVertex) currInstruc.getSource();
+
+                        if(currLocation == null)
+                        {
+                            currLocation = googleMap.addMarker(new MarkerOptions().position(source.getPosition())
+                                    .title(getResources().getString(R.string.curr_location))
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        }
+                        else
+                        {
+                            currLocation.setPosition(source.getPosition());
+                            currLocation.setVisible(true);
+                        }
+                    }
                 }
             }
         }
@@ -109,7 +159,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         Vertex destination;
         PassRouteData activity = (PassRouteData) getActivity();
         int currRoutePos = activity.getCurrInstructionPos();
-        Route route = activity.getRoute();
+        route = activity.getRoute();
 
         if(route != null && route.getRouteLength() > 0 && googleMap != null)
         {
@@ -119,7 +169,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
             currRoutePos --;
 
             //Path/Lines that are before the current position
-            while(currRoutePos > 0)
+            while(currRoutePos >= 0)
             {
                 currInstruction = route.getInstructionAt(currRoutePos);
                 source = currInstruction.getSource();
@@ -134,15 +184,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
                             .add(endPoint)
                             .color(Color.RED);
 
-                    routeLines.add(googleMap.addPolyline(currLine));
-                    routeLines.get(currRoutePos).setVisible(false);
+                    //Add the line to the start, since its to the LEFT of the current position (as in not shown)
+                    routeLines.add(0, googleMap.addPolyline(currLine));
+                    routeLines.get(0).setVisible(false);
+
+                    currPosInLines++; //Move up one position everytime a non-visible polyline is added
                 }
                 else if(currInstruction.isIndoorInstruction())
                 {
                     break;
                 }
 
-                currRoutePos++;
+                currRoutePos--;
             }
 
             currRoutePos = lastPosInRoute;
@@ -163,6 +216,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
                             .color(Color.RED);
 
                     routeLines.add(googleMap.addPolyline(currLine));
+
+                    if(currLocation == null)
+                    {
+                        currLocation = googleMap.addMarker(new MarkerOptions().position(startPoint)
+                                .title(getResources().getString(R.string.curr_location))
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                    }
                 }
                 else if(currInstruction.isIndoorInstruction())
                 {
