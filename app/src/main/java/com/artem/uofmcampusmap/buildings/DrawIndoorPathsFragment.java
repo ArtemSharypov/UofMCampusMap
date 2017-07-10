@@ -42,6 +42,7 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
     abstract protected int findXPixelFor(double xCoordinate);
     abstract protected int findYPixelFor(double yCoordinate);
 
+    //Scales a position of a pixel in the X coordinate, from 1080x1920 to the current screen resolution
     protected int scaleXPixelPos(int origXPixelPos)
     {
         int xPixelPos = origXPixelPos;
@@ -62,6 +63,7 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
         return xPixelPos;
     }
 
+    //Scales a position of a pixel in the Y coordinate, from 1080x1920 to the current screen resolution
     protected int scaleYPixelPos(int origYPixelPos)
     {
         int yPixelPos = origYPixelPos;
@@ -87,6 +89,7 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
         return checkIfValidVertex(instruction.getSource()) && checkIfValidVertex(instruction.getDestination());
     }
 
+    //For a Vertex to be valid, It must be a IndoorVertex, that is within the expected building, and is on the expected floor
     private boolean checkIfValidVertex(Vertex vertex)
     {
         boolean valid = false;
@@ -105,6 +108,8 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
         return valid;
     }
 
+    //Updates the route that is displayed within the drawingPathView, simply updates the position the view holds
+    //and then forces the view to draw itself again
     @Override
     public void updateDisplayedRoute() {
         PassRouteData activity = (PassRouteData) getActivity();
@@ -114,6 +119,7 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
         drawingPathView.invalidate();
     }
 
+    // Displays a route that comes from the Activity, starting at the current position within that route.
     @Override
     public void displayRoute()
     {
@@ -125,6 +131,8 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
 
         if(route != null)
         {
+            //Creates Lines (Paths that will be drawn) from the current position, going backwards until the Instruction is no longer
+            //within the building, or is no longer within this floor.
             while (startPosOfIndoors >= 0)
             {
                 currInstruction = route.getInstructionAt(startPosOfIndoors);
@@ -156,6 +164,8 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
 
             currInstructionPos++;
 
+            //Creates Lines (Paths that will be drawn) from the current position, going forwards until the Instruction is no longer
+            //within the building, or is no longer within this floor.
             while (currInstructionPos < route.getNumInstructions())
             {
                 currInstruction = route.getInstructionAt(currInstructionPos);
@@ -184,6 +194,8 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
         }
     }
 
+    //Creates a Line from the Instruction's source position, to the destination in terms of pixel location
+    //that is dependent on the screen resolution and the building layout
     private Line createLine(Instruction instructionToUse)
     {
         IndoorVertex source = (IndoorVertex) instructionToUse.getSource();

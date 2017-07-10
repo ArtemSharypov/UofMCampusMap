@@ -26,16 +26,12 @@ public class OutdoorVertex extends Vertex
         return position;
     }
 
+    //Finds the distance between this Vertex and the specified one
+    //Only works for when the passed Vertex is an Outdoor one
     @Override
     public int getDistanceFrom(Vertex vertex) {
         int distance = 0;
         OutdoorVertex outdoorVertex;
-        final double AVG_RADIUS_EARTH_KM = 6373;
-        final double KM_TO_M = 1000;
-        double latDistance;
-        double lngDistance;
-        double a;
-        double c;
 
         if(vertex instanceof OutdoorVertex)
         {
@@ -47,6 +43,7 @@ public class OutdoorVertex extends Vertex
         return distance;
     }
 
+    //Calculates the distance in metres from this Vertex to the specified location
     private int calculateDistanceFrom(LatLng location)
     {
         int distance = 0;
@@ -92,6 +89,8 @@ public class OutdoorVertex extends Vertex
         return indoorVertex;
     }
 
+    //Finds out if this and the passed Vertex are equal, used for the equal(Object obj) call
+    //Must have the same LatLng position
     public boolean equals(Vertex vertex)
     {
         boolean areEqual = false;

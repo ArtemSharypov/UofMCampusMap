@@ -32,6 +32,11 @@ public class Instruction {
         return source instanceof IndoorVertex && destination instanceof IndoorVertex;
     }
 
+    public boolean isOutdoorInstruction()
+    {
+        return source instanceof OutdoorVertex && destination instanceof OutdoorVertex;
+    }
+
     public boolean isExitBuildingInstruction()
     {
         return source instanceof IndoorVertex && destination instanceof OutdoorVertex;
@@ -52,6 +57,7 @@ public class Instruction {
         return isStairsInstruc;
     }
 
+    //Only used for general directions, ie East/West or North/South
     private void findDirection()
     {
         if(source != null && destination != null)
@@ -108,6 +114,7 @@ public class Instruction {
         this.distance = source.getDistanceFrom(destination);
     }
 
+    //Used to guarantee that the distance will be converted from feet to metres in case of IndoorVertex's
     public int getDistanceInMetres()
     {
         int metreDistance = distance;
@@ -119,11 +126,6 @@ public class Instruction {
         }
 
         return metreDistance;
-    }
-
-    public int getDistance()
-    {
-        return distance;
     }
 
     public Vertex getSource() {
@@ -139,26 +141,32 @@ public class Instruction {
         return direction;
     }
 
+    //Creates String directions for this instruction, depending on the conditions that they satisfy
     public String getTextDirections()
     {
         String toString = "Go straight for " + distance;
 
         if(source instanceof IndoorVertex)
         {
+            //Indoor -> Outdoor means exiting a building
             if(destination instanceof OutdoorVertex)
             {
                 toString = "Exit the building";
             }
             else
             {
+                //Indoor -> Indoor
                 IndoorVertex sourceIndoor = (IndoorVertex) source;
                 IndoorVertex destIndoor = (IndoorVertex) destination;
+
+                //Being on the same floor means that the distance will be in feet
                 if(sourceIndoor.getFloor() == destIndoor.getFloor())
                 {
                     toString += " feet";
                 }
                 else
                 {
+                    //Check if there are stairs involved (if floors change)
                     if(sourceIndoor.getFloor() > destIndoor.getFloor())
                     {
                         toString = "Go up ";
@@ -167,19 +175,22 @@ public class Instruction {
                     {
                         toString = "Go down ";
                     }
-                    toString += Math.max(((IndoorVertex) source).getFloor(), ((IndoorVertex) destination).getFloor());
+
+                    toString += Math.abs(((IndoorVertex) source).getFloor() - ((IndoorVertex) destination).getFloor());
                     toString += " floors.";
                 }
             }
         }
         else
         {
+            //Outdoor -> Indoor means that a building is to be entered
             if(destination instanceof IndoorVertex)
             {
                 toString = "Enter " + ((IndoorVertex) destination).getBuilding();
             }
             else
             {
+                //Else its just a distance in metres
                 toString += "m";
             }
         }

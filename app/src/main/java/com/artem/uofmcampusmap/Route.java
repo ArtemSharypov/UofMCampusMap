@@ -61,6 +61,8 @@ public class Route {
         return quicker;
     }
 
+    //Creates a normal Route using Vertex's and their parent Vertex's.
+    //Since the A* will give a destination and its previous connection(s)
     public static Route reverseRoute(Vertex endVertex)
     {
         Route reversedRoute = null;
@@ -87,6 +89,8 @@ public class Route {
         return reversedRoute;
     }
 
+    //Adds a route to the start of the route list
+    //Tries to optimize an instruction using the next instruction if they are going in the same direction
     private void addInstructionToStart(Instruction instruction)
     {
         if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
@@ -135,6 +139,7 @@ public class Route {
         }
     }
 
+    //Creates and adds a direction based on the passed instruction to the start of the list
     private void addDirectionToStart(Instruction instruction)
     {
         String directionToAdd = instruction.getTextDirections();
@@ -227,6 +232,8 @@ public class Route {
         return turnDirections;
     }
 
+    //Adds a route to the end of the route list
+    //Tries to optimize an instruction using the previous instruction if they are going in the same direction
     private void addInstructionToEnd(Instruction instruction)
     {
         if(instruction != null && instruction.getSource() != null && instruction.getDestination() != null)
@@ -276,6 +283,7 @@ public class Route {
         }
     }
 
+    //Creates and adds a direction based on the passed instruction to the start of the list
     private void addDirectionToEnd(Instruction instruction)
     {
         String directionToAdd = instruction.getTextDirections();
@@ -315,7 +323,7 @@ public class Route {
         return routeLength;
     }
 
-    //Adds the second route onto this route and just return a new route
+    //Connects this Route to the passed Route, as well as adding the Route to the end of this one
     public void combineRoutes(Route routeToCombine)
     {
         if(routeToCombine != null)

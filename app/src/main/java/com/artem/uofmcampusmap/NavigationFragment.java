@@ -18,6 +18,11 @@ import android.widget.Toast;
 
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor1Fragment;
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor2Fragment;
+import com.artem.uofmcampusmap.buildings.machray.Machray_Floor1;
+import com.artem.uofmcampusmap.buildings.machray.Machray_Floor2;
+import com.artem.uofmcampusmap.buildings.machray.Machray_Floor3;
+import com.artem.uofmcampusmap.buildings.machray.Machray_Floor4;
+import com.artem.uofmcampusmap.buildings.machray.Machray_Floor5;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -148,7 +153,6 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                         updateShownInstruction();
                         updateDistanceTimeRemaining();
                         updateActivityRoutePos();
-
                         updateCurrDisplayedRoute();
                     }
                 }
@@ -174,6 +178,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             if(startLocation.equals(getResources().getString(R.string.curr_location)) ||
                     destinationLocation.equals(getResources().getString(R.string.curr_location)))
             {
+                //Current location means that a GPS position needs to be found, and used for the route
                 findLocation();
             }
             else
@@ -203,6 +208,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         return view;
     }
 
+    //Calls the child fragment (if there is one) to update the displayed path
     private void updateCurrDisplayedRoute()
     {
         DisplayRoute childFrag = (DisplayRoute) getChildFragmentManager().findFragmentById(R.id.frag_holder);
@@ -213,12 +219,14 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         }
     }
 
+    //Updates the current route within the activity
     private void updateActivityRoute(Route route)
     {
         PassRouteData activity = (PassRouteData) getActivity();
         activity.passRoute(route);
     }
 
+    //Updates the current instruction being shown
     private void updateShownInstruction()
     {
         if(currInstructionPos < route.getNumInstructions())
@@ -243,6 +251,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         activity.setCurrInstructionPos(currInstructionPos);
     }
 
+    //Checks if google play services are enabled for GPS
     private boolean checkPlayServices()
     {
         int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
@@ -276,6 +285,8 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         googleApiClient.connect();
     }
 
+    //Tries to get the last known GPS location
+    //If one is found, then it will use it to create a Route as planned from the start to destination locations
     private void findLocation()
     {
         try
@@ -295,6 +306,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             LatLng gpsLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
             String gps = getResources().getString(R.string.curr_location);
 
+            //Tries to create a Route using the last known GPS location
             if(startLocation.equals(gps))
             {
                 route = campusMap.getRoute(gpsLocation, destinationLocation, destinationRoom);
@@ -304,6 +316,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                 route = campusMap.getRoute(startLocation, startRoom, gpsLocation);
             }
 
+            //Displays the route information if there one was successfully created
             if(route != null)
             {
                 remainingDistance = route.getRouteLength();
@@ -335,6 +348,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         }
     }
 
+    //Tries to estimate the amount of time needed to walk the distance remaining on the Route
     private int amountOfTime(double distance)
     {
         final double WALK_SPEED_METERS_PER_MIN = 66.67;
@@ -353,6 +367,8 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         childFragTrans.commit();
     }
 
+    //Potentially switches the child fragment being displayed, if the instructions building or floor has switched
+    //If not then it will just update the path shown
     private void handleIndoorSource(Instruction instructionWithIndoorV)
     {
         IndoorVertex indoorSource;
@@ -383,14 +399,17 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
 
     //todo for this and map fragment might need to actually either CLEAR the stack or reuse them, because eventually
     //its starting to cause a large amount of memory being used due to hard references of each and every fragment.
+
+    //Switches to a specified building building or floor number and updated the current location / floor
     private void switchViewToBuilding(String buildingName, int floorNumber)
     {
+        FragmentManager childFragManager = getChildFragmentManager();
+        FragmentTransaction childFragTrans;
+
         if(buildingName.equals(getResources().getString(R.string.armes)))
         {
             currLocation = buildingName;
             currFloor = floorNumber;
-            FragmentManager childFragManager = getChildFragmentManager();
-            FragmentTransaction childFragTrans;
 
             if(currFloor == 1)
             {
@@ -398,7 +417,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
 
                 childFragTrans = childFragManager.beginTransaction();
                 childFragTrans.add(R.id.frag_holder, armesFloor1Fragment);
-                childFragTrans.addToBackStack("Armes1");
+                childFragTrans.addToBackStack(currLocation + currFloor);
                 childFragTrans.commit();
             }
             else if(currFloor == 2)
@@ -407,7 +426,58 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
 
                 childFragTrans = childFragManager.beginTransaction();
                 childFragTrans.add(R.id.frag_holder, armesFloor2Fragment);
-                childFragTrans.addToBackStack("Armes1");
+                childFragTrans.addToBackStack(currLocation + currFloor);
+                childFragTrans.commit();
+            }
+        }
+        else if(buildingName.equals(getResources().getString(R.string.machray)))
+        {
+            currLocation = buildingName;
+            currFloor = floorNumber;
+
+            if(currFloor == 1)
+            {
+                Machray_Floor1 machrayFloor1Frag = new Machray_Floor1();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, machrayFloor1Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+            else if(currFloor == 2)
+            {
+                Machray_Floor2 machrayFloor2Frag = new Machray_Floor2();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, machrayFloor2Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+            else if(currFloor == 3)
+            {
+                Machray_Floor3 machrayFloor3Frag = new Machray_Floor3();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, machrayFloor3Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+            else if(currFloor == 4)
+            {
+                Machray_Floor4 machrayFloor4Frag = new Machray_Floor4();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, machrayFloor4Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+            else if(currFloor == 5)
+            {
+                Machray_Floor5 machrayFloor5Frag = new Machray_Floor5();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, machrayFloor5Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
                 childFragTrans.commit();
             }
         }

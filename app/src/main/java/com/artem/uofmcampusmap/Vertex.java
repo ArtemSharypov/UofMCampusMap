@@ -73,6 +73,7 @@ public abstract class Vertex {
 
     public abstract boolean equals(Vertex vertex);
 
+    //Used for HashMap / Set
     @Override
     public boolean equals(Object obj) {
         boolean result;

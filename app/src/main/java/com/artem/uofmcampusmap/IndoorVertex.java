@@ -27,6 +27,8 @@ public class IndoorVertex extends Vertex
         this.position = vertex.getPosition();
     }
 
+    //Distance between two IndoorVertex's is simply a^2 + b^2 = distance
+    //Anything else can't be reasonably calculated
     @Override
     public int getDistanceFrom(Vertex destinationVertex) {
         int distance = 0;
@@ -68,16 +70,21 @@ public class IndoorVertex extends Vertex
         return connection;
     }
 
+    //Used for the main equals(Object obj) check
+    //Two IndoorVertex's must have the same X and Y positions, and be within the same building
     public boolean equals(Vertex vertex)
     {
         boolean areEqual = false;
         XYPos posToCompare;
+        IndoorVertex indoorVertex;
 
         if(vertex != null && vertex instanceof IndoorVertex)
         {
-            posToCompare = ((IndoorVertex) vertex).getPosition();
+            indoorVertex = (IndoorVertex) vertex;
+            posToCompare = indoorVertex.getPosition();
 
-            if(position.getX() == posToCompare.getX() && position.getY() == posToCompare.getY())
+            if(building.equals(indoorVertex.getBuilding()) && position.getX() == posToCompare.getX()
+                    && position.getY() == posToCompare.getY())
             {
                 areEqual = true;
             }
