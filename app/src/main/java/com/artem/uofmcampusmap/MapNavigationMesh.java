@@ -31,6 +31,7 @@ public class MapNavigationMesh
         populationMesh();
     }
 
+    //Adds another entrance to a given building
     private void addEntrance(String keyName, Vertex entranceVertex)
     {
         ArrayList<Vertex> entrancesList;
@@ -48,6 +49,7 @@ public class MapNavigationMesh
         startEndLocations.put(keyName, entrancesList);
     }
 
+    //Handles the creation of a Route within a indoor building using RouteFinder
     private Route navigateIndoors(IndoorVertex startLocation, IndoorVertex destinationLocation)
     {
         Route route;
@@ -78,6 +80,8 @@ public class MapNavigationMesh
         return route;
     }
 
+    //Handles all of the cases of creating a Route between the start and end location.
+    //uses RouteFinder to create any Routes between the locations as needed
     public Route getRoute(String startLocation, String startRoom, String endLocation, String endRoom)
     {
         Route route = null;
@@ -91,6 +95,7 @@ public class MapNavigationMesh
 
         if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
         {
+            //Same buildings don't need a route, unless they're in different rooms
             if(startLocation.equals(endLocation))
             {
                 if(!startRoom.equals(endRoom))
@@ -143,6 +148,7 @@ public class MapNavigationMesh
         return route;
     }
 
+    //Used for creation of a Route from a current GPS location, to a building or room within that building
     public Route getRoute(LatLng gpsStartLocation, String endLocation, String endRoom)
     {
         Route route = null;
@@ -152,6 +158,7 @@ public class MapNavigationMesh
 
         if(startEndLocations.containsKey(endLocation))
         {
+            //Tries to find where the GPS location is to route from
             for (WalkableZone currZone : walkableZones) {
                 if (currZone.zoneContainsLatLngPos(gpsStartLocation)) {
                     currLocation = new OutdoorVertex(gpsStartLocation);
@@ -180,6 +187,7 @@ public class MapNavigationMesh
         return route;
     }
 
+    //Used for creation of a Route from a building and/or room to a current GPS location
     public Route getRoute(String startLocation, String startRoom, LatLng gpsEndLocation)
     {
         Route route = null;
@@ -189,7 +197,9 @@ public class MapNavigationMesh
 
         if(startEndLocations.containsKey(startLocation))
         {
-            //todo split this up into seperate sections (aka walkable zones) to speed up checking the location
+            //todo split this up into seperate sections (aka walkable zones) to speed up checking the location and then
+            // just use LatLngBounds if the location is within the zone and then use a contains to make it do the check for me
+            //Tries to find where the GPS location is to route from
             for (WalkableZone currZone : walkableZones) {
                 if (currZone.zoneContainsLatLngPos(gpsEndLocation)) {
                     currLocation = new OutdoorVertex(gpsEndLocation);
@@ -201,11 +211,14 @@ public class MapNavigationMesh
 
             if(currLocation != null)
             {
+                //Shortest distance from the starting building to the current location
                 startBuildingExit = findBestEntranceExitTo(currLocation, startLocation);
 
+                //Creates a route from the starting room, to the exit and then a route from the exit to the current location
                 route = routeFromStartRoomToExit(startLocation, startRoom, startBuildingExit);
                 startToCurrLocationRoute = routeFinder.findRoute(startBuildingExit, currLocation);
 
+                //Combines the two potential routes together
                 if (route != null)
                 {
                     route.combineRoutes(startToCurrLocationRoute);
@@ -220,6 +233,7 @@ public class MapNavigationMesh
         return route;
     }
 
+    //Creates a route for when both of the rooms are within the same building
     private Route routeSameBuildingRooms(String building, String startRoom, String endRoom)
     {
         Route route = null;
@@ -234,6 +248,7 @@ public class MapNavigationMesh
         return route;
     }
 
+    //Creates a route from a room within a building, to the specified exit of that building
     private Route routeFromStartRoomToExit(String building, String startRoom, OutdoorVertex exitVertex)
     {
         Route route = null;
@@ -247,6 +262,7 @@ public class MapNavigationMesh
         return route;
     }
 
+    //Creates a route from a building entrance, to a specified room within that building
     private Route routeFromBuildingEntranceToDest(String building, OutdoorVertex entranceVertex, String endRoom)
     {
         Route route = null;
@@ -260,6 +276,7 @@ public class MapNavigationMesh
         return route;
     }
 
+    //Finds the shortest distance entrance / exit combination from the location to the building
     private OutdoorVertex findBestEntranceExitTo(OutdoorVertex location, String building)
     {
         OutdoorVertex bestEntExit = null;
@@ -280,6 +297,7 @@ public class MapNavigationMesh
         return bestEntExit;
     }
 
+    //Tries to find a specified room within a building
     private IndoorVertex findRoomVertex(String room, String building)
     {
         IndoorVertex roomVertex = null;
@@ -295,6 +313,8 @@ public class MapNavigationMesh
         return roomVertex;
     }
 
+    //Creates all of the WalkableZones sections of the mesh, that are used for finding where the GPS location is coming from
+    //Also contains all of the Vertex's for navigation, along with their connections to one another
     private void populationMesh()
     {
         //BottomMiddle is the entrancce

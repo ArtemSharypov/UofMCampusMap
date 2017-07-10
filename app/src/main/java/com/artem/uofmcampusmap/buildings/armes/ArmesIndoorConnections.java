@@ -37,9 +37,11 @@ public class ArmesIndoorConnections
         populateConnections();
     }
 
+    //Creates all of the points within Armes, including the rooms, stairs, and exits, and connects them to eachother
     public void populateConnections()
     {
         //floor 2
+        //points
         IndoorVertex _12_125 = new IndoorVertex(building, new XYPos(12.5, 125), 2);
         IndoorVertex _131_112 = new IndoorVertex(building, new XYPos(131.25, 112.5), 2); //room 208
         IndoorVertex _162_112 = new IndoorVertex(building, new XYPos(162.5, 112.5), 2); //room 208
@@ -91,7 +93,7 @@ public class ArmesIndoorConnections
         secondFloorStairs.add(leftStairsFloor2);
         secondFloorStairs.add(rightStairsFloor2);
 
-        //floor 2 connections
+        //connections between points
         connectVertex(bullerConnection, southWestEntrance);
         connectVertex(southWestEntrance, _12_37);
         connectVertex(_12_37, _12_125);
@@ -142,6 +144,7 @@ public class ArmesIndoorConnections
         connectVertex(machray_connect_south, rightStairsFloor2);
 
         //floor 1
+        //points
         IndoorVertex _163_120 = new IndoorVertex(building, new XYPos(163.75, 120), 1);
         IndoorVertex _10_126 = new IndoorVertex(building, new XYPos(10, 126.25), 1);
         IndoorVertex _18_132 = new IndoorVertex(building, new XYPos(18.75, 132.5), 1);
@@ -184,7 +187,7 @@ public class ArmesIndoorConnections
         firstFloorStairs.add(leftStairsFloor1);
         firstFloorStairs.add(rightStairsFloor1);
 
-        //floor 1 connections
+        //connections between points
         connectVertex(parkerConnectionTunnel, _10_126);
         connectVertex(allenConnectionTunnel, _10_126);
         connectVertex(_10_126, _18_132);
@@ -259,53 +262,42 @@ public class ArmesIndoorConnections
         connectVertex(rightStairsFloor1, rightStairsFloor2);
     }
 
-    private void connectVertex(Vertex vertex1, Vertex vertex2)
+    //Connects two vertex's, and adds them as North/South or East/West connections depending on their positions to eachother
+    private void connectVertex(IndoorVertex indoorV1, IndoorVertex indoorV2)
     {
-        if(vertex1 instanceof IndoorVertex && vertex2 instanceof IndoorVertex)
+        XYPos firstPos = indoorV1.getPosition();
+        XYPos secondPos = indoorV2.getPosition();
+
+        //Change in only X position means that the vertex's are East/West of eachother
+        //Change in only Y position means that the vertex's are North/South of eachother
+        if(firstPos.getX() > secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
         {
-            IndoorVertex indoorV1 = (IndoorVertex) vertex1;
-            XYPos firstPos = indoorV1.getPosition();
-            IndoorVertex indoorV2 = (IndoorVertex) vertex2;
-            XYPos secondPos = indoorV2.getPosition();
-
-            if(firstPos.getX() > secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
-            {
-                indoorV1.addWestConnection(indoorV2);
-                indoorV2.addEastConnection(indoorV1);
-            }
-            else if(firstPos.getX() < secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
-            {
-                indoorV1.addEastConnection(indoorV2);
-                indoorV2.addWestConnection(indoorV1);
-            }
-            else if(firstPos.getY() > secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
-            {
-                indoorV1.addSouthConnection(indoorV2);
-                indoorV2.addNorthConnection(indoorV1);
-            }
-            else if(firstPos.getY() < secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
-            {
-                indoorV1.addNorthConnection(indoorV2);
-                indoorV2.addSouthConnection(indoorV1);
-            }
-            else
-            {
-                vertex1.addConnection(vertex2);
-                vertex2.addConnection(vertex1);
-            }
-
-            vertex1.addConnection(vertex2);
-            vertex2.addConnection(vertex1);
-
+            indoorV1.addWestConnection(indoorV2);
+            indoorV2.addEastConnection(indoorV1);
         }
-        else
+        else if(firstPos.getX() < secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
         {
-            vertex1.addConnection(vertex2);
-            vertex2.addConnection(vertex1);
+            indoorV1.addEastConnection(indoorV2);
+            indoorV2.addWestConnection(indoorV1);
         }
+        else if(firstPos.getY() > secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
+        {
+            indoorV1.addSouthConnection(indoorV2);
+            indoorV2.addNorthConnection(indoorV1);
+        }
+        else if(firstPos.getY() < secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
+        {
+            indoorV1.addNorthConnection(indoorV2);
+            indoorV2.addSouthConnection(indoorV1);
+        }
+
+
+        indoorV1.addConnection(indoorV2);
+        indoorV2.addConnection(indoorV1);
     }
 
     //todo make this better for rooms that have multi entrances or that have entrances on different floors
+    //Finds a room based on its number
     public IndoorVertex findRoom(String roomNumb)
     {
         ArrayList<IndoorVertex> roomList;
@@ -350,6 +342,7 @@ public class ArmesIndoorConnections
         return northWestEntrance;
     }
 
+    //Finds the closest stairs on the floor that the specified room is on
     public IndoorVertex getClosestStairsToRoom(IndoorVertex room)
     {
         IndoorVertex closestStairs = null;

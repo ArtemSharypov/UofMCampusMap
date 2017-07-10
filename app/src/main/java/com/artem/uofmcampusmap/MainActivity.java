@@ -101,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         {
             currBuilding = savedInstanceState.getString("currBuilding");
             startLocation = savedInstanceState.getString("startLocation");
+            startRoom = savedInstanceState.getString("startRoom");
             destinationLocation = savedInstanceState.getString("destinationLocation");
+            destinationRoom = savedInstanceState.getString("destinationRoom");
         }
     }
 
@@ -111,7 +113,9 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         outState.putString("currBuilding", currBuilding);
         outState.putString("startLocation", startLocation);
+        outState.putString("startRoom", startRoom);
         outState.putString("destinationLocation", destinationLocation);
+        outState.putString("destinationRoom", destinationRoom);
     }
 
     //On click item for items in the nav drawer.
@@ -353,18 +357,24 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 break;
         }
+
         menuItem.setChecked(true);
         mDrawerLayout.closeDrawers();
     }
 
+    //Used to clear any route information when switching to a building layout
     private void resetFields()
     {
         startRoom = "";
         startLocation = "";
         destinationLocation = "";
         destinationRoom = "";
+        currRoute = null;
+        currInstructionPos = 0;
     }
 
+    //Resets any route information and switches to the building layouts
+    //Building that is displayed is the one within currBuilding (recorded when a NavigationDrawer item is pressed)
     private void switchToBuildingLayouts()
     {
         resetFields();
@@ -378,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         fragmentTransaction.commit();
     }
 
-    //Switch current fragment to the RoutePlannerFragment
+    //Resets any route information and switches to the RoutePlannerFragment
     private void switchToRoutePlanner()
     {
         resetFields();

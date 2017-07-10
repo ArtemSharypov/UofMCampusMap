@@ -61,7 +61,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         return view;
     }
 
-
+    //Updates the PolyLines displayed dependent on what happened to the position in the route since last time the lines were drawn
+    //If there is a positive change, that means the current path needs to be hidden
+    //If there is a negative change, that means the previous path needs to be displayed
     @Override
     public void updateDisplayedRoute()
     {
@@ -75,7 +77,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
 
             if(linePos > 0)
             {
-                //means that next was pressed
+                //means that next was pressed, hide the current path/line
                 if(currPosInLines < routeLines.size())
                 {
                     routeLines.get(currPosInLines).setVisible(false);
@@ -84,7 +86,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
             }
             else
             {
-                //means that previous was pressed
+                //means that previous was pressed, show the previous path/line
                 if(currPosInLines > 0)
                 {
                     currPosInLines--;
@@ -94,6 +96,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         }
     }
 
+    //Creates a list of Polylines that relate to the route, and the position it is in within the route
+    //Any lines before the current position are not displayed, any after however are
     @Override
     public void displayRoute()
     {
@@ -112,13 +116,45 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
             lastPosInRoute = currRoutePos;
             currPosInLines = 0;
 
+            currRoutePos --;
+
+            //Path/Lines that are before the current position
+            while(currRoutePos > 0)
+            {
+                currInstruction = route.getInstructionAt(currRoutePos);
+                source = currInstruction.getSource();
+                destination = currInstruction.getDestination();
+
+                //Create a path/line only if the instruction is an outdoors one
+                if(currInstruction.isOutdoorInstruction())
+                {
+                    startPoint = ((OutdoorVertex) source).getPosition();
+                    endPoint = ((OutdoorVertex) destination).getPosition();
+                    currLine = new PolylineOptions().add(startPoint)
+                            .add(endPoint)
+                            .color(Color.RED);
+
+                    routeLines.add(googleMap.addPolyline(currLine));
+                    routeLines.get(currRoutePos).setVisible(false);
+                }
+                else if(currInstruction.isIndoorInstruction())
+                {
+                    break;
+                }
+
+                currRoutePos++;
+            }
+
+            currRoutePos = lastPosInRoute;
+
             while(currRoutePos < route.getNumInstructions())
             {
                 currInstruction = route.getInstructionAt(currRoutePos);
                 source = currInstruction.getSource();
                 destination = currInstruction.getDestination();
 
-                if(source instanceof OutdoorVertex && destination instanceof OutdoorVertex)
+                //Create a path/line only if the instruction is an outdoors one
+                if(currInstruction.isOutdoorInstruction())
                 {
                     startPoint = ((OutdoorVertex) source).getPosition();
                     endPoint = ((OutdoorVertex) destination).getPosition();
@@ -128,7 +164,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
 
                     routeLines.add(googleMap.addPolyline(currLine));
                 }
-                else if(source instanceof IndoorVertex && destination instanceof IndoorVertex)
+                else if(currInstruction.isIndoorInstruction())
                 {
                     break;
                 }
@@ -177,6 +213,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         displayRoute();
     }
 
+    //Centers the camera around approx center of the campus
     private void centerMap()
     {
         LatLng northEastCorner = new LatLng(49.815699, -97.129079);
@@ -189,6 +226,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerOfCampus, zoomAmount));
     }
 
+    //Creates markers that are used to display the names of each building
     private void addBuildingMarkers()
     {
         //todo make custom markers that just say the building name, over the building its meant to represent. maybe turn off onClicks for them

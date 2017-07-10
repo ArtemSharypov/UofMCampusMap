@@ -28,6 +28,7 @@ public class WalkableZone
         this.bottomRightCorner = bottomRight;
     }
 
+    //Connects every other vertex to the top vertex
     private void topConnections()
     {
         connectToTop(this.left);
@@ -35,6 +36,7 @@ public class WalkableZone
         connectToTop(this.bottom);
     }
 
+    //Connects every other vertex to the left vertex
     private void leftConnections()
     {
         connectToLeft(this.top);
@@ -42,6 +44,7 @@ public class WalkableZone
         connectToLeft(this.bottom);
     }
 
+    //Connects every other vertex to the right vertex
     private void rightConnections()
     {
         connectToRight(this.top);
@@ -49,6 +52,7 @@ public class WalkableZone
         connectToRight(this.bottom);
     }
 
+    //Connects every other vertex to the bottom vertex
     private void bottomConnections()
     {
         connectToBottom(this.top);
@@ -56,6 +60,7 @@ public class WalkableZone
         connectToBottom(this.right);
     }
 
+    //Reconnects all of the vertex's together
     private void updateAllConnections()
     {
         topConnections();
@@ -168,6 +173,7 @@ public class WalkableZone
         return bottom;
     }
 
+    //Used to check if a passed location is within this zone
     public boolean zoneContainsLatLngPos(LatLng location)
     {
         boolean isWithin = false;

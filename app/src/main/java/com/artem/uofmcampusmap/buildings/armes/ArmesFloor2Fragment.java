@@ -24,66 +24,6 @@ import com.artem.uofmcampusmap.buildings.Line;
  */
 
 public class ArmesFloor2Fragment extends DrawIndoorPathsFragment {
-
-    /* temp DP points for 768x1280, dpi is 318, or 318/160 = 1.9875
-        Calculate pixel size for this one
-        then just convert between different screen resolutions with the original pixels
-        xy - dp - pixel
-    floor2
-        allen north ent (0, 131), 104, 254 - 207, 505
-        allen south ent (0, 118), 104, 263 - 207, 523
-
-        22/131 - 128, 254 - 255, 505
-        22/118 - 128, 263 - 255, 523
-
-        12/125 - 117, 259 - 233, 515
-        12/37 - 117, 367 - 233, 730
-        12/187 - 117, 175 - 233, 348
-        11/206 - 117, 155 - 233, 309
-
-        0/37 - 104, 367 - 207, 730
-        0/187 - 104, 175 - 207, 348
-
-        15/6 - 122, 400 - 243, 796
-
-        31/118 - 140, 265 - 279, 525
-        31/131 - 140, 252 - 279, 505
-        31/137 - 140, 247 - 279, 491
-        31/112 - 140, 270 - 279, 537
-
-        37/125 - 149, 259 - 297, 515
-
-        50/137 - 163, 247 - 324, 491
-        50/131 - 163, 252 - 324, 505
-
-        62/137 - 182, 247 - 362, 491
-        62/118 - 182, 265 - 362, 525
-        62/131 - 182, 252 - 362, 505
-        62/112 - 182, 270 - 362, 537
-
-        85/112 - 209, 270 - 416, 537
-        85/118 - 209, 265 - 416, 525
-        85/131 - 209, 252 - 416, 505
-        85/137 - 209, 247 - 416, 491
-
-        108/112 - 238, 270 - 474, 537
-        108/118 - 238, 265 - 474, 525
-
-        131/112 - 265, 270 - 527, 537
-        131/118 - 265, 265 - 527, 525
-        131/131 - 265, 252 - 527, 505
-
-        156/125 - 297, 259 - 591, 515
-
-        162/131 - 301, 252 - 599, 505
-        162/137 - 301, 247 - 599, 491
-
-        173/118 - 316, 263 - 629, 525
-        173/131 - 316, 254 - 629, 505
-     */
-
-    //todo change the floor image as a constant size, changing depending on if it goes from mdpi or such
-    //then can just use pixels offset as needed
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

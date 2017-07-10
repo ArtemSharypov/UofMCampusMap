@@ -170,6 +170,7 @@ public class BuildingLayoutFragment extends Fragment{
             return numFloors;
         }
 
+        //Creates/Returns a Fragment that is related to the building, and the position (floor) that is passed
         @Override
         public Fragment getItem(int position) {
             Fragment fragment = null;
@@ -571,6 +572,7 @@ public class BuildingLayoutFragment extends Fragment{
         return view;
     }
 
+    //Creates a List of floor names that are used as the titles of each tab
     private ArrayList<String> populateFloorNames()
     {
         MainActivity activity = (MainActivity) getActivity();

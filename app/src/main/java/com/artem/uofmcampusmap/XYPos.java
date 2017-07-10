@@ -14,9 +14,10 @@ public class XYPos {
         this.y = y;
     }
 
+    //Calculates the distance between two XYPos's using a^2+c^2 = distance
     public int getDistanceFrom(XYPos otherPoint)
     {
-        int dist = 0;
+        int dist;
 
         int tempX = (int) Math.abs(this.x - otherPoint.getX());
         int tempY = (int) Math.abs(this.y - otherPoint.getY());
