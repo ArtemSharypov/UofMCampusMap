@@ -41,22 +41,7 @@ public class ArmesFloor1Fragment extends DrawIndoorPathsFragment {
         return view;
     }
 
-    /*
-        default will be xhdpi, 720x1280
-        xCoord - pixel
-        -22.5 - 152
-        10 - 225
-        18.75 - 255
-        56.25 - 340
-        71.25 - 372
-        87.5 - 402
-        92.5 - 415
-        93.75 - 423
-        120 - 491
-        130 - 500
-        163.75 - 588
-        168.75 - 598
-     */
+    /* default will be xhdpi, 720x1280 */
     //todo switch default to 1080*1920
     @Override
     protected int findXPixelFor(double xCoordinate)
@@ -117,17 +102,7 @@ public class ArmesFloor1Fragment extends DrawIndoorPathsFragment {
         return xPixelPos;
     }
 
-    /* default is is in xhdpi, 720x1280
-        y coordinate - pixel pos
-        95 - 590
-        120 - 538
-        122.5 - 535
-        126.25 - 520
-        132.5 - 505
-        138.75 - 492
-        156.25 - 454
-        212.5 - 325
-     */
+    /* default is is in xhdpi, 720x1280  */
     //todo switch default to 1080*1920
     @Override
     protected int findYPixelFor(double yCoordinate)

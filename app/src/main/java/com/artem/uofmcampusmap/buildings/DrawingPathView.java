@@ -60,6 +60,8 @@ public class DrawingPathView extends View {
         }
         else
         {
+            //Used for when there are no routes to display
+            //Just prevents any potential bugs with lines remaining
             Paint clear = new Paint();
             clear.setColor(Color.TRANSPARENT);
             canvas.drawLine(0, 0, 0, 0, clear);

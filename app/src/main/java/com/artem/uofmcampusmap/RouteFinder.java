@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public class RouteFinder {
 
-    //Find a path from start to end if there exists one
+    //Find a path from start to end if there exists one using an A* algorithm
     public Route findRoute(Vertex start, Vertex end)
     {
         Route route = null;
@@ -39,6 +39,7 @@ public class RouteFinder {
 
             openList.add(source);
 
+            //openList being empty means a route has been found, or that there is no possible paths between start/destination
             while(!openList.isEmpty())
             {
                 lowestCostVertex = findLowestCostVertex(openList);
@@ -80,7 +81,8 @@ public class RouteFinder {
                     {
                         vertexToCompare = closedList.get(closedList.indexOf(currVertex));
 
-                        //Remove the vertex in the closed list if its F is bigger, and add current to open list
+                        //Remove the vertex in the closed list if its F (total distance between it and destination) is bigger,
+                        // and add current to open list
                         if(vertexToCompare != null)
                         {
                             if(vertexToCompare.getF() > currVertex.getF())
@@ -104,6 +106,8 @@ public class RouteFinder {
         return route;
     }
 
+    //Adds all valid connections from the parent vertex into the List
+    //If the destination is on a given floor, any successors must be on the same floor as it to be added
     private ArrayList<Vertex> generateSuccessors(Vertex parent, Vertex destination)
     {
         HashSet<Vertex> connections;
@@ -130,11 +134,12 @@ public class RouteFinder {
                     childVertex = new IndoorVertex((IndoorVertex) currConnection);
                     childIsIndoor = true;
                 }
-                else if(currConnection instanceof OutdoorVertex)
-                    childVertex = new OutdoorVertex((OutdoorVertex) currConnection);
                 else
-                    childVertex = currConnection;
+                    childVertex = new OutdoorVertex((OutdoorVertex) currConnection);
 
+                //For a successor, if the parent is Indoor, then the child has to be an IndoorVertex as well as being on the same floor
+                //as the parent
+                //Or simply the child vertex being an Outdoor's one
                 if(((childIsIndoor && parentIsIndoor)&& ((IndoorVertex)childVertex).getFloor() == parentIndoor.getFloor()) ||
                         childVertex instanceof OutdoorVertex)
                 {
@@ -150,6 +155,8 @@ public class RouteFinder {
         return successors;
     }
 
+    //todo replace this with just a priorityqueue?
+    //Finds the next vertex that has the smallest estimated total cost from it to the destination
     private Vertex findLowestCostVertex(ArrayList<Vertex> vertexList)
     {
         Vertex currVertex = null;
@@ -157,6 +164,7 @@ public class RouteFinder {
 
         for(Vertex vertex: vertexList)
         {
+            //F is the estimated total cost from this vertex to the destination
             if(currVertex == null)
             {
                 currVertex = vertex;

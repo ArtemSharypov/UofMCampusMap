@@ -36,6 +36,7 @@ public class MachrayIndoorConnections
         populateConnections();
     }
 
+    //Finds the closest stairs on the floor that the specified room is on
     public IndoorVertex getClosestStairsToRoom(IndoorVertex room)
     {
         IndoorVertex closestStairs = null;
@@ -82,6 +83,7 @@ public class MachrayIndoorConnections
     }
 
     //todo make this better for rooms that have multi entrances or that have entrances on different floors
+    //Finds a room based on its number
     public IndoorVertex findRoom(String roomNumb)
     {
         ArrayList<IndoorVertex> roomList;
@@ -98,52 +100,41 @@ public class MachrayIndoorConnections
         return room;
     }
 
-    private void connectVertex(Vertex vertex1, Vertex vertex2)
+    //Connects two vertex's, and adds them as North/South or East/West connections depending on their positions to eachother
+    private void connectVertex(IndoorVertex indoorV1, IndoorVertex indoorV2)
     {
-        if(vertex1 instanceof IndoorVertex && vertex2 instanceof IndoorVertex)
+        XYPos firstPos = indoorV1.getPosition();
+        XYPos secondPos = indoorV2.getPosition();
+
+        //Change in only X position means that the vertex's are East/West of eachother
+        //Change in only Y position means that the vertex's are North/South of eachother
+        if(firstPos.getX() > secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
         {
-            IndoorVertex indoorV1 = (IndoorVertex) vertex1;
-            XYPos firstPos = indoorV1.getPosition();
-            IndoorVertex indoorV2 = (IndoorVertex) vertex2;
-            XYPos secondPos = indoorV2.getPosition();
-
-            if(firstPos.getX() > secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
-            {
-                indoorV1.addWestConnection(indoorV2);
-                indoorV2.addEastConnection(indoorV1);
-            }
-            else if(firstPos.getX() < secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
-            {
-                indoorV1.addEastConnection(indoorV2);
-                indoorV2.addWestConnection(indoorV1);
-            }
-            else if(firstPos.getY() > secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
-            {
-                indoorV1.addSouthConnection(indoorV2);
-                indoorV2.addNorthConnection(indoorV1);
-            }
-            else if(firstPos.getY() < secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
-            {
-                indoorV1.addNorthConnection(indoorV2);
-                indoorV2.addSouthConnection(indoorV1);
-            }
-            else
-            {
-                vertex1.addConnection(vertex2);
-                vertex2.addConnection(vertex1);
-            }
-
-            vertex1.addConnection(vertex2);
-            vertex2.addConnection(vertex1);
-
+            indoorV1.addWestConnection(indoorV2);
+            indoorV2.addEastConnection(indoorV1);
         }
-        else
+        else if(firstPos.getX() < secondPos.getX() && Math.floor(firstPos.getY() - secondPos.getY()) == 0.0)
         {
-            vertex1.addConnection(vertex2);
-            vertex2.addConnection(vertex1);
+            indoorV1.addEastConnection(indoorV2);
+            indoorV2.addWestConnection(indoorV1);
         }
+        else if(firstPos.getY() > secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
+        {
+            indoorV1.addSouthConnection(indoorV2);
+            indoorV2.addNorthConnection(indoorV1);
+        }
+        else if(firstPos.getY() < secondPos.getY() && Math.floor(firstPos.getX() - secondPos.getX()) == 0.0)
+        {
+            indoorV1.addNorthConnection(indoorV2);
+            indoorV2.addSouthConnection(indoorV1);
+        }
+
+
+        indoorV1.addConnection(indoorV2);
+        indoorV2.addConnection(indoorV1);
     }
 
+    //Creates all of the points and exits within Machray, as well as connecting them to eachother
     private void populateConnections()
     {
         IndoorVertex elevatorFloor1 = new IndoorVertex(building, new XYPos(50, 40), 1);
