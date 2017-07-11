@@ -170,14 +170,14 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
 
         if(!startLocation.equals("") && !destinationLocation.equals(""))
         {
-            if(checkPlayServices() && googleApiClient != null)
-            {
-                buildGoogleApiClient();
-            }
-
             if(startLocation.equals(getResources().getString(R.string.curr_location)) ||
                     destinationLocation.equals(getResources().getString(R.string.curr_location)))
             {
+                if(checkPlayServices())
+                {
+                    buildGoogleApiClient();
+                }
+
                 //Current location means that a GPS position needs to be found, and used for the route
                 findLocation();
             }
