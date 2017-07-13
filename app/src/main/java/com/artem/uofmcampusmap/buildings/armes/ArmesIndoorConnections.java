@@ -1,7 +1,6 @@
 package com.artem.uofmcampusmap.buildings.armes;
 
 import com.artem.uofmcampusmap.IndoorVertex;
-import com.artem.uofmcampusmap.Vertex;
 import com.artem.uofmcampusmap.XYPos;
 
 import java.util.ArrayList;
@@ -14,9 +13,11 @@ import java.util.HashMap;
 public class ArmesIndoorConnections
 {
     private HashMap<String, ArrayList<IndoorVertex>> rooms;
-    private ArrayList<IndoorVertex> allenConnections;
     private IndoorVertex allenConnectionTunnel;
-    private ArrayList<IndoorVertex> machrayConnections;
+    private IndoorVertex allenConnectionNorth;
+    private IndoorVertex allenConnectionSouth;
+    private IndoorVertex machrayConnectionNorth; //floor2
+    private IndoorVertex machrayConnectionSouth; //floor2
     private IndoorVertex machrayConnectionTunnel;
     private IndoorVertex bullerConnection;
     private IndoorVertex parkerConnection;
@@ -30,8 +31,6 @@ public class ArmesIndoorConnections
     public ArmesIndoorConnections()
     {
         rooms = new HashMap<>();
-        allenConnections = new ArrayList<>();
-        machrayConnections = new ArrayList<>();
         firstFloorStairs = new ArrayList<>();
         secondFloorStairs = new ArrayList<>();
         populateConnections();
@@ -75,17 +74,11 @@ public class ArmesIndoorConnections
         northWestEntrance = new IndoorVertex(building, new XYPos(0, 187.5), 2);
         southWestEntrance = new IndoorVertex(building, new XYPos(0, 37.5), 2);
 
-        IndoorVertex allen_connect_north = new IndoorVertex(building, new XYPos(0, 131.25), 2);
-        IndoorVertex allen_connect_south = new IndoorVertex(building, new XYPos(0, 118.75), 2);
+        allenConnectionNorth = new IndoorVertex(building, new XYPos(0, 131.25), 2);
+        allenConnectionSouth = new IndoorVertex(building, new XYPos(0, 118.75), 2);
 
-        allenConnections.add(allen_connect_north);
-        allenConnections.add(allen_connect_south);
-
-        IndoorVertex machray_connect_north = new IndoorVertex(building, new XYPos(173.75, 131.25), 2);
-        IndoorVertex machray_connect_south = new IndoorVertex(building, new XYPos(173.75, 118.75), 2);
-
-        machrayConnections.add(machray_connect_north);
-        machrayConnections.add(machray_connect_south);
+        machrayConnectionNorth = new IndoorVertex(building, new XYPos(173.75, 131.25), 2);
+        machrayConnectionSouth = new IndoorVertex(building, new XYPos(173.75, 118.75), 2);
 
         bullerConnection = new IndoorVertex(building, new XYPos(15, 6.25), 2);
         parkerConnection = new IndoorVertex(building, new XYPos(12.5, 206.25), 2);
@@ -101,8 +94,8 @@ public class ArmesIndoorConnections
         connectVertex(parkerConnection, _12_187);
         connectVertex(northWestEntrance, _12_187);
         connectVertex(_12_125, _12_187);
-        connectVertex(allen_connect_north, _12_125);
-        connectVertex(allen_connect_south, _12_125);
+        connectVertex(allenConnectionNorth, _12_125);
+        connectVertex(allenConnectionSouth, _12_125);
         connectVertex(_12_125, _22_118);
         connectVertex(_12_125, _22_131);
         connectVertex(_22_131, _31_131);
@@ -134,14 +127,14 @@ public class ArmesIndoorConnections
         connectVertex(_131_131, _162_131);
         connectVertex(_131_131, _85_131);
         connectVertex(_85_131, _85_137);
-        connectVertex(_162_131, machray_connect_north);
+        connectVertex(_162_131, machrayConnectionNorth);
         connectVertex(_162_131, rightStairsFloor2);
         connectVertex(_162_131, _162_118);
-        connectVertex(machray_connect_north, rightStairsFloor2);
+        connectVertex(machrayConnectionNorth, rightStairsFloor2);
         connectVertex(_162_118, _162_112);
         connectVertex(_162_118, rightStairsFloor2);
-        connectVertex(_162_118, machray_connect_south);
-        connectVertex(machray_connect_south, rightStairsFloor2);
+        connectVertex(_162_118, machrayConnectionSouth);
+        connectVertex(machrayConnectionSouth, rightStairsFloor2);
 
         //floor 1
         //points
@@ -332,6 +325,22 @@ public class ArmesIndoorConnections
 
     public IndoorVertex getParkerConnectionTunnel() {
         return parkerConnectionTunnel;
+    }
+
+    public IndoorVertex getMachrayConnectionNorth() {
+        return machrayConnectionNorth;
+    }
+
+    public IndoorVertex getMachrayConnectionSouth() {
+        return machrayConnectionSouth;
+    }
+
+    public IndoorVertex getAllenConnectionNorth() {
+        return allenConnectionNorth;
+    }
+
+    public IndoorVertex getAllenConnectionSouth() {
+        return allenConnectionSouth;
     }
 
     public IndoorVertex getSouthWestEntrance() {
