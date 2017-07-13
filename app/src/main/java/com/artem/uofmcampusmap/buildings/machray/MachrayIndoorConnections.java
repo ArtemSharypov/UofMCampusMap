@@ -20,7 +20,9 @@ public class MachrayIndoorConnections
     private ArrayList<IndoorVertex> fourthFloorStairsElevator;
     private ArrayList<IndoorVertex> fifthFloorStairsElevator;
     private IndoorVertex exit;
-    private ArrayList<IndoorVertex> armesConnections;
+    private IndoorVertex armesConnectionTunnel;
+    private IndoorVertex armesConnectionNorth;
+    private IndoorVertex armesConnectionSouth;
     private IndoorVertex duffRoblinConnection;
     private final String building = "Machray"; //todo switch this to resources?
 
@@ -32,7 +34,6 @@ public class MachrayIndoorConnections
         thirdFloorStairsElevator = new ArrayList<>();
         fourthFloorStairsElevator = new ArrayList<>();
         fifthFloorStairsElevator = new ArrayList<>();
-        armesConnections = new ArrayList<>();
         populateConnections();
     }
 
@@ -140,17 +141,32 @@ public class MachrayIndoorConnections
         IndoorVertex elevatorFloor1 = new IndoorVertex(building, new XYPos(50, 40), 1);
         IndoorVertex stairsFloor1 = new IndoorVertex(building, new XYPos(56.25, 28.13), 1);
 
+        firstFloorStairsElevator.add(stairsFloor1);
+        firstFloorStairsElevator.add(elevatorFloor1);
+
         IndoorVertex stairsFloor2 = new IndoorVertex(building, new XYPos(49.43, 160.49), 2);
         IndoorVertex elevatorFloor2 = new IndoorVertex(building, new XYPos(44.19, 151.19), 2);
+
+        secondFloorStairsElevator.add(stairsFloor2);
+        secondFloorStairsElevator.add(elevatorFloor2);
 
         IndoorVertex stairsFloor3 = new IndoorVertex(building, new XYPos(33.75, 28.13), 3);
         IndoorVertex elevatorFloor3 = new IndoorVertex(building, new XYPos(28.75, 37.5), 3);
 
+        thirdFloorStairsElevator.add(stairsFloor3);
+        thirdFloorStairsElevator.add(elevatorFloor3);
+
         IndoorVertex stairsFloor4 = new IndoorVertex(building, new XYPos(33.75, 28.13), 4);
         IndoorVertex elevatorFloor4 = new IndoorVertex(building, new XYPos(28.75, 37.5), 4);
 
+        fourthFloorStairsElevator.add(stairsFloor4);
+        fourthFloorStairsElevator.add(elevatorFloor4);
+
         IndoorVertex stairsFloor5 = new IndoorVertex(building, new XYPos(33.75, 28.13), 5);
         IndoorVertex elevatorFloor5 = new IndoorVertex(building, new XYPos(28.75, 37.5), 5);
+
+        firstFloorStairsElevator.add(stairsFloor5);
+        fifthFloorStairsElevator.add(elevatorFloor5);
 
         //Stair connections to one another
         connectVertex(stairsFloor1, stairsFloor2);
@@ -186,7 +202,7 @@ public class MachrayIndoorConnections
 
     private void createFloor1Connections(IndoorVertex stairs, IndoorVertex elevator)
     {
-        IndoorVertex armesConnection = new IndoorVertex(building, new XYPos(0, 31.25), 1);
+        armesConnectionTunnel = new IndoorVertex(building, new XYPos(0, 31.25), 1);
         IndoorVertex _41_31 = new IndoorVertex(building, new XYPos(41.25, 31.25), 1);
         IndoorVertex _50_28 = new IndoorVertex(building, new XYPos(50, 28.13), 1);
         IndoorVertex _50_21 = new IndoorVertex(building, new XYPos(50, 21.88), 1);
@@ -206,9 +222,6 @@ public class MachrayIndoorConnections
         IndoorVertex _93_72 = new IndoorVertex(building, new XYPos(93.75, 72.5), 1);
         IndoorVertex _50_31 = new IndoorVertex(building, new XYPos(50, 31.25), 1);
         IndoorVertex _137_72 = new IndoorVertex(building, new XYPos(137.5, 72.5), 1);
-
-        //Other building connections
-        armesConnections.add(armesConnection);
 
         //rooms
         ArrayList<IndoorVertex> rm106 = new ArrayList<>();
@@ -248,7 +261,7 @@ public class MachrayIndoorConnections
         rooms.put("113", rm113);
 
         //Connections between this floor
-        connectVertex(armesConnection, _41_31);
+        connectVertex(armesConnectionTunnel, _41_31);
         connectVertex(_41_31, _50_31);
         connectVertex(_50_31, elevator);
         connectVertex(_50_31, _50_28);
@@ -277,8 +290,8 @@ public class MachrayIndoorConnections
     private void createFloor2Connections(IndoorVertex stairs, IndoorVertex elevator)
     {
         //Points on the map
-        IndoorVertex armes_connection_top = new IndoorVertex(building, new XYPos(0, 151.19), 2);
-        IndoorVertex armes_connection_bottom = new IndoorVertex(building, new XYPos(0, 158.75), 2);
+        armesConnectionNorth = new IndoorVertex(building, new XYPos(0, 151.19), 2);
+        armesConnectionSouth = new IndoorVertex(building, new XYPos(0, 158.75), 2);
         IndoorVertex rm239_fac_science = new IndoorVertex(building, new XYPos(30.24, 97.11), 2);
         IndoorVertex _30_151 = new IndoorVertex(building, new XYPos(30.24, 151.19), 2);
         IndoorVertex _30_179 = new IndoorVertex(building, new XYPos(30.24, 179.65), 2);
@@ -302,13 +315,9 @@ public class MachrayIndoorConnections
 
         rooms.put("239", rm239);
 
-        //Connections to other buildings
-        armesConnections.add(armes_connection_bottom);
-        armesConnections.add(armes_connection_top);
-
         //Connections to other points
-        connectVertex(armes_connection_bottom, _30_158);
-        connectVertex(armes_connection_top, _30_151);
+        connectVertex(armesConnectionSouth, _30_158);
+        connectVertex(armesConnectionNorth, _30_151);
         connectVertex(_30_151, rm239_fac_science);
         connectVertex(_30_151, _30_154);
         connectVertex(_30_154, _44_154);
@@ -426,5 +435,17 @@ public class MachrayIndoorConnections
 
     public IndoorVertex getDuffRoblinConnection() {
         return duffRoblinConnection;
+    }
+
+    public IndoorVertex getArmesConnectionTunnel() {
+        return armesConnectionTunnel;
+    }
+
+    public IndoorVertex getArmesConnectionNorth() {
+        return armesConnectionNorth;
+    }
+
+    public IndoorVertex getArmesConnectionSouth() {
+        return armesConnectionSouth;
     }
 }

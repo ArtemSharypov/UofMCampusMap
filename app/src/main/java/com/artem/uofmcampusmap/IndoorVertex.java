@@ -27,6 +27,38 @@ public class IndoorVertex extends Vertex
         this.position = vertex.getPosition();
     }
 
+    //Connects two vertex's, and adds them as North/South or East/West connections depending on their positions to eachother
+    public void connectVertex(IndoorVertex indoorToConnect)
+    {
+        XYPos posOfOtherVertex = indoorToConnect.getPosition();
+
+        //Change in only X position means that the vertex's are East/West of eachother
+        //Change in only Y position means that the vertex's are North/South of eachother
+        if(position.getX() > posOfOtherVertex.getX() && Math.floor(position.getY() - posOfOtherVertex.getY()) == 0.0)
+        {
+            this.addWestConnection(indoorToConnect);
+            indoorToConnect.addEastConnection(this);
+        }
+        else if(position.getX() < posOfOtherVertex.getX() && Math.floor(position.getY() - posOfOtherVertex.getY()) == 0.0)
+        {
+            this.addEastConnection(indoorToConnect);
+            indoorToConnect.addWestConnection(this);
+        }
+        else if(position.getY() > posOfOtherVertex.getY() && Math.floor(position.getX() - posOfOtherVertex.getX()) == 0.0)
+        {
+            this.addSouthConnection(indoorToConnect);
+            indoorToConnect.addNorthConnection(this);
+        }
+        else if(position.getY() < posOfOtherVertex.getY() && Math.floor(position.getX() - posOfOtherVertex.getX()) == 0.0)
+        {
+            this.addNorthConnection(indoorToConnect);
+            indoorToConnect.addSouthConnection(this);
+        }
+
+        this.addConnection(indoorToConnect);
+        indoorToConnect.addConnection(this);
+    }
+
     //Distance between two IndoorVertex's is simply a^2 + b^2 = distance
     //Anything else can't be reasonably calculated
     @Override
