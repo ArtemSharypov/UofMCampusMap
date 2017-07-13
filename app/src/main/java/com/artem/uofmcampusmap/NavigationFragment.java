@@ -16,6 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.artem.uofmcampusmap.buildings.allen.Allen_Floor1;
+import com.artem.uofmcampusmap.buildings.allen.Allen_Floor2;
+import com.artem.uofmcampusmap.buildings.allen.Allen_Floor3;
+import com.artem.uofmcampusmap.buildings.allen.Allen_Floor4;
+import com.artem.uofmcampusmap.buildings.allen.Allen_Floor5;
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor1Fragment;
 import com.artem.uofmcampusmap.buildings.armes.ArmesFloor2Fragment;
 import com.artem.uofmcampusmap.buildings.machray.Machray_Floor1;
@@ -477,6 +482,57 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
 
                 childFragTrans = childFragManager.beginTransaction();
                 childFragTrans.add(R.id.frag_holder, machrayFloor5Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+        }
+        else if(buildingName.equals(getResources().getString(R.string.allen)))
+        {
+            currLocation = buildingName;
+            currFloor = floorNumber;
+
+            if(currFloor == 1)
+            {
+                Allen_Floor1 allenFloor1Frag = new Allen_Floor1();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, allenFloor1Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+            else if(currFloor == 2)
+            {
+                Allen_Floor2 allenFloor2Frag = new Allen_Floor2();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, allenFloor2Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+            else if(currFloor == 3)
+            {
+                Allen_Floor3 allenFloor3Frag = new Allen_Floor3();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, allenFloor3Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+            else if(currFloor == 4)
+            {
+                Allen_Floor4 allenFloor4Frag = new Allen_Floor4();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, allenFloor4Frag);
+                childFragTrans.addToBackStack(currLocation + floorNumber);
+                childFragTrans.commit();
+            }
+            else if(currFloor == 5)
+            {
+                Allen_Floor5 allenFloor5Frag = new Allen_Floor5();
+
+                childFragTrans = childFragManager.beginTransaction();
+                childFragTrans.add(R.id.frag_holder, allenFloor5Frag);
                 childFragTrans.addToBackStack(currLocation + floorNumber);
                 childFragTrans.commit();
             }
