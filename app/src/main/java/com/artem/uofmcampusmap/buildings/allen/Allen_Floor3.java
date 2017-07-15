@@ -26,6 +26,8 @@ public class Allen_Floor3 extends DrawIndoorPathsFragment {
         setBuilding(getResources().getString(R.string.allen));
         setFloor(3);
 
+        displayRoute();
+
         return view;
     }
 
@@ -33,31 +35,31 @@ public class Allen_Floor3 extends DrawIndoorPathsFragment {
     protected int findXPixelFor(double xCoordinate) {
         int xPixel = 0;
 
-        if(xCoordinate == 21.25)
+        if(xCoordinate == -21.25)
         {
             xPixel = 150;
         }
-        else if(xCoordinate == 62.5)
+        else if(xCoordinate == -62.5)
         {
             xPixel = 375;
         }
-        else if(xCoordinate == 66.25)
+        else if(xCoordinate == -66.25)
         {
             xPixel = 408;
         }
-        else if(xCoordinate == 71.25)
+        else if(xCoordinate == -71.25)
         {
             xPixel = 438;
         }
-        else if(xCoordinate == 148.75)
+        else if(xCoordinate == -148.75)
         {
             xPixel = 850;
         }
-        else if(xCoordinate == 157.5)
+        else if(xCoordinate == -157.5)
         {
             xPixel = 905;
         }
-        else if(xCoordinate == 162.5)
+        else if(xCoordinate == -162.5)
         {
             xPixel = 930;
         }

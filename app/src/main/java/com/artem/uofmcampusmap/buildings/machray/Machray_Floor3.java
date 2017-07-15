@@ -29,6 +29,8 @@ public class Machray_Floor3 extends DrawIndoorPathsFragment
         setBuilding(getResources().getString(R.string.machray));
         setFloor(3);
 
+        displayRoute();
+
         return view;
     }
 
@@ -38,35 +40,35 @@ public class Machray_Floor3 extends DrawIndoorPathsFragment
     {
         int xPixel = 0;
 
-        if(xCoordinate == 11.25)
+        if(xCoordinate == 1011.25)
         {
             xPixel = 95;
         }
-        else if(xCoordinate == 18.75)
+        else if(xCoordinate == 1018.75)
         {
             xPixel = 130;
         }
-        else if(xCoordinate == 28.75)
+        else if(xCoordinate == 1028.75)
         {
             xPixel = 200;
         }
-        else if(xCoordinate == 33.75)
+        else if(xCoordinate == 1033.75)
         {
             xPixel = 231;
         }
-        else if(xCoordinate == 35)
+        else if(xCoordinate == 1035)
         {
             xPixel = 240;
         }
-        else if(xCoordinate == 47.75)
+        else if(xCoordinate == 1047.75)
         {
             xPixel = 307;
         }
-        else if(xCoordinate == 72.5)
+        else if(xCoordinate == 1072.5)
         {
             xPixel = 480;
         }
-        else if(xCoordinate == 85)
+        else if(xCoordinate == 1085)
         {
             xPixel = 550;
         }

@@ -39,6 +39,11 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
         this.floor = floor;
     }
 
+    /*For x and y coordinates, armes is the only unchanged building. Per each building west of armes, between the current building and
+    armes, x gets changed by -1000 and for every building east, x gets changed by +1000.
+      For each building north of armes, that is between the current building and armes, y gets changed by +1000. y gets changed by
+       -1000 for each building south of armes with the same property as above
+    */
     abstract protected int findXPixelFor(double xCoordinate);
     abstract protected int findYPixelFor(double yCoordinate);
 
