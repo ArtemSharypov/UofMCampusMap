@@ -28,6 +28,8 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
         setBuilding(getResources().getString(R.string.machray));
         setFloor(4);
 
+        displayRoute();
+
         return view;
     }
 

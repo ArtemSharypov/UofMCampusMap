@@ -27,6 +27,8 @@ public class Allen_Floor5 extends DrawIndoorPathsFragment {
         setBuilding(getResources().getString(R.string.allen));
         setFloor(5);
 
+        displayRoute();
+
         return view;
     }
 

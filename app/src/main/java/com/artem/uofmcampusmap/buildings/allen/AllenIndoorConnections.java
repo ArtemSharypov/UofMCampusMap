@@ -199,6 +199,8 @@ public class AllenIndoorConnections {
 
         //Rooms
         ArrayList<IndoorVertex> rm114 = new ArrayList<>();
+        rm114.add(_157_101);
+
         rooms.put("114", rm114);
 
         //Connections between points
