@@ -66,11 +66,17 @@ public class IndoorVertex extends Vertex
         int distance = 0;
         IndoorVertex indoorVertex;
 
-        if(destinationVertex instanceof IndoorVertex)
-        {
+        if(destinationVertex instanceof IndoorVertex) {
             indoorVertex = (IndoorVertex) destinationVertex;
 
-            distance = position.getDistanceFrom(indoorVertex.getPosition());
+            if (indoorVertex.getBuilding().equals(building))
+            {
+                distance = position.getDistanceFrom(indoorVertex.getPosition());
+            }
+            else
+            {
+                distance = 2; //todo need some reasonable distance for connecting buildings
+            }
         }
 
         return distance;
