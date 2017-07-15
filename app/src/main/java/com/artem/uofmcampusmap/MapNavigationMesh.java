@@ -55,55 +55,6 @@ public class MapNavigationMesh
         startEndLocations.put(keyName, entrancesList);
     }
 
-    //Handles the creation of a Route within a indoor building using RouteFinder
-    private Route navigateBuildingIndoors(String building, IndoorVertex startLocation, IndoorVertex destinationLocation)
-    {
-        Route route;
-
-        if(startLocation.getFloor() == destinationLocation.getFloor())
-        {
-               route = routeFinder.findRoute(startLocation, destinationLocation);
-        }
-        else //Different floors, find the closest stairs
-        {
-            //Find the closest stairs to the starting room, then find a route from it to them
-            IndoorVertex closestStairs = closestStairsToRoom(building, startLocation);
-            Route routeStartToStairs = routeFinder.findRoute(startLocation, closestStairs);
-
-            //Stairs that will connect to the closest stairs, that will now be on the same level as the destination
-            IndoorVertex destinationFloorStairs = closestStairs.findStairsConnection(destinationLocation.getFloor());
-
-            //From the stairs on the destination level to the destination itself
-            Route secondStairsToDest = routeFinder.findRoute(destinationFloorStairs, destinationLocation);
-
-            //Combine the seperate floor routes
-            routeStartToStairs.combineRoutes(secondStairsToDest);
-            route = routeStartToStairs;
-        }
-
-        return route;
-    }
-
-    private IndoorVertex closestStairsToRoom(String building, IndoorVertex room)
-    {
-        IndoorVertex stairs = null;
-
-        if(building.equals(resources.getString(R.string.armes)))
-        {
-            stairs = armesIndoorConnections.getClosestStairsToRoom(room);
-        }
-        else if(building.equals(resources.getString(R.string.machray)))
-        {
-            stairs = machrayIndoorConnections.getClosestStairsToRoom(room);
-        }
-        else if(building.equals(resources.getString(R.string.allen)))
-        {
-            stairs = allenIndoorConnections.getClosestStairsToRoom(room);
-        }
-
-        return stairs;
-    }
-
     private boolean buildingsConnectViaTunnels(String building1, String building2)
     {
         List connectedBuildings = Arrays.asList(tunnelConnectedBuildings);
@@ -123,7 +74,6 @@ public class MapNavigationMesh
         Route exitToEntrance; //Consists of Outdoor vertex's doing the outdoor portion
         Route startRoomToExit; //Indoor vertex's that connect start room to the buildings exit
         Route entranceToEndRoom; //Indoor vertex's that connect the entrance to the destination room
-        final int TUNNELS_FLOOR = 1;
 
         if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
         {
@@ -140,34 +90,7 @@ public class MapNavigationMesh
                 //todo make this just an if check for an extra route, then compare the routes once it can run sufficiently fast enough
                 if(buildingsConnectViaTunnels(startLocation, endLocation))
                 {
-                    //todo clean this up afterwards, requires changing the other methods to accommodate it
-                    //once / if it works properly after implementation is done
-                    IndoorVertex startRoomVertex = findRoomVertex(startRoom, startLocation);
-                    IndoorVertex endRoomVertex = findRoomVertex(endRoom, endLocation);
-
-                    if(startRoomVertex != null && endRoomVertex != null)
-                    {
-                        //Find the closest stairs to the starting room, then find a route from it to them
-                        IndoorVertex startClosestStairs = closestStairsToRoom(startLocation, startRoomVertex);
-                        Route routeStartToStairs = routeFinder.findRoute(startRoomVertex, startClosestStairs);
-
-                        //Find the closest stairs to the destination room, create a route from them to the room
-                        IndoorVertex endClosestStairs = closestStairsToRoom(endLocation, endRoomVertex);
-                        Route tunnelsToEndRoom = routeFinder.findRoute(endClosestStairs, endRoomVertex);
-
-                        //Stairs that will connect to the closest stairs, that will now be on the same level as the tunnels
-                        IndoorVertex startTunnelFloorStairs = startClosestStairs.findStairsConnection(TUNNELS_FLOOR);
-
-                        //Stairs that will connect from the tunnel floor, to the destination rooms floor
-                        IndoorVertex endTunnelFloorStairs = endClosestStairs.findStairsConnection(TUNNELS_FLOOR);
-
-                        Route startToEndBuilding = routeFinder.findRoute(startTunnelFloorStairs, endTunnelFloorStairs);
-
-                        //Combine the 3 parts of the route into one single Route
-                        route = routeStartToStairs;
-                        route.combineRoutes(startToEndBuilding);
-                        route.combineRoutes(tunnelsToEndRoom);
-                    }
+                    route = routeViaTunnels(startLocation, startRoom, endLocation, endRoom);
                 }
                 else
                 {
@@ -305,6 +228,90 @@ public class MapNavigationMesh
         return route;
     }
 
+    //Handles the creation of a Route within a indoor building using RouteFinder
+    private Route navigateSameBuilding(String building, IndoorVertex startLocation, IndoorVertex destinationLocation)
+    {
+        Route route;
+
+        if(startLocation.getFloor() == destinationLocation.getFloor())
+        {
+            route = routeFinder.findRoute(startLocation, destinationLocation);
+        }
+        else //Different floors, find the closest stairs
+        {
+            //Find the closest stairs to the starting room, then find a route from it to them
+            IndoorVertex closestStairs = closestStairsToRoom(building, startLocation);
+            Route routeStartToStairs = routeFinder.findRoute(startLocation, closestStairs);
+
+            //Stairs that will connect to the closest stairs, that will now be on the same level as the destination
+            IndoorVertex destinationFloorStairs = closestStairs.findStairsConnection(destinationLocation.getFloor());
+
+            //From the stairs on the destination level to the destination itself
+            Route secondStairsToDest = routeFinder.findRoute(destinationFloorStairs, destinationLocation);
+
+            //Combine the seperate floor routes
+            routeStartToStairs.combineRoutes(secondStairsToDest);
+            route = routeStartToStairs;
+        }
+
+        return route;
+    }
+
+    private IndoorVertex closestStairsToRoom(String building, IndoorVertex room)
+    {
+        IndoorVertex stairs = null;
+
+        if(building.equals(resources.getString(R.string.armes)))
+        {
+            stairs = armesIndoorConnections.getClosestStairsToRoom(room);
+        }
+        else if(building.equals(resources.getString(R.string.machray)))
+        {
+            stairs = machrayIndoorConnections.getClosestStairsToRoom(room);
+        }
+        else if(building.equals(resources.getString(R.string.allen)))
+        {
+            stairs = allenIndoorConnections.getClosestStairsToRoom(room);
+        }
+
+        return stairs;
+    }
+
+    // Used for creating a route between buildings that are connected by tunnels in some way
+    private Route routeViaTunnels(String startBuilding, String startRoom, String endBuilding, String endRoom)
+    {
+        Route route = null;
+        final int TUNNELS_FLOOR = 1;
+        IndoorVertex startRoomVertex = findRoomVertex(startRoom, startBuilding);
+        IndoorVertex endRoomVertex = findRoomVertex(endRoom, endBuilding);
+
+        if(startRoomVertex != null && endRoomVertex != null)
+        {
+            //Find the closest stairs to the starting room, then find a route room to stairs
+            IndoorVertex startClosestStairs = closestStairsToRoom(startBuilding, startRoomVertex);
+            Route routeStartToStairs = routeFinder.findRoute(startRoomVertex, startClosestStairs);
+
+            //Find the closest stairs to the destination room, create a route from the stairs to the room
+            IndoorVertex endClosestStairs = closestStairsToRoom(endBuilding, endRoomVertex);
+            Route tunnelsToEndRoom = routeFinder.findRoute(endClosestStairs, endRoomVertex);
+
+            //Stairs that will connect to the closest stairs, that will now be on the same level as the tunnels
+            IndoorVertex startTunnelFloorStairs = startClosestStairs.findStairsConnection(TUNNELS_FLOOR);
+
+            //Stairs that will connect from the tunnel floor, to the destination rooms floor
+            IndoorVertex endTunnelFloorStairs = endClosestStairs.findStairsConnection(TUNNELS_FLOOR);
+
+            Route startToEndBuilding = routeFinder.findRoute(startTunnelFloorStairs, endTunnelFloorStairs);
+
+            //Combine the 3 parts of the route into one single Route
+            route = routeStartToStairs;
+            route.combineRoutes(startToEndBuilding);
+            route.combineRoutes(tunnelsToEndRoom);
+        }
+
+        return route;
+    }
+
     //Creates a route for when both of the rooms are within the same building
     private Route routeSameBuildingRooms(String building, String startRoom, String endRoom)
     {
@@ -314,7 +321,7 @@ public class MapNavigationMesh
 
         if (startRoomVertex != null && endRoomVertex != null)
         {
-            route = navigateBuildingIndoors(building, startRoomVertex, endRoomVertex);
+            route = navigateSameBuilding(building, startRoomVertex, endRoomVertex);
         }
 
         return route;
@@ -324,20 +331,22 @@ public class MapNavigationMesh
     private Route routeFromStartRoomToExit(String building, String startRoom, OutdoorVertex exitVertex)
     {
         Route route = null;
+        Route stairsToExit;
+        IndoorVertex indoorExit;
+        IndoorVertex startFloorStairs;
+        IndoorVertex exitFloorStairs;
+        IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
 
-        //todo probably can remove the specific allen check, since it would work via the same connections as armes now
-        if(building.equals(resources.getString(R.string.allen)))
-        {
-            route = routeIndoorToExitAllen(startRoom, exitVertex);
-        }
-        else
-        {
-            IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
+        //Finds a route from the starting room to the closest set of stairs, and then from those stairs to the exit
+        if (startRoomVertex != null) {
+            indoorExit = exitVertex.findIndoorConnection();
+            startFloorStairs = closestStairsToRoom(building, startRoomVertex);
+            exitFloorStairs = startFloorStairs.findStairsConnection(indoorExit.getFloor());
 
-            if (startRoomVertex != null) {
-                IndoorVertex indoorStartExit = exitVertex.findIndoorConnection();
-                route = navigateBuildingIndoors(building, startRoomVertex, indoorStartExit);
-            }
+            route = routeFinder.findRoute(startRoomVertex, startFloorStairs);
+            stairsToExit = routeFinder.findRoute(exitFloorStairs, indoorExit);
+
+            route.combineRoutes(stairsToExit);
         }
 
         return route;
@@ -347,43 +356,17 @@ public class MapNavigationMesh
     private Route routeFromBuildingEntranceToDest(String building, OutdoorVertex entranceVertex, String endRoom)
     {
         Route route = null;
-
-        if(building.equals(resources.getString(R.string.allen)))
-        {
-            route = routeExitToIndoorsAllen(endRoom, entranceVertex);
-        }
-        else
-        {
-            IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
-
-            if (endRoomVertex != null)
-            {
-                IndoorVertex indoorEndEntrance = entranceVertex.findIndoorConnection();
-                route = navigateBuildingIndoors(building, indoorEndEntrance, endRoomVertex);
-            }
-        }
-
-        return route;
-    }
-
-    //Special case that only applies to Allen and having to exit.
-    //Needs to go from an entrance thatll be in machray, to the closest connection of Allen, that will then
-    //go to the room specified
-    private Route routeExitToIndoorsAllen(String room, OutdoorVertex entranceVertex)
-    {
-        Route route = null;
         Route stairsToDestRoom;
-        String allen = resources.getString(R.string.allen);
         IndoorVertex indoorEntrance;
         IndoorVertex entranceFloorStairs;
         IndoorVertex destinationFloorStairs;
-        IndoorVertex endRoomVertex = findRoomVertex(room, allen);
+        IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
 
         //Finds a route from the entrance, a set of stairs, then from those stairs to the destination room
         if (endRoomVertex != null) {
             indoorEntrance = entranceVertex.findIndoorConnection();
-            destinationFloorStairs = closestStairsToRoom(allen, endRoomVertex);
-            entranceFloorStairs = destinationFloorStairs.findStairsConnection(indoorEntrance.getFloor()); //Should be floor 2
+            destinationFloorStairs = closestStairsToRoom(building, endRoomVertex);
+            entranceFloorStairs = destinationFloorStairs.findStairsConnection(indoorEntrance.getFloor());
 
             route = routeFinder.findRoute(indoorEntrance, entranceFloorStairs);
             stairsToDestRoom = routeFinder.findRoute(destinationFloorStairs, endRoomVertex);
@@ -391,33 +374,6 @@ public class MapNavigationMesh
             route.combineRoutes(stairsToDestRoom);
         }
 
-        return route;
-    }
-
-    /* //Special case that only applies to Allen and having to exit.
-        Goes from a room within allen, to a connecting point to armes, then to outside
-     */
-    private Route routeIndoorToExitAllen(String room, OutdoorVertex exitVertex)
-    {
-        Route route = null;
-        Route allenToExit;
-        String allen = resources.getString(R.string.allen);
-        IndoorVertex indoorExit;
-        IndoorVertex startFloorStairs;
-        IndoorVertex exitFloorStairs;
-        IndoorVertex startRoomVertex = findRoomVertex(room, allen);
-
-        //Finds a route from the starting room to the closest set of stairs, and then from those stairs to the exit
-        if (startRoomVertex != null) {
-            indoorExit = exitVertex.findIndoorConnection();
-            startFloorStairs = closestStairsToRoom(allen, startRoomVertex);
-            exitFloorStairs = startFloorStairs.findStairsConnection(indoorExit.getFloor()); //Should be floor 2
-
-            route = routeFinder.findRoute(startRoomVertex, startFloorStairs);
-            allenToExit = routeFinder.findRoute(exitFloorStairs, indoorExit);
-
-            route.combineRoutes(allenToExit);
-        }
         return route;
     }
 
