@@ -75,7 +75,7 @@ public class IndoorVertex extends Vertex
             }
             else
             {
-                distance = 2; //todo need some reasonable distance for connecting buildings
+                distance = 2;
             }
         }
 
