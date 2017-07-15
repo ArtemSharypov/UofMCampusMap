@@ -138,32 +138,32 @@ public class MachrayIndoorConnections
     //Creates all of the points and exits within Machray, as well as connecting them to eachother
     private void populateConnections()
     {
-        IndoorVertex elevatorFloor1 = new IndoorVertex(building, new XYPos(50, 40), 1);
-        IndoorVertex stairsFloor1 = new IndoorVertex(building, new XYPos(56.25, 28.13), 1);
+        IndoorVertex elevatorFloor1 = new IndoorVertex(building, new XYPos(1050, 40), 1);
+        IndoorVertex stairsFloor1 = new IndoorVertex(building, new XYPos(1056.25, 28.13), 1);
 
         firstFloorStairsElevator.add(stairsFloor1);
         firstFloorStairsElevator.add(elevatorFloor1);
 
-        IndoorVertex stairsFloor2 = new IndoorVertex(building, new XYPos(49.43, 160.49), 2);
-        IndoorVertex elevatorFloor2 = new IndoorVertex(building, new XYPos(44.19, 151.19), 2);
+        IndoorVertex stairsFloor2 = new IndoorVertex(building, new XYPos(1049.43, 160.49), 2);
+        IndoorVertex elevatorFloor2 = new IndoorVertex(building, new XYPos(1044.19, 151.19), 2);
 
         secondFloorStairsElevator.add(stairsFloor2);
         secondFloorStairsElevator.add(elevatorFloor2);
 
-        IndoorVertex stairsFloor3 = new IndoorVertex(building, new XYPos(33.75, 28.13), 3);
-        IndoorVertex elevatorFloor3 = new IndoorVertex(building, new XYPos(28.75, 37.5), 3);
+        IndoorVertex stairsFloor3 = new IndoorVertex(building, new XYPos(1033.75, 28.13), 3);
+        IndoorVertex elevatorFloor3 = new IndoorVertex(building, new XYPos(1028.75, 37.5), 3);
 
         thirdFloorStairsElevator.add(stairsFloor3);
         thirdFloorStairsElevator.add(elevatorFloor3);
 
-        IndoorVertex stairsFloor4 = new IndoorVertex(building, new XYPos(33.75, 28.13), 4);
-        IndoorVertex elevatorFloor4 = new IndoorVertex(building, new XYPos(28.75, 37.5), 4);
+        IndoorVertex stairsFloor4 = new IndoorVertex(building, new XYPos(1033.75, 28.13), 4);
+        IndoorVertex elevatorFloor4 = new IndoorVertex(building, new XYPos(1028.75, 37.5), 4);
 
         fourthFloorStairsElevator.add(stairsFloor4);
         fourthFloorStairsElevator.add(elevatorFloor4);
 
-        IndoorVertex stairsFloor5 = new IndoorVertex(building, new XYPos(33.75, 28.13), 5);
-        IndoorVertex elevatorFloor5 = new IndoorVertex(building, new XYPos(28.75, 37.5), 5);
+        IndoorVertex stairsFloor5 = new IndoorVertex(building, new XYPos(1033.75, 28.13), 5);
+        IndoorVertex elevatorFloor5 = new IndoorVertex(building, new XYPos(1028.75, 37.5), 5);
 
         firstFloorStairsElevator.add(stairsFloor5);
         fifthFloorStairsElevator.add(elevatorFloor5);
@@ -202,26 +202,26 @@ public class MachrayIndoorConnections
 
     private void createFloor1Connections(IndoorVertex stairs, IndoorVertex elevator)
     {
-        armesConnectionTunnel = new IndoorVertex(building, new XYPos(0, 31.25), 1);
-        IndoorVertex _41_31 = new IndoorVertex(building, new XYPos(41.25, 31.25), 1);
-        IndoorVertex _50_28 = new IndoorVertex(building, new XYPos(50, 28.13), 1);
-        IndoorVertex _50_21 = new IndoorVertex(building, new XYPos(50, 21.88), 1);
-        IndoorVertex _137_21 = new IndoorVertex(building, new XYPos(137.5, 21.88), 1);
-        IndoorVertex _137_27 = new IndoorVertex(building, new XYPos(137.5, 27.5), 1);
-        duffRoblinConnection = new IndoorVertex(building, new XYPos(137.5, -37.5), 1);
-        IndoorVertex room_113_leftSide = new IndoorVertex(building, new XYPos(110, 27.5), 1);
-        IndoorVertex _137_77 = new IndoorVertex(building, new XYPos(137.5, 77.5), 1);
-        IndoorVertex room_108 = new IndoorVertex(building, new XYPos(97.5, 87.5), 1);
-        IndoorVertex room_111 = new IndoorVertex(building, new XYPos(120, 81.25), 1);
-        IndoorVertex room_112 = new IndoorVertex(building, new XYPos(110, 75), 1);
-        IndoorVertex _165_21 = new IndoorVertex(building, new XYPos(165, 21.88), 1);
-        IndoorVertex room_115 = new IndoorVertex(building, new XYPos(168.75, 51.25), 1);
-        IndoorVertex room_113_rightSide = new IndoorVertex(building, new XYPos(162.5, 27.5), 1);
-        IndoorVertex room_106 = new IndoorVertex(building, new XYPos(90, 72.5), 1);
-        IndoorVertex room_107 = new IndoorVertex(building, new XYPos(90, 80), 1);
-        IndoorVertex _93_72 = new IndoorVertex(building, new XYPos(93.75, 72.5), 1);
-        IndoorVertex _50_31 = new IndoorVertex(building, new XYPos(50, 31.25), 1);
-        IndoorVertex _137_72 = new IndoorVertex(building, new XYPos(137.5, 72.5), 1);
+        armesConnectionTunnel = new IndoorVertex(building, new XYPos(1000, 31.25), 1);
+        IndoorVertex _41_31 = new IndoorVertex(building, new XYPos(1041.25, 31.25), 1);
+        IndoorVertex _50_28 = new IndoorVertex(building, new XYPos(1050, 28.13), 1);
+        IndoorVertex _50_21 = new IndoorVertex(building, new XYPos(1050, 21.88), 1);
+        IndoorVertex _137_21 = new IndoorVertex(building, new XYPos(1137.5, 21.88), 1);
+        IndoorVertex _137_27 = new IndoorVertex(building, new XYPos(1137.5, 27.5), 1);
+        duffRoblinConnection = new IndoorVertex(building, new XYPos(1137.5, -37.5), 1);
+        IndoorVertex room_113_leftSide = new IndoorVertex(building, new XYPos(1110, 27.5), 1);
+        IndoorVertex _137_77 = new IndoorVertex(building, new XYPos(1137.5, 77.5), 1);
+        IndoorVertex room_108 = new IndoorVertex(building, new XYPos(1097.5, 87.5), 1);
+        IndoorVertex room_111 = new IndoorVertex(building, new XYPos(1120, 81.25), 1);
+        IndoorVertex room_112 = new IndoorVertex(building, new XYPos(1110, 75), 1);
+        IndoorVertex _165_21 = new IndoorVertex(building, new XYPos(1165, 21.88), 1);
+        IndoorVertex room_115 = new IndoorVertex(building, new XYPos(1168.75, 51.25), 1);
+        IndoorVertex room_113_rightSide = new IndoorVertex(building, new XYPos(1162.5, 27.5), 1);
+        IndoorVertex room_106 = new IndoorVertex(building, new XYPos(1090, 72.5), 1);
+        IndoorVertex room_107 = new IndoorVertex(building, new XYPos(1090, 80), 1);
+        IndoorVertex _93_72 = new IndoorVertex(building, new XYPos(1093.75, 72.5), 1);
+        IndoorVertex _50_31 = new IndoorVertex(building, new XYPos(1050, 31.25), 1);
+        IndoorVertex _137_72 = new IndoorVertex(building, new XYPos(1137.5, 72.5), 1);
 
         //rooms
         ArrayList<IndoorVertex> rm106 = new ArrayList<>();
@@ -290,19 +290,19 @@ public class MachrayIndoorConnections
     private void createFloor2Connections(IndoorVertex stairs, IndoorVertex elevator)
     {
         //Points on the map
-        armesConnectionNorth = new IndoorVertex(building, new XYPos(0, 151.19), 2);
-        armesConnectionSouth = new IndoorVertex(building, new XYPos(0, 158.75), 2);
-        IndoorVertex rm239_fac_science = new IndoorVertex(building, new XYPos(30.24, 97.11), 2);
-        IndoorVertex _30_151 = new IndoorVertex(building, new XYPos(30.24, 151.19), 2);
-        IndoorVertex _30_179 = new IndoorVertex(building, new XYPos(30.24, 179.65), 2);
-        exit = new IndoorVertex(building, new XYPos(30.24, 188.41), 2);
-        IndoorVertex rm211_library = new IndoorVertex(building, new XYPos(80.25, 173.29), 2);
-        IndoorVertex _44_160 = new IndoorVertex(building, new XYPos(44.19, 160.49), 2);
-        IndoorVertex _44_173 = new IndoorVertex(building, new XYPos(44.19, 173.29), 2);
-        IndoorVertex _30_173 = new IndoorVertex(building, new XYPos(30.24, 173.29), 2);
-        IndoorVertex _30_158 = new IndoorVertex(building, new XYPos(30.24, 158.75), 2);
-        IndoorVertex _44_154 = new IndoorVertex(building, new XYPos(44.19, 154.1), 2);
-        IndoorVertex _30_154 = new IndoorVertex(building, new XYPos(30.24, 154.1), 2);
+        armesConnectionNorth = new IndoorVertex(building, new XYPos(1000, 151.19), 2);
+        armesConnectionSouth = new IndoorVertex(building, new XYPos(1000, 158.75), 2);
+        IndoorVertex rm239_fac_science = new IndoorVertex(building, new XYPos(1030.24, 97.11), 2);
+        IndoorVertex _30_151 = new IndoorVertex(building, new XYPos(1030.24, 151.19), 2);
+        IndoorVertex _30_179 = new IndoorVertex(building, new XYPos(1030.24, 179.65), 2);
+        exit = new IndoorVertex(building, new XYPos(1030.24, 188.41), 2);
+        IndoorVertex rm211_library = new IndoorVertex(building, new XYPos(1080.25, 173.29), 2);
+        IndoorVertex _44_160 = new IndoorVertex(building, new XYPos(1044.19, 160.49), 2);
+        IndoorVertex _44_173 = new IndoorVertex(building, new XYPos(1044.19, 173.29), 2);
+        IndoorVertex _30_173 = new IndoorVertex(building, new XYPos(1030.24, 173.29), 2);
+        IndoorVertex _30_158 = new IndoorVertex(building, new XYPos(1030.24, 158.75), 2);
+        IndoorVertex _44_154 = new IndoorVertex(building, new XYPos(1044.19, 154.1), 2);
+        IndoorVertex _30_154 = new IndoorVertex(building, new XYPos(1030.24, 154.1), 2);
 
         //Rooms
         ArrayList<IndoorVertex> rm211 = new ArrayList<>();
@@ -339,17 +339,17 @@ public class MachrayIndoorConnections
     private void createFloor3Connections(IndoorVertex stairs1, IndoorVertex elevator)
     {
         //Points
-        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(18.75, 28.13), 3);
-        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(18.75, 71.88), 3);
-        IndoorVertex _35_71 = new IndoorVertex(building, new XYPos(35, 71.88), 3);
-        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(11.25, 71.88), 3);
-        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(28.75, 28.13), 3);
-        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(28.75, 21.88), 3);
-        IndoorVertex _72_21 = new IndoorVertex(building, new XYPos(72.5, 21.88), 3);
-        IndoorVertex _47_71 = new IndoorVertex(building, new XYPos(47.5, 71.88), 3);
-        IndoorVertex _85_26 = new IndoorVertex(building, new XYPos(85, 26.88), 3);
-        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(28.75, 34.38), 3);
-        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(18.75, 34.38), 3);
+        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(1018.75, 28.13), 3);
+        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(1018.75, 71.88), 3);
+        IndoorVertex _35_71 = new IndoorVertex(building, new XYPos(1035, 71.88), 3);
+        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(1011.25, 71.88), 3);
+        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(1028.75, 28.13), 3);
+        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(1028.75, 21.88), 3);
+        IndoorVertex _72_21 = new IndoorVertex(building, new XYPos(1072.5, 21.88), 3);
+        IndoorVertex _47_71 = new IndoorVertex(building, new XYPos(1047.5, 71.88), 3);
+        IndoorVertex _85_26 = new IndoorVertex(building, new XYPos(1085, 26.88), 3);
+        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(1028.75, 34.38), 3);
+        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(1018.75, 34.38), 3);
 
         //Rooms
 
@@ -372,17 +372,17 @@ public class MachrayIndoorConnections
     private void createFloor4Connections(IndoorVertex stairs1, IndoorVertex elevator)
     {
         //Points
-        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(18.75, 28.13), 4);
-        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(18.75, 71.88), 4);
-        IndoorVertex _35_71 = new IndoorVertex(building, new XYPos(35, 71.88), 4);
-        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(11.25, 71.88), 4);
-        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(28.75, 28.13), 4);
-        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(28.75, 21.88), 4);
-        IndoorVertex _47_71 = new IndoorVertex(building, new XYPos(47.5, 71.88), 4);
-        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(28.75, 34.38), 4);
-        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(18.75, 34.38), 4);
-        IndoorVertex _84_23 = new IndoorVertex(building, new XYPos(84.38, 23.13), 4);
-        IndoorVertex _59_21 = new IndoorVertex(building, new XYPos(59.38, 21.88), 4);
+        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(1018.75, 28.13), 4);
+        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(1018.75, 71.88), 4);
+        IndoorVertex _35_71 = new IndoorVertex(building, new XYPos(1035, 71.88), 4);
+        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(1011.25, 71.88), 4);
+        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(1028.75, 28.13), 4);
+        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(1028.75, 21.88), 4);
+        IndoorVertex _47_71 = new IndoorVertex(building, new XYPos(1047.5, 71.88), 4);
+        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(1028.75, 34.38), 4);
+        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(1018.75, 34.38), 4);
+        IndoorVertex _84_23 = new IndoorVertex(building, new XYPos(1084.38, 23.13), 4);
+        IndoorVertex _59_21 = new IndoorVertex(building, new XYPos(1059.38, 21.88), 4);
 
         //Rooms
 
@@ -405,14 +405,14 @@ public class MachrayIndoorConnections
     private void createFloor5Connections(IndoorVertex stairs1, IndoorVertex elevator)
     {
         //Points
-        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(18.75, 28.13), 5);
-        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(18.75, 71.88), 5);
-        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(11.25, 71.88), 5);
-        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(28.75, 28.13), 5);
-        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(28.75, 21.88), 5);
-        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(28.75, 34.38), 5);
-        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(18.75, 34.38), 5);
-        IndoorVertex _42_71 = new IndoorVertex(building, new XYPos(42.5, 71.88), 5);
+        IndoorVertex _18_28 = new IndoorVertex(building, new XYPos(1018.75, 28.13), 5);
+        IndoorVertex _18_71 = new IndoorVertex(building, new XYPos(1018.75, 71.88), 5);
+        IndoorVertex _11_71 = new IndoorVertex(building, new XYPos(1011.25, 71.88), 5);
+        IndoorVertex _28_28 = new IndoorVertex(building, new XYPos(1028.75, 28.13), 5);
+        IndoorVertex _28_21 = new IndoorVertex(building, new XYPos(1028.75, 21.88), 5);
+        IndoorVertex _28_34 = new IndoorVertex(building, new XYPos(1028.75, 34.38), 5);
+        IndoorVertex _18_34 = new IndoorVertex(building, new XYPos(1018.75, 34.38), 5);
+        IndoorVertex _42_71 = new IndoorVertex(building, new XYPos(1042.5, 71.88), 5);
 
         //Rooms
 

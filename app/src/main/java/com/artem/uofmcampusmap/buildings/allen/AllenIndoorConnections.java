@@ -100,41 +100,41 @@ public class AllenIndoorConnections {
     private void populateConnections()
     {
         //Stairs / Elevator creations
-        IndoorVertex stairsLeftFloor1 = new IndoorVertex(building, new XYPos(62.5, 68.75), 1);
-        IndoorVertex stairsRightFloor1 = new IndoorVertex(building, new XYPos(153.75, 68.75), 1);
-        IndoorVertex elevatorFloor1 = new IndoorVertex(building, new XYPos(72.5, 68.75), 1);
+        IndoorVertex stairsLeftFloor1 = new IndoorVertex(building, new XYPos(-62.5, 68.75), 1);
+        IndoorVertex stairsRightFloor1 = new IndoorVertex(building, new XYPos(-153.75, 68.75), 1);
+        IndoorVertex elevatorFloor1 = new IndoorVertex(building, new XYPos(-72.5, 68.75), 1);
 
         firstFloorStairsElevator.add(stairsLeftFloor1);
         firstFloorStairsElevator.add(stairsRightFloor1);
         firstFloorStairsElevator.add(elevatorFloor1);
 
-        IndoorVertex stairsLeftFloor2 = new IndoorVertex(building, new XYPos(62.5, 43.75), 2);
-        IndoorVertex stairsRightFloor2 = new IndoorVertex(building, new XYPos(153.75, 43.75), 2);
-        IndoorVertex elevatorFloor2 = new IndoorVertex(building, new XYPos(71.25, 43.75), 2);
+        IndoorVertex stairsLeftFloor2 = new IndoorVertex(building, new XYPos(-62.5, 43.75), 2);
+        IndoorVertex stairsRightFloor2 = new IndoorVertex(building, new XYPos(-153.75, 43.75), 2);
+        IndoorVertex elevatorFloor2 = new IndoorVertex(building, new XYPos(-71.25, 43.75), 2);
 
         secondFloorStairsElevator.add(stairsLeftFloor2);
         secondFloorStairsElevator.add(stairsRightFloor2);
         secondFloorStairsElevator.add(elevatorFloor2);
 
-        IndoorVertex stairsLeftFloor3 = new IndoorVertex(building, new XYPos(62.5, 43.75), 3);
-        IndoorVertex stairsRightFloor3 = new IndoorVertex(building, new XYPos(148.75, 41.25), 3);
-        IndoorVertex elevatorFloor3 = new IndoorVertex(building, new XYPos(71.25, 43.75), 3);
+        IndoorVertex stairsLeftFloor3 = new IndoorVertex(building, new XYPos(-62.5, 43.75), 3);
+        IndoorVertex stairsRightFloor3 = new IndoorVertex(building, new XYPos(-148.75, 41.25), 3);
+        IndoorVertex elevatorFloor3 = new IndoorVertex(building, new XYPos(-71.25, 43.75), 3);
 
         thirdFloorStairsElevator.add(stairsLeftFloor3);
         thirdFloorStairsElevator.add(stairsRightFloor3);
         thirdFloorStairsElevator.add(elevatorFloor3);
 
-        IndoorVertex stairsLeftFloor4 = new IndoorVertex(building, new XYPos(62.5, 43.75), 4);
-        IndoorVertex stairsRightFloor4 = new IndoorVertex(building, new XYPos(148.75, 41.25), 4);
-        IndoorVertex elevatorFloor4 = new IndoorVertex(building, new XYPos(71.25, 43.75), 4);
+        IndoorVertex stairsLeftFloor4 = new IndoorVertex(building, new XYPos(-62.5, 43.75), 4);
+        IndoorVertex stairsRightFloor4 = new IndoorVertex(building, new XYPos(-148.75, 41.25), 4);
+        IndoorVertex elevatorFloor4 = new IndoorVertex(building, new XYPos(-71.25, 43.75), 4);
 
         fourthFloorStairsElevator.add(stairsLeftFloor4);
         fourthFloorStairsElevator.add(stairsRightFloor4);
         fourthFloorStairsElevator.add(elevatorFloor4);
 
-        IndoorVertex stairsLeftFloor5 = new IndoorVertex(building, new XYPos(62.5, 43.75), 5);
-        IndoorVertex stairsRightFloor5 = new IndoorVertex(building, new XYPos(148.75, 41.25), 5);
-        IndoorVertex elevatorFloor5 = new IndoorVertex(building, new XYPos(71.25, 43.75), 5);
+        IndoorVertex stairsLeftFloor5 = new IndoorVertex(building, new XYPos(-62.5, 43.75), 5);
+        IndoorVertex stairsRightFloor5 = new IndoorVertex(building, new XYPos(-148.75, 41.25), 5);
+        IndoorVertex elevatorFloor5 = new IndoorVertex(building, new XYPos(-71.25, 43.75), 5);
 
         fifthFloorStairsElevator.add(stairsLeftFloor5);
         firstFloorStairsElevator.add(stairsRightFloor5);
@@ -187,15 +187,15 @@ public class AllenIndoorConnections {
     private void createFloor1Connections(IndoorVertex stairsLeft, IndoorVertex stairsRight, IndoorVertex elevator)
     {
         //Points on the floor
-        armesTunnelConnection = new IndoorVertex(building, new XYPos(181.25, 68.75), 1);
-        IndoorVertex _155_31 = new IndoorVertex(building, new XYPos(155, 31.25), 1);
-        IndoorVertex _172_60 = new IndoorVertex(building, new XYPos(172, 60), 1);
-        IndoorVertex _157_60 = new IndoorVertex(building, new XYPos(157.5, 60), 1);
-        IndoorVertex _67_60 = new IndoorVertex(building, new XYPos(67.5, 60), 1);
-        IndoorVertex _157_101 = new IndoorVertex(building, new XYPos(157.5, 101.25), 1); //rm114
-        IndoorVertex _67_68 = new IndoorVertex(building, new XYPos(67.5, 68.75), 1);
-        IndoorVertex _157_68 = new IndoorVertex(building, new XYPos(157, 68.75), 1);
-        bioSciTunnelConnection = new IndoorVertex(building, new XYPos(141, 0), 1);
+        armesTunnelConnection = new IndoorVertex(building, new XYPos(-181.25, 68.75), 1);
+        IndoorVertex _155_31 = new IndoorVertex(building, new XYPos(-155, 31.25), 1);
+        IndoorVertex _172_60 = new IndoorVertex(building, new XYPos(-172, 60), 1);
+        IndoorVertex _157_60 = new IndoorVertex(building, new XYPos(-157.5, 60), 1);
+        IndoorVertex _67_60 = new IndoorVertex(building, new XYPos(-67.5, 60), 1);
+        IndoorVertex _157_101 = new IndoorVertex(building, new XYPos(-157.5, 101.25), 1); //rm114
+        IndoorVertex _67_68 = new IndoorVertex(building, new XYPos(-67.5, 68.75), 1);
+        IndoorVertex _157_68 = new IndoorVertex(building, new XYPos(-157, 68.75), 1);
+        bioSciTunnelConnection = new IndoorVertex(building, new XYPos(-141, 0), 1);
 
         //Rooms
         ArrayList<IndoorVertex> rm114 = new ArrayList<>();
@@ -222,16 +222,16 @@ public class AllenIndoorConnections {
     private void createFloor2Connections(IndoorVertex stairsLeft, IndoorVertex stairsRight, IndoorVertex elevator)
     {
         //Points on the floor
-        armesSouthConnection = new IndoorVertex(building, new XYPos(200, 43.75), 2);
-        armesNorthConnection = new IndoorVertex(building, new XYPos(200, 51.25), 2);
-        IndoorVertex _182_46 = new IndoorVertex(building, new XYPos(182.5, 46.25), 2);
-        IndoorVertex _160_43 = new IndoorVertex(building, new XYPos(160, 43.75), 2);
-        IndoorVertex _160_20 = new IndoorVertex(building, new XYPos(160, 20), 2);
-        IndoorVertex _160_65 = new IndoorVertex(building, new XYPos(160, 65), 2);
-        IndoorVertex _65_65 = new IndoorVertex(building, new XYPos(65, 65), 2);
-        IndoorVertex _65_43 = new IndoorVertex(building, new XYPos(65, 43.75), 2);
-        IndoorVertex _65_20 = new IndoorVertex(building, new XYPos(65, 20), 2);
-        IndoorVertex _165_20 = new IndoorVertex(building, new XYPos(165.5, 20), 2); //rm 201
+        armesSouthConnection = new IndoorVertex(building, new XYPos(-200, 43.75), 2);
+        armesNorthConnection = new IndoorVertex(building, new XYPos(-200, 51.25), 2);
+        IndoorVertex _182_46 = new IndoorVertex(building, new XYPos(-182.5, 46.25), 2);
+        IndoorVertex _160_43 = new IndoorVertex(building, new XYPos(-160, 43.75), 2);
+        IndoorVertex _160_20 = new IndoorVertex(building, new XYPos(-160, 20), 2);
+        IndoorVertex _160_65 = new IndoorVertex(building, new XYPos(-160, 65), 2);
+        IndoorVertex _65_65 = new IndoorVertex(building, new XYPos(-65, 65), 2);
+        IndoorVertex _65_43 = new IndoorVertex(building, new XYPos(-65, 43.75), 2);
+        IndoorVertex _65_20 = new IndoorVertex(building, new XYPos(-65, 20), 2);
+        IndoorVertex _165_20 = new IndoorVertex(building, new XYPos(-165.5, 20), 2); //rm 201
 
         //Rooms
         ArrayList<IndoorVertex> rm201 = new ArrayList<>();
@@ -258,14 +258,14 @@ public class AllenIndoorConnections {
     private void createFloor3Connections(IndoorVertex stairsLeft, IndoorVertex stairsRight, IndoorVertex elevator)
     {
         //Points on the floor
-        IndoorVertex _66_43 = new IndoorVertex(building, new XYPos(66.25, 43.75), 3);
-        IndoorVertex _148_36 = new IndoorVertex(building, new XYPos(148.75, 36.25), 3);
-        IndoorVertex _157_36 = new IndoorVertex(building, new XYPos(157.5, 36.25), 3);
-        IndoorVertex _157_65 = new IndoorVertex(building, new XYPos(157.5, 65), 3);
-        IndoorVertex _162_67 = new IndoorVertex(building, new XYPos(162.5, 67.5), 3); //rm 316
-        IndoorVertex _66_65 = new IndoorVertex(building, new XYPos(66.25, 65), 3);
-        IndoorVertex _21_65 = new IndoorVertex(building, new XYPos(21.25, 65), 3); //rm 319
-        IndoorVertex _66_36 = new IndoorVertex(building, new XYPos(66.25, 36.25), 3);
+        IndoorVertex _66_43 = new IndoorVertex(building, new XYPos(-66.25, 43.75), 3);
+        IndoorVertex _148_36 = new IndoorVertex(building, new XYPos(-148.75, 36.25), 3);
+        IndoorVertex _157_36 = new IndoorVertex(building, new XYPos(-157.5, 36.25), 3);
+        IndoorVertex _157_65 = new IndoorVertex(building, new XYPos(-157.5, 65), 3);
+        IndoorVertex _162_67 = new IndoorVertex(building, new XYPos(-162.5, 67.5), 3); //rm 316
+        IndoorVertex _66_65 = new IndoorVertex(building, new XYPos(-66.25, 65), 3);
+        IndoorVertex _21_65 = new IndoorVertex(building, new XYPos(-21.25, 65), 3); //rm 319
+        IndoorVertex _66_36 = new IndoorVertex(building, new XYPos(-66.25, 36.25), 3);
 
         //Rooms
         ArrayList<IndoorVertex> rm319 = new ArrayList<>();
@@ -295,11 +295,11 @@ public class AllenIndoorConnections {
     private void createFloor4Connections(IndoorVertex stairsLeft, IndoorVertex stairsRight, IndoorVertex elevator)
     {
         //Points on the floor
-        IndoorVertex _66_43 = new IndoorVertex(building, new XYPos(66.25, 43.75), 4);
-        IndoorVertex _148_36 = new IndoorVertex(building, new XYPos(148.75, 36.25), 4);
-        IndoorVertex _66_36 = new IndoorVertex(building, new XYPos(66.25, 36.25), 4);
-        IndoorVertex _66_31 = new IndoorVertex(building, new XYPos(66.25, 31.25), 4); //rm405
-        IndoorVertex _148_31 = new IndoorVertex(building, new XYPos(148.75, 31.25), 4); //rm403
+        IndoorVertex _66_43 = new IndoorVertex(building, new XYPos(-66.25, 43.75), 4);
+        IndoorVertex _148_36 = new IndoorVertex(building, new XYPos(-148.75, 36.25), 4);
+        IndoorVertex _66_36 = new IndoorVertex(building, new XYPos(-66.25, 36.25), 4);
+        IndoorVertex _66_31 = new IndoorVertex(building, new XYPos(-66.25, 31.25), 4); //rm405
+        IndoorVertex _148_31 = new IndoorVertex(building, new XYPos(-148.75, 31.25), 4); //rm403
 
         //Rooms
         ArrayList<IndoorVertex> rm405 = new ArrayList<>();
@@ -325,13 +325,13 @@ public class AllenIndoorConnections {
     private void createFloor5Connections(IndoorVertex stairsLeft, IndoorVertex stairsRight, IndoorVertex elevator)
     {
         //Points on the floor
-        IndoorVertex _66_43 = new IndoorVertex(building, new XYPos(66.25, 43.75), 5);
-        IndoorVertex _66_37 = new IndoorVertex(building, new XYPos(66.25, 37.5), 5);
-        IndoorVertex _16_37 = new IndoorVertex(building, new XYPos(16.25, 37.5), 5);
-        IndoorVertex _16_71 = new IndoorVertex(building, new XYPos(16.25, 71.25), 5);
-        IndoorVertex _66_71 = new IndoorVertex(building, new XYPos(66.25, 71.25), 5);
-        IndoorVertex _148_37 = new IndoorVertex(building, new XYPos(148.75, 37.5), 5);
-        IndoorVertex _152_37 = new IndoorVertex(building, new XYPos(152.5, 37.5), 5); //rm 522
+        IndoorVertex _66_43 = new IndoorVertex(building, new XYPos(-66.25, 43.75), 5);
+        IndoorVertex _66_37 = new IndoorVertex(building, new XYPos(-66.25, 37.5), 5);
+        IndoorVertex _16_37 = new IndoorVertex(building, new XYPos(-16.25, 37.5), 5);
+        IndoorVertex _16_71 = new IndoorVertex(building, new XYPos(-16.25, 71.25), 5);
+        IndoorVertex _66_71 = new IndoorVertex(building, new XYPos(-66.25, 71.25), 5);
+        IndoorVertex _148_37 = new IndoorVertex(building, new XYPos(-148.75, 37.5), 5);
+        IndoorVertex _152_37 = new IndoorVertex(building, new XYPos(-152.5, 37.5), 5); //rm 522
 
         //Rooms
         ArrayList<IndoorVertex> rm522 = new ArrayList<>();

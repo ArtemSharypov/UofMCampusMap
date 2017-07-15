@@ -36,39 +36,39 @@ public class Allen_Floor1 extends DrawIndoorPathsFragment {
     protected int findXPixelFor(double xCoordinate) {
         int xPixel = 0;
 
-        if(xCoordinate == 62.5)
+        if(xCoordinate == -62.5)
         {
             xPixel = 382;
         }
-        else if(xCoordinate == 67.5)
+        else if(xCoordinate == -67.5)
         {
             xPixel = 413;
         }
-        else if(xCoordinate == 72.5)
+        else if(xCoordinate == -72.5)
         {
             xPixel = 440;
         }
-        else if(xCoordinate == 141)
+        else if(xCoordinate == -141)
         {
             xPixel = 792;
         }
-        else if(xCoordinate == 153.75)
+        else if(xCoordinate == -153.75)
         {
             xPixel = 850;
         }
-        else if(xCoordinate == 155)
+        else if(xCoordinate == -155)
         {
             xPixel = 862;
         }
-        else if(xCoordinate == 157.5)
+        else if(xCoordinate == -157.5)
         {
             xPixel = 870;
         }
-        else if(xCoordinate == 172)
+        else if(xCoordinate == -172)
         {
             xPixel = 954;
         }
-        else if(xCoordinate == 181.25)
+        else if(xCoordinate == -181.25)
         {
             xPixel = 998;
         }
