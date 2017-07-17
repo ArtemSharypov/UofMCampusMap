@@ -1,6 +1,7 @@
 package com.artem.uofmcampusmap;
 
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,6 +40,59 @@ import com.google.android.gms.maps.model.LatLng;
  */
 
 public class NavigationFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+
+    //Used for finding a route based on startLocation, startRoom, destinationLocation, destinationRoom as a background task
+    private class RouteCreationTask extends AsyncTask<Void, Void, Route>
+    {
+        @Override
+        protected Route doInBackground(Void... voids) {
+            Route routeCreated = null;
+
+            if(!startLocation.equals("") && !destinationLocation.equals(""))
+            {
+                if(startLocation.equals(getResources().getString(R.string.curr_location)) ||
+                        destinationLocation.equals(getResources().getString(R.string.curr_location)))
+                {
+                    if(checkPlayServices())
+                    {
+                        buildGoogleApiClient();
+                    }
+
+                    //Current location means that a GPS position needs to be found, and used for the route
+                    findLocation();
+                }
+                else
+                {
+                    routeCreated = campusMap.getRoute(startLocation, startRoom, destinationLocation, destinationRoom);
+                }
+            }
+
+            return routeCreated;
+        }
+
+        @Override
+        protected void onPostExecute(Route routeCreated) {
+            if(routeCreated != null)
+            {
+                route = routeCreated; //Update the route being displayed
+                remainingDistance = routeCreated.getRouteLength();
+                Instruction firstInstruction = routeCreated.getInstructionAt(0);
+
+                updateDistanceTimeRemaining();
+                updateShownInstruction();
+                updateActivityRoutePos();
+                updateActivityRoute(routeCreated);
+
+                instructionsLinLayout.setVisibility(View.VISIBLE);
+
+                if(firstInstruction.getSource() instanceof IndoorVertex)
+                {
+                    handleIndoorSource(firstInstruction);
+                }
+            }
+        }
+    }
+
     private FrameLayout fragHolder;
     private ImageView prevInstruction;
     private ImageView nextInstruction;
@@ -173,42 +227,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         switchToMapFrag();
         currLocation = OUTSIDE_ID;
 
-        if(!startLocation.equals("") && !destinationLocation.equals(""))
-        {
-            if(startLocation.equals(getResources().getString(R.string.curr_location)) ||
-                    destinationLocation.equals(getResources().getString(R.string.curr_location)))
-            {
-                if(checkPlayServices())
-                {
-                    buildGoogleApiClient();
-                }
-
-                //Current location means that a GPS position needs to be found, and used for the route
-                findLocation();
-            }
-            else
-            {
-                route = campusMap.getRoute(startLocation, startRoom, destinationLocation, destinationRoom);
-            }
-
-            if(route != null)
-            {
-                remainingDistance = route.getRouteLength();
-                Instruction firstInstruction = route.getInstructionAt(0);
-
-                updateDistanceTimeRemaining();
-                updateShownInstruction();
-                updateActivityRoutePos();
-                updateActivityRoute(route);
-
-                instructionsLinLayout.setVisibility(View.VISIBLE);
-
-                if(firstInstruction.getSource() instanceof IndoorVertex)
-                {
-                    handleIndoorSource(firstInstruction);
-                }
-            }
-        }
+        new RouteCreationTask().execute();
 
         return view;
     }
@@ -234,13 +253,12 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
     //Updates the current instruction being shown
     private void updateShownInstruction()
     {
-        if(currInstructionPos < route.getNumInstructions())
-        {
-            instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
-        }
-        else
-        {
-            instructionsTextView.setText(getResources().getString(R.string.arrived_msg));
+        if(route != null) {
+            if (currInstructionPos < route.getNumInstructions()) {
+                instructionsTextView.setText(route.getDirectionsAt(currInstructionPos));
+            } else {
+                instructionsTextView.setText(getResources().getString(R.string.arrived_msg));
+            }
         }
     }
 

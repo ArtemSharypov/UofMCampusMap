@@ -444,13 +444,20 @@ public class MapNavigationMesh
         //Finds a route from the starting room to the closest set of stairs, and then from those stairs to the exit
         if (startRoomVertex != null) {
             indoorExit = exitVertex.findIndoorConnection();
-            startFloorStairs = closestStairsToRoom(building, startRoomVertex);
-            exitFloorStairs = startFloorStairs.findStairsConnection(indoorExit.getFloor());
 
-            route = routeFinder.findRoute(startRoomVertex, startFloorStairs);
-            stairsToExit = routeFinder.findRoute(exitFloorStairs, indoorExit);
+            if (indoorExit.getFloor() != startRoomVertex.getFloor())
+            {
+                startFloorStairs = closestStairsToRoom(building, startRoomVertex);
+                exitFloorStairs = startFloorStairs.findStairsConnection(indoorExit.getFloor());
+                stairsToExit = routeFinder.findRoute(exitFloorStairs, indoorExit);
+                route = routeFinder.findRoute(startRoomVertex, startFloorStairs);
 
-            route.combineRoutes(stairsToExit);
+                route.combineRoutes(stairsToExit);
+            }
+            else
+            {
+                route = routeFinder.findRoute(startRoomVertex, indoorExit);
+            }
         }
 
         return route;
@@ -469,13 +476,20 @@ public class MapNavigationMesh
         //Finds a route from the entrance, a set of stairs, then from those stairs to the destination room
         if (endRoomVertex != null) {
             indoorEntrance = entranceVertex.findIndoorConnection();
-            destinationFloorStairs = closestStairsToRoom(building, endRoomVertex);
-            entranceFloorStairs = destinationFloorStairs.findStairsConnection(indoorEntrance.getFloor());
 
-            route = routeFinder.findRoute(indoorEntrance, entranceFloorStairs);
-            stairsToDestRoom = routeFinder.findRoute(destinationFloorStairs, endRoomVertex);
+            if (indoorEntrance.getFloor() != endRoomVertex.getFloor())
+            {
+                destinationFloorStairs = closestStairsToRoom(building, endRoomVertex);
+                entranceFloorStairs = destinationFloorStairs.findStairsConnection(indoorEntrance.getFloor());
+                route = routeFinder.findRoute(indoorEntrance, entranceFloorStairs);
+                stairsToDestRoom = routeFinder.findRoute(destinationFloorStairs, endRoomVertex);
 
-            route.combineRoutes(stairsToDestRoom);
+                route.combineRoutes(stairsToDestRoom);
+            }
+            else
+            {
+                route = routeFinder.findRoute(indoorEntrance, endRoomVertex);
+            }
         }
 
         return route;
