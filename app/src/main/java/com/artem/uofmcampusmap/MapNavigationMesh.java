@@ -27,6 +27,11 @@ public class MapNavigationMesh
     private Resources resources;
     private RouteFinder routeFinder;
 
+    //Used for passing routes around from threads, normally is for each part ie going from a buildings room to an exit within it
+    private Route firstRoutePart;
+    private Route secondRoutePart;
+    private Route lastRoutePart;
+
     public MapNavigationMesh(Resources resources)
     {
         walkableZones = new ArrayList<>();
@@ -67,13 +72,6 @@ public class MapNavigationMesh
     public Route getRoute(String startLocation, String startRoom, String endLocation, String endRoom)
     {
         Route route = null;
-        ArrayList<Vertex> startBuildingExits;
-        OutdoorVertex startBuildingExit = null;
-        ArrayList<Vertex> endBuildingEntrances;
-        OutdoorVertex endBuildingEntrance = null;
-        Route exitToEntrance; //Consists of Outdoor vertex's doing the outdoor portion
-        Route startRoomToExit; //Indoor vertex's that connect start room to the buildings exit
-        Route entranceToEndRoom; //Indoor vertex's that connect the entrance to the destination room
 
         if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
         {
@@ -94,48 +92,7 @@ public class MapNavigationMesh
                 }
                 else
                 {
-                    startBuildingExits = startEndLocations.get(startLocation);
-                    endBuildingEntrances = startEndLocations.get(endLocation);
-                    int tempDist;
-                    int bestDist = Integer.MAX_VALUE;
-
-                    //Find the best entrance/exit combination between all entrance/exits
-                    for (Vertex start : startBuildingExits)
-                    {
-                        for (Vertex destination : endBuildingEntrances)
-                        {
-                            tempDist = start.getDistanceFrom(destination);
-
-                            if (tempDist < bestDist)
-                            {
-                                startBuildingExit = (OutdoorVertex) start;
-                                endBuildingEntrance = (OutdoorVertex) destination;
-                                bestDist = tempDist;
-                            }
-                        }
-                    }
-
-                    //Route from the starting room, to the exit of the building
-                    startRoomToExit = routeFromStartRoomToExit(startLocation, startRoom, startBuildingExit);
-
-                    //Create a route from the start buildings exit to the destination building entrances
-                    exitToEntrance = routeFinder.findRoute(startBuildingExit, endBuildingEntrance);
-
-                    //Route from the destination building entrance to the destination room
-                    entranceToEndRoom = routeFromBuildingEntranceToDest(endLocation, endBuildingEntrance, endRoom);
-
-                    //Combine all the seperate routes into one single route
-                    if (startRoomToExit != null)
-                    {
-                        startRoomToExit.combineRoutes(exitToEntrance);
-                        route = startRoomToExit;
-                    }
-                    else
-                    {
-                        route = exitToEntrance;
-                    }
-
-                    route.combineRoutes(entranceToEndRoom);
+                   route = routeViaInToOut(startLocation, startRoom, endLocation, endRoom);
                 }
             }
         }
@@ -228,30 +185,311 @@ public class MapNavigationMesh
         return route;
     }
 
-    //Handles the creation of a Route within a indoor building using RouteFinder
-    private Route navigateSameBuilding(String building, IndoorVertex startLocation, IndoorVertex destinationLocation)
+    //Creates a route for when both of the rooms are within the same building
+    private Route routeSameBuildingRooms(String building, String startRoom, String endRoom)
     {
-        Route route;
+        Route route = null;
+        final IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
+        final IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
+        final IndoorVertex closestStairs;
+        final IndoorVertex destinationFloorStairs;
 
-        if(startLocation.getFloor() == destinationLocation.getFloor())
+        if (startRoomVertex != null && endRoomVertex != null)
         {
-            route = routeFinder.findRoute(startLocation, destinationLocation);
+            if(startRoomVertex.getFloor() == endRoomVertex.getFloor())
+            {
+                route = routeFinder.findRoute(startRoomVertex, endRoomVertex);
+            }
+            else //Different floors, find the closest stairs
+            {
+                //Find the closest stairs to the starting room, then find a route from it to them
+                closestStairs = closestStairsToRoom(building, startRoomVertex);
+
+                //Creates a route from the starting room to the closest stairs
+                Thread thread1 = new Thread()
+                {
+                    @Override
+                    public void run() {
+                        firstRoutePart = routeFinder.findRoute(startRoomVertex, closestStairs);
+                    }
+                };
+
+                thread1.start();
+                route = firstRoutePart;
+
+                //Stairs that will connect to the closest stairs, that will now be on the same level as the destination
+                destinationFloorStairs = closestStairs.findStairsConnection(endRoomVertex.getFloor());
+
+                //Creates a route from the last stairs to the destination room
+                Thread thread2 = new Thread()
+                {
+                    @Override
+                    public void run()
+                    {
+                        //From the stairs on the destination level to the destination itself
+                        secondRoutePart = routeFinder.findRoute(destinationFloorStairs, endRoomVertex);
+                    }
+                };
+
+                thread2.start();
+
+                //Wait for the seperate route threads to finish, then combine the routes all together
+                try
+                {
+                    thread1.join();
+                    thread2.join();
+
+                    //Combine the seperate floor routes
+                    route.combineRoutes(secondRoutePart);
+                }
+                catch(InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+            }
         }
-        else //Different floors, find the closest stairs
+
+        return route;
+    }
+
+    //Creates a route for going from a building, to outdoors, then to enter the destination building
+    private Route routeViaInToOut(final String startBuilding, final String startRoom, final String endBuilding, final String endRoom)
+    {
+        Route route = null;
+        ArrayList<Vertex> startBuildingExits = startEndLocations.get(startBuilding);
+        ArrayList<Vertex> endBuildingEntrances = startEndLocations.get(endBuilding);
+        OutdoorVertex tempExit = null;
+        OutdoorVertex tempEntrance = null;
+        final OutdoorVertex startBuildingExit;
+        final OutdoorVertex endBuildingEntrance;
+        int tempDist;
+        int bestDist = Integer.MAX_VALUE;
+
+        //Find the best entrance/exit combination between all entrance/exits
+        for (Vertex start : startBuildingExits)
         {
-            //Find the closest stairs to the starting room, then find a route from it to them
-            IndoorVertex closestStairs = closestStairsToRoom(building, startLocation);
-            Route routeStartToStairs = routeFinder.findRoute(startLocation, closestStairs);
+            for (Vertex destination : endBuildingEntrances)
+            {
+                tempDist = start.getDistanceFrom(destination);
 
-            //Stairs that will connect to the closest stairs, that will now be on the same level as the destination
-            IndoorVertex destinationFloorStairs = closestStairs.findStairsConnection(destinationLocation.getFloor());
+                if (tempDist < bestDist)
+                {
+                    tempExit = (OutdoorVertex) start;
+                    tempEntrance = (OutdoorVertex) destination;
+                    bestDist = tempDist;
+                }
+            }
+        }
 
-            //From the stairs on the destination level to the destination itself
-            Route secondStairsToDest = routeFinder.findRoute(destinationFloorStairs, destinationLocation);
+        startBuildingExit = tempExit;
+        endBuildingEntrance = tempEntrance;
 
-            //Combine the seperate floor routes
-            routeStartToStairs.combineRoutes(secondStairsToDest);
-            route = routeStartToStairs;
+        //Route from start room -> building exit
+        Thread thread1 = new Thread()
+        {
+            @Override
+            public void run() {
+                //Route from the starting room, to the exit of the building
+                firstRoutePart = routeFromStartRoomToExit(startBuilding, startRoom, startBuildingExit);
+            }
+        };
+
+        thread1.start();
+
+        //Route from start building exit -> end building entrance
+        Thread thread2 = new Thread()
+        {
+            @Override
+            public void run() {
+                //Create a route from the start buildings exit to the destination building entrances
+                secondRoutePart = routeFinder.findRoute(startBuildingExit, endBuildingEntrance);
+            }
+        };
+
+        thread2.start();
+
+        //Route from end building entrance -> end room
+        Thread thread3 = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                //Route from the destination building entrance to the destination room
+                lastRoutePart = routeFromBuildingEntranceToDest(endBuilding, endBuildingEntrance, endRoom);
+            }
+        };
+
+        thread3.start();
+
+        //Wait for the seperate route threads to finish, then combine the routes all together
+        try
+        {
+            thread1.join();
+            thread2.join();
+            thread3.join();
+
+            //Combine all the seperate routes into one single route
+            if (firstRoutePart != null)
+            {
+                firstRoutePart.combineRoutes(secondRoutePart);
+                route = firstRoutePart;
+            }
+            else
+            {
+                route = secondRoutePart;
+            }
+
+            route.combineRoutes(lastRoutePart);
+        }
+        catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+
+        return route;
+    }
+
+    // Used for creating a route between buildings that are connected by tunnels in some way
+    private Route routeViaTunnels(String startBuilding, String startRoom, String endBuilding, String endRoom)
+    {
+        Route route = null;
+        final int TUNNELS_FLOOR = 1;
+        final IndoorVertex startRoomVertex = findRoomVertex(startRoom, startBuilding);
+        final IndoorVertex endRoomVertex = findRoomVertex(endRoom, endBuilding);
+        final IndoorVertex startClosestStairs;
+        final IndoorVertex startTunnelFloorStairs;
+        final IndoorVertex endClosestStairs;
+        final IndoorVertex endTunnelFloorStairs;
+
+        if(startRoomVertex != null && endRoomVertex != null)
+        {
+            //Find the closest stairs to the starting room, then find a route room to stairs
+            startClosestStairs = closestStairsToRoom(startBuilding, startRoomVertex);
+
+            //Start room -> closest stairs
+            Thread thread1 = new Thread()
+            {
+                @Override
+                public void run() {
+                    firstRoutePart = routeFinder.findRoute(startRoomVertex, startClosestStairs);
+                }
+            };
+
+            thread1.start();
+
+            //Find the closest stairs to the destination room, create a route from the stairs to the room
+            endClosestStairs = closestStairsToRoom(endBuilding, endRoomVertex);
+
+            //Stairs on same floor as end room -> end room
+            Thread thread2 = new Thread()
+            {
+                @Override
+                public void run()
+                {
+                    lastRoutePart = routeFinder.findRoute(endClosestStairs, endRoomVertex);
+                }
+            };
+
+            thread2.start();
+
+            //Stairs that will connect to the closest stairs, that will now be on the same level as the tunnels
+            startTunnelFloorStairs = startClosestStairs.findStairsConnection(TUNNELS_FLOOR);
+
+            //Stairs that will connect from the tunnel floor, to the destination rooms floor
+            endTunnelFloorStairs = endClosestStairs.findStairsConnection(TUNNELS_FLOOR);
+
+            //Start building stairs at tunnel -> end building stairs at tunnel
+            Thread thread3 = new Thread()
+            {
+                @Override
+                public void run()
+                {
+                    secondRoutePart  = routeFinder.findRoute(startTunnelFloorStairs, endTunnelFloorStairs);
+                }
+            };
+
+            thread3.start();
+
+            //Wait for the seperate route threads to finish, then combine the routes all together
+            try
+            {
+                thread1.join();
+                thread2.join();
+                thread3.join();
+
+                //Combine the 3 parts of the route into one single Route
+                route = firstRoutePart;
+                route.combineRoutes(secondRoutePart);
+                route.combineRoutes(lastRoutePart);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        return route;
+    }
+
+    //Creates a route from a room within a building, to the specified exit of that building
+    private Route routeFromStartRoomToExit(String building, String startRoom, OutdoorVertex exitVertex)
+    {
+        Route route = null;
+        Route stairsToExit;
+        IndoorVertex indoorExit;
+        IndoorVertex startFloorStairs;
+        IndoorVertex exitFloorStairs;
+        IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
+
+        //Finds a route from the starting room to the closest set of stairs, and then from those stairs to the exit
+        if (startRoomVertex != null) {
+            indoorExit = exitVertex.findIndoorConnection();
+
+            if (indoorExit.getFloor() != startRoomVertex.getFloor())
+            {
+                startFloorStairs = closestStairsToRoom(building, startRoomVertex);
+                exitFloorStairs = startFloorStairs.findStairsConnection(indoorExit.getFloor());
+                stairsToExit = routeFinder.findRoute(exitFloorStairs, indoorExit);
+                route = routeFinder.findRoute(startRoomVertex, startFloorStairs);
+
+                route.combineRoutes(stairsToExit);
+            }
+            else
+            {
+                route = routeFinder.findRoute(startRoomVertex, indoorExit);
+            }
+        }
+
+        return route;
+    }
+
+    //Creates a route from a building entrance, to a specified room within that building
+    private Route routeFromBuildingEntranceToDest(String building, OutdoorVertex entranceVertex, String endRoom)
+    {
+        Route route = null;
+        Route stairsToDestRoom;
+        IndoorVertex indoorEntrance;
+        IndoorVertex entranceFloorStairs;
+        IndoorVertex destinationFloorStairs;
+        IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
+
+        //Finds a route from the entrance, a set of stairs, then from those stairs to the destination room
+        if (endRoomVertex != null) {
+            indoorEntrance = entranceVertex.findIndoorConnection();
+
+            if (indoorEntrance.getFloor() != endRoomVertex.getFloor())
+            {
+                destinationFloorStairs = closestStairsToRoom(building, endRoomVertex);
+                entranceFloorStairs = destinationFloorStairs.findStairsConnection(indoorEntrance.getFloor());
+                route = routeFinder.findRoute(indoorEntrance, entranceFloorStairs);
+                stairsToDestRoom = routeFinder.findRoute(destinationFloorStairs, endRoomVertex);
+
+                route.combineRoutes(stairsToDestRoom);
+            }
+            else
+            {
+                route = routeFinder.findRoute(indoorEntrance, endRoomVertex);
+            }
         }
 
         return route;
@@ -275,106 +513,6 @@ public class MapNavigationMesh
         }
 
         return stairs;
-    }
-
-    // Used for creating a route between buildings that are connected by tunnels in some way
-    private Route routeViaTunnels(String startBuilding, String startRoom, String endBuilding, String endRoom)
-    {
-        Route route = null;
-        final int TUNNELS_FLOOR = 1;
-        IndoorVertex startRoomVertex = findRoomVertex(startRoom, startBuilding);
-        IndoorVertex endRoomVertex = findRoomVertex(endRoom, endBuilding);
-
-        if(startRoomVertex != null && endRoomVertex != null)
-        {
-            //Find the closest stairs to the starting room, then find a route room to stairs
-            IndoorVertex startClosestStairs = closestStairsToRoom(startBuilding, startRoomVertex);
-            Route routeStartToStairs = routeFinder.findRoute(startRoomVertex, startClosestStairs);
-
-            //Find the closest stairs to the destination room, create a route from the stairs to the room
-            IndoorVertex endClosestStairs = closestStairsToRoom(endBuilding, endRoomVertex);
-            Route tunnelsToEndRoom = routeFinder.findRoute(endClosestStairs, endRoomVertex);
-
-            //Stairs that will connect to the closest stairs, that will now be on the same level as the tunnels
-            IndoorVertex startTunnelFloorStairs = startClosestStairs.findStairsConnection(TUNNELS_FLOOR);
-
-            //Stairs that will connect from the tunnel floor, to the destination rooms floor
-            IndoorVertex endTunnelFloorStairs = endClosestStairs.findStairsConnection(TUNNELS_FLOOR);
-
-            Route startToEndBuilding = routeFinder.findRoute(startTunnelFloorStairs, endTunnelFloorStairs);
-
-            //Combine the 3 parts of the route into one single Route
-            route = routeStartToStairs;
-            route.combineRoutes(startToEndBuilding);
-            route.combineRoutes(tunnelsToEndRoom);
-        }
-
-        return route;
-    }
-
-    //Creates a route for when both of the rooms are within the same building
-    private Route routeSameBuildingRooms(String building, String startRoom, String endRoom)
-    {
-        Route route = null;
-        IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
-        IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
-
-        if (startRoomVertex != null && endRoomVertex != null)
-        {
-            route = navigateSameBuilding(building, startRoomVertex, endRoomVertex);
-        }
-
-        return route;
-    }
-
-    //Creates a route from a room within a building, to the specified exit of that building
-    private Route routeFromStartRoomToExit(String building, String startRoom, OutdoorVertex exitVertex)
-    {
-        Route route = null;
-        Route stairsToExit;
-        IndoorVertex indoorExit;
-        IndoorVertex startFloorStairs;
-        IndoorVertex exitFloorStairs;
-        IndoorVertex startRoomVertex = findRoomVertex(startRoom, building);
-
-        //Finds a route from the starting room to the closest set of stairs, and then from those stairs to the exit
-        if (startRoomVertex != null) {
-            indoorExit = exitVertex.findIndoorConnection();
-            startFloorStairs = closestStairsToRoom(building, startRoomVertex);
-            exitFloorStairs = startFloorStairs.findStairsConnection(indoorExit.getFloor());
-
-            route = routeFinder.findRoute(startRoomVertex, startFloorStairs);
-            stairsToExit = routeFinder.findRoute(exitFloorStairs, indoorExit);
-
-            route.combineRoutes(stairsToExit);
-        }
-
-        return route;
-    }
-
-    //Creates a route from a building entrance, to a specified room within that building
-    private Route routeFromBuildingEntranceToDest(String building, OutdoorVertex entranceVertex, String endRoom)
-    {
-        Route route = null;
-        Route stairsToDestRoom;
-        IndoorVertex indoorEntrance;
-        IndoorVertex entranceFloorStairs;
-        IndoorVertex destinationFloorStairs;
-        IndoorVertex endRoomVertex = findRoomVertex(endRoom, building);
-
-        //Finds a route from the entrance, a set of stairs, then from those stairs to the destination room
-        if (endRoomVertex != null) {
-            indoorEntrance = entranceVertex.findIndoorConnection();
-            destinationFloorStairs = closestStairsToRoom(building, endRoomVertex);
-            entranceFloorStairs = destinationFloorStairs.findStairsConnection(indoorEntrance.getFloor());
-
-            route = routeFinder.findRoute(indoorEntrance, entranceFloorStairs);
-            stairsToDestRoom = routeFinder.findRoute(destinationFloorStairs, endRoomVertex);
-
-            route.combineRoutes(stairsToDestRoom);
-        }
-
-        return route;
     }
 
     //Finds the shortest distance entrance / exit combination from the location to the building
