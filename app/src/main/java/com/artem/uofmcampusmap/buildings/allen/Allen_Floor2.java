@@ -78,23 +78,23 @@ public class Allen_Floor2 extends DrawIndoorPathsFragment {
 
         if(yCoordinate == 20)
         {
-            yPixel = 1139;
+            yPixel = 877;
         }
         else if(yCoordinate == 43.75)
         {
-            yPixel = 1024;
+            yPixel = 762;
         }
         else if(yCoordinate == 46.25)
         {
-            yPixel = 1015;
+            yPixel = 753;
         }
         else if(yCoordinate == 51.25)
         {
-            yPixel = 1000;
+            yPixel = 736;
         }
         else if(yCoordinate == 65)
         {
-            yPixel = 921;
+            yPixel = 660;
         }
 
         return yPixel;

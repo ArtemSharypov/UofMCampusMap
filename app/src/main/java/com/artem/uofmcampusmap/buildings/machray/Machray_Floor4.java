@@ -72,8 +72,6 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
             xPixel = 545;
         }
 
-        scaleXPixelPos(xPixel);
-
         return xPixel;
     }
 
@@ -85,30 +83,28 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
 
         if(yCoordinate == 21.88)
         {
-            yPixel = 1505;
+            yPixel = 1232;
         }
         else if(yCoordinate == 23.13)
         {
-            yPixel = 1480;
+            yPixel = 1220;
         }
         else if(yCoordinate == 28.13)
         {
-            yPixel = 1450;
+            yPixel = 1183;
         }
         else if(yCoordinate == 34.38)
         {
-            yPixel = 1415;
+            yPixel = 1148;
         }
         else if(yCoordinate == 37.5)
         {
-            yPixel = 1390;
+            yPixel = 1125;
         }
         else if(yCoordinate == 71.88)
         {
-            yPixel = 1170;
+            yPixel = 904;
         }
-
-        scaleYPixelPos(yPixel);
 
         return yPixel;
     }

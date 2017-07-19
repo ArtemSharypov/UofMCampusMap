@@ -47,36 +47,34 @@ public class ArmesFloor2Fragment extends DrawIndoorPathsFragment {
         int xPixelPos = -1;
 
         if (xCoordinate == 0) {
-            xPixelPos = 207;
+            xPixelPos = 298;
         } else if (xCoordinate == 12.5) {
-            xPixelPos = 233;
+            xPixelPos = 331;
         } else if (xCoordinate == 15) {
-            xPixelPos = 243;
+            xPixelPos = 346;
         } else if (xCoordinate == 22.5) {
-            xPixelPos = 255;
+            xPixelPos = 369;
         } else if (xCoordinate == 31.25) {
-            xPixelPos = 279;
+            xPixelPos = 398;
         } else if (xCoordinate == 37.5) {
-            xPixelPos = 297;
+            xPixelPos = 424;
         } else if (xCoordinate == 50) {
             xPixelPos = 324;
         } else if (xCoordinate == 62.5) {
-            xPixelPos = 362;
+            xPixelPos = 462;
         } else if (xCoordinate == 85) {
-            xPixelPos = 416;
+            xPixelPos = 590;
         } else if (xCoordinate == 108.5) {
-            xPixelPos = 474;
+            xPixelPos = 670;
         } else if (xCoordinate == 131.25) {
-            xPixelPos = 527;
+            xPixelPos = 746;
         } else if (xCoordinate == 156.25) {
-            xPixelPos = 591;
+            xPixelPos = 837;
         } else if (xCoordinate == 162.5) {
-            xPixelPos = 599;
+            xPixelPos = 849;
         } else if (xCoordinate == 173.75) {
-            xPixelPos = 629;
+            xPixelPos = 891;
         }
-
-        scaleXPixelPos(xPixelPos);
 
         return xPixelPos;
     }
@@ -87,25 +85,27 @@ public class ArmesFloor2Fragment extends DrawIndoorPathsFragment {
     protected int findYPixelFor(double yCoordinate) {
         int yPixelPos = -1;
 
-        if (yCoordinate == 37.5) {
-            yPixelPos = 730;
-        } else if (yCoordinate == 112.5) {
-            yPixelPos = 537;
-        } else if (yCoordinate == 118.75) {
-            yPixelPos = 525;
-        } else if (yCoordinate == 125) {
-            yPixelPos = 515;
-        } else if (yCoordinate == 131.25) {
-            yPixelPos = 505;
-        } else if (yCoordinate == 137.5) {
-            yPixelPos = 491;
-        } else if (yCoordinate == 187.5) {
-            yPixelPos = 348;
-        } else if (yCoordinate == 206.25) {
-            yPixelPos = 309;
+        if(yCoordinate == 6.25)
+        {
+            yPixelPos = 1030;
         }
-
-        scaleYPixelPos(yPixelPos);
+        else if (yCoordinate == 37.5) {
+            yPixelPos = 940;
+        } else if (yCoordinate == 112.5) {
+            yPixelPos = 667;
+        } else if (yCoordinate == 118.75) {
+            yPixelPos = 648;
+        } else if (yCoordinate == 125) {
+            yPixelPos = 632;
+        } else if (yCoordinate == 131.25) {
+            yPixelPos = 619;
+        } else if (yCoordinate == 137.5) {
+            yPixelPos = 596;
+        } else if (yCoordinate == 187.5) {
+            yPixelPos = 403;
+        } else if (yCoordinate == 206.25) {
+            yPixelPos = 338;
+        }
 
         return yPixelPos;
     }
