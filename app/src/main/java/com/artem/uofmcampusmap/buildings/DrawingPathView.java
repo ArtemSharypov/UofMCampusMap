@@ -90,7 +90,7 @@ public class DrawingPathView extends View {
                 sourceX = (int) (line.getSourceX() * xScale);
                 sourceY = (int) (line.getSourceY() * yScale) + yPixelOffset;
                 destX = (int) (line.getDestX() * xScale);
-                destY = (int) (line.getDestX() * yScale) + yPixelOffset;
+                destY = (int) (line.getDestY() * yScale) + yPixelOffset;
 
                 canvas.drawLine(sourceX, sourceY, destX, destY, paint);
 
