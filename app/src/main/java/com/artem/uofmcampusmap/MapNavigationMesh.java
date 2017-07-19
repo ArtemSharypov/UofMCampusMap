@@ -215,7 +215,6 @@ public class MapNavigationMesh
                 };
 
                 thread1.start();
-                route = firstRoutePart;
 
                 //Stairs that will connect to the closest stairs, that will now be on the same level as the destination
                 destinationFloorStairs = closestStairs.findStairsConnection(endRoomVertex.getFloor());
@@ -238,6 +237,8 @@ public class MapNavigationMesh
                 {
                     thread1.join();
                     thread2.join();
+
+                    route = firstRoutePart;
 
                     //Combine the seperate floor routes
                     route.combineRoutes(secondRoutePart);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UofM Campus Map</string>
+    <string name="app_name">Unofficial UofM Campus Map</string>
 
     <string name="distance_remaining">Distance Remaining: </string>
     <string name="est_time">Estimated Time: </string>
@@ -93,5 +93,36 @@
         <item>@string/allen</item>
         <item>@string/armes</item>
         <item>@string/machray</item>
+    </string-array>
+
+    <string-array name="building_rooms">
+        <!-- Allen -->
+        <item>114 Allen</item>
+        <item>201 Allen</item>
+        <item>316 Allen</item>
+        <item>319 Allen</item>
+        <item>403 Allen</item>
+        <item>405 Allen</item>
+        <item>522 Allen</item>
+
+        <!-- Armes -->
+        <item>111 Armes</item>
+        <item>115 Armes</item>
+        <item>200 Armes</item>
+        <item>201 Armes</item>
+        <item>204 Armes</item>
+        <item>205 Armes</item>
+        <item>208 Armes</item>
+
+        <!-- Machray -->
+        <item>106 Machray</item>
+        <item>107 Machray</item>
+        <item>108 Machray</item>
+        <item>111 Machray</item>
+        <item>112 Machray</item>
+        <item>113 Machray</item>
+        <item>115 Machray</item>
+        <item>211 Machray</item>
+        <item>239 Machray</item>
     </string-array>
 </resources>
