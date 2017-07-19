@@ -194,7 +194,7 @@ public class AllenIndoorConnections {
         IndoorVertex _67_60 = new IndoorVertex(building, new XYPos(-67.5, 60), 1);
         IndoorVertex _157_101 = new IndoorVertex(building, new XYPos(-157.5, 101.25), 1); //rm114
         IndoorVertex _67_68 = new IndoorVertex(building, new XYPos(-67.5, 68.75), 1);
-        IndoorVertex _157_68 = new IndoorVertex(building, new XYPos(-157, 68.75), 1);
+        IndoorVertex _157_68 = new IndoorVertex(building, new XYPos(-157.5, 68.75), 1);
         bioSciTunnelConnection = new IndoorVertex(building, new XYPos(-141, 0), 1);
 
         //Rooms
@@ -231,11 +231,11 @@ public class AllenIndoorConnections {
         IndoorVertex _65_65 = new IndoorVertex(building, new XYPos(-65, 65), 2);
         IndoorVertex _65_43 = new IndoorVertex(building, new XYPos(-65, 43.75), 2);
         IndoorVertex _65_20 = new IndoorVertex(building, new XYPos(-65, 20), 2);
-        IndoorVertex _165_20 = new IndoorVertex(building, new XYPos(-165.5, 20), 2); //rm 201
+        IndoorVertex _162_20 = new IndoorVertex(building, new XYPos(-162.5, 20), 2); //rm 201
 
         //Rooms
         ArrayList<IndoorVertex> rm201 = new ArrayList<>();
-        rm201.add(_165_20);
+        rm201.add(_162_20);
 
         rooms.put("201", rm201);
 
@@ -246,7 +246,7 @@ public class AllenIndoorConnections {
         _160_43.connectVertex(stairsRight);
         _160_43.connectVertex(_160_20);
         _160_43.connectVertex(_160_65);
-        _160_20.connectVertex(_165_20);
+        _160_20.connectVertex(_162_20);
         _160_20.connectVertex(_65_20);
         _65_20.connectVertex(_65_43);
         _65_43.connectVertex(stairsLeft);

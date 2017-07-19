@@ -3,7 +3,6 @@ package com.artem.uofmcampusmap.buildings;
 import android.graphics.Point;
 import android.support.v4.app.Fragment;
 import android.view.Display;
-import android.view.WindowManager;
 
 import com.artem.uofmcampusmap.DisplayRoute;
 import com.artem.uofmcampusmap.IndoorVertex;
@@ -21,8 +20,6 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
     private DrawingPathView drawingPathView;
     private String building;
     private int floor;
-    private final int DEFAULT_SCREEN_WIDTH = 1080;
-    private final int DEFAULT_SCREEN_HEIGHT = 1920;
 
     protected void setDrawingPathView(DrawingPathView drawingPathView)
     {
@@ -40,54 +37,12 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
     }
 
     /*For x and y coordinates, armes is the only unchanged building. Per each building west of armes, between the current building and
-    armes, x gets changed by -1000 and for every building east, x gets changed by +1000.
-      For each building north of armes, that is between the current building and armes, y gets changed by +1000. y gets changed by
-       -1000 for each building south of armes with the same property as above
-    */
+        armes, x gets changed by -1000 and for every building east, x gets changed by +1000.
+          For each building north of armes, that is between the current building and armes, y gets changed by +1000. y gets changed by
+           -1000 for each building south of armes with the same property as above
+        */
     abstract protected int findXPixelFor(double xCoordinate);
     abstract protected int findYPixelFor(double yCoordinate);
-
-    //Scales a position of a pixel in the X coordinate, from 1080x1920 to the current screen resolution
-    protected int scaleXPixelPos(int origXPixelPos)
-    {
-        int xPixelPos = origXPixelPos;
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int scale;
-
-        //If the screen resolutions width is different than the default 1080 used for positions, then have to divide
-        //curr width / 1080 to get the scale, which is applied to the xPixelPos
-        if(width != DEFAULT_SCREEN_WIDTH)
-        {
-            scale = width / DEFAULT_SCREEN_WIDTH;
-            xPixelPos *= scale;
-        }
-
-        return xPixelPos;
-    }
-
-    //Scales a position of a pixel in the Y coordinate, from 1080x1920 to the current screen resolution
-    protected int scaleYPixelPos(int origYPixelPos)
-    {
-        int yPixelPos = origYPixelPos;
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int height = size.y;
-        int scale;
-
-        //If the screen resolutions height is different than the default 1920 used for positions, then have to divide
-        //curr height / 1920 to get the scale, which is applied to the yPixelPos
-        if(height != DEFAULT_SCREEN_HEIGHT)
-        {
-            scale = height / DEFAULT_SCREEN_HEIGHT;
-            yPixelPos *= scale;
-        }
-
-        return yPixelPos;
-    }
 
     protected boolean checkIfValidInstruc(Instruction instruction)
     {
