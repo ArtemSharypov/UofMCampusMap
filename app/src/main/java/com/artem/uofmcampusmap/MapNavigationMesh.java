@@ -86,7 +86,7 @@ public class MapNavigationMesh
             else
             {
                 //todo make this just an if check for an extra route, then compare the routes once it can run sufficiently fast enough
-                if(buildingsConnectViaTunnels(startLocation, endLocation))
+                if(buildingsConnectViaTunnels(startLocation, endLocation) && !startRoom.equals("") && !endRoom.equals(""))
                 {
                     route = routeViaTunnels(startLocation, startRoom, endLocation, endRoom);
                 }
@@ -817,7 +817,7 @@ public class MapNavigationMesh
         eli_dafoe.setRight(new LatLng(49.809935, -97.131675));
         eli_dafoe.setBottom(new LatLng(49.809667, -97.131876));
 
-        addEntrance("Elizabeth Dafoe", eli_dafoe.getTop());
+        addEntrance("Elizabeth Dafoe", eli_dafoe.getRight());
         walkableZones.add(eli_dafoe);
 
         //rightMid

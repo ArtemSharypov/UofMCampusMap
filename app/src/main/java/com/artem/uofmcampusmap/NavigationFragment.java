@@ -94,7 +94,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                 {
                     //Special case for only outdoor locations, since the display will already be the map and it won't have to change
                     //at all
-                    if(currLocation.equals(getResources().getString(R.string.curr_location)))
+                    if(currLocation.equals(OUTSIDE_ID))
                     {
                         DisplayRoute childFrag = (DisplayRoute) getChildFragmentManager().findFragmentById(R.id.frag_holder);
 

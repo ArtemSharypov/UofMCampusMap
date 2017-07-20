@@ -116,7 +116,7 @@ public class RoutePlannerFragment extends Fragment {
                     //Length 1 means more than likely it is a building
                     if(splitFromLocation.length == 1)
                     {
-                        toLocation = splitFromLocation[0];
+                        fromLocation = splitFromLocation[0];
                     }
                     else if(splitFromLocation.length > 1)
                     {
@@ -134,7 +134,7 @@ public class RoutePlannerFragment extends Fragment {
                         {
                             //If it failed to make the String into a number, it has to be a parking lot, bus stop, or building
                             //Therefore just use the entire entered String from before
-                            fromLocation = toText;
+                            fromLocation = fromText;
                         }
                     }
                 }

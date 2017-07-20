@@ -61,7 +61,9 @@
             android:layout_below="@+id/from_radio_group"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
-            android:hint="Enter a Room or Building" />
+            android:hint="Enter a Room or Building"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
     </RelativeLayout>
 
@@ -120,7 +122,9 @@
             android:layout_below="@+id/to_radio_group"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
-            android:hint="Enter a Room or a Building" />
+            android:hint="Enter a Room or a Building"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
     </RelativeLayout>
 
     <LinearLayout
