@@ -100,6 +100,7 @@ public class OutdoorVertex extends Vertex
         {
             posToCompare = ((OutdoorVertex) vertex).getPosition();
 
+            //Since LatLng coords are double, the distance between themselves must be 0 to be the same point
             if(calculateDistanceFrom(posToCompare) == 0)
             {
                 areEqual = true;
