@@ -4,105 +4,128 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/from_title"
-        style="@style/RobotoTextViewStyle"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/relativeLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="44dp"
-        android:text="From" />
+        android:layout_alignParentStart="true">
 
-    <Spinner
-        android:id="@+id/from_building"
-        android:layout_width="150dp"
+        <TextView
+            android:id="@+id/from_title"
+            style="@style/RobotoTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="From" />
+
+        <RadioGroup
+            android:id="@+id/from_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/from_title"
+            android:layout_marginTop="15dp"
+            android:checkedButton="@+id/from_location">
+
+            <RadioButton
+                android:id="@+id/from_curr_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Current Location" />
+
+            <RadioButton
+                android:id="@+id/from_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/from_title"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:text="Building / Bus Stop / Parking Lot" />
+
+        </RadioGroup>
+
+        <AutoCompleteTextView
+            android:id="@+id/from_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/from_radio_group"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:hint="Enter a Room or Building"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/from_building_tv"
+        android:layout_marginTop="30dp"
+        android:id="@+id/relativeLayout2"
+        android:layout_below="@+id/relativeLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true">
 
-    <Spinner
-        android:id="@+id/to_building"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/to_building_tv"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/to_title"
+            style="@style/RobotoTextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="To" />
 
-    <TextView
-        android:id="@+id/to_title"
-        style="@style/RobotoTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/from_building"
-        android:layout_marginTop="45dp"
-        android:text="To" />
+        <RadioGroup
+            android:id="@+id/to_radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/to_title"
+            android:layout_marginTop="15dp"
+            android:checkedButton="@+id/to_location">
 
-    <TextView
-        android:id="@+id/from_building_tv"
-        style="@style/RobotoTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/from_title"
-        android:text="Building" />
+            <RadioButton
+                android:id="@+id/to_curr_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Location" />
 
-    <TextView
-        android:id="@+id/from_room_tv"
-        style="@style/RobotoTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/from_building"
-        android:layout_marginLeft="62dp"
-        android:layout_marginStart="62dp"
-        android:layout_toEndOf="@+id/from_building"
-        android:layout_toRightOf="@+id/from_building"
-        android:text="Room" />
+            <RadioButton
+                android:id="@+id/to_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false"
+                android:layout_below="@+id/from_title"
+                android:layout_marginTop="5dp"
+                android:text="Building / Bus Stop / Parking Lot" />
 
-    <EditText
-        android:id="@+id/from_room"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/from_room_tv"
-        android:layout_alignStart="@+id/from_room_tv"
-        android:layout_below="@+id/from_room_tv"
-        android:ems="10"
-        android:inputType="number"/>
+        </RadioGroup>
 
-    <TextView
-        android:id="@+id/to_building_tv"
-        style="@style/RobotoTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/from_building_tv"
-        android:layout_alignRight="@+id/from_building_tv"
-        android:layout_below="@+id/to_title"
-        android:text="Building" />
-
-    <TextView
-        android:id="@+id/to_room_tv"
-        style="@style/RobotoTextViewStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/to_building"
-        android:layout_alignLeft="@+id/from_room"
-        android:layout_alignStart="@+id/from_room"
-        android:text="Room" />
-
-    <EditText
-        android:id="@+id/to_room"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/to_room_tv"
-        android:layout_alignStart="@+id/to_room_tv"
-        android:layout_below="@+id/to_room_tv"
-        android:ems="10"
-        android:inputType="number"/>
+        <AutoCompleteTextView
+            android:id="@+id/to_autocomplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/to_radio_group"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:hint="Enter a Room or a Building"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

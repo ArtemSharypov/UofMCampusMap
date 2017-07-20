@@ -86,7 +86,7 @@ public class MapNavigationMesh
             else
             {
                 //todo make this just an if check for an extra route, then compare the routes once it can run sufficiently fast enough
-                if(buildingsConnectViaTunnels(startLocation, endLocation))
+                if(buildingsConnectViaTunnels(startLocation, endLocation) && !startRoom.equals("") && !endRoom.equals(""))
                 {
                     route = routeViaTunnels(startLocation, startRoom, endLocation, endRoom);
                 }
@@ -215,7 +215,6 @@ public class MapNavigationMesh
                 };
 
                 thread1.start();
-                route = firstRoutePart;
 
                 //Stairs that will connect to the closest stairs, that will now be on the same level as the destination
                 destinationFloorStairs = closestStairs.findStairsConnection(endRoomVertex.getFloor());
@@ -238,6 +237,8 @@ public class MapNavigationMesh
                 {
                     thread1.join();
                     thread2.join();
+
+                    route = firstRoutePart;
 
                     //Combine the seperate floor routes
                     route.combineRoutes(secondRoutePart);
@@ -716,7 +717,7 @@ public class MapNavigationMesh
         drake.setTop(artlab.getBottom());
         drake.setBottom(new LatLng(49.808213, -97.130217));
 
-        addEntrance("Drake", drake.getBottom());
+        addEntrance("Drake Centre", drake.getBottom());
         walkableZones.add(drake);
 
         //rightMid
@@ -816,7 +817,7 @@ public class MapNavigationMesh
         eli_dafoe.setRight(new LatLng(49.809935, -97.131675));
         eli_dafoe.setBottom(new LatLng(49.809667, -97.131876));
 
-        addEntrance("Elizabeth Dafoe", eli_dafoe.getTop());
+        addEntrance("Elizabeth Dafoe", eli_dafoe.getRight());
         walkableZones.add(eli_dafoe);
 
         //rightMid

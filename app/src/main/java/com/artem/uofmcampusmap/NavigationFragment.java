@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,20 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                 if(firstInstruction.getSource() instanceof IndoorVertex)
                 {
                     handleIndoorSource(firstInstruction);
+                }
+                else
+                {
+                    //Special case for only outdoor locations, since the display will already be the map and it won't have to change
+                    //at all
+                    if(currLocation.equals(OUTSIDE_ID))
+                    {
+                        DisplayRoute childFrag = (DisplayRoute) getChildFragmentManager().findFragmentById(R.id.frag_holder);
+
+                        if(childFrag != null)
+                        {
+                            childFrag.displayRoute();
+                        }
+                    }
                 }
             }
         }
