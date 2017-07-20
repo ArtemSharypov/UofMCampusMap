@@ -121,6 +121,7 @@ public class IndoorVertex extends Vertex
             indoorVertex = (IndoorVertex) vertex;
             posToCompare = indoorVertex.getPosition();
 
+            //Vertex's must have the same (X, Y) point to be considered the same
             if(building.equals(indoorVertex.getBuilding()) && position.getX() == posToCompare.getX()
                     && position.getY() == posToCompare.getY())
             {

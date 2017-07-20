@@ -1,7 +1,10 @@
 package com.artem.uofmcampusmap;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.PriorityQueue;
 
 /**
  * Created by Artem on 2017-05-01.
@@ -15,11 +18,26 @@ public class RouteFinder {
         Route route = null;
         Vertex source;
         Vertex destination;
-        Vertex lowestCostVertex;
-        Vertex vertexToCompare;
-        ArrayList<Vertex> closedList; //vertices evaluated
-        ArrayList<Vertex> openList; //vertices not yet evaluated
-        ArrayList<Vertex> successors; //vertices that are connected to lowest cost vertex
+        Vertex currVertex;
+        HashSet<Vertex> closedList; //vertices evaluated
+        PriorityQueue<Vertex> openList; //vertices not yet evaluated
+        Comparator<Vertex> comparator = new Comparator<Vertex>() {
+            @Override
+            public int compare(Vertex vertex1, Vertex vertex2) {
+                if(vertex1.getF() < vertex2.getF())
+                {
+                    return -1;
+                }
+                else if(vertex1.getF() > vertex2.getF())
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        };
 
         if(start != null && end != null)
         {
@@ -34,149 +52,89 @@ public class RouteFinder {
                 destination = new OutdoorVertex((OutdoorVertex) end);
 
             source.setG(0);
-            closedList = new ArrayList<>();
-            openList = new ArrayList<>();
+            closedList = new HashSet<>();
+            openList = new PriorityQueue<>(5, comparator);
 
             openList.add(source);
 
             //openList being empty means a route has been found, or that there is no possible paths between start/destination
             while(!openList.isEmpty())
             {
-                lowestCostVertex = findLowestCostVertex(openList);
+                currVertex = openList.poll();
 
-                openList.remove(lowestCostVertex);
-                successors = generateSuccessors(lowestCostVertex, end);
-
-                //find the connections the next vertices have
-                for(Vertex currVertex: successors)
+                if(currVertex.equals(destination))
                 {
-                    if(currVertex.equals(destination))
-                    {
-                        //Save the route and clear everything
-                        route = Route.reverseRoute(currVertex);
-                        openList.clear();
-                        break;
-                    }
-
-                    //g = parent g + distance between parent and this
-                    currVertex.setG(lowestCostVertex.getG() + lowestCostVertex.getDistanceFrom(currVertex));
-                    currVertex.calculateH(destination);
-                    currVertex.calculateF();
-
-                    if(openList.contains(currVertex))
-                    {
-                        vertexToCompare = openList.get(openList.indexOf(currVertex));
-
-                        //Remove the vertex in the open list if its F is bigger than the current
-                        if(vertexToCompare != null)
-                        {
-                            if(vertexToCompare.getF() > currVertex.getF())
-                            {
-                                openList.remove(vertexToCompare);
-                                openList.add(currVertex);
-                            }
-                        }
-                    }
-                    else if(closedList.contains(currVertex))
-                    {
-                        vertexToCompare = closedList.get(closedList.indexOf(currVertex));
-
-                        //Remove the vertex in the closed list if its F (total distance between it and destination) is bigger,
-                        // and add current to open list
-                        if(vertexToCompare != null)
-                        {
-                            if(vertexToCompare.getF() > currVertex.getF())
-                            {
-                                closedList.remove(vertexToCompare);
-                                openList.add(currVertex);
-                            }
-                        }
-                    }
-                    else //new vertex, add it to open
-                    {
-                        openList.add(currVertex);
-                    }
-
+                    //Save the route and clear everything
+                    route = Route.reverseRoute(currVertex);
+                    openList.clear();
+                    break;
                 }
 
-                closedList.add(lowestCostVertex);
+                for(Vertex currSuccessor: currVertex.getConnections())
+                {
+                    if(checkIfValidSuccessor(currSuccessor, currVertex))
+                    {
+                         /* For a successor to be added into the open set, it must have one of three conditions:
+                             -Not be in the closed set
+                             -Be in the open set, and now have a lower G cost compared to before
+                             -Not be in the open or closed set.
+                         */
+                        if (openList.contains(currSuccessor))
+                        {
+                            double tempGCost = currVertex.getG() + currVertex.getDistanceFrom(currSuccessor);
+
+                            if (currSuccessor.getG() > tempGCost)
+                            {
+                                openList.remove(currSuccessor);
+
+                                currSuccessor.setParent(currVertex);
+                                currSuccessor.setG(tempGCost);
+                                currSuccessor.calculateF();
+
+                                openList.add(currSuccessor);
+                            }
+                        }
+                        else
+                        {
+                            if (!closedList.contains(currSuccessor))
+                            {
+                                currSuccessor.setParent(currVertex);
+                                currSuccessor.setG(currVertex.getG() + currVertex.getDistanceFrom(currSuccessor));
+                                currSuccessor.calculateH(destination);
+                                currSuccessor.calculateF();
+
+                                openList.add(currSuccessor);
+                            }
+                        }
+                    }
+                }
+
+                closedList.add(currVertex);
             }
         }
 
         return route;
     }
 
-    //Adds all valid connections from the parent vertex into the List
-    //If the destination is on a given floor, any successors must be on the same floor as it to be added
-    private ArrayList<Vertex> generateSuccessors(Vertex parent, Vertex destination)
+    //Used to check if a parents successor is valid to use in the A* algorithm
+    private boolean checkIfValidSuccessor(Vertex successor, Vertex parent)
     {
-        HashSet<Vertex> connections;
-        ArrayList<Vertex> successors = new ArrayList<>();
-        Vertex childVertex;
+        boolean valid = false;
 
-        boolean parentIsIndoor = false;
-        IndoorVertex parentIndoor = null;
-        boolean childIsIndoor = false;
-
-        if(parent != null)
+        //For a successor to be valid, it has to be of the same Vertex type, ie both Indoor or Outdoor
+        //As well as if it is an IndoorVertex, they must be on the same floor.
+        if(successor instanceof IndoorVertex && parent instanceof IndoorVertex)
         {
-            if(parent instanceof IndoorVertex){
-                parentIsIndoor = true;
-                parentIndoor = (IndoorVertex) parent;
-            }
-
-            connections = parent.getConnections();
-
-            for(Vertex currConnection: connections)
+            if(((IndoorVertex) successor).getFloor() == ((IndoorVertex) parent).getFloor())
             {
-                if(currConnection instanceof IndoorVertex)
-                {
-                    childVertex = new IndoorVertex((IndoorVertex) currConnection);
-                    childIsIndoor = true;
-                }
-                else
-                    childVertex = new OutdoorVertex((OutdoorVertex) currConnection);
-
-                //For a successor, if the parent is Indoor, then the child has to be an IndoorVertex as well as being on the same floor
-                //as the parent
-                //Or simply the child vertex being an Outdoor's one
-                if(((childIsIndoor && parentIsIndoor)&& ((IndoorVertex)childVertex).getFloor() == parentIndoor.getFloor()) ||
-                        childVertex instanceof OutdoorVertex)
-                {
-                    childVertex.setParent(parent);
-                    childVertex.setG(parent.getG() + parent.getDistanceFrom(childVertex));
-                    childVertex.calculateH(destination);
-                    childVertex.calculateF();
-                    successors.add(childVertex);
-                }
+                valid = true;
             }
         }
-
-        return successors;
-    }
-
-    //todo replace this with just a priorityqueue?
-    //Finds the next vertex that has the smallest estimated total cost from it to the destination
-    private Vertex findLowestCostVertex(ArrayList<Vertex> vertexList)
-    {
-        Vertex currVertex = null;
-        double currCost = 0;
-
-        for(Vertex vertex: vertexList)
+        else if(successor instanceof OutdoorVertex && parent instanceof OutdoorVertex)
         {
-            //F is the estimated total cost from this vertex to the destination
-            if(currVertex == null)
-            {
-                currVertex = vertex;
-                currCost = vertex.getF();
-            }
-            else if(vertex.getF() < currCost)
-            {
-                currVertex = vertex;
-                currCost = vertex.getF();
-            }
+            valid = true;
         }
 
-        return currVertex;
+        return valid;
     }
 }

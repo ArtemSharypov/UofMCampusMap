@@ -72,6 +72,8 @@ public class MapNavigationMesh
     public Route getRoute(String startLocation, String startRoom, String endLocation, String endRoom)
     {
         Route route = null;
+        Route indoorRoute = null;
+        Route outdoorRoute = null;
 
         if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
         {
@@ -85,14 +87,28 @@ public class MapNavigationMesh
             }
             else
             {
-                //todo make this just an if check for an extra route, then compare the routes once it can run sufficiently fast enough
                 if(buildingsConnectViaTunnels(startLocation, endLocation) && !startRoom.equals("") && !endRoom.equals(""))
                 {
-                    route = routeViaTunnels(startLocation, startRoom, endLocation, endRoom);
+                    indoorRoute = routeViaTunnels(startLocation, startRoom, endLocation, endRoom);
+                }
+
+                outdoorRoute = routeViaInToOut(startLocation, startRoom, endLocation, endRoom);
+
+                //Check if its quicker to go through a tunnel / connection or by going outside and around
+                if(indoorRoute != null)
+                {
+                    if(indoorRoute.getRouteLength() < outdoorRoute.getRouteLength())
+                    {
+                        route = indoorRoute;
+                    }
+                    else
+                    {
+                        route = outdoorRoute;
+                    }
                 }
                 else
                 {
-                   route = routeViaInToOut(startLocation, startRoom, endLocation, endRoom);
+                    route = outdoorRoute;
                 }
             }
         }
@@ -576,7 +592,7 @@ public class MapNavigationMesh
         agri_engineer_south_ent.setRight(new LatLng(49.807472, -97.134153));
         agri_engineer_south_ent.setBottom(new LatLng(49.807406, -97.134132));
 
-        addEntrance("Agricultural Engineering", agri_engineer_north_ent.getBottom());
+        addEntrance("Agricultural Engineering", agri_engineer_south_ent.getBottom());
         walkableZones.add(agri_engineer_south_ent);
 
         //BottomMiddle is the entrance

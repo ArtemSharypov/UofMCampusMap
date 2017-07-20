@@ -45,55 +45,55 @@ public class ArmesFloor1Fragment extends DrawIndoorPathsFragment {
     @Override
     protected int findXPixelFor(double xCoordinate)
     {
-        int xPixelPos = -1;
+        int xPixelPos = 0;
 
         if(xCoordinate == -22.5)
         {
-            xPixelPos = 152;
+            xPixelPos = 114;
         }
         else if(xCoordinate == 10)
         {
-            xPixelPos = 225;
+            xPixelPos = 247;
         }
         else if(xCoordinate == 18.75)
         {
-            xPixelPos = 255;
+            xPixelPos = 302;
         }
         else if(xCoordinate == 56.25)
         {
-            xPixelPos = 340;
+            xPixelPos = 460;
         }
         else if(xCoordinate == 71.25)
         {
-            xPixelPos = 372;
+            xPixelPos = 517;
         }
         else if(xCoordinate == 87.5)
         {
-            xPixelPos = 402;
+            xPixelPos = 572;
         }
         else if(xCoordinate == 92.5)
         {
-            xPixelPos = 415;
+            xPixelPos = 594;
         }
         else if(xCoordinate == 93.75)
         {
-            xPixelPos = 423;
+            xPixelPos = 607;
         }
         else if(xCoordinate == 120)
         {
-            xPixelPos = 491;
+            xPixelPos = 736;
         }
         else if(xCoordinate == 130)
         {
-            xPixelPos = 500;
+            xPixelPos = 745;
         }
         else if(xCoordinate == 163.75)
         {
-            xPixelPos = 588;
+            xPixelPos = 913;
         }
         else if(xCoordinate == 168.75)
         {
-            xPixelPos = 598;
+            xPixelPos = 930;
         }
 
         return xPixelPos;
@@ -103,39 +103,39 @@ public class ArmesFloor1Fragment extends DrawIndoorPathsFragment {
     @Override
     protected int findYPixelFor(double yCoordinate)
     {
-        int yPixelPos = -1;
+        int yPixelPos = 0;
 
         if(yCoordinate == 95)
         {
-            yPixelPos = 590;
+            yPixelPos = 740;
         }
         else if(yCoordinate == 120)
         {
-            yPixelPos = 538;
+            yPixelPos = 643;
         }
         else if(yCoordinate == 122.5)
         {
-            yPixelPos = 535;
+            yPixelPos = 632;
         }
         else if(yCoordinate == 126.25)
         {
-            yPixelPos = 520;
+            yPixelPos = 616;
         }
         else if(yCoordinate == 132.5)
         {
-            yPixelPos = 505;
+            yPixelPos = 589;
         }
         else if(yCoordinate == 138.75)
         {
-            yPixelPos = 492;
+            yPixelPos = 559;
         }
         else if(yCoordinate == 156.25)
         {
-            yPixelPos = 454;
+            yPixelPos = 488;
         }
         else if(yCoordinate == 212.5)
         {
-            yPixelPos = 325;
+            yPixelPos = 253;
         }
 
         return yPixelPos;
