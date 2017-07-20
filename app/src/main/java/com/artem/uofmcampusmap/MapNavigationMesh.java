@@ -717,7 +717,7 @@ public class MapNavigationMesh
         drake.setTop(artlab.getBottom());
         drake.setBottom(new LatLng(49.808213, -97.130217));
 
-        addEntrance("Drake", drake.getBottom());
+        addEntrance("Drake Centre", drake.getBottom());
         walkableZones.add(drake);
 
         //rightMid
