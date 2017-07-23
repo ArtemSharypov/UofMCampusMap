@@ -39,7 +39,7 @@ public class MapNavigationMesh
         routeFinder = new RouteFinder();
         this.resources = resources;
         tunnelConnectedBuildings = resources.getStringArray(R.array.tunnel_connected_buildings);
-        populationMesh();
+        populateMesh();
     }
 
     //Adds another entrance to a given building
@@ -573,6 +573,8 @@ public class MapNavigationMesh
         return roomVertex;
     }
 
+    //Creates all of the WalkableZones sections of the mesh, that are used for finding where the GPS location is coming from
+    //Also contains all of the Vertex's for navigation, along with their connections to one another
     private void populateMesh()
     {
         //Bottom is the entrancce
@@ -702,6 +704,15 @@ public class MapNavigationMesh
 
         addEntrance("Architecture 2", archi2_south_ent.getBottom());
         walkableZones.add(archi2_south_ent);
+
+        //right
+        WalkableZone archi2_west_ent = new WalkableZone(new LatLng(49.807778, -97.137130), new LatLng(49.807834, -97.136870), new LatLng(49.807675, -97.137019), new LatLng(49.807759, -97.136834));
+        archi2_west_ent.setRight(new LatLng(49.807761, -97.136842));
+        archi2_west_ent.setLeft(new LatLng(49.807692, -97.137034));
+        archi2_west_ent.setTop(new LatLng(49.807831, -97.136946));
+
+        addEntrance("Architecture 2", archi2_west_ent.getRight());
+        walkableZones.add(archi2_west_ent);
 
         //top is entrance
         WalkableZone armes_machray = new WalkableZone(new LatLng(49.810977, -97.133496), new LatLng(49.811021, -97.133344), new LatLng(49.810778, -97.133302), new LatLng(49.810819, -97.133178));
@@ -2291,17 +2302,10 @@ public class MapNavigationMesh
 
         WalkableZone gq = new WalkableZone(new LatLng(49.807672, -97.137194), new LatLng(49.807714, -97.137053), new LatLng(49.807573, -97.137138), new LatLng(49.807614, -97.137007));
         gq.setLeft(gp.getRight());
-        gq.setRight(new LatLng(49.807692, -97.137034));
+        gq.setRight(archi2_west_ent.getLeft());
         gq.setBottom(new LatLng(49.807599, -97.137059));
 
         walkableZones.add(gq);
-
-        WalkableZone archi2_west_ent = new WalkableZone(new LatLng(49.807778, -97.137130), new LatLng(49.807834, -97.136870), new LatLng(49.807675, -97.137019), new LatLng(49.807759, -97.136834));
-        archi2_west_ent.setRight(new LatLng(49.807761, -97.136842));
-        archi2_west_ent.setLeft(gq.getRight());
-        archi2_west_ent.setTop(new LatLng(49.807831, -97.136946));
-
-        walkableZones.add(archi2_west_ent)
 
         WalkableZone gr = new WalkableZone(new LatLng(49.807862, -97.137037), new LatLng(49.807883, -97.136920), new LatLng(49.807802, -97.136984), new LatLng(49.807827, -97.136872));
         gr.setBottom(archi2_west_ent.getTop());
@@ -2362,322 +2366,724 @@ public class MapNavigationMesh
 
         walkableZones.add(gz);
 
+        WalkableZone ha = new WalkableZone(new LatLng(49.808373, -97.137459), new LatLng(49.808439, -97.137270), new LatLng(49.808218, -97.136837), new LatLng(49.808260, -97.136711));
+        ha.setTop(education_west_ent.getBottom());
+        ha.setBottom(gv.getTop());
 
+        walkableZones.add(ha);
 
-    }
-    //WalkableZone  = new WalkableZone(new LatLng(), new LatLng(), new LatLng(), new LatLng());
+        WalkableZone hb = new WalkableZone(new LatLng(49.808131, -97.136533), new LatLng(49.808171, -97.136455), new LatLng(49.808048, -97.136324), new LatLng(49.808074, -97.136225));
+        hb.setTop(gw.getBottom());
+        hb.setBottom(archi2_north_ent.getTop());
 
-    //Creates all of the WalkableZones sections of the mesh, that are used for finding where the GPS location is coming from
-    //Also contains all of the Vertex's for navigation, along with their connections to one another
-    private void populationMesh()
-    {
-        WalkableZone ai = new WalkableZone(new LatLng(49.808272, -97.132776), new LatLng(49.808341, -97.132528), new LatLng(49.808090, -97.132631), new LatLng(49.808176, -97.132409));
-        ai.setTop(new LatLng(49.808329, -97.132564));
-        ai.setLeft(new LatLng(49.808158, -97.132680));
-        ai.setRight(ac.getLeft());
-        ai.setBottom(new LatLng(49.808165, -97.132435));
+        walkableZones.add(hb);
 
-        walkableZones.add(ai);
+        WalkableZone hc = new WalkableZone(new LatLng(49.807582, -97.137139), new LatLng(49.807639, -97.136943), new LatLng(49.807506, -97.137096), new LatLng(49.807563, -97.136908));
+        hc.setTop(gq.getBottom());
+        hc.setRight(new LatLng(49.807582, -97.136929));
 
-        WalkableZone aj = new WalkableZone(new LatLng(49.808544, -97.132795), new LatLng(49.808558, -97.132704), new LatLng(49.808312, -97.132602), new LatLng(49.808337, -97.132518));
-        aj.setTop(eitc_e1_east_ent.getBottom());
-        aj.setBottom(ai.getTop());
+        walkableZones.add(hc);
 
-        walkableZones.add(aj);
+        WalkableZone hd = new WalkableZone(new LatLng(49.807603, -97.136954), new LatLng(49.807730, -97.136334), new LatLng(49.807552, -97.136926), new LatLng(49.807668, -97.136312));
+        hd.setLeft(hc.getRight());
+        hd.setRight(new LatLng(49.807689, -97.136309));
 
-        WalkableZone ak = new WalkableZone(new LatLng(49.808742, -97.132950), new LatLng(49.808766, -97.132859), new LatLng(49.808554, -97.132812), new LatLng(49.808587, -97.132714));
-        ak.setTop(eitc_e1_e2.getBottom());
-        ak.setBottom(eitc_e1_east_ent.getTop());
+        walkableZones.add(hd);
 
-        walkableZones.add(ak);
+        WalkableZone he = new WalkableZone(new LatLng(49.807713, -97.136350), new LatLng(49.807767, -97.136189), new LatLng(49.807655, -97.136330), new LatLng(49.807689, -97.136130));
+        he.setLeft(hd.getRight());
+        he.setTop(archi2_south_ent.getBottom());
+        he.setRight(new LatLng(49.807738, -97.136187));
+        he.setBottom(new LatLng(49.807681, -97.136191));
 
-        WalkableZone al = new WalkableZone(new LatLng(49.808168, -97.132468), new LatLng(49.808182, -97.132423), new LatLng(49.808093, -97.132407), new LatLng(49.808111, -97.132359));
-        al.setTop(ai.getBottom());
-        al.setBottom(new LatLng(49.808102, -97.132385));
+        walkableZones.add(he);
 
-        walkableZones.add(al);
+        WalkableZone hf = new WalkableZone(new LatLng(49.807668, -97.136286), new LatLng(49.807694, -97.136117), new LatLng(49.807436, -97.136165), new LatLng(49.807487, -97.135980));
+        hf.setTop(he.getBottom());
+        hf.setBottom(new LatLng(49.807471, -97.136059));
 
-        WalkableZone aw = new WalkableZone(new LatLng(49.807856, -97.133648), new LatLng(49.808175, -97.132680), new LatLng(49.807816, -97.133633), new LatLng(49.808144, -97.132659));
-        aw.setRight(ai.getLeft());
-        aw.setLeft(eitc_e1_e3.getRight());
+        walkableZones.add(hf);
 
-        walkableZones.add(aw);
+        WalkableZone hg = new WalkableZone(new LatLng(49.807410, -97.136204), new LatLng(49.807491, -97.135937), new LatLng(49.807320, -97.136142), new LatLng(49.807415, -97.135869));
+        hg.setTop(hf.getBottom());
+        hg.setLeft(new LatLng(49.807387, -97.136112));
+        hg.setRight(new LatLng(49.807441, -97.135932));
 
-        WalkableZone ax = new WalkableZone(new LatLng(49.807225, -97.135525), new LatLng(49.807874, -97.133808), new LatLng(49.807176, -97.135508), new LatLng(49.807779, -97.133750));
-        ax.setRight(eitc_e1_e3.getLeft());
-        ax.setLeft(new LatLng(49.807202, -97.135511));
-        ax.setTop(russel_south_ent.getBottom());
-        ax.setBottom(aq.getTop());
+        walkableZones.add(hg);
 
-        walkableZones.add(ax);
+        WalkableZone hh = new WalkableZone(new LatLng(49.807366, -97.136318), new LatLng(49.807408, -97.136168), new LatLng(49.807277, -97.136275), new LatLng(49.807344, -97.136069));
+        hh.setLeft(new LatLng(49.807318, -97.136300));
+        hh.setRight(hg.getLeft());
 
-        WalkableZone ay = new WalkableZone(new LatLng(49.807201, -97.135700), new LatLng(49.807252, -97.135570), new LatLng(49.807123, -97.135634), new LatLng(49.807180, -97.135489));
-        ay.setRight(ax.getLeft());
-        ay.setBottom(new LatLng(49.807156, -97.135650));
-        ay.setLeft(fac_of_music_south_end.getRight());
+        walkableZones.add(hh);
 
-        walkableZones.add(ay);
+        WalkableZone hi = new WalkableZone(new LatLng(49.807309, -97.136461), new LatLng(49.807347, -97.136332), new LatLng(49.807232, -97.136390), new LatLng(49.807260, -97.136286));
+        hi.setRight(hh.getLeft());
+        hi.setBottom(new LatLng(49.807241, -97.136322));
 
-        WalkableZone az = new WalkableZone(new LatLng(49.806223, -97.138543), new LatLng(49.807193, -97.135656), new LatLng(49.806115, -97.138502), new LatLng(49.807135, -97.135619));
-        az.setLeft(new LatLng(49.806191, -97.138524));
-        az.setRight(ay.getBottom());
-        az.setTop(new LatLng(49.807015, -97.136213));
+        walkableZones.add(hi);
 
-        walkableZones.add(az);
+        WalkableZone hj = new WalkableZone(new LatLng(49.807237, -97.136412), new LatLng(49.807252, -97.136290), new LatLng(49.806996, -97.136302), new LatLng(49.807040, -97.136174));
+        hj.setTop(hi.getBottom());
+        hj.setBottom(new LatLng(49.807028, -97.136229));
 
-        WalkableZone ba = new WalkableZone(new LatLng(49.806233, -97.138803), new LatLng(49.806306, -97.138689), new LatLng(49.806111, -97.138505), new LatLng(49.806229, -97.138530));
-        ba.setRight(az.getLeft());
-        ba.setLeft(new LatLng(49.806261, -97.138778));
+        walkableZones.add(hj);
 
-        walkableZones.add(ba);
+        WalkableZone hk = new WalkableZone(new LatLng(49.807014, -97.136321), new LatLng(49.807051, -97.136183), new LatLng(49.806942, -97.136258), new LatLng(49.806960, -97.136137));
+        hk.setTop(hj.getBottom());
+        hk.setLeft(new LatLng(49.806979, -97.136249));
+        hk.setRight(new LatLng(49.807007, -97.136153));
 
-        WalkableZone bb = new WalkableZone(new LatLng(49.807059, -97.139510), new LatLng(49.807071, -97.139470), new LatLng(49.805933, -97.138566), new LatLng(49.805953, -97.138531));
-        bb.setTop(new LatLng(49.807064, -97.139488));
-        bb.setRight(ba.getLeft());
-        bb.setBottom(au.getTop());
+        walkableZones.add(hk);
 
-        walkableZones.add(bb);
+        WalkableZone hl = new WalkableZone(new LatLng(49.806920, -97.136462), new LatLng(49.807023, -97.136277), new LatLng(49.806818, -97.136401), new LatLng(49.806949, -97.136239));
+        hl.setRight(hk.getLeft());
+        hl.setLeft(new LatLng(49.806882, -97.136424));
 
-        WalkableZone bf = new WalkableZone(new LatLng(49.807283, -97.136411), new LatLng(49.807266, -97.136293), new LatLng(49.807003, -97.136300), new LatLng(49.807039, -97.136176));
-        bf.setBottom(az.getTop());
-        bf.setRight(new LatLng(49.807283, -97.136321));
+        walkableZones.add(hl);
 
-        walkableZones.add(bf);
+        WalkableZone hm = new WalkableZone(new LatLng(49.806844, -97.136649), new LatLng(49.806900, -97.136478), new LatLng(49.806746, -97.136616), new LatLng(49.806820, -97.136384));
+        hm.setLeft(new LatLng(49.806823, -97.136629));
+        hm.setRight(hl.getLeft());
 
-        WalkableZone bj = new WalkableZone(new LatLng(49.808373, -97.137459), new LatLng(49.808439, -97.137270), new LatLng(49.808218, -97.136837), new LatLng(49.808260, -97.136711));
-        bj.setTop(education_west_ent.getBottom());
-        bj.setBottom(bi.getTop());
+        walkableZones.add(hm);
 
-        walkableZones.add(bj);
+        WalkableZone hn = new WalkableZone(new LatLng(49.806248, -97.138602), new LatLng(49.806834, -97.136656), new LatLng(49.806090, -97.138574), new LatLng(49.806752, -97.136622));
+        hn.setLeft(fy.getRight());
+        hn.setRight(hm.getLeft());
 
-        WalkableZone bk = new WalkableZone(new LatLng(49.808318, -97.136638), new LatLng(49.808421, -97.136311), new LatLng(49.808214, -97.136558), new LatLng(49.808306, -97.136218));
-        bk.setLeft(bi.getRight());
-        bk.setRight(new LatLng(49.808361, -97.136284));
+        walkableZones.add(hn);
 
-        walkableZones.add(bk);
+        WalkableZone ho = new WalkableZone(new LatLng(49.807023, -97.136127), new LatLng(49.807235, -97.135607), new LatLng(49.806969, -97.136050), new LatLng(49.807157, -97.135510));
+        ho.setLeft(hk.getRight());
+        ho.setRight(new LatLng(49.807187, -97.135548));
 
-        WalkableZone bl = new WalkableZone(new LatLng(49.808146, -97.136589), new LatLng(49.808189, -97.136455), new LatLng(49.808060, -97.136346), new LatLng(49.808091, -97.136224));
-        bl.setBottom(archi2_north_ent.getTop());
-        bl.setTop(bi.getBottom());
+        walkableZones.add(ho);
 
-        walkableZones.add(bl);
+        WalkableZone hp = new WalkableZone(new LatLng(49.807206, -97.135572), new LatLng(49.807227, -97.135514), new LatLng(49.807168, -97.135534), new LatLng(49.807185, -97.135489));
+        hp.setLeft(ho.getRight());
+        hp.setRight(new LatLng(49.807203, -97.135501));
+        hp.setTop(new LatLng(49.807211, -97.135550));
 
-        WalkableZone bm = new WalkableZone(new LatLng(49.808084, -97.136087), new LatLng(49.808084, -97.135914), new LatLng(49.807750, -97.136240), new LatLng(49.807679, -97.136123));
-        bm.setTop(new LatLng(49.808059, -97.135999));
-        bm.setLeft(archi2_north_ent.getRight());
-        bm.setBottom(new LatLng(49.807745, -97.136164));
+        walkableZones.add(hp);
 
-        walkableZones.add(bm);
+        WalkableZone hq = new WalkableZone(new LatLng(49.807428, -97.135760), new LatLng(49.807446, -97.135657), new LatLng(49.807202, -97.135564), new LatLng(49.807222, -97.135517));
+        hq.setTop(new LatLng(49.807438, -97.135711));
+        hq.setBottom(hp.getTop());
 
-        WalkableZone bn = new WalkableZone(new LatLng(49.807725, -97.136381), new LatLng(49.807799, -97.136184), new LatLng(49.807320, -97.136098), new LatLng(49.807386, -97.135893));
-        bn.setTop(archi2_south_ent.getBottom());
-        bn.setRight(bm.getBottom());
-        bn.setBottom(fac_of_music_north_end.getTop());
+        walkableZones.add(hq);
 
-        walkableZones.add(bn);
+        WalkableZone hr = new WalkableZone(new LatLng(49.807480, -97.135781), new LatLng(49.807482, -97.135697), new LatLng(49.807428, -97.135760), new LatLng(49.807446, -97.135657));
+        hr.setLeft(new LatLng(49.807452, -97.135756));
+        hr.setBottom(hq.getTop());
 
-        WalkableZone bo = new WalkableZone(new LatLng(49.808272, -97.136020), new LatLng(49.808302, -97.135884), new LatLng(49.808042, -97.136102), new LatLng(49.808033, -97.135948));
-        bo.setTop(new LatLng(49.808279, -97.135949));
-        bo.setRight(new LatLng(49.808183, -97.135918));
-        bo.setBottom(bm.getTop());
+        walkableZones.add(hr);
 
-        walkableZones.add(bo);
+        WalkableZone hs = new WalkableZone(new LatLng(49.807478, -97.136006), new LatLng(49.807482, -97.135775), new LatLng(49.807383, -97.135937), new LatLng(49.807436, -97.135747));
+        hs.setRight(hr.getLeft());
+        hs.setLeft(hg.getRight());
 
-        WalkableZone bp = new WalkableZone(new LatLng(49.808216, -97.135917), new LatLng(49.808318, -97.135581), new LatLng(49.808134, -97.135950), new LatLng(49.808273, -97.135551));
-        bp.setLeft(bo.getRight());
-        bp.setRight(russel_north_ent.getLeft());
-        bp.setTop(new LatLng(49.808280, -97.135670));
+        walkableZones.add(hs);
 
-        walkableZones.add(bp);
+        WalkableZone ht = new WalkableZone(new LatLng(49.807225, -97.135530), new LatLng(49.807422, -97.134878), new LatLng(49.807145, -97.135479), new LatLng(49.807358, -97.134834));
+        ht.setRight(new LatLng(49.807405, -97.134870));
+        ht.setLeft(hp.getRight());
 
-        WalkableZone bq = new WalkableZone(new LatLng(49.808334, -97.135829), new LatLng(49.808472, -97.135767), new LatLng(49.808264, -97.135693), new LatLng(49.808282, -97.135632));
-        bq.setBottom(bp.getTop());
-        bq.setLeft(new LatLng(49.808392, -97.135795));
-        bq.setRight(new LatLng(49.808402, -97.135728));
+        walkableZones.add(ht);
 
-        walkableZones.add(bq);
+        WalkableZone hu = new WalkableZone(new LatLng(49.807422, -97.134878), new LatLng(49.807446, -97.134792), new LatLng(49.807358, -97.134834), new LatLng(49.807424, -97.134768));
+        hu.setLeft(ht.getRight());
+        hu.setRight(new LatLng(49.807436, -97.134784));
+        hu.setTop(russel_south_ent.getBottom());
+        hu.setBottom(new LatLng(49.807407, -97.134837));
 
-        WalkableZone br = new WalkableZone(new LatLng(49.808429, -97.135922), new LatLng(49.808445, -97.135787), new LatLng(49.808267, -97.136002), new LatLng(49.808294, -97.135882));
-        br.setLeft(new LatLng(49.808306, -97.136012));
-        br.setBottom(bo.getTop());
-        br.setRight(bq.getLeft());
-        br.setTop(new LatLng(49.808437, -97.135851));
+        walkableZones.add(hu);
 
-        walkableZones.add(br);
+        WalkableZone hv = new WalkableZone(new LatLng(49.807394, -97.134873), new LatLng(49.807422, -97.134765), new LatLng(49.807292, -97.134742), new LatLng(49.807308, -97.134675));
+        hv.setTop(hu.getBottom());
+        hv.setBottom(fh.getTop());
 
-        WalkableZone bs = new WalkableZone(new LatLng(49.808418, -97.136325), new LatLng(49.808433, -97.136190), new LatLng(49.808267, -97.135978), new LatLng(49.808354, -97.135987));
-        bs.setRight(br.getLeft());
-        bs.setLeft(bk.getRight());
-        bs.setTop(new LatLng(49.808419, -97.136262));
+        walkableZones.add(hv);
 
-        walkableZones.add(bs);
+        WalkableZone hw = new WalkableZone(new LatLng(49.807454, -97.134803), new LatLng(49.807874, -97.133806), new LatLng(49.807422, -97.134765), new LatLng(49.807780, -97.133697));
+        hw.setLeft(hu.getRight());
+        hw.setRight(n.getLeft());
 
-        WalkableZone bt = new WalkableZone(new LatLng(49.808641, -97.136126), new LatLng(49.808529, -97.136070), new LatLng(49.808400, -97.136326), new LatLng(49.808419, -97.136191));
-        bt.setBottom(education_south_ent.getBottom());
-        bt.setTop(bs.getTop());
-        bt.setRight(new LatLng(49.808568, -97.136101));
+        walkableZones.add(hw);
 
-        walkableZones.add(bt);
+        WalkableZone hx = new WalkableZone(new LatLng(49.809585, -97.133746), new LatLng(49.809625, -97.133530), new LatLng(49.809770, -97.133934), new LatLng(49.809844, -97.133606));
+        hx.setTop(bs.getTop());
+        hx.setBottom(new LatLng(49.809610, -97.133596));
 
-        WalkableZone bu = new WalkableZone(new LatLng(49.808591, -97.136154), new LatLng(49.808649, -97.136005), new LatLng(49.808427, -97.135911), new LatLng(49.808446, -97.135763));
-        bu.setTop(new LatLng(49.808605, -97.136014));
-        bu.setLeft(bt.getRight());
-        bu.setBottom(br.getTop());
+        walkableZones.add(hx);
 
-        walkableZones.add(bu);
+        WalkableZone hy = new WalkableZone(new LatLng(49.809541, -97.133789), new LatLng(49.809629, -97.133521), new LatLng(49.809444, -97.133714), new LatLng(49.809507, -97.133438));
+        hy.setTop(hx.getBottom());
+        hy.setBottom(new LatLng(49.809514, -97.133526));
+        hy.setLeft(uni_centre_north_ent.getRight());
 
-        WalkableZone bv = new WalkableZone(new LatLng(49.808726, -97.136083), new LatLng(49.808729, -97.135940), new LatLng(49.808608, -97.136113), new LatLng(49.808614, -97.135913));
-        bv.setTop(new LatLng(49.808721, -97.136014));
-        bv.setBottom(bu.getTop());
-        bv.setLeft(education_south_ent.getRight());
+        walkableZones.add(hy);
 
-        walkableZones.add(bv);
+        WalkableZone hz = new WalkableZone(new LatLng(49.809479, -97.133558), new LatLng(49.809511, -97.133435), new LatLng(49.809155, -97.133304), new LatLng(49.809185, -97.133183));
+        hz.setTop(hy.getBottom());
+        hz.setLeft(uni_centre_east_ent.getRight());
+        hz.setBottom(new LatLng(49.809183, -97.133267));
 
-        WalkableZone bw = new WalkableZone(new LatLng(49.808382, -97.135481), new LatLng(49.808445, -97.135284), new LatLng(49.808306, -97.135460), new LatLng(49.808378, -97.135242));
-        bw.setTop(new LatLng(49.808397, -97.135377));
-        bw.setLeft(russel_north_ent.getRight());
+        walkableZones.add(hz);
 
-        walkableZones.add(bw);
+        WalkableZone ia = new WalkableZone(new LatLng(49.809194, -97.133180), new LatLng(49.809258, -97.133002), new LatLng(49.809079, -97.133115), new LatLng(49.809127, -97.132889));
+        ia.setRight(al.getLeft());
+        ia.setLeft(new LatLng(49.809136, -97.133148));
 
-        WalkableZone bx = new WalkableZone(new LatLng(49.808441, -97.135780), new LatLng(49.808541, -97.135535), new LatLng(49.808363, -97.135712), new LatLng(49.808432, -97.135495));
-        bx.setLeft(bq.getRight());
-        bx.setTop(new LatLng(49.808529, -97.135567));
-        bx.setRight(new LatLng(49.808463, -97.135508));
+        walkableZones.add(ia);
 
-        walkableZones.add(bx);
+        WalkableZone ib = new WalkableZone(new LatLng(49.809164, -97.133324), new LatLng(49.809195, -97.133185), new LatLng(49.809057, -97.133225), new LatLng(49.809083, -97.133115));
+        ib.setRight(ia.getLeft());
+        ib.setTop(hz.getBottom());
+        ib.setLeft(new LatLng(49.809091, -97.133237));
+        ib.setBottom(new LatLng(49.809068, -97.133162));
 
-        WalkableZone by = new WalkableZone(new LatLng(49.808646, -97.135669), new LatLng(49.808644, -97.135568), new LatLng(49.808519, -97.135596), new LatLng(49.808533, -97.135545));
-        by.setTop(helen_glass.getBottom());
-        by.setBottom(bx.getTop());
+        walkableZones.add(ib);
 
-        walkableZones.add(by);
+        WalkableZone ic = new WalkableZone(new LatLng(49.809057, -97.133225), new LatLng(49.809086, -97.133122), new LatLng(49.808996, -97.133183), new LatLng(49.809021, -97.133084));
+        ic.setTop(ib.getBottom());
+        ic.setBottom(new LatLng(49.809016, -97.133126));
+        ic.setLeft(new LatLng(49.809040, -97.133177));
 
-        WalkableZone bz = new WalkableZone(new LatLng(49.808540, -97.135557), new LatLng(49.808670, -97.135079), new LatLng(49.808382, -97.135481), new LatLng(49.808532, -97.134996));
-        bz.setLeft(bx.getRight());
-        bz.setBottom(bw.getTop());
-        bz.setRight(new LatLng(49.808617, -97.135022));
+        walkableZones.add(ic);
 
-        walkableZones.add(bz);
+        WalkableZone id = new WalkableZone(new LatLng(49.808994, -97.133431), new LatLng(49.809070, -97.133199), new LatLng(49.808949, -97.133367), new LatLng(49.809007, -97.133151));
+        id.setRight(ic.getLeft());
+        id.setLeft(eitc_e2.getRight());
+        id.setTop(new LatLng(49.809063, -97.133278));
 
-        WalkableZone ca = new WalkableZone(new LatLng(49.808745, -97.135150), new LatLng(49.808777, -97.135021), new LatLng(49.808706, -97.135159), new LatLng(49.808745, -97.134995));
-        ca.setLeft(new LatLng(49.808741, -97.135127));
-        ca.setBottom(new LatLng(49.808738, -97.135035));
-        ca.setTop(uni_centre_south_west_ent.getBottom());
+        walkableZones.add(id);
 
-        walkableZones.add(ca);
+        WalkableZone ig = new WalkableZone(new LatLng(49.809065, -97.133434), new LatLng(49.809126, -97.133256), new LatLng(49.809005, -97.133403), new LatLng(49.809070, -97.133199));
+        ig.setLeft(new LatLng(49.809043, -97.133412));
+        ig.setRight(ib.getLeft());
+        ig.setBottom(id.getTop());
 
-        WalkableZone cb = new WalkableZone(new LatLng(49.808711, -97.135147), new LatLng(49.808784, -97.134894), new LatLng(49.808524, -97.135020), new LatLng(49.808609, -97.134751));
-        cb.setTop(ca.getBottom());
-        cb.setRight(new LatLng(49.808748, -97.134871));
-        cb.setLeft(bz.getRight());
-        cb.setBottom(eitc_e3.getLeft());
+        walkableZones.add(ig);
 
-        walkableZones.add(cb);
+        WalkableZone ih = new WalkableZone(new LatLng(49.809075, -97.133582), new LatLng(49.809115, -97.133454), new LatLng(49.808982, -97.133504), new LatLng(49.809014, -97.133378));
+        ih.setLeft(new LatLng(49.809033, -97.133534));
+        ih.setTop(new LatLng(49.809099, -97.133523));
+        ih.setBottom(eitc_e2.getTop());
+        ih.setRight(ig.getLeft());
 
-        WalkableZone cc = new WalkableZone(new LatLng(49.808747, -97.135500), new LatLng(49.808776, -97.135098), new LatLng(49.808661, -97.135457), new LatLng(49.808711, -97.135082));
-        cc.setLeft(helen_glass.getRight());
-        cc.setRight(ca.getLeft());
+        walkableZones.add(ih);
 
-        walkableZones.add(cc);
+        WalkableZone ii = new WalkableZone(new LatLng(49.809002, -97.133168), new LatLng(49.809027, -97.133079), new LatLng(49.808902, -97.133076), new LatLng(49.808925, -97.133001));
+        ii.setTop(ic.getBottom());
+        ii.setBottom(new LatLng(49.808926, -97.133034));
 
-        WalkableZone cd = new WalkableZone(new LatLng(49.808883, -97.135066), new LatLng(49.808994, -97.134727), new LatLng(49.808696, -97.134909), new LatLng(49.808811, -97.134602));
-        cd.setLeft(cb.getRight());
-        cd.setTop(uni_centre_west_ent.getBottom());
-        cd.setRight(new LatLng(49.808953, -97.134693));
+        walkableZones.add(ii);
 
-        walkableZones.add(cd);
+        WalkableZone ij = new WalkableZone(new LatLng(49.808902, -97.133078), new LatLng(49.808925, -97.133000), new LatLng(49.808858, -97.133042), new LatLng(49.808883, -97.132969));
+        ij.setBottom(new LatLng(49.808873, -97.132998));
+        ij.setTop(ii.getBottom());
+        ij.setRight(new LatLng(49.808905, -97.132982));
 
-        WalkableZone ce = new WalkableZone(new LatLng(49.809002, -97.134745), new LatLng(49.809182, -97.134225), new LatLng(49.808867, -97.134635), new LatLng(49.809019, -97.134121));
-        ce.setLeft(cd.getRight());
-        ce.setRight(new LatLng(49.809129, -97.134215));
+        walkableZones.add(ij);
 
-        walkableZones.add(ce);
+        WalkableZone ik = new WalkableZone(new LatLng(49.808834, -97.133304), new LatLng(49.808891, -97.132972), new LatLng(49.808498, -97.133017), new LatLng(49.808580, -97.132743));
+        ik.setTop(ij.getBottom());
+        ik.setBottom(o.getTop());
 
-        WalkableZone cf = new WalkableZone(new LatLng(49.809198, -97.134243), new LatLng(49.809346, -97.133747), new LatLng(49.808991, -97.134100), new LatLng(49.809162, -97.133537));
-        cf.setLeft(ce.getRight());
-        cf.setBottom(new LatLng(49.809141, -97.133597));
-        cf.setTop(uni_centre_north_ent.getBottom());
+        walkableZones.add(ik);
 
-        walkableZones.add(cf);
+        WalkableZone il = new WalkableZone(new LatLng(49.809370, -97.133901), new LatLng(49.809432, -97.133733), new LatLng(49.809295, -97.133866), new LatLng(49.809357, -97.133642));
+        il.setBottom(new LatLng(49.809315, -97.133807));
+        il.setTop(uni_centre_north_ent.getBottom());
 
-        WalkableZone cg = new WalkableZone(new LatLng(49.809155, -97.133702), new LatLng(49.809196, -97.133509), new LatLng(49.808985, -97.133496), new LatLng(49.809029, -97.133355));
-        cg.setTop(cf.getBottom());
-        cg.setBottom(eitc_e2.getTop());
-        cg.setLeft(eitc_e3.getRight());
-        cg.setRight(new LatLng(49.809058, -97.133384));
+        walkableZones.add(il);
 
-        walkableZones.add(cg);
+        WalkableZone im = new WalkableZone(new LatLng(49.809187, -97.133802), new LatLng(49.809227, -97.133658), new LatLng(49.809053, -97.133682), new LatLng(49.809110, -97.133454));
+        im.setTop(new LatLng(49.809204, -97.133726));
+        im.setBottom(ih.getTop());
 
-        WalkableZone ch = new WalkableZone(new LatLng(49.809004, -97.133166), new LatLng(49.809034, -97.133082), new LatLng(49.808760, -97.132960), new LatLng(49.808783, -97.132879));
-        ch.setTop(new LatLng(49.809016, -97.133126));
-        ch.setRight(new LatLng(49.808905, -97.132985));
-        ch.setBottom(eitc_e1_e2.getTop());
+        walkableZones.add(im);
 
-        walkableZones.add(ch);
+        WalkableZone in = new WalkableZone(new LatLng(49.809295, -97.133864), new LatLng(49.809324, -97.133737), new LatLng(49.809185, -97.133802), new LatLng(49.809218, -97.133655));
+        in.setBottom(im.getTop());
+        in.setTop(il.getBottom());
+        in.setLeft(new LatLng(49.809236, -97.133827));
 
-        WalkableZone ci = new WalkableZone(new LatLng(49.808929, -97.133014), new LatLng(49.808965, -97.132892), new LatLng(49.808883, -97.132978), new LatLng(49.808931, -97.132850));
-        ci.setRight(ag.getLeft());
-        ci.setLeft(ch.getRight());
+        walkableZones.add(in);
 
-        walkableZones.add(ci);
+        WalkableZone io = new WalkableZone(new LatLng(49.808969, -97.134733), new LatLng(49.809294, -97.133837), new LatLng(49.808925, -97.134694), new LatLng(49.809102, -97.133740));
+        io.setRight(in.getLeft());
+        io.setLeft(new LatLng(49.808951, -97.134699));
 
-        WalkableZone cj = new WalkableZone(new LatLng(49.809029, -97.133360), new LatLng(49.809084, -97.133116), new LatLng(49.808952, -97.133304), new LatLng(49.809022, -97.133072));
-        cj.setBottom(ch.getTop());
-        cj.setLeft(eitc_e2.getRight());
-        cj.setTop(new LatLng(49.809077, -97.133165));
+        walkableZones.add(io);
 
-        walkableZones.add(cj);
+        WalkableZone ip = new WalkableZone(new LatLng(49.808927, -97.134904), new LatLng(49.808973, -97.134718), new LatLng(49.808803, -97.134861), new LatLng(49.808857, -97.134656));
+        ip.setRight(io.getLeft());
+        ip.setBottom(new LatLng(49.808816, -97.134808));
+        ip.setLeft(new LatLng(49.808896, -97.134874));
 
-        WalkableZone ck = new WalkableZone(new LatLng(49.809077, -97.133430), new LatLng(49.809193, -97.133043), new LatLng(49.809012, -97.133397), new LatLng(49.809138, -97.132937));
-        ck.setRight(p.getLeft());
-        ck.setBottom(cj.getTop());
-        ck.setLeft(cg.getRight());
-        ck.setTop(new LatLng(49.809142, -97.133212));
+        walkableZones.add(ip);
 
-        walkableZones.add(ck);
+        WalkableZone iq = new WalkableZone(new LatLng(49.808873, -97.135073), new LatLng(49.808927, -97.134904), new LatLng(49.808771, -97.134989), new LatLng(49.808803, -97.134861));
+        iq.setTop(uni_centre_west_ent.getBottom());
+        iq.setRight(ip.getLeft());
 
-        WalkableZone cl = new WalkableZone(new LatLng(49.809464, -97.133621), new LatLng(49.809518, -97.133424), new LatLng(49.809102, -97.133344), new LatLng(49.809161, -97.133147));
-        cl.setTop(new LatLng(49.809507, -97.133477));
-        cl.setLeft(uni_centre_east_ent.getRight());
-        cl.setBottom(ck.getTop());
+        walkableZones.add(iq);
 
-        walkableZones.add(cl);
+        WalkableZone ir = new WalkableZone(new LatLng(49.808780, -97.134891), new LatLng(49.808859, -97.134634), new LatLng(49.808721, -97.134849), new LatLng(49.808803, -97.134616));
+        ir.setTop(ip.getBottom());
+        ir.setLeft(new LatLng(49.808750, -97.134865));
 
-        WalkableZone cm = new WalkableZone(new LatLng(49.809806, -97.133977), new LatLng(49.809876, -97.133627), new LatLng(49.809452, -97.133705), new LatLng(49.809536, -97.133379));
-        cm.setTop(new LatLng(49.809848, -97.133752));
-        cm.setRight(new LatLng(49.809859, -97.133622));
-        cm.setLeft(uni_centre_north_ent.getRight());
-        cm.setBottom(cl.getTop());
+        walkableZones.add(ir);
 
-        walkableZones.add(cm);
+        WalkableZone is = new WalkableZone(new LatLng(49.808784, -97.134577), new LatLng(49.809078, -97.133558), new LatLng(49.808663, -97.134458), new LatLng(49.808987, -97.133491));
+        is.setLeft(new LatLng(49.808742, -97.134541));
+        is.setRight(ih.getLeft());
 
+        walkableZones.add(is);
 
-        WalkableZone eg = new WalkableZone(new LatLng(49.809907, -97.137265), new LatLng(49.809937, -97.137201), new LatLng(49.809742, -97.136922), new LatLng(49.809768, -97.136879));
-        eg.setTop(st_pauls_east_ent.getBottom());
-        eg.setBottom(new LatLng(49.809763, -97.136915));
+        WalkableZone it = new WalkableZone(new LatLng(49.808756, -97.134647), new LatLng(49.808770, -97.134525), new LatLng(49.808699, -97.134605), new LatLng(49.808719, -97.134527));
+        it.setBottom(eitc_e3.getTop());
+        it.setLeft(new LatLng(49.808712, -97.134615));
+        it.setRight(is.getLeft());
 
-        walkableZones.add(eg);
+        walkableZones.add(it);
 
-        WalkableZone eh = new WalkableZone(new LatLng(49.809753, -97.136946), new LatLng(49.809762, -97.136760), new LatLng(49.809242, -97.136546), new LatLng(49.809298, -97.136395));
-        eh.setTop(eg.getBottom());
-        eh.setRight(ee.getLeft());
-        eh.setBottom(new LatLng(49.809265, -97.136474));
+        WalkableZone iu = new WalkableZone(new LatLng(49.808675, -97.134844), new LatLng(49.808741, -97.134654), new LatLng(49.808564, -97.134740), new LatLng(49.808634, -97.134531));
+        iu.setRight(it.getLeft());
+        iu.setLeft(new LatLng(49.808649, -97.134794));
 
-        walkableZones.add(eh);
+        walkableZones.add(iu);
 
-        WalkableZone ei = new WalkableZone(new LatLng(49.809267, -97.136529), new LatLng(49.809297, -97.136386), new LatLng(49.808813, -97.136140), new LatLng(49.808852, -97.136002));
-        ei.setTop(eh.getBottom());
-        ei.setLeft(education_north_ent.getRight());
-        ei.setBottom(new LatLng(49.808828, -97.136078));
+        WalkableZone iv = new WalkableZone(new LatLng(49.808652, -97.134934), new LatLng(49.808672, -97.134821), new LatLng(49.808536, -97.134845), new LatLng(49.808568, -97.134743));
+        iv.setRight(iu.getLeft());
+        iv.setLeft(new LatLng(49.808600, -97.134911));
+        iv.setTop(new LatLng(49.808681, -97.134869));
 
-        walkableZones.add(ei);
+        walkableZones.add(iv);
 
-        WalkableZone ej = new WalkableZone(new LatLng(49.808794, -97.136136), new LatLng(49.808865, -97.135979), new LatLng(49.808712, -97.136087), new LatLng(49.808772, -97.135775));
-        ej.setTop(ei.getBottom());
-        ej.setBottom(bv.getTop());
-        ej.setRight(helen_glass.getLeft());
+        WalkableZone iw = new WalkableZone(new LatLng(49.808745, -97.134999), new LatLng(49.808783, -97.134882), new LatLng(49.808652, -97.134934), new LatLng(49.808672, -97.134821));
+        iw.setLeft(new LatLng(49.808711, -97.134971));
+        iw.setRight(ir.getLeft());
+        iw.setBottom(iv.getTop());
 
-        walkableZones.add(ej);
+        walkableZones.add(iw);
+
+        WalkableZone ix = new WalkableZone(new LatLng(49.808766, -97.135097), new LatLng(49.808786, -97.135026), new LatLng(49.808732, -97.135052), new LatLng(49.808744, -97.134995));
+        ix.setTop(uni_centre_south_west_ent.getBottom());
+        ix.setLeft(new LatLng(49.808749, -97.135069));
+        ix.setBottom(new LatLng(49.808737, -97.135029));
+
+        walkableZones.add(ix);
+
+        WalkableZone iy = new WalkableZone(new LatLng(49.808748, -97.135195), new LatLng(49.808766, -97.135097), new LatLng(49.808699, -97.135173), new LatLng(49.808732, -97.135052));
+        iy.setRight(ix.getLeft());
+        iy.setBottom(new LatLng(49.808703, -97.135102));
+        iy.setLeft(new LatLng(49.808736, -97.135156));
+
+        walkableZones.add(iy);
+
+        WalkableZone iz = new WalkableZone(new LatLng(49.808748, -97.135499), new LatLng(49.808759, -97.135183), new LatLng(49.808669, -97.135534), new LatLng(49.808719, -97.135134));
+        iz.setRight(iy.getLeft());
+        iz.setLeft(helen_glass.getRight());
+
+        walkableZones.add(iz);
+
+        WalkableZone ja = new WalkableZone(new LatLng(49.808730, -97.135058), new LatLng(49.808744, -97.134998), new LatLng(49.808683, -97.135035), new LatLng(49.808695, -97.134968));
+        ja.setLeft(new LatLng(49.808712, -97.135043));
+        ja.setRight(iw.getLeft());
+        ja.setBottom(new LatLng(49.808687, -97.135011));
+        ja.setTop(ix.getBottom());
+
+        walkableZones.add(ja);
+
+        WalkableZone jb = new WalkableZone(new LatLng(49.808683, -97.135035), new LatLng(49.808695, -97.134968), new LatLng(49.808519, -97.134949), new LatLng(49.808549, -97.134877));
+        jb.setTop(ja.getBottom());
+        jb.setLeft(new LatLng(49.808587, -97.134958));
+        jb.setRight(iv.getLeft());
+
+        walkableZones.add(jb);
+
+        WalkableZone jc = new WalkableZone(new LatLng(49.808707, -97.135152), new LatLng(49.808726, -97.135063), new LatLng(49.808651, -97.135136), new LatLng(49.808679, -97.135039));
+        jc.setRight(ja.getLeft());
+        jc.setBottom(new LatLng(49.808653, -97.135098));
+        jc.setTop(iy.getBottom());
+
+        walkableZones.add(jc);
+
+        WalkableZone jd = new WalkableZone(new LatLng(49.808651, -97.135136), new LatLng(49.808679, -97.135039), new LatLng(49.808480, -97.135063), new LatLng(49.808510, -97.134935));
+        jd.setTop(jc.getBottom());
+        jd.setRight(jb.getLeft());
+        jd.setLeft(new LatLng(49.808548, -97.135068));
+
+        walkableZones.add(jd);
+
+        WalkableZone je = new WalkableZone(new LatLng(49.808513, -97.135542), new LatLng(49.808638, -97.135130), new LatLng(49.808396, -97.135477), new LatLng(49.808516, -97.135050));
+        je.setRight(jd.getLeft());
+        je.setBottom(new LatLng(49.808401, -97.135387));
+        je.setLeft(new LatLng(49.808481, -97.135518));
+
+        walkableZones.add(je);
+
+        WalkableZone jf = new WalkableZone(new LatLng(49.808384, -97.135509), new LatLng(49.808431, -97.135284), new LatLng(49.808315, -97.135441), new LatLng(49.808378, -97.135250));
+        jf.setTop(je.getBottom());
+        jf.setLeft(new LatLng(49.808324, -97.135465));
+
+        walkableZones.add(jf);
+
+        WalkableZone jg = new WalkableZone(new LatLng(49.808287, -97.135649), new LatLng(49.808340, -97.135508), new LatLng(49.808254, -97.135623), new LatLng(49.808315, -97.135441));
+        jg.setRight(jf.getLeft());
+        jg.setLeft(new LatLng(49.808270, -97.135634));
+        jg.setBottom(russel_north_ent.getTop());
+
+        walkableZones.add(jg);
+
+        WalkableZone jh = new WalkableZone(new LatLng(49.808518, -97.135642), new LatLng(49.808520, -97.135566), new LatLng(49.808415, -97.135582), new LatLng(49.808429, -97.135495));
+        jh.setLeft(new LatLng(49.808455, -97.135582));
+        jh.setRight(je.getLeft());
+        jh.setTop(new LatLng(49.808524, -97.135571));
+
+        walkableZones.add(jh);
+
+        WalkableZone ji = new WalkableZone(new LatLng(49.808688, -97.135687), new LatLng(49.808690, -97.135578), new LatLng(49.808519, -97.135616), new LatLng(49.808528, -97.135561));
+        ji.setTop(helen_glass.getBottom());
+        ji.setBottom(jh.getTop());
+
+        walkableZones.add(ji);
+
+        WalkableZone jj = new WalkableZone(new LatLng(49.808450, -97.135752), new LatLng(49.808509, -97.135600), new LatLng(49.808361, -97.135707), new LatLng(49.808410, -97.135577));
+        jj.setRight(jh.getLeft());
+        jj.setLeft(new LatLng(49.808404, -97.135723));
+
+        walkableZones.add(jj);
+
+        WalkableZone jk = new WalkableZone(new LatLng(49.808432, -97.135911), new LatLng(49.808450, -97.135752), new LatLng(49.808325, -97.135862), new LatLng(49.808361, -97.135707));
+        jk.setTop(new LatLng(49.808434, -97.135839));
+        jk.setLeft(new LatLng(49.808335, -97.135915));
+        jk.setRight(jj.getLeft());
+        jk.setBottom(new LatLng(49.808353, -97.135734));
+
+        walkableZones.add(jk);
+
+        WalkableZone jl = new WalkableZone(new LatLng(49.808274, -97.135700), new LatLng(49.808291, -97.135646), new LatLng(49.808233, -97.135669), new LatLng(49.808253, -97.135614));
+        jl.setTop(new LatLng(49.808278, -97.135671));
+        jl.setLeft(new LatLng(49.808258, -97.135681));
+        jl.setRight(jg.getLeft());
+
+        walkableZones.add(jl);
+
+        WalkableZone jm = new WalkableZone(new LatLng(49.808339, -97.135826), new LatLng(49.808362, -97.135702), new LatLng(49.808274, -97.135700), new LatLng(49.808291, -97.135646));
+        jm.setTop(jk.getBottom());
+        jm.setBottom(jl.getTop());
+
+        walkableZones.add(jm);
+
+        WalkableZone jn = new WalkableZone(new LatLng(49.808212, -97.135899), new LatLng(49.808274, -97.135685), new LatLng(49.808141, -97.135929), new LatLng(49.808239, -97.135655));
+        jn.setLeft(new LatLng(49.808190, -97.135903));
+        jn.setRight(jl.getLeft());
+
+        walkableZones.add(jn);
+
+        WalkableZone jo = new WalkableZone(new LatLng(49.808262, -97.136000), new LatLng(49.808288, -97.135899), new LatLng(49.808101, -97.136032), new LatLng(49.808111, -97.135948));
+        jo.setRight(jn.getLeft());
+        jo.setTop(new LatLng(49.808277, -97.135953));
+        jo.setBottom(new LatLng(49.808132, -97.135969));
+
+        walkableZones.add(jo);
+
+        WalkableZone jp = new WalkableZone(new LatLng(49.808125, -97.136074), new LatLng(49.808132, -97.135937), new LatLng(49.807911, -97.136115), new LatLng(49.807860, -97.135904));
+        jp.setTop(jo.getBottom());
+        jp.setLeft(archi2_north_ent.getRight());
+        jp.setBottom(new LatLng(49.807948, -97.136049));
+
+        walkableZones.add(jp);
+
+        WalkableZone jq = new WalkableZone(new LatLng(49.807953, -97.136089), new LatLng(49.807953, -97.136008), new LatLng(49.807747, -97.136211), new LatLng(49.807719, -97.136124));
+        jq.setTop(jp.getBottom());
+        jq.setBottom(he.getRight());
+
+        walkableZones.add(jq);
+
+        WalkableZone jr = new WalkableZone(new LatLng(49.808268, -97.135988), new LatLng(49.808289, -97.135912), new LatLng(49.808197, -97.136025), new LatLng(49.808211, -97.135896));
+        jr.setTop(new LatLng(49.808278, -97.135950));
+        jr.setBottom(jo.getTop());
+
+        walkableZones.add(jr);
+
+        WalkableZone js = new WalkableZone(new LatLng(49.808342, -97.136014), new LatLng(49.808366, -97.135941), new LatLng(49.808268, -97.135988), new LatLng(49.808289, -97.135912));
+        js.setLeft(new LatLng(49.808311, -97.135997));
+        js.setRight(jk.getLeft());
+
+        walkableZones.add(js);
+
+        WalkableZone jt = new WalkableZone(new LatLng(49.808366, -97.136164), new LatLng(49.808342, -97.136006), new LatLng(49.808314, -97.136261), new LatLng(49.808267, -97.135992));
+        jt.setRight(js.getLeft());
+        jt.setTop(new LatLng(49.808347, -97.136203));
+
+        walkableZones.add(jt);
+
+        WalkableZone ju = new WalkableZone(new LatLng(49.808405, -97.136316), new LatLng(49.808428, -97.136199), new LatLng(49.808313, -97.136245), new LatLng(49.808354, -97.136139));
+        ju.setLeft(gx.getRight());
+        ju.setBottom(jt.getTop());
+        ju.setTop(new LatLng(49.808426, -97.136251));
+
+        walkableZones.add(ju);
+
+        WalkableZone jv = new WalkableZone(new LatLng(49.808568, -97.136322), new LatLng(49.808515, -97.136140), new LatLng(49.808400, -97.136311), new LatLng(49.808422, -97.136198));
+        jv.setBottom(ju.getTop());
+        jv.setRight(new LatLng(49.808536, -97.136200));
+
+        walkableZones.add(jv);
+
+        WalkableZone jw = new WalkableZone(new LatLng(49.808568, -97.136235), new LatLng(49.808588, -97.136173), new LatLng(49.808505, -97.136171), new LatLng(49.808515, -97.136125));
+        jw.setTop(new LatLng(49.808577, -97.136208));
+        jw.setLeft(jv.getRight());
+        jw.setRight(new LatLng(49.808552, -97.136155));
+        walkableZones.add(jw);
+
+        WalkableZone jx = new WalkableZone(new LatLng(49.808592, -97.136187), new LatLng(49.808586, -97.135921), new LatLng(49.808520, -97.136130), new LatLng(49.808511, -97.135955));
+        jx.setLeft(jw.getRight());
+        jx.setTop(new LatLng(49.808602, -97.136014));
+        jx.setBottom(new LatLng(49.808529, -97.135912));
+
+        walkableZones.add(jx);
+
+        WalkableZone jy = new WalkableZone(new LatLng(49.808528, -97.136012), new LatLng(49.808576, -97.135871), new LatLng(49.808413, -97.135915), new LatLng(49.808442, -97.135783));
+        jy.setTop(jx.getBottom());
+        jy.setBottom(jk.getTop());
+
+        walkableZones.add(jy);
+
+        WalkableZone jz = new WalkableZone(new LatLng(49.808761, -97.136115), new LatLng(49.808768, -97.135939), new LatLng(49.808601, -97.136093), new LatLng(49.808587, -97.135937));
+        jz.setLeft(new LatLng(49.808696, -97.136073));
+        jz.setBottom(jx.getTop());
+        jz.setTop(er.getBottom());
+
+        walkableZones.add(jz);
+
+        WalkableZone ka = new WalkableZone(new LatLng(49.808639, -97.136348), new LatLng(49.808668, -97.136238), new LatLng(49.808547, -97.136294), new LatLng(49.808584, -97.136188));
+        ka.setBottom(jw.getTop());
+        ka.setRight(new LatLng(49.808646, -97.136227));
+        ka.setLeft(education_south_ent.getRight());
+
+        walkableZones.add(ka);
+
+        WalkableZone kb = new WalkableZone(new LatLng(49.808656, -97.136242), new LatLng(49.808718, -97.136077), new LatLng(49.808630, -97.136217), new LatLng(49.808672, -97.136060));
+        kb.setLeft(ka.getRight());
+        kb.setRight(jz.getLeft());
+
+        walkableZones.add(kb);
+
+        WalkableZone kc = new WalkableZone(new LatLng(49.808925, -97.133014), new LatLng(49.808969, -97.132893), new LatLng(49.808886, -97.132981), new LatLng(49.808932, -97.132848));
+        kc.setLeft(ij.getRight());
+        kc.setRight(new LatLng(49.808950, -97.132876));
+
+        walkableZones.add(kc);
+
+        WalkableZone kd = new WalkableZone(new LatLng(49.809006, -97.132926), new LatLng(49.809040, -97.132840), new LatLng(49.808926, -97.132861), new LatLng(49.808952, -97.132778));
+        kd.setLeft(kc.getRight());
+        kd.setBottom(new LatLng(49.808956, -97.132822));
+
+        walkableZones.add(kd);
+
+        WalkableZone ke = new WalkableZone(new LatLng(49.808995, -97.132807), new LatLng(49.808919, -97.132534), new LatLng(49.808931, -97.132852), new LatLng(49.808876, -97.132600));
+        ke.setTop(kd.getBottom());
+        ke.setBottom(new LatLng(49.808897, -97.132560));
+
+        walkableZones.add(ke);
+
+        WalkableZone kf = new WalkableZone(new LatLng(49.808919, -97.132534), new LatLng(49.808907, -97.132494), new LatLng(49.808876, -97.132600), new LatLng(49.808859, -97.132500));
+        kf.setLeft(ke.getBottom());
+        kf.setTop(new LatLng(49.808914, -97.132500));
+        kf.setBottom(new LatLng(49.808869, -97.132534));
+
+        walkableZones.add(kf);
+
+        WalkableZone kg = new WalkableZone(new LatLng(49.809060, -97.132374), new LatLng(49.809037, -97.132316), new LatLng(49.808920, -97.132534), new LatLng(49.808907, -97.132479));
+        kg.setRight(new LatLng(49.809048, -97.132343));
+        kg.setBottom(kf.getTop());
+
+        walkableZones.add(kg);
+
+        WalkableZone kh = new WalkableZone(new LatLng(49.809060, -97.132374), new LatLng(49.809098, -97.132248), new LatLng(49.809033, -97.132334), new LatLng(49.809059, -97.132242));
+        kh.setLeft(kg.getRight());
+        kh.setRight(new LatLng(49.809081, -97.132241));
+        kh.setTop(new LatLng(49.809085, -97.132296));
+
+        walkableZones.add(kh);
+
+        WalkableZone ki = new WalkableZone(new LatLng(49.809247, -97.132490), new LatLng(49.809284, -97.132373), new LatLng(49.809072, -97.132380), new LatLng(49.809095, -97.132254));
+        ki.setTop(ak.getBottom());
+        ki.setBottom(kh.getTop());
+
+        walkableZones.add(ki);
+
+        WalkableZone kj = new WalkableZone(new LatLng(49.809105, -97.132251), new LatLng(49.809111, -97.131937), new LatLng(49.809057, -97.132242), new LatLng(49.809068, -97.131978));
+        kj.setLeft(kh.getRight());
+        kj.setRight(new LatLng(49.809094, -97.131941));
+
+        walkableZones.add(kj);
+
+        WalkableZone kk = new WalkableZone(new LatLng(49.809109, -97.131939), new LatLng(49.809091, -97.131844), new LatLng(49.809064, -97.131954), new LatLng(49.809057, -97.131859));
+        kk.setLeft(kj.getRight());
+        kk.setRight(new LatLng(49.809071, -97.131855));
+        kk.setTop(new LatLng(49.809097, -97.131889));
+
+        walkableZones.add(kk);
+
+        WalkableZone kl = new WalkableZone(new LatLng(49.809310, -97.131867), new LatLng(49.809305, -97.131714), new LatLng(49.809109, -97.131939), new LatLng(49.809091, -97.131844));
+        kl.setBottom(kk.getTop());
+        kl.setTop(ae.getBottom());
+
+        walkableZones.add(kl);
+
+        WalkableZone km = new WalkableZone(new LatLng(49.809048, -97.131890), new LatLng(49.809091, -97.131842), new LatLng(49.808942, -97.131705), new LatLng(49.808969, -97.131617));
+        km.setLeft(kk.getRight());
+        km.setBottom(new LatLng(49.808965, -97.131667));
+
+        walkableZones.add(km);
+
+        WalkableZone kn = new WalkableZone(new LatLng(49.808950, -97.131730), new LatLng(49.808984, -97.131617), new LatLng(49.808885, -97.131669), new LatLng(49.808903, -97.131590));
+        kn.setTop(km.getBottom());
+        kn.setBottom(new LatLng(49.808899, -97.131645));
+        kn.setRight(new LatLng(49.808945, -97.131607));
+
+        walkableZones.add(kn);
+
+        WalkableZone ko = new WalkableZone(new LatLng(49.808976, -97.131650), new LatLng(49.809056, -97.131420), new LatLng(49.808904, -97.131595), new LatLng(49.808974, -97.131357));
+        ko.setLeft(kn.getRight());
+        ko.setRight(an.getLeft());
+
+        walkableZones.add(ko);
+
+        WalkableZone kp = new WalkableZone(new LatLng(49.808908, -97.131673), new LatLng(49.808921, -97.131577), new LatLng(49.808744, -97.131656), new LatLng(49.808730, -97.131559));
+        kp.setTop(kn.getBottom());
+        kp.setBottom(new LatLng(49.808748, -97.131616));
+
+        walkableZones.add(kp);
+
+        WalkableZone kq = new WalkableZone(new LatLng(49.808686, -97.131637), new LatLng(49.808747, -97.131552), new LatLng(49.808691, -97.131683), new LatLng(49.808677, -97.131587));
+        kq.setTop(kp.getBottom());
+        kq.setBottom(new LatLng(49.808683, -97.131646));
+        kq.setRight(new LatLng(49.808707, -97.131568));
+
+        walkableZones.add(kq);
+
+        WalkableZone kr = new WalkableZone(new LatLng(49.808739, -97.131563), new LatLng(49.808684, -97.131191), new LatLng(49.808683, -97.131594), new LatLng(49.808627, -97.131232));
+        kr.setLeft(kq.getRight());
+        kr.setRight(new LatLng(49.808652, -97.131214));
+
+        walkableZones.add(kr);
+
+        WalkableZone ks = new WalkableZone(new LatLng(49.808691, -97.131234), new LatLng(49.808741, -97.131166), new LatLng(49.808575, -97.131211), new LatLng(49.808614, -97.131091));
+        ks.setLeft(new LatLng(49.808605, -97.131195));
+        ks.setRight(ap.getLeft());
+        ks.setTop(kr.getRight());
+
+        walkableZones.add(ks);
+
+        WalkableZone kt = new WalkableZone(new LatLng(49.808691, -97.131664), new LatLng(49.808684, -97.131583), new LatLng(49.808605, -97.131733), new LatLng(49.808598, -97.131648));
+        kt.setRight(kq.getBottom());
+        kt.setBottom(new LatLng(49.808600, -97.131681));
+
+        walkableZones.add(kt);
+
+        WalkableZone ku = new WalkableZone(new LatLng(49.808591, -97.131747), new LatLng(49.808596, -97.131656), new LatLng(49.808542, -97.131725), new LatLng(49.808557, -97.131666));
+        ku.setLeft(new LatLng(49.808558, -97.131745));
+        ku.setBottom(new LatLng(49.808549, -97.131690));
+        ku.setTop(kt.getBottom());
+
+        walkableZones.add(ku);
+
+        WalkableZone kv = new WalkableZone(new LatLng(49.808510, -97.131978), new LatLng(49.808582, -97.131769), new LatLng(49.808468, -97.131963), new LatLng(49.808547, -97.131726));
+        kv.setLeft(new LatLng(49.808488, -97.131966));
+        kv.setRight(ku.getLeft());
+
+        walkableZones.add(kv);
+
+        WalkableZone kw = new WalkableZone(new LatLng(49.808514, -97.132132), new LatLng(49.808514, -97.131975), new LatLng(49.808468, -97.132126), new LatLng(49.808472, -97.131963));
+        kw.setLeft(new LatLng(49.808484, -97.132128));
+        kw.setRight(kv.getLeft());
+        kw.setBottom(new LatLng(49.808470, -97.132012));
+
+        walkableZones.add(kw);
+
+        WalkableZone kx = new WalkableZone(new LatLng(49.808541, -97.132239), new LatLng(49.808501, -97.132151), new LatLng(49.808482, -97.132266), new LatLng(49.808469, -97.132128));
+        kx.setRight(kw.getLeft());
+        kx.setBottom(new LatLng(49.808469, -97.132213));
+        kx.setLeft(new LatLng(49.808502, -97.132243));
+
+        walkableZones.add(kx);
+
+        WalkableZone ky = new WalkableZone(new LatLng(49.808654, -97.132582), new LatLng(49.808675, -97.132450), new LatLng(49.808478, -97.132441), new LatLng(49.808488, -97.132242));
+        ky.setRight(kx.getLeft());
+        ky.setTop(new LatLng(49.808642, -97.132497));
+
+        walkableZones.add(ky);
+
+        WalkableZone kz = new WalkableZone(new LatLng(49.808867, -97.132617), new LatLng(49.808853, -97.132499), new LatLng(49.808654, -97.132582), new LatLng(49.808675, -97.132450));
+        kz.setBottom(ky.getTop());
+        kz.setRight(kf.getBottom());
+
+        walkableZones.add(kz);
+
+        WalkableZone la = new WalkableZone(new LatLng(49.808452, -97.131682), new LatLng(49.808617, -97.131215), new LatLng(49.808413, -97.131683), new LatLng(49.808583, -97.131180));
+        la.setRight(ks.getLeft());
+        la.setLeft(new LatLng(49.808439, -97.131677));
+
+        walkableZones.add(la);
+
+        WalkableZone lb = new WalkableZone(new LatLng(49.808426, -97.131765), new LatLng(49.808446, -97.131702), new LatLng(49.808393, -97.131752), new LatLng(49.808421, -97.131685));
+        lb.setLeft(new LatLng(49.808401, -97.131757));
+        lb.setRight(la.getLeft());
+        lb.setTop(new LatLng(49.808436, -97.131730));
+
+        walkableZones.add(lb);
+
+        WalkableZone lc = new WalkableZone(new LatLng(49.808544, -97.131731), new LatLng(49.808598, -97.131646), new LatLng(49.808426, -97.131765), new LatLng(49.808446, -97.131702));
+        lc.setTop(ku.getBottom());
+        lc.setBottom(lb.getTop());
+
+        walkableZones.add(lc);
+
+        WalkableZone ld = new WalkableZone(new LatLng(49.808386, -97.131903), new LatLng(49.808426, -97.131765), new LatLng(49.808346, -97.131879), new LatLng(49.808393, -97.131752));
+        ld.setLeft(new LatLng(49.808369, -97.131877));
+        ld.setTop(new LatLng(49.808396, -97.131849));
+        ld.setRight(lb.getLeft());
+
+        walkableZones.add(ld);
+
+        WalkableZone le = new WalkableZone(new LatLng(49.808464, -97.132102), new LatLng(49.808472, -97.131969), new LatLng(49.808386, -97.131903), new LatLng(49.808408, -97.131814));
+        le.setBottom(ld.getTop());
+        le.setTop(kw.getBottom());
+
+        walkableZones.add(le);
+
+        WalkableZone lf = new WalkableZone(new LatLng(49.808263, -97.132243), new LatLng(49.808387, -97.131892), new LatLng(49.808236, -97.132222), new LatLng(49.808358, -97.131858));
+        lf.setRight(ld.getLeft());
+        lf.setLeft(new LatLng(49.808249, -97.132228));
+
+        walkableZones.add(lf);
+
+        WalkableZone lg = new WalkableZone(new LatLng(49.808278, -97.132366), new LatLng(49.808294, -97.132253), new LatLng(49.808213, -97.132301), new LatLng(49.808234, -97.132216));
+        lg.setLeft(new LatLng(49.808227, -97.132306));
+        lg.setTop(new LatLng(49.808276, -97.132284));
+        lg.setRight(lf.getLeft());
+
+        walkableZones.add(lg);
+
+        WalkableZone lh = new WalkableZone(new LatLng(49.808482, -97.132259), new LatLng(49.808475, -97.132159), new LatLng(49.808287, -97.132348), new LatLng(49.808275, -97.132248));
+        lh.setTop(kx.getBottom());
+        lh.setBottom(lg.getTop());
+
+        walkableZones.add(lh);
+
+        WalkableZone li = new WalkableZone(new LatLng(49.808194, -97.132426), new LatLng(49.808243, -97.132299), new LatLng(49.808173, -97.132423), new LatLng(49.808220, -97.132272));
+        li.setRight(lg.getLeft());
+        li.setLeft(eu.getRight());
+
+        walkableZones.add(li);
 
         armesIndoorConnections = new ArmesIndoorConnections();
 
@@ -2696,6 +3102,7 @@ public class MapNavigationMesh
 
         connectBuildingsTogether();
     }
+    //WalkableZone  = new WalkableZone(new LatLng(), new LatLng(), new LatLng(), new LatLng());
 
     private void connectBuildingsTogether()
     {
