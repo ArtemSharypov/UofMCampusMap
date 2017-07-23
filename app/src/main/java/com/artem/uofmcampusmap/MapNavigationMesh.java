@@ -1505,27 +1505,33 @@ public class MapNavigationMesh
         bu.setLeft(new LatLng(49.810024, -97.134002));
         bu.setBottom(bt.getTop());
         bu.setTop(new LatLng(49.810076, -97.133945));
+
         walkableZones.add(bu);
 
         WalkableZone bv = new WalkableZone(new LatLng(49.810076, -97.134399), new LatLng(49.810170, -97.134135), new LatLng(49.809702, -97.134224), new LatLng(49.809818, -97.133818));
         bv.setRight(bu.getLeft());
         bv.setTop(new LatLng(49.810126, -97.134269));
+
         walkableZones.add(bv);
 
         WalkableZone bw = new WalkableZone(new LatLng(49.810108, -97.134080), new LatLng(49.810164, -97.133896), new LatLng(49.810045, -97.134033), new LatLng(49.810088, -97.133837));
         bw.setRight(bo.getLeft());
         bw.setTop(new LatLng(49.810128, -97.134015));
+        bw.setBottom(bu.getTop());
+
         walkableZones.add(bw);
 
         WalkableZone bx = new WalkableZone(new LatLng(49.810172, -97.134141), new LatLng(49.810207, -97.134004), new LatLng(49.810108, -97.134080), new LatLng(49.810164, -97.133896));
         bx.setBottom(bw.getTop());
         bx.setTop(new LatLng(49.810185, -97.134074));
+
         walkableZones.add(bx);
 
         WalkableZone by = new WalkableZone(new LatLng(49.810212, -97.134195), new LatLng(49.810256, -97.134047), new LatLng(49.810164, -97.134153), new LatLng(49.810207, -97.134012));
         by.setTop(new LatLng(49.810238, -97.134108));
         by.setBottom(bx.getTop());
         by.setLeft(new LatLng(49.810207, -97.134140));
+
         walkableZones.add(by);
 
         WalkableZone bz = new WalkableZone(new LatLng(49.810150, -97.134431), new LatLng(49.810212, -97.134195), new LatLng(49.810096, -97.134408), new LatLng(49.810164, -97.134153));
@@ -2758,11 +2764,10 @@ public class MapNavigationMesh
 
         walkableZones.add(jj);
 
-        WalkableZone jk = new WalkableZone(new LatLng(49.808432, -97.135911), new LatLng(49.808450, -97.135752), new LatLng(49.808325, -97.135862), new LatLng(49.808361, -97.135707));
+        WalkableZone jk = new WalkableZone(new LatLng(49.808432, -97.135911), new LatLng(49.808439, -97.135784), new LatLng(49.808325, -97.135862), new LatLng(49.808339, -97.135830));
         jk.setTop(new LatLng(49.808434, -97.135839));
         jk.setLeft(new LatLng(49.808335, -97.135915));
-        jk.setRight(jj.getLeft());
-        jk.setBottom(new LatLng(49.808353, -97.135734));
+        jk.setRight(new LatLng(49.808393, -97.135794));
 
         walkableZones.add(jk);
 
@@ -2774,7 +2779,7 @@ public class MapNavigationMesh
         walkableZones.add(jl);
 
         WalkableZone jm = new WalkableZone(new LatLng(49.808339, -97.135826), new LatLng(49.808362, -97.135702), new LatLng(49.808274, -97.135700), new LatLng(49.808291, -97.135646));
-        jm.setTop(jk.getBottom());
+        jm.setTop(new LatLng(49.808353, -97.135734));
         jm.setBottom(jl.getTop());
 
         walkableZones.add(jm);
@@ -2787,7 +2792,7 @@ public class MapNavigationMesh
 
         WalkableZone jo = new WalkableZone(new LatLng(49.808262, -97.136000), new LatLng(49.808288, -97.135899), new LatLng(49.808101, -97.136032), new LatLng(49.808111, -97.135948));
         jo.setRight(jn.getLeft());
-        jo.setTop(new LatLng(49.808277, -97.135953));
+        jo.setTop(new LatLng(49.808205, -97.135957));
         jo.setBottom(new LatLng(49.808132, -97.135969));
 
         walkableZones.add(jo);
@@ -2814,6 +2819,7 @@ public class MapNavigationMesh
         WalkableZone js = new WalkableZone(new LatLng(49.808342, -97.136014), new LatLng(49.808366, -97.135941), new LatLng(49.808268, -97.135988), new LatLng(49.808289, -97.135912));
         js.setLeft(new LatLng(49.808311, -97.135997));
         js.setRight(jk.getLeft());
+        js.setBottom(jr.getTop());
 
         walkableZones.add(js);
 
@@ -2845,12 +2851,12 @@ public class MapNavigationMesh
         WalkableZone jx = new WalkableZone(new LatLng(49.808592, -97.136187), new LatLng(49.808586, -97.135921), new LatLng(49.808520, -97.136130), new LatLng(49.808511, -97.135955));
         jx.setLeft(jw.getRight());
         jx.setTop(new LatLng(49.808602, -97.136014));
-        jx.setBottom(new LatLng(49.808529, -97.135912));
+        jx.setRight(new LatLng(49.808529, -97.135912));
 
         walkableZones.add(jx);
 
         WalkableZone jy = new WalkableZone(new LatLng(49.808528, -97.136012), new LatLng(49.808576, -97.135871), new LatLng(49.808413, -97.135915), new LatLng(49.808442, -97.135783));
-        jy.setTop(jx.getBottom());
+        jy.setTop(jx.getRight());
         jy.setBottom(jk.getTop());
 
         walkableZones.add(jy);
@@ -3084,6 +3090,13 @@ public class MapNavigationMesh
         li.setLeft(eu.getRight());
 
         walkableZones.add(li);
+
+        WalkableZone lj = new WalkableZone(new LatLng(49.808439, -97.135784), new LatLng(49.808446, -97.135748), new LatLng(49.808339, -97.135830), new LatLng(49.808368, -97.135704));
+        lj.setRight(jj.getLeft());
+        lj.setBottom(jm.getTop());
+        lj.setLeft(jk.getRight());
+
+        walkableZones.add(lj);
 
         armesIndoorConnections = new ArmesIndoorConnections();
 
