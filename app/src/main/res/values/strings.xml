@@ -47,6 +47,7 @@
     <string name="russel">Russel</string>
     <string name="st_johns">St.Johns College</string>
     <string name="st_pauls">St.Pauls College</string>
+    <string name="tache_arts">Tache Arts Complex</string>
     <string name="tier">Tier</string>
     <string name="uni_centre">University Centre</string>
     <string name="uni_college">University College</string>
@@ -83,6 +84,7 @@
         <item>@string/russel</item>
         <item>@string/st_johns</item>
         <item>@string/st_pauls</item>
+        <item>@string/tache_arts</item>
         <item>@string/tier</item>
         <item>@string/uni_centre</item>
         <item>@string/uni_college</item>
