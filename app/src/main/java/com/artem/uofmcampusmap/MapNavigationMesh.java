@@ -1078,8 +1078,8 @@ public class MapNavigationMesh
 
         //right
         WalkableZone tache_arts_west_ent = new WalkableZone(new LatLng(49.807839, -97.132685), new LatLng(49.807823, -97.132539), new LatLng(49.807798, -97.132663), new LatLng(49.807783, -97.132571));
-        tache_arts_west_ent.setRight(new LatLng(49.807821, -97.132675));
-        tache_arts_west_ent.setLeft(new LatLng(49.807803, -97.132558));
+        tache_arts_west_ent.setRight(new LatLng(49.807803, -97.132558));
+        tache_arts_west_ent.setLeft(new LatLng(49.807821, -97.132675));
 
         addEntrance("Tache Arts Complex", tache_arts_west_ent.getRight());
         walkableZones.add(tache_arts_west_ent);
