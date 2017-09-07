@@ -77,6 +77,7 @@
         <item>@string/eb_dafoe_at_uni</item>
         <item>@string/nb_maclean_uofm</item>
         <item>@string/nb_uni_chancellor</item>
+        <item>@string/welcome_centre</item>
     </string-array>
 
     <string-array name="building_options" >
