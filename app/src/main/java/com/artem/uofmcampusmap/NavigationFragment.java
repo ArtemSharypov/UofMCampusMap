@@ -434,16 +434,25 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             }
         }
     }
+    
+    //Checks if there is already the same fragment on the backstack, then use it. Else replace the current fragment with the one passed
+    private void replaceFragment(Fragment fragment, String stateName)
+    {
+        FragmentManager childFragManager = getChildFragmentManager();
+        boolean fragmentPopped = childFragManager.popBackStackImmediate(currLocation + currFloor, 0);
 
-    //todo for this and map fragment might need to actually either CLEAR the stack or reuse them, because eventually
-    //its starting to cause a large amount of memory being used due to hard references of each and every fragment.
+        if(!fragmentPopped)
+        {
+            FragmentTransaction childFragTrans = childFragManager.beginTransaction();
+            childFragTrans.replace(R.id.frag_holder, fragment);
+            childFragTrans.addToBackStack(stateName);
+            childFragTrans.commit();
+        }
+    }
 
     //Switches to a specified building building or floor number and updated the current location / floor
     private void switchViewToBuilding(String buildingName, int floorNumber)
     {
-        FragmentManager childFragManager = getChildFragmentManager();
-        FragmentTransaction childFragTrans;
-
         if(buildingName.equals(getResources().getString(R.string.armes)))
         {
             currLocation = buildingName;
@@ -453,19 +462,13 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             {
                 ArmesFloor1Fragment armesFloor1Fragment = new ArmesFloor1Fragment();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, armesFloor1Fragment);
-                childFragTrans.addToBackStack(currLocation + currFloor);
-                childFragTrans.commit();
+                replaceFragment(armesFloor1Fragment, currLocation + currFloor);
             }
             else if(currFloor == 2)
             {
                 ArmesFloor2Fragment armesFloor2Fragment = new ArmesFloor2Fragment();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, armesFloor2Fragment);
-                childFragTrans.addToBackStack(currLocation + currFloor);
-                childFragTrans.commit();
+                replaceFragment(armesFloor2Fragment, currLocation + currFloor);
             }
         }
         else if(buildingName.equals(getResources().getString(R.string.machray)))
@@ -477,46 +480,31 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             {
                 Machray_Floor1 machrayFloor1Frag = new Machray_Floor1();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, machrayFloor1Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(machrayFloor1Frag, currLocation + currFloor);
             }
             else if(currFloor == 2)
             {
                 Machray_Floor2 machrayFloor2Frag = new Machray_Floor2();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, machrayFloor2Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(machrayFloor2Frag, currLocation + currFloor);
             }
             else if(currFloor == 3)
             {
                 Machray_Floor3 machrayFloor3Frag = new Machray_Floor3();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, machrayFloor3Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(machrayFloor3Frag, currLocation + currFloor);
             }
             else if(currFloor == 4)
             {
                 Machray_Floor4 machrayFloor4Frag = new Machray_Floor4();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, machrayFloor4Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(machrayFloor4Frag, currLocation + currFloor);
             }
             else if(currFloor == 5)
             {
                 Machray_Floor5 machrayFloor5Frag = new Machray_Floor5();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, machrayFloor5Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(machrayFloor5Frag, currLocation + currFloor);
             }
         }
         else if(buildingName.equals(getResources().getString(R.string.allen)))
@@ -528,46 +516,31 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             {
                 Allen_Floor1 allenFloor1Frag = new Allen_Floor1();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, allenFloor1Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(allenFloor1Frag, currLocation + currFloor);
             }
             else if(currFloor == 2)
             {
                 Allen_Floor2 allenFloor2Frag = new Allen_Floor2();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, allenFloor2Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(allenFloor2Frag, currLocation + currFloor);
             }
             else if(currFloor == 3)
             {
                 Allen_Floor3 allenFloor3Frag = new Allen_Floor3();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, allenFloor3Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(allenFloor3Frag, currLocation + currFloor);
             }
             else if(currFloor == 4)
             {
                 Allen_Floor4 allenFloor4Frag = new Allen_Floor4();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, allenFloor4Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(allenFloor4Frag, currLocation + currFloor);
             }
             else if(currFloor == 5)
             {
                 Allen_Floor5 allenFloor5Frag = new Allen_Floor5();
 
-                childFragTrans = childFragManager.beginTransaction();
-                childFragTrans.add(R.id.frag_holder, allenFloor5Frag);
-                childFragTrans.addToBackStack(currLocation + floorNumber);
-                childFragTrans.commit();
+                replaceFragment(allenFloor5Frag, currLocation + currFloor);
             }
         }
     }
