@@ -153,11 +153,17 @@ public class RoutePlannerFragment extends Fragment {
 
         String[] buildings = getResources().getStringArray(R.array.building_options);
         String[] rooms = getResources().getStringArray(R.array.building_rooms);
-        String[] locations = new String[buildings.length + rooms.length];
+        String[] parkingLotsAndBuses = getResources().getStringArray(R.array.lots_bus_stops);
+        String[] tempLocations = new String[buildings.length + rooms.length];
+        String[] locations = new String[tempLocations.length + parkingLotsAndBuses.length];
 
         //Combine all of the buildings and rooms into a single array
-        System.arraycopy(buildings, 0, locations, 0, buildings.length);
-        System.arraycopy(rooms, 0, locations, buildings.length, rooms.length);
+        System.arraycopy(buildings, 0, tempLocations, 0, buildings.length);
+        System.arraycopy(rooms, 0, tempLocations, buildings.length, rooms.length);
+
+        //Combine buildings/rooms array with all bus stops and parking lots
+        System.arraycopy(tempLocations, 0, locations, 0, tempLocations.length);
+        System.arraycopy(parkingLotsAndBuses, 0, locations, tempLocations.length, parkingLotsAndBuses.length);
 
         toLocationAutoComplete = (AutoCompleteTextView) view.findViewById(R.id.to_autocomplete);
         ArrayAdapter<String> toAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, locations);
