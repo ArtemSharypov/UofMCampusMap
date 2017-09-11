@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         FragmentManager fragmentManager;
         FragmentTransaction fragmentTransaction;
 
+        //todo change the nav drawer items to reuse previous fragments
         switch(menuItem.getItemId())
         {
             case R.id.campus_map:
@@ -373,6 +374,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         currInstructionPos = 0;
     }
 
+    //todo switch to reuse the building layout fragment
     //Resets any route information and switches to the building layouts
     //Building that is displayed is the one within currBuilding (recorded when a NavigationDrawer item is pressed)
     private void switchToBuildingLayouts()
@@ -388,6 +390,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         fragmentTransaction.commit();
     }
 
+    //todo switch to resuse the building layout fragment
     //Resets any route information and switches to the RoutePlannerFragment
     private void switchToRoutePlanner()
     {

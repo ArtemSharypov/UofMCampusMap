@@ -1,6 +1,9 @@
 package com.artem.uofmcampusmap.buildings.allen;
 
+import android.content.res.Resources;
+
 import com.artem.uofmcampusmap.IndoorVertex;
+import com.artem.uofmcampusmap.R;
 import com.artem.uofmcampusmap.XYPos;
 
 import java.util.ArrayList;
@@ -21,9 +24,9 @@ public class AllenIndoorConnections {
     private IndoorVertex armesNorthConnection; //Floor 2 connection
     private IndoorVertex armesSouthConnection; //Floor 2 connection
     private IndoorVertex bioSciTunnelConnection;
-    private final String building = "Allen";
+    private final String building;
 
-    public AllenIndoorConnections()
+    public AllenIndoorConnections(Resources resources)
     {
         rooms = new HashMap<>();
         firstFloorStairsElevator = new ArrayList<>();
@@ -31,6 +34,7 @@ public class AllenIndoorConnections {
         thirdFloorStairsElevator = new ArrayList<>();
         fourthFloorStairsElevator = new ArrayList<>();
         fifthFloorStairsElevator = new ArrayList<>();
+        building = resources.getString(R.string.allen);
         populateConnections();
     }
 
