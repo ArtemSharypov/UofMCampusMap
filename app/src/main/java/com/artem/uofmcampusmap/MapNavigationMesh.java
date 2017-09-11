@@ -165,8 +165,7 @@ public class MapNavigationMesh
 
         if(startEndLocations.containsKey(startLocation))
         {
-            //todo split this up into seperate sections (aka walkable zones) to speed up checking the location and then
-            // just use LatLngBounds if the location is within the zone and then use a contains to make it do the check for me
+            //todo split this up into seperate sections (aka walkable zones) to speed up checking the location
             //Tries to find where the GPS location is to route from
             for (WalkableZone currZone : walkableZones) {
                 if (currZone.zoneContainsLatLngPos(gpsEndLocation)) {
@@ -3630,7 +3629,7 @@ public class MapNavigationMesh
 
         walkableZones.add(nx);
 
-        armesIndoorConnections = new ArmesIndoorConnections();
+        armesIndoorConnections = new ArmesIndoorConnections(resources);
 
         IndoorVertex nwArmesEnt = armesIndoorConnections.getNorthWestEntrance();
         allen_armes_parker.connectToRight(nwArmesEnt);
@@ -3638,16 +3637,15 @@ public class MapNavigationMesh
         IndoorVertex swArmesEnt = armesIndoorConnections.getSouthWestEntrance();
         allen_armes.connectToRight(swArmesEnt);
 
-        machrayIndoorConnections = new MachrayIndoorConnections();
+        machrayIndoorConnections = new MachrayIndoorConnections(resources);
 
         IndoorVertex machrayEnt = machrayIndoorConnections.getExit();
         armes_machray.connectToTop(machrayEnt);
 
-        allenIndoorConnections = new AllenIndoorConnections();
+        allenIndoorConnections = new AllenIndoorConnections(resources);
 
         connectBuildingsTogether();
     }
-    //WalkableZone  = new WalkableZone(new LatLng(), new LatLng(), new LatLng(), new LatLng());
 
     private void connectBuildingsTogether()
     {

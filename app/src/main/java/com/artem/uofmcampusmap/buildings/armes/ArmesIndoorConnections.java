@@ -1,6 +1,9 @@
 package com.artem.uofmcampusmap.buildings.armes;
 
+import android.content.res.Resources;
+
 import com.artem.uofmcampusmap.IndoorVertex;
+import com.artem.uofmcampusmap.R;
 import com.artem.uofmcampusmap.XYPos;
 
 import java.util.ArrayList;
@@ -24,15 +27,16 @@ public class ArmesIndoorConnections
     private IndoorVertex parkerConnectionTunnel;
     private IndoorVertex southWestEntrance;
     private IndoorVertex northWestEntrance;
-    private final String building = "Armes";
+    private final String building;
     private ArrayList<IndoorVertex> firstFloorStairs;
     private ArrayList<IndoorVertex> secondFloorStairs;
 
-    public ArmesIndoorConnections()
+    public ArmesIndoorConnections(Resources resources)
     {
         rooms = new HashMap<>();
         firstFloorStairs = new ArrayList<>();
         secondFloorStairs = new ArrayList<>();
+        building = resources.getString(R.string.armes);
         populateConnections();
     }
 

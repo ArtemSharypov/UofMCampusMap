@@ -167,7 +167,7 @@ public class Instruction {
                 else
                 {
                     //Check if there are stairs involved (if floors change)
-                    if(sourceIndoor.getFloor() > destIndoor.getFloor())
+                    if(sourceIndoor.getFloor() < destIndoor.getFloor())
                     {
                         toString = "Go up ";
                     }

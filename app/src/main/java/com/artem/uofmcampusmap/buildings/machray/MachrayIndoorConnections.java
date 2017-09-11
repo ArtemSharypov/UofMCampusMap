@@ -1,6 +1,9 @@
 package com.artem.uofmcampusmap.buildings.machray;
 
+import android.content.res.Resources;
+
 import com.artem.uofmcampusmap.IndoorVertex;
+import com.artem.uofmcampusmap.R;
 import com.artem.uofmcampusmap.Vertex;
 import com.artem.uofmcampusmap.XYPos;
 
@@ -24,9 +27,9 @@ public class MachrayIndoorConnections
     private IndoorVertex armesConnectionNorth;
     private IndoorVertex armesConnectionSouth;
     private IndoorVertex duffRoblinConnection;
-    private final String building = "Machray"; //todo switch this to resources?
+    private final String building;
 
-    public MachrayIndoorConnections()
+    public MachrayIndoorConnections(Resources resources)
     {
         rooms = new HashMap<>();
         firstFloorStairsElevator = new ArrayList<>();
@@ -34,6 +37,7 @@ public class MachrayIndoorConnections
         thirdFloorStairsElevator = new ArrayList<>();
         fourthFloorStairsElevator = new ArrayList<>();
         fifthFloorStairsElevator = new ArrayList<>();
+        building = resources.getString(R.string.machray);
         populateConnections();
     }
 
