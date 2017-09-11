@@ -434,7 +434,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
             }
         }
     }
-    
+
     //Checks if there is already the same fragment on the backstack, then use it. Else replace the current fragment with the one passed
     private void replaceFragment(Fragment fragment, String stateName)
     {

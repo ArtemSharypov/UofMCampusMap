@@ -338,7 +338,7 @@ public class MapNavigationMesh
 
         thread3.start();
 
-        //Wait for the seperate route threads to finish, then combine the routes all together
+        //Wait for the separate route threads to finish, then combine the routes all together
         try
         {
             thread1.join();
@@ -377,71 +377,80 @@ public class MapNavigationMesh
         final IndoorVertex startTunnelFloorStairs;
         final IndoorVertex endClosestStairs;
         final IndoorVertex endTunnelFloorStairs;
+        Route startToStairs;
+        Route tunnelStairsRoute;
+        Route stairsToEnd;
 
         if(startRoomVertex != null && endRoomVertex != null)
         {
-            //Find the closest stairs to the starting room, then find a route room to stairs
-            startClosestStairs = closestStairsToRoom(startBuilding, startRoomVertex);
-
-            //Start room -> closest stairs
-            Thread thread1 = new Thread()
+            /* Four cases for the tunnel routing conditions
+                1) they are both on the tunnel floor
+                2) first room is on the tunnel floor, second room isnt
+                3) second room is on the tunnel floor, first room isnt
+                4) they are both not on the tunnel floor
+             */
+            if(startRoomVertex.getFloor() == endRoomVertex.getFloor() && startRoomVertex.getFloor() == TUNNELS_FLOOR)
             {
-                @Override
-                public void run() {
-                    firstRoutePart = routeFinder.findRoute(startRoomVertex, startClosestStairs);
-                }
-            };
-
-            thread1.start();
-
-            //Find the closest stairs to the destination room, create a route from the stairs to the room
-            endClosestStairs = closestStairsToRoom(endBuilding, endRoomVertex);
-
-            //Stairs on same floor as end room -> end room
-            Thread thread2 = new Thread()
-            {
-                @Override
-                public void run()
-                {
-                    lastRoutePart = routeFinder.findRoute(endClosestStairs, endRoomVertex);
-                }
-            };
-
-            thread2.start();
-
-            //Stairs that will connect to the closest stairs, that will now be on the same level as the tunnels
-            startTunnelFloorStairs = startClosestStairs.findStairsConnection(TUNNELS_FLOOR);
-
-            //Stairs that will connect from the tunnel floor, to the destination rooms floor
-            endTunnelFloorStairs = endClosestStairs.findStairsConnection(TUNNELS_FLOOR);
-
-            //Start building stairs at tunnel -> end building stairs at tunnel
-            Thread thread3 = new Thread()
-            {
-                @Override
-                public void run()
-                {
-                    secondRoutePart  = routeFinder.findRoute(startTunnelFloorStairs, endTunnelFloorStairs);
-                }
-            };
-
-            thread3.start();
-
-            //Wait for the seperate route threads to finish, then combine the routes all together
-            try
-            {
-                thread1.join();
-                thread2.join();
-                thread3.join();
-
-                //Combine the 3 parts of the route into one single Route
-                route = firstRoutePart;
-                route.combineRoutes(secondRoutePart);
-                route.combineRoutes(lastRoutePart);
+                route = routeFinder.findRoute(startRoomVertex, endRoomVertex);
             }
-            catch (InterruptedException e)
+            else if(startRoomVertex.getFloor() == TUNNELS_FLOOR)
             {
-                e.printStackTrace();
+                //Find the closest stairs to the destination room, create a route from the stairs to the room
+                endClosestStairs = closestStairsToRoom(endBuilding, endRoomVertex);
+
+                //Stairs that will connect from the tunnel floor, to the destination rooms floor
+                endTunnelFloorStairs = endClosestStairs.findStairsConnection(TUNNELS_FLOOR);
+
+                startToStairs = routeFinder.findRoute(startRoomVertex, endClosestStairs);
+                stairsToEnd = routeFinder.findRoute(endTunnelFloorStairs, endRoomVertex);
+
+                if(startToStairs != null && stairsToEnd != null)
+                {
+                    startToStairs.combineRoutes(stairsToEnd);
+                    route = startToStairs;
+                }
+            }
+            else if(endRoomVertex.getFloor() == TUNNELS_FLOOR)
+            {
+                //Find the closest stairs to the starting room, then find a route room to stairs
+                startClosestStairs = closestStairsToRoom(startBuilding, startRoomVertex);
+
+                //Stairs that will connect to the closest stairs, that will now be on the same level as the tunnels
+                startTunnelFloorStairs = startClosestStairs.findStairsConnection(TUNNELS_FLOOR);
+
+                startToStairs = routeFinder.findRoute(startRoomVertex, startClosestStairs);
+                stairsToEnd = routeFinder.findRoute(startTunnelFloorStairs, endRoomVertex);
+
+                if(startToStairs != null && stairsToEnd != null)
+                {
+                    startToStairs.combineRoutes(stairsToEnd);
+                    route = startToStairs;
+                }
+            }
+            else
+            {
+                //Find the closest stairs to the starting room, then find a route room to stairs
+                startClosestStairs = closestStairsToRoom(startBuilding, startRoomVertex);
+
+                //Find the closest stairs to the destination room, create a route from the stairs to the room
+                endClosestStairs = closestStairsToRoom(endBuilding, endRoomVertex);
+
+                //Stairs that will connect to the closest stairs, that will now be on the same level as the tunnels
+                startTunnelFloorStairs = startClosestStairs.findStairsConnection(TUNNELS_FLOOR);
+
+                //Stairs that will connect from the tunnel floor, to the destination rooms floor
+                endTunnelFloorStairs = endClosestStairs.findStairsConnection(TUNNELS_FLOOR);
+
+                startToStairs = routeFinder.findRoute(startRoomVertex, startClosestStairs);
+                tunnelStairsRoute = routeFinder.findRoute(startTunnelFloorStairs, endTunnelFloorStairs);
+                stairsToEnd = routeFinder.findRoute(endClosestStairs, endRoomVertex);
+
+                if(startToStairs != null && tunnelStairsRoute != null && stairsToEnd != null)
+                {
+                    startToStairs.combineRoutes(tunnelStairsRoute);
+                    startToStairs.combineRoutes(stairsToEnd);
+                    route = startToStairs;
+                }
             }
         }
 
@@ -579,7 +588,7 @@ public class MapNavigationMesh
     {
         String agri_engineer = resources.getString(R.string.agr_engineer);
 
-        //Bottom is the entrancce
+        //Bottom is the entrance
         WalkableZone agri_engineer_north_ent = new WalkableZone(new LatLng(49.807551, -97.133870), new LatLng(49.807568, -97.133802), new LatLng(49.807471, -97.133811), new LatLng(49.807485, -97.133747));
         agri_engineer_north_ent.setTop(new LatLng(49.807573, -97.133832));
         agri_engineer_north_ent.setBottom(new LatLng(49.807491, -97.133790));
