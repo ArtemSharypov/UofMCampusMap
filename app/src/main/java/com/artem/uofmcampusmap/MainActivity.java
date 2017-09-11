@@ -5,6 +5,7 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -120,10 +121,6 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
     //On click item for items in the nav drawer.
     private void selectDrawerItem(MenuItem menuItem) {
-        FragmentManager fragmentManager;
-        FragmentTransaction fragmentTransaction;
-
-        //todo change the nav drawer items to reuse previous fragments
         switch(menuItem.getItemId())
         {
             case R.id.campus_map:
@@ -135,226 +132,212 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 break;
             case R.id.navigate:
-                switchToRoutePlanner();
+                RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
+                replaceFragment(routePlannerFragment, routePlannerFragment.getClass().toString());
+
                 break;
             case R.id.agriculture:
                 this.currBuilding = getResources().getString(R.string.agriculture);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.agri_engineer:
                 this.currBuilding = getResources().getString(R.string.agr_engineer);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.allen:
                 this.currBuilding = getResources().getString(R.string.allen);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.animal_sci:
                 this.currBuilding = getResources().getString(R.string.animal_sci);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.architecture:
                 this.currBuilding = getResources().getString(R.string.archi_2);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.armes:
                 this.currBuilding = getResources().getString(R.string.armes);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.artlab:
                 this.currBuilding = getResources().getString(R.string.artlab);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.bio_sci:
                 this.currBuilding = getResources().getString(R.string.bio_sci);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.buller:
                 this.currBuilding = getResources().getString(R.string.buller);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.dairy_sci:
                 this.currBuilding = getResources().getString(R.string.dairy_science);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.drake_centre:
                 this.currBuilding = getResources().getString(R.string.drake_centre);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.duff_roblin:
                 this.currBuilding = getResources().getString(R.string.duff_roblin);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.education:
                 this.currBuilding = getResources().getString(R.string.education);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.eitc_e1:
                 this.currBuilding = getResources().getString(R.string.eitc_e1);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.eitc_e2:
                 this.currBuilding = getResources().getString(R.string.eitc_e2);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.eitc_e3:
                 this.currBuilding = getResources().getString(R.string.eitc_e3);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.elizabeth_dafoe:
                 this.currBuilding = getResources().getString(R.string.elizabeth_dafoe);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.ext_education:
                 this.currBuilding = getResources().getString(R.string.ext_education);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.fletcher:
                 this.currBuilding = getResources().getString(R.string.fletcher);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.helen_glass:
                 this.currBuilding = getResources().getString(R.string.helen_glass);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.human_eco:
                 this.currBuilding = getResources().getString(R.string.human_ecology);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.isbister:
                 this.currBuilding = getResources().getString(R.string.isbister);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.machray:
                 this.currBuilding = getResources().getString(R.string.machray);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.parker:
                 this.currBuilding = getResources().getString(R.string.parker);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.plant_sci:
                 this.currBuilding = getResources().getString(R.string.plant_sci);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.robert_schultz:
                 this.currBuilding = getResources().getString(R.string.robert_schultz);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.robson:
                 this.currBuilding = getResources().getString(R.string.robson);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.russel:
                 this.currBuilding = getResources().getString(R.string.russel);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.st_johns:
                 this.currBuilding = getResources().getString(R.string.st_johns);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.st_pauls:
                 this.currBuilding = getResources().getString(R.string.st_pauls);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.tier:
                 this.currBuilding = getResources().getString(R.string.tier);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.uni_centre:
                 this.currBuilding = getResources().getString(R.string.uni_centre);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
                 break;
             case R.id.uni_college:
                 this.currBuilding = getResources().getString(R.string.uni_college);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.wallace:
                 this.currBuilding = getResources().getString(R.string.wallace);
-                switchToBuildingLayouts();
+                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+
                 break;
             case R.id.agri_animal_sci:
-                resetFields();
-
                 Agri_AnimalSci_Tunnel agri_animalSci_tunnel = new Agri_AnimalSci_Tunnel();
-
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame_layout, agri_animalSci_tunnel);
-                fragmentTransaction.addToBackStack("NavigationFragment");
-                fragmentTransaction.commit();
+                replaceFragment(agri_animalSci_tunnel, agri_animalSci_tunnel.getClass().toString());
 
                 break;
             case R.id.archi2_ext_educ:
-                resetFields();
-
                 Archi2_ExtEduc_Tunnel archi2_extEduc_tunnel = new Archi2_ExtEduc_Tunnel();
-
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame_layout, archi2_extEduc_tunnel);
-                fragmentTransaction.addToBackStack("NavigationFragment");
-                fragmentTransaction.commit();
+                replaceFragment(archi2_extEduc_tunnel, archi2_extEduc_tunnel.getClass().toString());
 
                 break;
             case R.id.dafoe_duff_roblin_uni_college:
-                resetFields();
-
                 Dafoe_DuffRoblin_UniCollege_Tunnel dafoe_duffRoblin_uniCollege_tunnel = new Dafoe_DuffRoblin_UniCollege_Tunnel();
-
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame_layout, dafoe_duffRoblin_uniCollege_tunnel);
-                fragmentTransaction.addToBackStack("NavigationFragment");
-                fragmentTransaction.commit();
+                replaceFragment(dafoe_duffRoblin_uniCollege_tunnel, dafoe_duffRoblin_uniCollege_tunnel.getClass().toString());
 
                 break;
             case R.id.robson_uni_college:
-                resetFields();
-
                 Robson_UniCollege_Tunnel robson_uniCollege_tunnel = new Robson_UniCollege_Tunnel();
-
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame_layout, robson_uniCollege_tunnel);
-                fragmentTransaction.addToBackStack("NavigationFragment");
-                fragmentTransaction.commit();
+                replaceFragment(robson_uniCollege_tunnel, robson_uniCollege_tunnel.getClass().toString());
 
                 break;
             case R.id.russel_archi2:
-                resetFields();
-
                 Russel_Archi2_Tunnel russel_archi2_tunnel = new Russel_Archi2_Tunnel();
-
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame_layout, russel_archi2_tunnel);
-                fragmentTransaction.addToBackStack("NavigationFragment");
-                fragmentTransaction.commit();
+                replaceFragment(russel_archi2_tunnel, russel_archi2_tunnel.getClass().toString());
 
                 break;
             case R.id.tier_artlab:
-                resetFields();
-
                 Tier_Artlab_Tunnel tier_artlab_tunnel = new Tier_Artlab_Tunnel();
-
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame_layout, tier_artlab_tunnel);
-                fragmentTransaction.addToBackStack("NavigationFragment");
-                fragmentTransaction.commit();
+                replaceFragment(tier_artlab_tunnel, tier_artlab_tunnel.getClass().toString());
 
                 break;
             case R.id.wallace_parker:
-                resetFields();
-
                 Wallace_Parker_Tunnel wallace_parker_tunnel = new Wallace_Parker_Tunnel();
-
-                fragmentManager = getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.main_frame_layout, wallace_parker_tunnel);
-                fragmentTransaction.addToBackStack("NavigationFragment");
-                fragmentTransaction.commit();
+                replaceFragment(wallace_parker_tunnel, wallace_parker_tunnel.getClass().toString());
 
                 break;
         }
@@ -374,35 +357,23 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         currInstructionPos = 0;
     }
 
-    //todo switch to reuse the building layout fragment
-    //Resets any route information and switches to the building layouts
-    //Building that is displayed is the one within currBuilding (recorded when a NavigationDrawer item is pressed)
-    private void switchToBuildingLayouts()
+    //Resets any route information, and switches to the desired fragment
+    //If the fragment wasn't on the stack already, it'll use the one that is passed
+    private void replaceFragment(Fragment fragment, String stateName)
     {
         resetFields();
 
-        BuildingLayoutFragment buildingLayoutFragment = new BuildingLayoutFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
+        boolean fragmentPopped = fragmentManager.popBackStackImmediate(stateName, 0);
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame_layout, buildingLayoutFragment);
-        fragmentTransaction.addToBackStack("NavigationFragment");
-        fragmentTransaction.commit();
-    }
-
-    //todo switch to resuse the building layout fragment
-    //Resets any route information and switches to the RoutePlannerFragment
-    private void switchToRoutePlanner()
-    {
-        resetFields();
-
-        RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame_layout, routePlannerFragment);
-        fragmentTransaction.addToBackStack("NavigationFragment");
-        fragmentTransaction.commit();
+        //If the fragment wasn't on the stack, create a new one to use
+        if(!fragmentPopped)
+        {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.frag_holder, fragment);
+            fragmentTransaction.addToBackStack(stateName);
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
@@ -492,7 +463,9 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         switch(item.getItemId())
         {
             case R.id.navigate_button:
-                switchToRoutePlanner();
+                RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
+                replaceFragment(routePlannerFragment, routePlannerFragment.getClass().toString());
+                
                 return true;
 
             default:
