@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.add(R.id.main_frame_layout, mapFragment);
+            fragmentTransaction.addToBackStack(mapFragment.getClass().toString());
             fragmentTransaction.commit();
         }
         else
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
             startRoom = savedInstanceState.getString("startRoom");
             destinationLocation = savedInstanceState.getString("destinationLocation");
             destinationRoom = savedInstanceState.getString("destinationRoom");
+
+            //todo potentially need to get the fragment from the stack to fix fragment disappearing?
         }
     }
 
@@ -128,6 +131,11 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 if(getSupportFragmentManager().getBackStackEntryCount() > 0)
                 {
                     getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+                else
+                {
+                    MapFragment mapFragment = new MapFragment();
+                    replaceFragment(mapFragment, mapFragment.getClass().toString());
                 }
 
                 break;
@@ -465,7 +473,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
             case R.id.navigate_button:
                 RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
                 replaceFragment(routePlannerFragment, routePlannerFragment.getClass().toString());
-                
+
                 return true;
 
             default:
