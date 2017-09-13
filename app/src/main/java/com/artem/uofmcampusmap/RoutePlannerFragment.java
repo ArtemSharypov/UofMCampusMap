@@ -1,7 +1,6 @@
 package com.artem.uofmcampusmap;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,18 +11,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Artem on 2017-04-22.
@@ -66,7 +62,10 @@ public class RoutePlannerFragment extends Fragment {
                 String fromRoom = "";
                 String fromText = "";
                 String[] splitFromLocation;
+                boolean fromLocationValid;
+                boolean toLocationValid;
 
+                //Parses the destination location into room / building or gps
                 if(toLocationIsGps)
                 {
                     toLocation = getResources().getString(R.string.curr_location);
@@ -103,6 +102,7 @@ public class RoutePlannerFragment extends Fragment {
                     }
                 }
 
+                //Parses the starting location into room/building or gps
                 if(fromLocationIsGps)
                 {
                     fromLocation = getResources().getString(R.string.curr_location);
@@ -139,15 +139,42 @@ public class RoutePlannerFragment extends Fragment {
                     }
                 }
 
-                //todo implement a check if there is such a room for the building locations entered, if not make a toast
-                activity.passStartLocation(fromLocation.trim());
-                activity.passStartRoom(fromRoom.trim());
+                fromLocationValid = validLocation(fromText);
+                toLocationValid = validLocation(toText);
 
-                activity.passDestinationLocation(toLocation.trim());
-                activity.passDestinationRoom(toRoom.trim());
+                //Check if both locations entered are considered to be valid
+                if(fromLocationValid && toLocationValid)
+                {
+                    activity.passStartLocation(fromLocation.trim());
+                    activity.passStartRoom(fromRoom.trim());
 
+                    activity.passDestinationLocation(toLocation.trim());
+                    activity.passDestinationRoom(toRoom.trim());
 
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+                else if(!fromLocationValid && !toLocationValid)
+                {
+                    //Both of the locations is invalid
+                    Toast.makeText(getContext(),
+                            "Couldn't find either of the two locations on campus", Toast.LENGTH_LONG)
+                            .show();
+                }
+                else if(!toLocationValid)
+                {
+                    //Only the destination is invalid
+                    Toast.makeText(getContext(),
+                            "Couldn't find the destination within the campus", Toast.LENGTH_LONG)
+                            .show();
+
+                }
+                else if(!fromLocationValid)
+                {
+                    //Only the starting location is invalid
+                    Toast.makeText(getContext(),
+                            "Couldn't find the starting location within the campus", Toast.LENGTH_LONG)
+                            .show();
+                }
             }
         });
 
@@ -239,6 +266,28 @@ public class RoutePlannerFragment extends Fragment {
         setHasOptionsMenu(true);
 
         return view;
+    }
+
+    //Checks if the passed String is a valid location on campus
+    private boolean validLocation(String location)
+    {
+        boolean valid = false;
+        String[] buildings = getResources().getStringArray(R.array.building_options);
+        String[] rooms = getResources().getStringArray(R.array.building_rooms);
+        String[] parkingLotsAndBuses = getResources().getStringArray(R.array.lots_bus_stops);
+        String[] tempLocations = new String[buildings.length + rooms.length];
+        String[] locations = new String[tempLocations.length + parkingLotsAndBuses.length];
+
+        //Todo switch to Arrays.asList by itself for better runtime later? would need to have a single check of current location
+        List<String> listOfLocations = new ArrayList<>(Arrays.asList(locations));
+        listOfLocations.add(getResources().getString(R.string.curr_location));
+
+        if(listOfLocations.contains(location.trim()))
+        {
+            valid = true;
+        }
+
+        return valid;
     }
 
     //Combines the words in an array starting at a position passed
