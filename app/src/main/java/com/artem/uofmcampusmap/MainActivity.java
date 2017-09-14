@@ -91,12 +91,11 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         if(savedInstanceState == null)
         {
-            NavigationFragment mapFragment = new NavigationFragment();
+            NavigationFragment navigationFragment = new NavigationFragment();
             FragmentManager fragmentManager = getSupportFragmentManager();
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.main_frame_layout, mapFragment);
-            fragmentTransaction.addToBackStack(mapFragment.getClass().toString());
+            fragmentTransaction.add(R.id.main_frame_layout, navigationFragment);
             fragmentTransaction.commit();
         }
         else
@@ -106,8 +105,6 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
             startRoom = savedInstanceState.getString("startRoom");
             destinationLocation = savedInstanceState.getString("destinationLocation");
             destinationRoom = savedInstanceState.getString("destinationRoom");
-
-            //todo potentially need to get the fragment from the stack to fix fragment disappearing?
         }
     }
 
@@ -127,225 +124,219 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         switch(menuItem.getItemId())
         {
             case R.id.campus_map:
-                //Map fragment should be at the very bottom of the stack if there is one
-                if(getSupportFragmentManager().getBackStackEntryCount() > 0)
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                Fragment currVisibleFragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
+
+                //If the fragment isn't on the stack, and if it isn't the current one visible, replace it with the MapFragment
+                if(!(currVisibleFragment instanceof NavigationFragment))
                 {
-                    getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                }
-                else
-                {
-                    MapFragment mapFragment = new MapFragment();
-                    replaceFragment(mapFragment, mapFragment.getClass().toString());
+                    NavigationFragment navigationFragment = new NavigationFragment();
+
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.main_frame_layout, navigationFragment);
+                    fragmentTransaction.commit();
                 }
 
                 break;
             case R.id.navigate:
-                RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
-                replaceFragment(routePlannerFragment, routePlannerFragment.getClass().toString());
+                replaceFragment(new RoutePlannerFragment());
 
                 break;
             case R.id.agriculture:
                 this.currBuilding = getResources().getString(R.string.agriculture);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.agri_engineer:
                 this.currBuilding = getResources().getString(R.string.agr_engineer);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.allen:
                 this.currBuilding = getResources().getString(R.string.allen);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.animal_sci:
                 this.currBuilding = getResources().getString(R.string.animal_sci);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.architecture:
                 this.currBuilding = getResources().getString(R.string.archi_2);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.armes:
                 this.currBuilding = getResources().getString(R.string.armes);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.artlab:
                 this.currBuilding = getResources().getString(R.string.artlab);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.bio_sci:
                 this.currBuilding = getResources().getString(R.string.bio_sci);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.buller:
                 this.currBuilding = getResources().getString(R.string.buller);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.dairy_sci:
                 this.currBuilding = getResources().getString(R.string.dairy_science);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.drake_centre:
                 this.currBuilding = getResources().getString(R.string.drake_centre);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.duff_roblin:
                 this.currBuilding = getResources().getString(R.string.duff_roblin);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.education:
                 this.currBuilding = getResources().getString(R.string.education);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.eitc_e1:
                 this.currBuilding = getResources().getString(R.string.eitc_e1);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.eitc_e2:
                 this.currBuilding = getResources().getString(R.string.eitc_e2);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.eitc_e3:
                 this.currBuilding = getResources().getString(R.string.eitc_e3);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.elizabeth_dafoe:
                 this.currBuilding = getResources().getString(R.string.elizabeth_dafoe);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.ext_education:
                 this.currBuilding = getResources().getString(R.string.ext_education);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.fletcher:
                 this.currBuilding = getResources().getString(R.string.fletcher);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.helen_glass:
                 this.currBuilding = getResources().getString(R.string.helen_glass);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.human_eco:
                 this.currBuilding = getResources().getString(R.string.human_ecology);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.isbister:
                 this.currBuilding = getResources().getString(R.string.isbister);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.machray:
                 this.currBuilding = getResources().getString(R.string.machray);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.parker:
                 this.currBuilding = getResources().getString(R.string.parker);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.plant_sci:
                 this.currBuilding = getResources().getString(R.string.plant_sci);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.robert_schultz:
                 this.currBuilding = getResources().getString(R.string.robert_schultz);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.robson:
                 this.currBuilding = getResources().getString(R.string.robson);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.russel:
                 this.currBuilding = getResources().getString(R.string.russel);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.st_johns:
                 this.currBuilding = getResources().getString(R.string.st_johns);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.st_pauls:
                 this.currBuilding = getResources().getString(R.string.st_pauls);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.tier:
                 this.currBuilding = getResources().getString(R.string.tier);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.uni_centre:
                 this.currBuilding = getResources().getString(R.string.uni_centre);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
                 break;
             case R.id.uni_college:
                 this.currBuilding = getResources().getString(R.string.uni_college);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.wallace:
                 this.currBuilding = getResources().getString(R.string.wallace);
-                replaceFragment(new BuildingLayoutFragment(), currBuilding);
+                replaceFragment(new BuildingLayoutFragment());
 
                 break;
             case R.id.agri_animal_sci:
-                Agri_AnimalSci_Tunnel agri_animalSci_tunnel = new Agri_AnimalSci_Tunnel();
-                replaceFragment(agri_animalSci_tunnel, agri_animalSci_tunnel.getClass().toString());
+                replaceFragment(new Agri_AnimalSci_Tunnel());
 
                 break;
             case R.id.archi2_ext_educ:
-                Archi2_ExtEduc_Tunnel archi2_extEduc_tunnel = new Archi2_ExtEduc_Tunnel();
-                replaceFragment(archi2_extEduc_tunnel, archi2_extEduc_tunnel.getClass().toString());
+                replaceFragment(new Archi2_ExtEduc_Tunnel());
 
                 break;
             case R.id.dafoe_duff_roblin_uni_college:
-                Dafoe_DuffRoblin_UniCollege_Tunnel dafoe_duffRoblin_uniCollege_tunnel = new Dafoe_DuffRoblin_UniCollege_Tunnel();
-                replaceFragment(dafoe_duffRoblin_uniCollege_tunnel, dafoe_duffRoblin_uniCollege_tunnel.getClass().toString());
+                replaceFragment(new Dafoe_DuffRoblin_UniCollege_Tunnel());
 
                 break;
             case R.id.robson_uni_college:
-                Robson_UniCollege_Tunnel robson_uniCollege_tunnel = new Robson_UniCollege_Tunnel();
-                replaceFragment(robson_uniCollege_tunnel, robson_uniCollege_tunnel.getClass().toString());
+                replaceFragment(new Robson_UniCollege_Tunnel());
 
                 break;
             case R.id.russel_archi2:
-                Russel_Archi2_Tunnel russel_archi2_tunnel = new Russel_Archi2_Tunnel();
-                replaceFragment(russel_archi2_tunnel, russel_archi2_tunnel.getClass().toString());
+                replaceFragment(new Russel_Archi2_Tunnel());
 
                 break;
             case R.id.tier_artlab:
-                Tier_Artlab_Tunnel tier_artlab_tunnel = new Tier_Artlab_Tunnel();
-                replaceFragment(tier_artlab_tunnel, tier_artlab_tunnel.getClass().toString());
+                replaceFragment(new Tier_Artlab_Tunnel());
 
                 break;
             case R.id.wallace_parker:
-                Wallace_Parker_Tunnel wallace_parker_tunnel = new Wallace_Parker_Tunnel();
-                replaceFragment(wallace_parker_tunnel, wallace_parker_tunnel.getClass().toString());
+                replaceFragment(new Wallace_Parker_Tunnel());
 
                 break;
         }
@@ -367,21 +358,24 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
     //Resets any route information, and switches to the desired fragment
     //If the fragment wasn't on the stack already, it'll use the one that is passed
-    private void replaceFragment(Fragment fragment, String stateName)
+    private void replaceFragment(Fragment fragment)
     {
         resetFields();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        boolean fragmentPopped = fragmentManager.popBackStackImmediate(stateName, 0);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame_layout, fragment);
+        fragmentTransaction.commit();
+    }
 
-        //If the fragment wasn't on the stack, create a new one to use
-        if(!fragmentPopped)
-        {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frag_holder, fragment);
-            fragmentTransaction.addToBackStack(stateName);
-            fragmentTransaction.commit();
-        }
+    public void switchToNavigation()
+    {
+        NavigationFragment navigationFragment = new NavigationFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame_layout, navigationFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -471,8 +465,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         switch(item.getItemId())
         {
             case R.id.navigate_button:
-                RoutePlannerFragment routePlannerFragment = new RoutePlannerFragment();
-                replaceFragment(routePlannerFragment, routePlannerFragment.getClass().toString());
+                replaceFragment(new RoutePlannerFragment());
 
                 return true;
 
@@ -483,13 +476,22 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
     @Override
     public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment currVisibleFragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
+
+        //Closes the app when it is displaying the map.
+        //If it isn't currently on the map screen, it will then display the map
         if(this.mDrawerLayout.isDrawerOpen(GravityCompat.START))
         {
             this.mDrawerLayout.closeDrawer(GravityCompat.START);
         }
-        else if(getSupportFragmentManager().getBackStackEntryCount() > 0)
+        else if(!(currVisibleFragment instanceof NavigationFragment))
         {
-            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            NavigationFragment navigationFragment = new NavigationFragment();
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_frame_layout, navigationFragment);
+            fragmentTransaction.commit();
         }
         else
         {

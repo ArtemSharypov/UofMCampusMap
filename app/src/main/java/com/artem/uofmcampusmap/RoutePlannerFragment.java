@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,7 +46,12 @@ public class RoutePlannerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //returns to the map fragment / screen
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                MainActivity mainActivity = (MainActivity) getActivity();
+
+                if(mainActivity != null)
+                {
+                    mainActivity.switchToNavigation();
+                }
             }
         });
 
@@ -151,7 +157,13 @@ public class RoutePlannerFragment extends Fragment {
                     activity.passDestinationLocation(toLocation.trim());
                     activity.passDestinationRoom(toRoom.trim());
 
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    //getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    MainActivity mainActivity = (MainActivity) getActivity();
+
+                    if(mainActivity != null)
+                    {
+                        mainActivity.switchToNavigation();
+                    }
                 }
                 else if(!fromLocationValid && !toLocationValid)
                 {
