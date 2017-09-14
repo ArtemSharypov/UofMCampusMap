@@ -1,6 +1,9 @@
 package com.artem.uofmcampusmap;
 
+import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -104,6 +107,28 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                         }
                     }
                 }
+            }
+            else if(startLocation.equals(getResources().getString(R.string.curr_location)) ||
+                    destinationLocation.equals(getResources().getString(R.string.curr_location)))
+            {
+                if(!isLocationServicesEnabled())
+                {
+                    Toast.makeText(getContext(),
+                            "Couldn't find your location, make sure GPS is enabled", Toast.LENGTH_LONG)
+                            .show();
+                }
+                else
+                {
+                    Toast.makeText(getContext(),
+                            "Couldn't find a route from where you currently are", Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+            else
+            {
+                Toast.makeText(getContext(),
+                        "Couldn't find a route from the desired locations", Toast.LENGTH_LONG)
+                        .show();
             }
         }
     }
@@ -242,7 +267,10 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         switchToMapFrag();
         currLocation = OUTSIDE_ID;
 
-        new RouteCreationTask().execute();
+        if(!startLocation.equals("") && !destinationLocation.equals(""))
+        {
+            new RouteCreationTask().execute();
+        }
 
         return view;
     }
@@ -288,6 +316,22 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         PassRouteData activity = (PassRouteData) getActivity();
         activity.setCurrInstructionPos(currInstructionPos);
     }
+
+    //Checks if location services ar enabled at all
+    private boolean isLocationServicesEnabled()
+    {
+        boolean enabled = false;
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+        {
+            enabled = true;
+        }
+
+        return enabled;
+    }
+
 
     //Checks if google play services are enabled for GPS
     private boolean checkPlayServices()
@@ -377,12 +421,6 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                     currLocation = OUTSIDE_ID;
                 }
             }
-        }
-        else
-        {
-            Toast.makeText(getContext(),
-                    "Couldn't find the location, make sure GPS is enabled", Toast.LENGTH_LONG)
-                    .show();
         }
     }
 

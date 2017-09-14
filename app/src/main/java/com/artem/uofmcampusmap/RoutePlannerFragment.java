@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,18 +35,38 @@ public class RoutePlannerFragment extends Fragment {
     private AutoCompleteTextView fromLocationAutoComplete;
     private boolean toLocationIsGps;
     private boolean fromLocationIsGps;
+    private String[] locations;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route_planner, container, false);
 
+        String[] buildings = getResources().getStringArray(R.array.building_options);
+        String[] rooms = getResources().getStringArray(R.array.building_rooms);
+        String[] parkingLotsAndBuses = getResources().getStringArray(R.array.lots_bus_stops);
+        String[] tempLocations = new String[buildings.length + rooms.length];
+        locations = new String[tempLocations.length + parkingLotsAndBuses.length];
+
+        //Combine all of the buildings and rooms into a single array
+        System.arraycopy(buildings, 0, tempLocations, 0, buildings.length);
+        System.arraycopy(rooms, 0, tempLocations, buildings.length, rooms.length);
+
+        //Combine buildings/rooms array with all bus stops and parking lots
+        System.arraycopy(tempLocations, 0, locations, 0, tempLocations.length);
+        System.arraycopy(parkingLotsAndBuses, 0, locations, tempLocations.length, parkingLotsAndBuses.length);
+
         cancelButton = (Button) view.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //returns to the map fragment / screen
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                MainActivity mainActivity = (MainActivity) getActivity();
+
+                if(mainActivity != null)
+                {
+                    mainActivity.switchToNavigation();
+                }
             }
         });
 
@@ -69,12 +90,14 @@ public class RoutePlannerFragment extends Fragment {
                 if(toLocationIsGps)
                 {
                     toLocation = getResources().getString(R.string.curr_location);
+                    toLocationValid = true;
                 }
                 else
                 {
                     //check for building, bus stop, parking lot
                     toText = toLocationAutoComplete.getText().toString();
                     splitToLocation = toText.split(" ");
+                    toLocationValid = validLocation(toText);
 
                     //Length 1 means more than likely it is a building
                     if(splitToLocation.length == 1)
@@ -106,12 +129,14 @@ public class RoutePlannerFragment extends Fragment {
                 if(fromLocationIsGps)
                 {
                     fromLocation = getResources().getString(R.string.curr_location);
+                    fromLocationValid = true;
                 }
                 else
                 {
                     //check for building, bus stop, parking lot
                     fromText = fromLocationAutoComplete.getText().toString();
                     splitFromLocation = fromText.split(" ");
+                    fromLocationValid = validLocation(fromText);
 
                     //Length 1 means more than likely it is a building
                     if(splitFromLocation.length == 1)
@@ -139,9 +164,6 @@ public class RoutePlannerFragment extends Fragment {
                     }
                 }
 
-                fromLocationValid = validLocation(fromText);
-                toLocationValid = validLocation(toText);
-
                 //Check if both locations entered are considered to be valid
                 if(fromLocationValid && toLocationValid)
                 {
@@ -151,7 +173,8 @@ public class RoutePlannerFragment extends Fragment {
                     activity.passDestinationLocation(toLocation.trim());
                     activity.passDestinationRoom(toRoom.trim());
 
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    activity.switchToNavigation();
+
                 }
                 else if(!fromLocationValid && !toLocationValid)
                 {
@@ -177,20 +200,6 @@ public class RoutePlannerFragment extends Fragment {
                 }
             }
         });
-
-        String[] buildings = getResources().getStringArray(R.array.building_options);
-        String[] rooms = getResources().getStringArray(R.array.building_rooms);
-        String[] parkingLotsAndBuses = getResources().getStringArray(R.array.lots_bus_stops);
-        String[] tempLocations = new String[buildings.length + rooms.length];
-        String[] locations = new String[tempLocations.length + parkingLotsAndBuses.length];
-
-        //Combine all of the buildings and rooms into a single array
-        System.arraycopy(buildings, 0, tempLocations, 0, buildings.length);
-        System.arraycopy(rooms, 0, tempLocations, buildings.length, rooms.length);
-
-        //Combine buildings/rooms array with all bus stops and parking lots
-        System.arraycopy(tempLocations, 0, locations, 0, tempLocations.length);
-        System.arraycopy(parkingLotsAndBuses, 0, locations, tempLocations.length, parkingLotsAndBuses.length);
 
         toLocationAutoComplete = (AutoCompleteTextView) view.findViewById(R.id.to_autocomplete);
         ArrayAdapter<String> toAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, locations);
@@ -272,13 +281,7 @@ public class RoutePlannerFragment extends Fragment {
     private boolean validLocation(String location)
     {
         boolean valid = false;
-        String[] buildings = getResources().getStringArray(R.array.building_options);
-        String[] rooms = getResources().getStringArray(R.array.building_rooms);
-        String[] parkingLotsAndBuses = getResources().getStringArray(R.array.lots_bus_stops);
-        String[] tempLocations = new String[buildings.length + rooms.length];
-        String[] locations = new String[tempLocations.length + parkingLotsAndBuses.length];
 
-        //Todo switch to Arrays.asList by itself for better runtime later? would need to have a single check of current location
         List<String> listOfLocations = new ArrayList<>(Arrays.asList(locations));
         listOfLocations.add(getResources().getString(R.string.curr_location));
 
