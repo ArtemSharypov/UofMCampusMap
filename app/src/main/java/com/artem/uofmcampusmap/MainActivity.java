@@ -124,18 +124,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         switch(menuItem.getItemId())
         {
             case R.id.campus_map:
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                Fragment currVisibleFragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
-
-                //If the fragment isn't on the stack, and if it isn't the current one visible, replace it with the MapFragment
-                if(!(currVisibleFragment instanceof NavigationFragment))
-                {
-                    NavigationFragment navigationFragment = new NavigationFragment();
-
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.main_frame_layout, navigationFragment);
-                    fragmentTransaction.commit();
-                }
+                switchToNavigation();
 
                 break;
             case R.id.navigate:
@@ -292,6 +281,11 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 replaceFragment(new BuildingLayoutFragment());
 
                 break;
+            case R.id.tache_hall:
+                this.currBuilding = getResources().getString(R.string.tache_arts);
+                replaceFragment(new BuildingLayoutFragment());
+
+                break;
             case R.id.tier:
                 this.currBuilding = getResources().getString(R.string.tier);
                 replaceFragment(new BuildingLayoutFragment());
@@ -368,14 +362,21 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         fragmentTransaction.commit();
     }
 
+    //Switches the current view to the NavigationFragment, only if its not already visible
     public void switchToNavigation()
     {
-        NavigationFragment navigationFragment = new NavigationFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment currVisibleFragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame_layout, navigationFragment);
-        fragmentTransaction.commit();
+        //If the fragment isn't on the stack, and if it isn't the current one visible, replace it with the MapFragment
+        if(!(currVisibleFragment instanceof NavigationFragment))
+        {
+            NavigationFragment navigationFragment = new NavigationFragment();
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_frame_layout, navigationFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     @Override

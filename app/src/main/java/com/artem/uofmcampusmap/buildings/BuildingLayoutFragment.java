@@ -92,6 +92,10 @@ import com.artem.uofmcampusmap.buildings.helen_glass.Helen_Glass_Floor1;
 import com.artem.uofmcampusmap.buildings.helen_glass.Helen_Glass_Floor2;
 import com.artem.uofmcampusmap.buildings.helen_glass.Helen_Glass_Floor3;
 import com.artem.uofmcampusmap.buildings.helen_glass.Helen_Glass_Floor4;
+import com.artem.uofmcampusmap.buildings.human_ecology.Human_Ecology_Floor1;
+import com.artem.uofmcampusmap.buildings.human_ecology.Human_Ecology_Floor2;
+import com.artem.uofmcampusmap.buildings.human_ecology.Human_Ecology_Floor3;
+import com.artem.uofmcampusmap.buildings.human_ecology.Human_Ecology_Floor4;
 import com.artem.uofmcampusmap.buildings.isbister.Isbister_Floor1;
 import com.artem.uofmcampusmap.buildings.isbister.Isbister_Floor2;
 import com.artem.uofmcampusmap.buildings.isbister.Isbister_Floor3;
@@ -124,6 +128,11 @@ import com.artem.uofmcampusmap.buildings.st_johns.St_Johns_Floor3;
 import com.artem.uofmcampusmap.buildings.st_pauls.St_Pauls_Floor1;
 import com.artem.uofmcampusmap.buildings.st_pauls.St_Pauls_Floor2;
 import com.artem.uofmcampusmap.buildings.st_pauls.St_Pauls_Floor3;
+import com.artem.uofmcampusmap.buildings.tache_hall.Tache_Hall_Floor1;
+import com.artem.uofmcampusmap.buildings.tache_hall.Tache_Hall_Floor2;
+import com.artem.uofmcampusmap.buildings.tache_hall.Tache_Hall_Floor3;
+import com.artem.uofmcampusmap.buildings.tache_hall.Tache_Hall_Floor4;
+import com.artem.uofmcampusmap.buildings.tache_hall.Tache_Hall_Floor5;
 import com.artem.uofmcampusmap.buildings.tier.Tier_Floor1;
 import com.artem.uofmcampusmap.buildings.tier.Tier_Floor2;
 import com.artem.uofmcampusmap.buildings.tier.Tier_Floor3;
@@ -397,7 +406,14 @@ public class BuildingLayoutFragment extends Fragment{
             }
             else if(buildingName.equals(getResources().getString(R.string.human_ecology)))
             {
-               //todo implement this part
+                if(position == 0)
+                    fragment = new Human_Ecology_Floor1();
+                else if(position == 1)
+                    fragment = new Human_Ecology_Floor2();
+                else if(position == 2)
+                    fragment = new Human_Ecology_Floor3();
+                else if(position == 3)
+                    fragment = new Human_Ecology_Floor4();
             }
             else if(buildingName.equals(getResources().getString(R.string.isbister)))
             {
@@ -489,6 +505,19 @@ public class BuildingLayoutFragment extends Fragment{
                     fragment = new St_Pauls_Floor2();
                 else if(position == 2)
                     fragment = new St_Pauls_Floor3();
+            }
+            else if(buildingName.equals(getResources().getString(R.string.tache_arts)))
+            {
+                if(position == 0)
+                    fragment = new Tache_Hall_Floor1();
+                else if(position == 1)
+                    fragment = new Tache_Hall_Floor2();
+                else if(position == 2)
+                    fragment = new Tache_Hall_Floor3();
+                else if(position == 3)
+                    fragment = new Tache_Hall_Floor4();
+                else if(position == 4)
+                    fragment = new Tache_Hall_Floor5();
             }
             else if(buildingName.equals(getResources().getString(R.string.tier)))
             {
@@ -662,7 +691,7 @@ public class BuildingLayoutFragment extends Fragment{
         }
         else if(buildingName.equals(getResources().getString(R.string.human_ecology)))
         {
-            //todo add in human ecology
+            floors = createFloorNamesFrom(1, 4);
         }
         else if(buildingName.equals(getResources().getString(R.string.isbister)))
         {
@@ -698,6 +727,10 @@ public class BuildingLayoutFragment extends Fragment{
         }else if(buildingName.equals(getResources().getString(R.string.st_pauls)))
         {
             floors = createFloorNamesFrom(1, 3);
+        }
+        else if(buildingName.equals(getResources().getString(R.string.tache_arts)))
+        {
+            floors = createFloorNamesFrom(1, 5);
         }
         else if(buildingName.equals(getResources().getString(R.string.tier)))
         {

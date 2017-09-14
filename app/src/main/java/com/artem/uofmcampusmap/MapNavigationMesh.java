@@ -344,7 +344,7 @@ public class MapNavigationMesh
             thread2.join();
             thread3.join();
 
-            //Combine all the seperate routes into one single route
+            //Combine all the separate routes into one single route
             if (firstRoutePart != null)
             {
                 firstRoutePart.combineRoutes(secondRoutePart);
@@ -355,7 +355,10 @@ public class MapNavigationMesh
                 route = secondRoutePart;
             }
 
-            route.combineRoutes(lastRoutePart);
+            if(route != null)
+            {
+                route.combineRoutes(lastRoutePart);
+            }
         }
         catch(InterruptedException e)
         {
