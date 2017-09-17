@@ -362,13 +362,13 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         fragmentTransaction.commit();
     }
 
-    //Switches the current view to the NavigationFragment, only if its not already visible
+    //Switches the current view to the NavigationFragment, if its not already visible
     public void switchToNavigation()
     {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment currVisibleFragment = fragmentManager.findFragmentById(R.id.main_frame_layout);
 
-        //If the fragment isn't on the stack, and if it isn't the current one visible, replace it with the MapFragment
+        //If the current visible fragment isn't a NavigationFragment, then switch to it
         if(!(currVisibleFragment instanceof NavigationFragment))
         {
             NavigationFragment navigationFragment = new NavigationFragment();
