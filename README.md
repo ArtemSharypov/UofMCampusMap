@@ -1,16 +1,15 @@
-# Turn by Turn Navigation System for the University of Manitoba Campus 
+# University of Manitoba Campus Map
 
-Currently can route from most buildings that are used by departments or for class / labs, aswell as most parking lots and bus stops.
+A map designed for the University of Manitoba campus, it contains building layouts, as well as provide turn by turn navigations to get from different buildings on campus, as well as navigate find paths to specific rooms within buildings. It also contains pathings to different parking lots, as well as bus stops.
 
 # Features
--Indoor & Outdoor Navigation
+-Indoor & Outdoor Navigation 
+
 -Support to show floor layouts of each building with room labels
--Map labels of each building
--Routing based on the current location to/from a location
--Detailed instructions alongside the estimated time it will take
+
+-Detailed instructions for each step, alongside an estimated distance and time for the route.
 
 # How it works
-Routing is done by an A Star algorithm, which creates the fastest route in a matter of seconds. Specifically it goes through each point on the map, which is chosen by the lowest total distance from a starting location to a destination. 
-It will also optimize routes (as in skip over points) when two points are in the same direction.
+Routing is done by an A Star algorithm. It picks the best current position on the map, then compares the next potential steps that take the least amount of time, and repeat it until the destination is reached.
 
-For indoor navigation, each level of the building is treated as a seperate entity, where the route is created then added together once the optimal path is found.
+For indoor navigation, each level of the building is treated as a seperate entity, where each level gets its own individual route, which is then combined with any other necessary parts.
