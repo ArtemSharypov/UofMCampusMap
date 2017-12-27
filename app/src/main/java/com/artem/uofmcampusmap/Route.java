@@ -2,9 +2,6 @@ package com.artem.uofmcampusmap;
 
 import java.util.ArrayList;
 
-/**
- * Created by Artem on 2017-04-28.
- */
 
 public class Route {
     private ArrayList<Instruction> route;

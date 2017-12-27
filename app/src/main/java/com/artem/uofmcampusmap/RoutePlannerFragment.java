@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by Artem on 2017-04-22.
- */
 
 public class RoutePlannerFragment extends Fragment {
     private Button cancelButton;
