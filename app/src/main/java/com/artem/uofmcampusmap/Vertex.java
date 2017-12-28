@@ -12,14 +12,14 @@ public abstract class Vertex {
     private HashSet<Vertex> connectionsNorthEast;
     private HashSet<Vertex> connectionsSouthWest;
     private HashSet<Vertex> connectionsSouthEast;
-    public static int NORTH = 1;
-    public static int SOUTH = 2;
-    public static int EAST = 3;
-    public static int WEST = 4;
-    public static int NORTH_WEST = 5;
-    public static int NORTH_EAST = 6;
-    public static int SOUTH_WEST = 7;
-    public static int SOUTH_EAST = 8;
+    public final static int NORTH = 1;
+    public final static int SOUTH = 2;
+    public final static int EAST = 3;
+    public final static int WEST = 4;
+    public final static int NORTH_WEST = 5;
+    public final static int NORTH_EAST = 6;
+    public final static int SOUTH_WEST = 7;
+    public final static int SOUTH_EAST = 8;
     private double g; //cost from the parent vertex
     private double h; //estimated cost from this to the destination
     private double f; //total cost (g+h)
@@ -135,6 +135,30 @@ public abstract class Vertex {
     public void addWestConnection(Vertex vertex)
     {
         connectionsWest.add(vertex);
+        connections.add(vertex);
+    }
+
+    public void addNorthEastConnection(Vertex vertex)
+    {
+        connectionsNorthEast.add(vertex);
+        connections.add(vertex);
+    }
+
+    public void addNorthWestConnection(Vertex vertex)
+    {
+        connectionsNorthWest.add(vertex);
+        connections.add(vertex);
+    }
+
+    public void addSouthEastConnection(Vertex vertex)
+    {
+        connectionsSouthEast.add(vertex);
+        connections.add(vertex);
+    }
+
+    public void addSouthWestConnection(Vertex vertex)
+    {
+        connectionsSouthWest.add(vertex);
         connections.add(vertex);
     }
 

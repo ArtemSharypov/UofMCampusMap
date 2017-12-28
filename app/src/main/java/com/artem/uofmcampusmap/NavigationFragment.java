@@ -134,7 +134,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
     private TextView distanceRemainingTV;
     private TextView estTimeRemainingTV;
     private LinearLayout instructionsLinLayout;
-    private MapNavigationMesh campusMap;
+    private MapGraph campusMap;
     private String startLocation;
     private String startRoom;
     private String destinationLocation;
@@ -154,7 +154,7 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_navigation, container, false);
 
-        campusMap = new MapNavigationMesh(getResources());
+        campusMap = new MapGraph(getResources());
         currInstructionPos = 0;
         currFloor = 0;
         currLocation = "";
