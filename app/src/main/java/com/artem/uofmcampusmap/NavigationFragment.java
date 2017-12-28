@@ -33,11 +33,8 @@ import com.artem.uofmcampusmap.buildings.machray.Machray_Floor4;
 import com.artem.uofmcampusmap.buildings.machray.Machray_Floor5;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 
-public class NavigationFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class NavigationFragment extends Fragment{
 
     //Used for finding a route based on startLocation, startRoom, destinationLocation, destinationRoom as a background task
     private class RouteCreationTask extends AsyncTask<Void, Void, Route>
@@ -51,13 +48,6 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                 if(startLocation.equals(getResources().getString(R.string.curr_location)) ||
                         destinationLocation.equals(getResources().getString(R.string.curr_location)))
                 {
-                    if(checkPlayServices())
-                    {
-                        buildGoogleApiClient();
-                    }
-
-                    //Current location means that a GPS position needs to be found, and used for the route
-                    findLocation();
                 }
                 else
                 {
@@ -146,8 +136,6 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
     private final String OUTSIDE_ID = "Outside";
     private double remainingDistance;
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
-    private GoogleApiClient googleApiClient;
-    private Location lastLocation = null;
 
     @Nullable
     @Override
@@ -351,73 +339,6 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
         return works;
     }
 
-    private synchronized void buildGoogleApiClient()
-    {
-        googleApiClient = new GoogleApiClient.Builder(getContext())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API).build();
-
-        googleApiClient.connect();
-    }
-
-    //Tries to get the last known GPS location
-    //If one is found, then it will use it to create a Route as planned from the start to destination locations
-    private void findLocation()
-    {
-        try
-        {
-            lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        }
-        catch(SecurityException error)
-        {
-            Toast.makeText(getContext(),
-                "Couldn't find the location, make sure GPS is enabled", Toast.LENGTH_LONG)
-                .show();
-        }
-
-        //Checks if there is a location that can be queried
-        if(lastLocation != null)
-        {
-            LatLng gpsLocation = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-            String gps = getResources().getString(R.string.curr_location);
-
-            //Tries to create a Route using the last known GPS location
-            if(startLocation.equals(gps))
-            {
-                route = campusMap.getRoute(gpsLocation, destinationLocation, destinationRoom);
-            }
-            else if(destinationLocation.equals(gps))
-            {
-                route = campusMap.getRoute(startLocation, startRoom, gpsLocation);
-            }
-
-            //Displays the route information if there one was successfully created
-            if(route != null)
-            {
-                remainingDistance = route.getRouteLength();
-                Instruction firstInstruction = route.getInstructionAt(0);
-
-                updateActivityRoute(route);
-                updateActivityRoutePos();
-                updateShownInstruction();
-                updateDistanceTimeRemaining();
-
-                instructionsLinLayout.setVisibility(View.VISIBLE);
-
-                if(firstInstruction.getSource() instanceof IndoorVertex)
-                {
-                    handleIndoorSource(firstInstruction);
-                }
-                else if(!currLocation.equals(OUTSIDE_ID))
-                {
-                    switchToMapFrag();
-                    currLocation = OUTSIDE_ID;
-                }
-            }
-        }
-    }
-
     //Tries to estimate the amount of time needed to walk the distance remaining on the Route
     private int amountOfTime(double distance)
     {
@@ -575,33 +496,5 @@ public class NavigationFragment extends Fragment implements GoogleApiClient.Conn
                 replaceFragment(allenFloor5Frag, currLocation + currFloor);
             }
         }
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        try
-        {
-            lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        }
-        catch(SecurityException error)
-        {
-            Toast.makeText(getContext(),
-                    "Couldn't find the location, make sure GPS is enabled", Toast.LENGTH_LONG)
-                    .show();
-        }
-
-        findLocation();
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        googleApiClient.connect();
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(getContext(),
-                "Failed to connect", Toast.LENGTH_LONG)
-                .show();
     }
 }

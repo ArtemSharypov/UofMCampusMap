@@ -295,7 +295,7 @@ public class MapFragment extends Fragment implements DisplayRoute {
     {
         GeoPoint centerOfCampus = new GeoPoint(49.809496, -97.133810);
 
-        int zoomAmount = 17;
+        int zoomAmount = 21;
         MapController mapController = (MapController) mMapView.getController();
         mapController.setZoom(zoomAmount);
         mapController.setCenter(centerOfCampus);
