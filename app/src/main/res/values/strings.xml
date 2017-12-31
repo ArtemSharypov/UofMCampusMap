@@ -16,6 +16,7 @@
 
     <string name="curr_location">Current Location</string>
 
+    <string name="active_living_centre">Active Living Centre</string>
     <string name="agriculture">Agriculture</string>
     <string name="agr_engineer">Agricultural Engineering</string>
     <string name="allen">Allen</string>
@@ -85,6 +86,7 @@
     </string-array>
 
     <string-array name="building_options" >
+        <item>@string/active_living_centre</item>
         <item>@string/agriculture</item>
         <item>@string/agr_engineer</item>
         <item>@string/allen</item>
