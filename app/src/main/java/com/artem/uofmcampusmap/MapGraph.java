@@ -541,7 +541,6 @@ public class MapGraph
         String wbDafoeAtAgri = resources.getString(R.string.wb_dafoe_at_agriculture);
         String ebDafoeAtUni = resources.getString(R.string.eb_dafoe_at_uni);
         String ebDafoeAtAgri = resources.getString(R.string.eb_dafoe_at_agri);
-        String nbMacleanUofM = resources.getString(R.string.nb_maclean_uofm);
 
         //Parking Lots
         String studentLot = resources.getString(R.string.student_lot);
@@ -597,8 +596,8 @@ public class MapGraph
         addEntrance(animalSci, animal_sci_south_ent);
 
         //archi2 OutdoorVertex = new OutdoorVertex(new GeoPoint());
-        OutdoorVertex archi2_north_ent = new OutdoorVertex(new GeoPoint(49.807970, -97.136214));
-        addEntrance(archi2, archi2_north_ent);
+        OutdoorVertex archi2_east_ent = new OutdoorVertex(new GeoPoint(49.807970, -97.136214));
+        addEntrance(archi2, archi2_east_ent);
 
         OutdoorVertex archi2_south_ent = new OutdoorVertex(new GeoPoint( 49.807786, -97.136334));
         addEntrance(archi2, archi2_south_ent);
@@ -792,13 +791,11 @@ public class MapGraph
         OutdoorVertex welcome_centre_ent = new OutdoorVertex(new GeoPoint(49.806228, -97.139611));
         addEntrance(welcomeCentre, welcome_centre_ent);
 
-        /* todo add parking lots / bus stop points
+        /* todo add missing parking lots / bus stop points
          OutdoorVertex = new OutdoorVertex(new GeoPoint());
         addEntrance();
 
          Will need to add (so far):
-            nb_maclean_uofm
-
             i_lot
          */
 
@@ -1550,60 +1547,218 @@ public class MapGraph
         connectVertexesWithDirection(Vertex.WEST, fz, fx);
         connectVertexesWithDirection(Vertex.NORTH_WEST, fz, fw);
 
-        /*connectVertexesWithDirection(Vertex);
+        OutdoorVertex ga = new OutdoorVertex(new GeoPoint(49.808892, -97.132523));
+        connectVertexesWithDirection(Vertex.NORTH_WEST, ga, fs);
 
-        OutdoorVertex a = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gb = new OutdoorVertex(new GeoPoint(49.809070, -97.132286));
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, gb, ga);
+        connectVertexesWithDirection(Vertex.NORTH, gb, ft);
 
-        OutdoorVertex b = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gc = new OutdoorVertex(new GeoPoint(49.809088, -97.131900));
+        connectVertexesWithDirection(Vertex.NORTH_WEST, gc, gb);
+        connectVertexesWithDirection(Vertex.NORTH_EAST, gc, cl);
 
-        OutdoorVertex c = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gd = new OutdoorVertex(new GeoPoint(49.808939, -97.131629));
+        connectVertexesWithDirection(Vertex.NORTH_WEST, gd, gc);
+        connectVertexesWithDirection(Vertex.EAST, gd, ci);
 
-        OutdoorVertex d = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex ge = new OutdoorVertex(new GeoPoint(49.808718, -97.131607));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, ge, gd);
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, ge, ca);
 
-        OutdoorVertex e = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gf = new OutdoorVertex(new GeoPoint(49.808570, -97.131707));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, gf, ge);
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, gf, bz);
 
-        OutdoorVertex f = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gg = new OutdoorVertex(new GeoPoint(49.808480, -97.132023));
+        connectVertexesWithDirection(Vertex.EAST, gg, gf);
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, gg, wb_dafoe_uofm);
 
-        OutdoorVertex g = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gh = new OutdoorVertex(new GeoPoint(49.808492, -97.132219));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, gh, gg);
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, gh, by);
 
-        OutdoorVertex h = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gi = new OutdoorVertex(new GeoPoint(49.808640, -97.132510));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, gi, gh);
+        connectVertexesWithDirection(Vertex.NORTH_EAST, gi, ga);
 
-        OutdoorVertex i = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gj = new OutdoorVertex(new GeoPoint(49.808759, -97.135044));
+        connectVertexesWithDirection(Vertex.NORTH, gj, uni_centre_south_west_ent);
 
-        OutdoorVertex j = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gk = new OutdoorVertex(new GeoPoint(49.808759, -97.135044));
+        connectVertexesWithDirection(Vertex.NORTH, gk, gj);
+        connectVertexesWithDirection(Vertex.EAST, gk, fm);
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, gk, fn);
 
-        OutdoorVertex k = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gl = new OutdoorVertex(new GeoPoint(49.808591, -97.134935));
+        connectVertexesWithDirection(Vertex.NORTH, gl, gk);
+        connectVertexesWithDirection(Vertex.EAST, gl, fn);
 
-        OutdoorVertex l = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gm = new OutdoorVertex(new GeoPoint(49.808735, -97.135130));
+        connectVertexesWithDirection(Vertex.EAST, gm, gj);
 
-        OutdoorVertex m = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gn = new OutdoorVertex(new GeoPoint(49.808726, -97.135545));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, gn, gm);
 
-        OutdoorVertex n = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex go = new OutdoorVertex(new GeoPoint(49.808780, -97.135572));
+        connectVertexesWithDirection(Vertex.NORTH, go, helen_glass_ent);
+        connectVertexesWithDirection(Vertex.SOUTH, go, gn);
 
-        OutdoorVertex o = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gp = new OutdoorVertex(new GeoPoint(49.808695, -97.135616));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, gp, go);
 
-        OutdoorVertex p = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gq = new OutdoorVertex(new GeoPoint(49.808799, -97.136042));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, gq, gn);
 
-        OutdoorVertex q = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gr = new OutdoorVertex(new GeoPoint(49.809201, -97.136406));
+        connectVertexesWithDirection(Vertex.SOUTH, gr, gg);
+        connectVertexesWithDirection(Vertex.NORTH, gr, ee);
+        connectVertexesWithDirection(Vertex.WEST, gr, education_north_ent);
 
-        OutdoorVertex r = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gs = new OutdoorVertex(new GeoPoint(49.808463, -97.135552));
+        connectVertexesWithDirection(Vertex.NORTH, gs, gp);
 
-        OutdoorVertex s = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gt = new OutdoorVertex(new GeoPoint(49.808410, -97.135443));
+        connectVertexesWithDirection(Vertex.NORTH_WEST, gt, gs);
+        connectVertexesWithDirection(Vertex.EAST, gt, gl);
 
-        OutdoorVertex t = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gu = new OutdoorVertex(new GeoPoint(49.808346, -97.135423));
+        connectVertexesWithDirection(Vertex.NORTH, gu, gt  );
 
-        OutdoorVertex u = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gv = new OutdoorVertex(new GeoPoint(49.808298, -97.135538));
+        connectVertexesWithDirection(Vertex.EAST, gv, gu);
+        connectVertexesWithDirection(Vertex.SOUTH, gv, russel_north_ent);
 
-        OutdoorVertex v = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gw = new OutdoorVertex(new GeoPoint(49.808261, -97.135656));
+        connectVertexesWithDirection(Vertex.EAST, gw, gv);
 
-        OutdoorVertex w = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gx = new OutdoorVertex(new GeoPoint(49.808393, -97.135768));
+        connectVertexesWithDirection(Vertex.SOUTH, gx, gw);
+        connectVertexesWithDirection(Vertex.EAST, gx, gs);
 
-        OutdoorVertex x = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gy = new OutdoorVertex(new GeoPoint(49.808316, -97.135959));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, gy, gx);
+        connectVertexesWithDirection(Vertex.EAST, gy, gs);
 
-        OutdoorVertex y = new OutdoorVertex(new GeoPoint());
+        OutdoorVertex gz = new OutdoorVertex(new GeoPoint(49.808316, -97.135959));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, gz, gy);
 
-        OutdoorVertex z = new OutdoorVertex(new GeoPoint());
-         */
+        OutdoorVertex ha = new OutdoorVertex(new GeoPoint(49.808372, -97.136237));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, ha, gz);
+
+        OutdoorVertex hb = new OutdoorVertex(new GeoPoint(49.808543, -97.136176));
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, hb, ha);
+
+        OutdoorVertex hc = new OutdoorVertex(new GeoPoint(49.808632, -97.136243));
+        connectVertexesWithDirection(Vertex.SOUTH, hc, hb);
+
+        OutdoorVertex hd = new OutdoorVertex(new GeoPoint(49.808594, -97.136381));
+        connectVertexesWithDirection(Vertex.EAST, hd, hc);
+        connectVertexesWithDirection(Vertex.NORTH, hd, education_south_ent);
+
+        OutdoorVertex he = new OutdoorVertex(new GeoPoint(49.808584, -97.136018));
+        connectVertexesWithDirection(Vertex.WEST, he, hb);
+
+        OutdoorVertex hf = new OutdoorVertex(new GeoPoint(49.808479, -97.135872));
+        connectVertexesWithDirection(Vertex.NORTH_WEST, hf, he);
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, hf, gy);
+
+        OutdoorVertex hg = new OutdoorVertex(new GeoPoint(49.808700, -97.136016));
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, hg, he);
+        connectVertexesWithDirection(Vertex.NORTH, hg, gq);
+        connectVertexesWithDirection(Vertex.WEST, hg, hc);
+
+        OutdoorVertex hh = new OutdoorVertex(new GeoPoint(49.808700, -97.136016));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, hh, gz);
+        connectVertexesWithDirection(Vertex.EAST, hh, gw);
+
+        OutdoorVertex hi = new OutdoorVertex(new GeoPoint(49.808003, -97.136058));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, hi, hh);
+
+        OutdoorVertex hj = new OutdoorVertex(new GeoPoint(49.807744, -97.136167));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, hj, hi);
+
+        OutdoorVertex hk = new OutdoorVertex(new GeoPoint(49.807702, -97.136259));
+        connectVertexesWithDirection(Vertex.EAST, hk, hj);
+        connectVertexesWithDirection(Vertex.NORTH, hk, archi2_south_ent);
+
+        OutdoorVertex hl = new OutdoorVertex(new GeoPoint(49.807614, -97.136163));
+        connectVertexesWithDirection(Vertex.NORTH, hl, hk);
+        connectVertexesWithDirection(Vertex.NORTH_EAST, hl, hj);
+        connectVertexesWithDirection(Vertex.SOUTH, hl, bo);
+
+        OutdoorVertex hm = new OutdoorVertex(new GeoPoint(49.807578, -97.136917));
+        connectVertexesWithDirection(Vertex.EAST, hm, hk);
+
+        OutdoorVertex hn = new OutdoorVertex(new GeoPoint(49.807637, -97.137089));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, hn, hm);
+
+        OutdoorVertex ho = new OutdoorVertex(new GeoPoint(49.807767, -97.136857));
+        connectVertexesWithDirection(Vertex.SOUTH, ho, archi2_west_ent);
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, ho, hn);
+
+        OutdoorVertex hp = new OutdoorVertex(new GeoPoint(49.807842, -97.136958));
+        connectVertexesWithDirection(Vertex.SOUTH, hp, ho);
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, hp, hn);
+
+        OutdoorVertex hq = new OutdoorVertex(new GeoPoint(49.807897, -97.137278));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, hq, hp);
+
+        OutdoorVertex hr = new OutdoorVertex(new GeoPoint(49.808089, -97.136716));
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, hr, hp);
+
+        OutdoorVertex hs = new OutdoorVertex(new GeoPoint(49.808150, -97.136517));
+        connectVertexesWithDirection(Vertex.WEST, hs, hr);
+
+        OutdoorVertex ht = new OutdoorVertex(new GeoPoint(49.808247, -97.136618));
+        connectVertexesWithDirection(Vertex.SOUTH, ht, hs);
+        connectVertexesWithDirection(Vertex.EAST, ht, ha);
+
+        OutdoorVertex hu = new OutdoorVertex(new GeoPoint(49.808206, -97.136766));
+        connectVertexesWithDirection(Vertex.EAST, hu, ht);
+        connectVertexesWithDirection(Vertex.SOUTH, hu, hr);
+
+        OutdoorVertex hv = new OutdoorVertex(new GeoPoint(49.808063, -97.136276));
+        connectVertexesWithDirection(Vertex.NORTH_WEST, hv, hs);
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, hv, hi);
+
+        OutdoorVertex hw = new OutdoorVertex(new GeoPoint(49.807988, -97.136225));
+        connectVertexesWithDirection(Vertex.NORTH, hw, hv);
+        connectVertexesWithDirection(Vertex.EAST, hw, hi);
+        connectVertexesWithDirection(Vertex.SOUTH, hw, archi2_east_ent);
+
+        OutdoorVertex hx = new OutdoorVertex(new GeoPoint(49.808408, -97.137315));
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, hx, hu);
+
+        OutdoorVertex hy = new OutdoorVertex(new GeoPoint(49.808449, -97.137303));
+        connectVertexesWithDirection(Vertex.SOUTH_WEST, hy, hx);
+        connectVertexesWithDirection(Vertex.EAST, hy, education_west_ent);
+
+        OutdoorVertex hz = new OutdoorVertex(new GeoPoint(49.807896, -97.137743));
+
+        OutdoorVertex ia = new OutdoorVertex(new GeoPoint(49.807896, -97.137743));
+        connectVertexesWithDirection(Vertex.WEST, ia, hz);
+        connectVertexesWithDirection(Vertex.EAST, ia, hu);
+        connectVertexesWithDirection(Vertex.SOUTH, ia, hq);
+
+        OutdoorVertex ib = new OutdoorVertex(new GeoPoint(49.807568, -97.137825));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, ib, hz);
+        connectVertexesWithDirection(Vertex.WEST, ib, ext_education_east_ent);
+
+        OutdoorVertex ic = new OutdoorVertex(new GeoPoint(49.807560, -97.137677));
+        connectVertexesWithDirection(Vertex.WEST, ic, ext_education_east_ent);
+
+        OutdoorVertex id = new OutdoorVertex(new GeoPoint(49.807607, -97.137533));
+        connectVertexesWithDirection(Vertex.WEST, id, ic);
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, id, hn);
+        connectVertexesWithDirection(Vertex.NORTH, id, hz);
+
+        OutdoorVertex ie = new OutdoorVertex(new GeoPoint(49.807805, -97.138122));
+        connectVertexesWithDirection(Vertex.EAST, ie, hz);
+
+        OutdoorVertex ig = new OutdoorVertex(new GeoPoint(49.807705, -97.138202));
+        connectVertexesWithDirection(Vertex.NORTH_EAST, ig, ie);
+        connectVertexesWithDirection(Vertex.WEST, ig, bb);
     }
 
     //Connects 2 vertex's with directions, the direction that is taken is from vertex1 -> vertex2
