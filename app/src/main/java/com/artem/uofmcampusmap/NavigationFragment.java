@@ -314,31 +314,6 @@ public class NavigationFragment extends Fragment{
         return enabled;
     }
 
-
-    //Checks if google play services are enabled for GPS
-    private boolean checkPlayServices()
-    {
-        int resultCode = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
-        boolean works = true;
-
-        if(resultCode != ConnectionResult.SUCCESS)
-        {
-            if(GoogleApiAvailability.getInstance().isUserResolvableError(resultCode))
-            {
-                GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), resultCode,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            }
-            else
-            {
-                getActivity().finish();
-            }
-
-            works = false;
-        }
-
-        return works;
-    }
-
     //Tries to estimate the amount of time needed to walk the distance remaining on the Route
     private int amountOfTime(double distance)
     {
