@@ -1,157 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+  >
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/from_title"
+        style="@style/RobotoTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/relativeLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:text="From"
+        app:layout_constraintBottom_toTopOf="@+id/from_autocomplete"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/from_title"
-            style="@style/RobotoTextViewStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="From" />
+    <AutoCompleteTextView
+        android:id="@+id/from_autocomplete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:hint="Enter a Building, Parking Lot, or Bus Stop"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioGroup
-            android:id="@+id/from_radio_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/from_title"
-            android:layout_marginTop="15dp"
-            android:checkedButton="@+id/from_location">
+    <Button
+        android:id="@+id/cancel_button"
+        style="@style/RobotoButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/find_route_button"
+        app:layout_constraintStart_toStartOf="parent" />
 
-            <RadioButton
-                android:id="@+id/from_curr_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Current Location" />
+    <Button
+        android:id="@+id/find_route_button"
+        style="@style/RobotoButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Find Route"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cancel_button" />
 
-            <RadioButton
-                android:id="@+id/from_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/from_title"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:text="Building / Bus Stop / Parking Lot" />
-
-        </RadioGroup>
-
-        <AutoCompleteTextView
-            android:id="@+id/from_autocomplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/from_radio_group"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:hint="Enter a Room or Building"
-            android:imeOptions="actionDone"
-            android:inputType="text" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
+    <TextView
+        android:id="@+id/to_title"
+        style="@style/RobotoTextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:id="@+id/relativeLayout2"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:text="To"
+        app:layout_constraintBottom_toTopOf="@+id/to_autocomplete"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/to_title"
-            style="@style/RobotoTextViewStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:text="To" />
-
-        <RadioGroup
-            android:id="@+id/to_radio_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/to_title"
-            android:layout_marginTop="15dp"
-            android:checkedButton="@+id/to_location">
-
-            <RadioButton
-                android:id="@+id/to_curr_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Current Location" />
-
-            <RadioButton
-                android:id="@+id/to_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentStart="false"
-                android:layout_below="@+id/from_title"
-                android:layout_marginTop="5dp"
-                android:text="Building / Bus Stop / Parking Lot" />
-
-        </RadioGroup>
-
-        <AutoCompleteTextView
-            android:id="@+id/to_autocomplete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/to_radio_group"
-            android:layout_marginTop="15dp"
-            android:layout_weight="1"
-            android:hint="Enter a Room or a Building"
-            android:imeOptions="actionDone"
-            android:inputType="text" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <AutoCompleteTextView
+        android:id="@+id/to_autocomplete"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout">
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
+        android:hint="Enter a Building, Parking Lot, or Bus Stop"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/from_autocomplete" />
 
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cancel"
-            style="@style/RobotoButtonStyle"/>
-
-        <Button
-            android:id="@+id/find_route_button"
-            style="@style/RobotoButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Find Route" />
-
-    </LinearLayout>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
