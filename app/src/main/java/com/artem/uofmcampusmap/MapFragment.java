@@ -74,6 +74,8 @@ public class MapFragment extends Fragment implements DisplayRoute {
                 if(currPosInLines < routeLines.size())
                 {
                     routeLines.get(currPosInLines).setVisible(false);
+                    mMapView.invalidate();
+
                     currPosInLines++;
 
                     Instruction currInstruc = route.getInstructionAt(currRoutePos);
@@ -122,7 +124,9 @@ public class MapFragment extends Fragment implements DisplayRoute {
                 if(currPosInLines > 0)
                 {
                     currPosInLines--;
+
                     routeLines.get(currPosInLines).setVisible(true);
+                    mMapView.invalidate();
 
                     Instruction currInstruc = route.getInstructionAt(currRoutePos);
 

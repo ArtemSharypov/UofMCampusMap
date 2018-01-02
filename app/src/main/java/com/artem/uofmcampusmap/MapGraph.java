@@ -984,7 +984,7 @@ public class MapGraph
         connectVertexesWithDirection(Vertex.SOUTH, ad, ab);
         connectVertexesWithDirection(Vertex.NORTH_WEST, ad, student_lot_mid);
 
-        OutdoorVertex ae = new OutdoorVertex(new GeoPoint(49.806546, -97.139944));
+        OutdoorVertex ae = new OutdoorVertex(new GeoPoint(49.807016, -97.140066));
         connectVertexesWithDirection(Vertex.SOUTH_WEST, ae, student_lot_north);
 
         OutdoorVertex af = new OutdoorVertex(new GeoPoint(49.807282, -97.140274));
@@ -1088,8 +1088,8 @@ public class MapGraph
         connectVertexesWithDirection(Vertex.NORTH_EAST, bg, bf);
         connectVertexesWithDirection(Vertex.NORTH, bg, nb_uni_chancellor);
 
-        OutdoorVertex bh = new OutdoorVertex(new GeoPoint(49.806417, -97.138849));
-        connectVertexesWithDirection(Vertex.NORTH, bh, bg);
+        OutdoorVertex bh = new OutdoorVertex(new GeoPoint(49.806387, -97.138722));
+        connectVertexesWithDirection(Vertex.NORTH_WEST, bh, bg);
         connectVertexesWithDirection(Vertex.EAST, bh, active_living_west_ent);
 
         OutdoorVertex bi = new OutdoorVertex(new GeoPoint(49.806179, -97.138511));
@@ -1112,7 +1112,7 @@ public class MapGraph
 
         OutdoorVertex bm = new OutdoorVertex(new GeoPoint(49.806995, -97.136195));
         connectVertexesWithDirection(Vertex.WEST, bm, wb_dafoe_at_agri);
-        connectVertexesWithDirection(Vertex.SOUTH, bm, u);
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, bm, u);
 
         OutdoorVertex bn = new OutdoorVertex(new GeoPoint(49.807262, -97.136336));
         connectVertexesWithDirection(Vertex.SOUTH, bn, bm);
@@ -1300,7 +1300,7 @@ public class MapGraph
         connectVertexesWithDirection(Vertex.NORTH, dk, human_eco_south_east_ent);
         connectVertexesWithDirection(Vertex.WEST, dk, cu);
 
-        OutdoorVertex dl = new OutdoorVertex(new GeoPoint(49.810396, -97.132412));
+        OutdoorVertex dl = new OutdoorVertex(new GeoPoint(49.808633, -97.134835));
         connectVertexesWithDirection(Vertex.SOUTH_WEST, dl, cu);
         connectVertexesWithDirection(Vertex.EAST, dl, human_eco_west_ent);
 
@@ -1496,10 +1496,10 @@ public class MapGraph
         OutdoorVertex fn = new OutdoorVertex(new GeoPoint(49.808633, -97.134835));
         connectVertexesWithDirection(Vertex.NORTH, fn, fm);
 
-        OutdoorVertex fo = new OutdoorVertex(new GeoPoint(49.808633, -97.134835));
+        OutdoorVertex fo = new OutdoorVertex(new GeoPoint(49.808715, -97.134554));
         connectVertexesWithDirection(Vertex.WEST, fo, fn);
         connectVertexesWithDirection(Vertex.EAST, fo, ff);
-        connectVertexesWithDirection(Vertex.SOUTH_EAST, fo, eitc_e3_ent);
+        connectVertexesWithDirection(Vertex.SOUTH, fo, eitc_e3_ent);
 
         OutdoorVertex fp = new OutdoorVertex(new GeoPoint(49.809036, -97.133131));
         connectVertexesWithDirection(Vertex.NORTH, fp, fc);
@@ -1611,7 +1611,7 @@ public class MapGraph
         connectVertexesWithDirection(Vertex.SOUTH_EAST, gq, gn);
 
         OutdoorVertex gr = new OutdoorVertex(new GeoPoint(49.809201, -97.136406));
-        connectVertexesWithDirection(Vertex.SOUTH, gr, gg);
+        connectVertexesWithDirection(Vertex.SOUTH, gr, gq);
         connectVertexesWithDirection(Vertex.NORTH, gr, ee);
         connectVertexesWithDirection(Vertex.WEST, gr, education_north_ent);
 
@@ -1668,7 +1668,7 @@ public class MapGraph
         connectVertexesWithDirection(Vertex.NORTH, hg, gq);
         connectVertexesWithDirection(Vertex.WEST, hg, hc);
 
-        OutdoorVertex hh = new OutdoorVertex(new GeoPoint(49.808700, -97.136016));
+        OutdoorVertex hh = new OutdoorVertex(new GeoPoint(49.808173, -97.135980));
         connectVertexesWithDirection(Vertex.NORTH_EAST, hh, gz);
         connectVertexesWithDirection(Vertex.EAST, hh, gw);
 
