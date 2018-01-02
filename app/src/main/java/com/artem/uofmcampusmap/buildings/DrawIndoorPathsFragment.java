@@ -1,8 +1,6 @@
 package com.artem.uofmcampusmap.buildings;
 
-import android.graphics.Point;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 
 import com.artem.uofmcampusmap.DisplayRoute;
 import com.artem.uofmcampusmap.IndoorVertex;
@@ -11,9 +9,6 @@ import com.artem.uofmcampusmap.PassRouteData;
 import com.artem.uofmcampusmap.Route;
 import com.artem.uofmcampusmap.Vertex;
 
-/**
- * Created by Artem on 2017-07-07.
- */
 
 public abstract class DrawIndoorPathsFragment extends Fragment implements DisplayRoute {
 
@@ -110,6 +105,9 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
                 {
                     if (!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction())
                     {
+                        //Since this stops once the instruction is no longer considered valid (is outdoors or is on a different floor), it has to go to
+                        //the position that is after this one, aka +1 pos over.
+                        startPosOfIndoors++;
                         break;
                     }
                 }

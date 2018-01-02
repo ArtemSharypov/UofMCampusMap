@@ -1,16 +1,13 @@
 package com.artem.uofmcampusmap;
 
-import com.google.android.gms.maps.model.LatLng;
 
-/**
- * Created by Artem on 2017-05-29.
- */
+import org.osmdroid.util.GeoPoint;
 
 public class OutdoorVertex extends Vertex
 {
-    private LatLng position;
+    private GeoPoint position;
 
-    OutdoorVertex(LatLng pos)
+    OutdoorVertex(GeoPoint pos)
     {
         super();
         this.position = pos;
@@ -22,7 +19,7 @@ public class OutdoorVertex extends Vertex
         this.position = vertex.getPosition();
     }
 
-    public LatLng getPosition() {
+    public GeoPoint getPosition() {
         return position;
     }
 
@@ -44,7 +41,7 @@ public class OutdoorVertex extends Vertex
     }
 
     //Calculates the distance in metres from this Vertex to the specified location
-    private int calculateDistanceFrom(LatLng location)
+    private int calculateDistanceFrom(GeoPoint location)
     {
         int distance = 0;
         final double AVG_RADIUS_EARTH_KM = 6373;
@@ -56,11 +53,11 @@ public class OutdoorVertex extends Vertex
 
         if(location != null)
         {
-            latDistance = Math.toRadians(position.latitude - location.latitude);
-            lngDistance = Math.toRadians(position.longitude - location.longitude);
+            latDistance = Math.toRadians(position.getLatitude() - location.getLatitude());
+            lngDistance = Math.toRadians(position.getLongitude()- location.getLongitude());
 
             a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                    + Math.cos(Math.toRadians(position.latitude)) * Math.cos(Math.toRadians(location.latitude))
+                    + Math.cos(Math.toRadians(position.getLatitude())) * Math.cos(Math.toRadians(location.getLatitude()))
                     * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
 
             c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
@@ -94,7 +91,7 @@ public class OutdoorVertex extends Vertex
     public boolean equals(Vertex vertex)
     {
         boolean areEqual = false;
-        LatLng posToCompare;
+        GeoPoint posToCompare;
 
         if(vertex != null && vertex instanceof OutdoorVertex)
         {
@@ -112,6 +109,6 @@ public class OutdoorVertex extends Vertex
 
     @Override
     public int hashCode() {
-        return (int) (position.latitude + position.longitude);
+        return (int) (position.getLatitude() + position.getLongitude());
     }
 }

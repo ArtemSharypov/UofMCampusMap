@@ -1,9 +1,5 @@
 package com.artem.uofmcampusmap;
 
-/**
- * Created by Artem on 2017-05-29.
- */
-
 public class IndoorVertex extends Vertex
 {
     private int floor;

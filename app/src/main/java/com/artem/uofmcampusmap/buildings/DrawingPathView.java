@@ -10,10 +10,6 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-/**
- * Created by Artem on 2017-06-26.
- */
-
 public class DrawingPathView extends View {
 
     private ArrayList<Line> pathsToDraw;

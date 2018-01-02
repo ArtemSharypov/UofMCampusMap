@@ -16,6 +16,7 @@
 
     <string name="curr_location">Current Location</string>
 
+    <string name="active_living_centre">Active Living Centre</string>
     <string name="agriculture">Agriculture</string>
     <string name="agr_engineer">Agricultural Engineering</string>
     <string name="allen">Allen</string>
@@ -56,31 +57,34 @@
 
     <string name="q_lot">Q Lot</string>
     <string name="k_lot">K Lot</string>
-    <string name="student_lot">Student Parking</string>
+    <string name="i_lot">I Lot</string>
+    <string name="student_lot">Student Parking (U Lot)</string>
 
     <string name="nb_uni_at_dysart">Northbound University at Dysart</string>
     <string name="sb_uni_at_dysart">Southbound University at Dysart</string>
-    <string name="wb_dafoe_at_uni">Westbound Dafoe at University</string>
+    <string name="wb_dafoe_at_uni">Westbound Dafoe at U of M Station</string>
     <string name="eb_dafoe_at_uni">Eastbound Dafoe at University</string>
-    <string name="nb_maclean_uofm">Northbound Maclean at U of M </string>
-    <string name="wb_dafoe_uofm">Westbound Dafoe at U of M (School of Music)</string>
+    <string name="eb_dafoe_at_agri">Eastbound Dafoe at Agriculture</string>
+    <string name="wb_dafoe_at_agriculture">Westbound Dafoe at Agriculture</string>
     <string name="nb_uni_chancellor">Northbound University at Chancellor Matheson</string>
 
     <string-array name="lots_bus_stops">
         <item>@string/q_lot</item>
         <item>@string/k_lot</item>
+        <item>@string/i_lot</item>
         <item>@string/student_lot</item>
         <item>@string/nb_uni_at_dysart</item>
         <item>@string/nb_uni_chancellor</item>
         <item>@string/sb_uni_at_dysart</item>
         <item>@string/wb_dafoe_at_uni</item>
         <item>@string/eb_dafoe_at_uni</item>
-        <item>@string/nb_maclean_uofm</item>
-        <item>@string/nb_uni_chancellor</item>
+        <item>@string/eb_dafoe_at_agri</item>
+        <item>@string/wb_dafoe_at_agriculture</item>
         <item>@string/welcome_centre</item>
     </string-array>
 
     <string-array name="building_options" >
+        <item>@string/active_living_centre</item>
         <item>@string/agriculture</item>
         <item>@string/agr_engineer</item>
         <item>@string/allen</item>
@@ -90,7 +94,6 @@
         <item>@string/artlab</item>
         <item>@string/bio_sci</item>
         <item>@string/buller</item>
-        <item>@string/curr_location</item>
         <item>@string/dairy_science</item>
         <item>@string/drake_centre</item>
         <item>@string/duff_roblin</item>

@@ -1,9 +1,5 @@
 package com.artem.uofmcampusmap.buildings;
 
-/**
- * Created by Artem on 2017-06-26.
- */
-
 public class Line {
     private int sourceX;
     private int sourceY;

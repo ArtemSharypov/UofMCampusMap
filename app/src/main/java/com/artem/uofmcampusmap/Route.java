@@ -2,9 +2,6 @@ package com.artem.uofmcampusmap;
 
 import java.util.ArrayList;
 
-/**
- * Created by Artem on 2017-04-28.
- */
 
 public class Route {
     private ArrayList<Instruction> route;
@@ -174,6 +171,7 @@ public class Route {
         directions.add(0, directionToAdd);
     }
 
+    //todo, need to fix turns so that they look at the previous instruction, because no matter the instruction it is in a straight line with no effect on anything else
     /*  For a source -> destination that is either North/South, then if destination -> source is either East/West it has to turn
         accordingly to switch directions. Same goes for East/West then North/South.
         Essentially means that the source is that direction from the destination in terms of N/S/W/E
