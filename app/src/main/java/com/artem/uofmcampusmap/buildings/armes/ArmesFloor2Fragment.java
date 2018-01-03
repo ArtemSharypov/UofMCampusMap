@@ -40,8 +40,7 @@ public class ArmesFloor2Fragment extends DrawIndoorPathsFragment {
         return view;
     }
 
-    //These pixel positions are the DEFAULT current ones for a 768x1280 image size currently
-    //todo switch default to 1080*1920
+    /* default is is in xxhdpi, image size is based on 1080 x 1400*/
     @Override
     protected int findXPixelFor(double xCoordinate) {
         int xPixelPos = -1;
@@ -79,17 +78,14 @@ public class ArmesFloor2Fragment extends DrawIndoorPathsFragment {
         return xPixelPos;
     }
 
-    //These pixel positions are the DEFAULT current ones for a 768x1280 image size currently
-    //todo switch default to 1080*1920
+    /* default is is in xxhdpi, image size is based on 1080 x 1400*/
     @Override
     protected int findYPixelFor(double yCoordinate) {
         int yPixelPos = -1;
 
-        if(yCoordinate == 6.25)
-        {
+        if(yCoordinate == 6.25) {
             yPixelPos = 1030;
-        }
-        else if (yCoordinate == 37.5) {
+        } else if (yCoordinate == 37.5) {
             yPixelPos = 940;
         } else if (yCoordinate == 112.5) {
             yPixelPos = 667;
