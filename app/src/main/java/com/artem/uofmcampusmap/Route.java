@@ -73,13 +73,38 @@ public class Route {
             prevVertex = endVertex;
             reversedRoute = new Route();
 
+            //Reverses the instructions, and makes any possible optimizations
             while (currVertex != null) {
                 instructionToAdd = new Instruction(currVertex, prevVertex);
-                reversedRoute.addDirectionToStart(instructionToAdd);
                 reversedRoute.addInstructionToStart(instructionToAdd);
 
                 prevVertex = currVertex;
                 currVertex = currVertex.getParent();
+            }
+
+            Instruction currInstruction;
+            Instruction prevInstruc;
+            String directionToAdd;
+            int prevInstrucDirection;
+            int currDirection;
+
+            //Creates directions based on the reversedRoute and adds them in
+            for(int i = 0; i < reversedRoute.route.size(); i++)
+            {
+                currInstruction = reversedRoute.route.get(i);
+                directionToAdd = currInstruction.getTextDirections();
+
+                if(i != 0)
+                {
+                    prevInstruc = reversedRoute.route.get(i - 1);
+                    prevInstrucDirection = prevInstruc.getCurrDirection();
+                    currDirection = currInstruction.getCurrDirection();
+
+                    String turnDirections = reversedRoute.turnDirections(prevInstrucDirection, currDirection);
+                    directionToAdd = turnDirections + directionToAdd;
+                }
+
+                reversedRoute.directions.add(directionToAdd);
             }
         }
 
@@ -111,14 +136,10 @@ public class Route {
                     //Remove the instruction and the direction that now gets skipped over
                     route.remove(0);
                     routeLength -= nextInstruct.getDistanceInMetres();
-                    directions.remove(0); //Have to remove directions twice since the direction for this instruction has already been added
-                    directions.remove(0);
 
                     //Add the now optimized instruction that skips over the un-necessary vertex, and update the directions to take
                     route.add(0, optimizedInstruc);
                     routeLength += optimizedInstruc.getDistanceInMetres();
-                    addDirectionToStart(optimizedInstruc);
-
                 }
                 else
                 {
@@ -136,42 +157,6 @@ public class Route {
         }
     }
 
-    //Creates and adds a direction based on the passed instruction to the start of the list
-    private void addDirectionToStart(Instruction instruction)
-    {
-        String directionToAdd = instruction.getTextDirections();
-
-        if(instruction.isIndoorInstruction())
-        {
-            if(route.size() > 0)
-            {
-                Instruction nextInstruc = route.get(0);
-
-                if(nextInstruc.isIndoorInstruction())
-                {
-                    int nextInstrucDirection = nextInstruc.getCurrDirection();
-                    int currDirection = instruction.getCurrDirection();
-
-                    String turnDirections = turnDirections(currDirection, nextInstrucDirection);
-                    directionToAdd = turnDirections + directionToAdd;
-                }
-            }
-        }
-        else
-        {
-            Vertex source = instruction.getSource();
-            Vertex destination = instruction.getDestination();
-            int sourceToDestDirect = source.directionToVertexIs(destination);
-            int destToSourceDirect = destination.directionToVertexIs(source);
-
-            String turnDirections = turnDirections(sourceToDestDirect, destToSourceDirect);
-            directionToAdd = turnDirections + directionToAdd;
-        }
-
-        directions.add(0, directionToAdd);
-    }
-
-    //todo, need to fix turns so that they look at the previous instruction, because no matter the instruction it is in a straight line with no effect on anything else
     /*  For a source -> destination that is either North/South, then if destination -> source is either East/West it has to turn
         accordingly to switch directions. Same goes for East/West then North/South.
         Essentially means that the source is that direction from the destination in terms of N/S/W/E
@@ -181,6 +166,8 @@ public class Route {
         String turnDirections = "";
         final String left = "Turn left and ";
         final String right = "Turn right and ";
+        final String slightlyLeft = "Turn slightly left and ";
+        final String slightlyRight = "Turn slightly right and ";
 
         if(firstDirection == Vertex.NORTH)
         {
@@ -191,6 +178,14 @@ public class Route {
             else if(secondDirection == Vertex.WEST)
             {
                 turnDirections = left;
+            }
+            else if(secondDirection == Vertex.NORTH_EAST)
+            {
+                turnDirections = slightlyRight;
+            }
+            else if(secondDirection == Vertex.NORTH_WEST)
+            {
+                turnDirections = slightlyLeft;
             }
         }
         else if(firstDirection == Vertex.SOUTH)
@@ -203,6 +198,14 @@ public class Route {
             {
                 turnDirections = right;
             }
+            else if(secondDirection == Vertex.SOUTH_EAST)
+            {
+                turnDirections = slightlyLeft;
+            }
+            else if(secondDirection == Vertex.SOUTH_WEST)
+            {
+                turnDirections = slightlyRight;
+            }
         }
         else if(firstDirection == Vertex.WEST)
         {
@@ -214,6 +217,14 @@ public class Route {
             {
                 turnDirections = left;
             }
+            else if(secondDirection == Vertex.SOUTH_WEST)
+            {
+                turnDirections = slightlyLeft;
+            }
+            else if(secondDirection == Vertex.NORTH_WEST)
+            {
+                turnDirections = slightlyRight;
+            }
         }
         else if(firstDirection == Vertex.EAST)
         {
@@ -222,6 +233,90 @@ public class Route {
                 turnDirections = left;
             }
             else if(secondDirection == Vertex.SOUTH)
+            {
+                turnDirections = right;
+            }
+            else if(secondDirection == Vertex.NORTH_EAST)
+            {
+                turnDirections = slightlyLeft;
+            }
+            else if(secondDirection == Vertex.SOUTH_EAST)
+            {
+                turnDirections = slightlyRight;
+            }
+        }
+        else if(firstDirection == Vertex.NORTH_WEST)
+        {
+            if(secondDirection == Vertex.NORTH)
+            {
+                turnDirections = slightlyRight;
+            }
+            else if(secondDirection == Vertex.WEST)
+            {
+                turnDirections = slightlyLeft;
+            }
+            else if(secondDirection == Vertex.NORTH_EAST)
+            {
+                turnDirections = right;
+            }
+            else if(secondDirection == Vertex.SOUTH_WEST)
+            {
+                turnDirections = left;
+            }
+        }
+        else  if(firstDirection == Vertex.NORTH_EAST)
+        {
+            if(secondDirection == Vertex.NORTH)
+            {
+                turnDirections = slightlyLeft;
+            }
+            else if(secondDirection == Vertex.EAST)
+            {
+                turnDirections = slightlyRight;
+            }
+            else if(secondDirection == Vertex.NORTH_WEST)
+            {
+                turnDirections = left;
+            }
+            else if(secondDirection == Vertex.SOUTH_EAST)
+            {
+                turnDirections = right;
+            }
+        }
+        else if(firstDirection == Vertex.SOUTH_WEST)
+        {
+            if(secondDirection == Vertex.WEST)
+            {
+                turnDirections = slightlyRight;
+            }
+            else if(secondDirection == Vertex.SOUTH)
+            {
+                turnDirections = slightlyLeft;
+            }
+            else if(secondDirection == Vertex.NORTH_WEST)
+            {
+                turnDirections = right;
+            }
+            else if(secondDirection == Vertex.SOUTH_EAST)
+            {
+                turnDirections = left;
+            }
+        }
+        else  if(firstDirection == Vertex.SOUTH_EAST)
+        {
+            if(secondDirection == Vertex.EAST)
+            {
+                turnDirections = slightlyLeft;
+            }
+            else if(secondDirection == Vertex.SOUTH)
+            {
+                turnDirections = slightlyRight;
+            }
+            else if(secondDirection == Vertex.NORTH_EAST)
+            {
+                turnDirections = left;
+            }
+            else if(secondDirection == Vertex.SOUTH_WEST)
             {
                 turnDirections = right;
             }
@@ -287,32 +382,16 @@ public class Route {
         String directionToAdd = instruction.getTextDirections();
         int routeSize = route.size();
 
-        if(instruction.isIndoorInstruction())
+        if(routeSize > 0)
         {
-            if(routeSize > 0)
-            {
-                Instruction prevInstruc = route.get(routeSize -1);
+            Instruction prevInstruc = route.get(routeSize -1);
+            int prevInstrucDirection = prevInstruc.getCurrDirection();
+            int currDirection = instruction.getCurrDirection();
 
-                if(prevInstruc.isIndoorInstruction())
-                {
-                    int prevInstrucDirection = prevInstruc.getCurrDirection();
-                    int currDirection = instruction.getCurrDirection();
-
-                    String turnDirections = turnDirections(prevInstrucDirection, currDirection);
-                    directionToAdd = turnDirections + directionToAdd;
-                }
-            }
-        }
-        else
-        {
-            Vertex source = instruction.getSource();
-            Vertex destination = instruction.getDestination();
-            int sourceToDestDirect = source.directionToVertexIs(destination);
-            int destToSourceDirect = destination.directionToVertexIs(source);
-
-            String turnDirections = turnDirections(sourceToDestDirect, destToSourceDirect);
+            String turnDirections = turnDirections(prevInstrucDirection, currDirection);
             directionToAdd = turnDirections + directionToAdd;
         }
+
         directions.add(directionToAdd);
     }
 

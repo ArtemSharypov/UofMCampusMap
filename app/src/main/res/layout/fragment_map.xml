@@ -5,6 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapView"
+        tilesource="Mapnik"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:visibility="visible">
+
+    </org.osmdroid.views.MapView>
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -14,12 +24,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <org.osmdroid.views.MapView
-        android:id="@+id/mapView"
-        tilesource="Mapnik"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
-
-    </org.osmdroid.views.MapView>
 </android.support.constraint.ConstraintLayout>
