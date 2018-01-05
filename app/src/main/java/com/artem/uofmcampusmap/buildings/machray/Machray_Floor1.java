@@ -68,6 +68,10 @@ public class Machray_Floor1 extends DrawIndoorPathsFragment
         {
             xPixel = 568;
         }
+        else if(xCoordinate == 1105)
+        {
+            xPixel = 594;
+        }
         else if(xCoordinate == 1110)
         {
             xPixel = 632;
