@@ -1,6 +1,7 @@
 package com.artem.uofmcampusmap;
 
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.artem.uofmcampusmap.buildings.BuildingLayoutFragment;
 import com.artem.uofmcampusmap.buildings.tunnels.Agri_AnimalSci_Tunnel;
@@ -26,11 +29,16 @@ import com.artem.uofmcampusmap.buildings.tunnels.Russel_Archi2_Tunnel;
 import com.artem.uofmcampusmap.buildings.tunnels.Tier_Artlab_Tunnel;
 import com.artem.uofmcampusmap.buildings.tunnels.Wallace_Parker_Tunnel;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements PassRouteData, PassBuildingData{
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private NavigationView navigationView;
+    private ExpandableListView mExpandableListView;
+    private CustomExpandableListAdapter expandableListAdapter;
     private String startLocation;
     private String startRoom;
     private String destinationLocation;
@@ -49,18 +57,57 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
         destinationLocation = "";
         destinationRoom = "";
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                selectDrawerItem(menuItem);
-                return true;
-            }
-        });
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        mExpandableListView = findViewById(R.id.nav_drawer_expandable_lv);
+
+        List<String> listDataHeaders = Arrays.asList(getResources().getStringArray(R.array.drawer_group_options));
+        HashMap<String, List<String>> listDataChilds = new HashMap<>();
+
+        List<String> buildingOptions =  Arrays.asList(getResources().getStringArray(R.array.drawer_building_options));
+        List<String> tunnelOptions =  Arrays.asList(getResources().getStringArray(R.array.drawer_tunnel_options));
+
+        listDataChilds.put(getResources().getString(R.string.building_layouts), buildingOptions);
+        listDataChilds.put(getResources().getString(R.string.tunnel_layouts), tunnelOptions);
+
+        expandableListAdapter = new CustomExpandableListAdapter(this, listDataHeaders, listDataChilds);
+        mExpandableListView.setAdapter(expandableListAdapter);
+
+        mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long l) {
+                TextView clickedTV = view.findViewById(R.id.tv_group_title);
+                String data = clickedTV.getText().toString();
+
+                if(data.equals(getResources().getString(R.string.campus_map)))
+                {
+                    switchToNavigation();
+                    mDrawerLayout.closeDrawers();
+                }
+                else if(data.equals(getResources().getString(R.string.navigate)))
+                {
+                    replaceFragment(new RoutePlannerFragment());
+                    mDrawerLayout.closeDrawers();
+                }
+
+                return false;
+            }
+        });
+
+        mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                TextView clickedTV = view.findViewById(R.id.tv_item_title);
+                String data = clickedTV.getText().toString();
+
+                selectDrawerItem(data);
+                expandableListView.collapseGroup(groupPosition);
+
+                return false;
+            }
+        });
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -116,222 +163,270 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     }
 
     //On click item for items in the nav drawer.
-    private void selectDrawerItem(MenuItem menuItem) {
-        switch(menuItem.getItemId())
+    private void selectDrawerItem(String childItemName) {
+        Resources resources = getResources();
+
+        String agriculture = resources.getString(R.string.agriculture);
+        String agri_engineer = resources.getString(R.string.agr_engineer);
+        String allen = resources.getString(R.string.allen);
+        String animalSci = resources.getString(R.string.animal_sci);
+        String archi2 = resources.getString(R.string.archi_2);
+        String armes = resources.getString(R.string.armes);
+        String artlab = resources.getString(R.string.artlab);
+
+        String bioSci = resources.getString(R.string.bio_sci);
+        String buller = resources.getString(R.string.buller);
+
+        String dairySci = resources.getString(R.string.dairy_science);
+        String drake = resources.getString(R.string.drake_centre);
+        String duffRoblin = resources.getString(R.string.duff_roblin);
+
+        String e1_eitc = resources.getString(R.string.eitc_e1);
+        String e2_eitc = resources.getString(R.string.eitc_e2);
+        String e3_eitc = resources.getString(R.string.eitc_e3);
+        String education = resources.getString(R.string.education);
+        String eliDafoe = resources.getString(R.string.elizabeth_dafoe);
+        String extEduc = resources.getString(R.string.ext_education);
+
+        String fletcher = resources.getString(R.string.fletcher);
+
+        String helenGlass = resources.getString(R.string.helen_glass);
+        String humanEco = resources.getString(R.string.human_ecology);
+
+        String isbister = resources.getString(R.string.isbister);
+
+        String machray = resources.getString(R.string.machray);
+
+        String parker = resources.getString(R.string.parker);
+        String plantScience = resources.getString(R.string.plant_sci);
+
+        String robertSchultz = resources.getString(R.string.robert_schultz);
+        String robson = resources.getString(R.string.robson);
+        String russel = resources.getString(R.string.russel);
+
+        String stJohns = resources.getString(R.string.st_johns);
+        String stPauls = resources.getString(R.string.st_pauls);
+
+        String tacheArts = resources.getString(R.string.tache_arts);
+        String tier = resources.getString(R.string.tier);
+
+        String uniCentre = resources.getString(R.string.uni_centre);
+        String uniCollege = resources.getString(R.string.uni_college);
+
+        String wallace = resources.getString(R.string.wallace);
+
+        String agriToAnimalSci = resources.getString(R.string.agri_to_animal_sci);
+        String archi2ToExtEduc = resources.getString(R.string.archi2_to_ext_educ);
+        String dafoeDuffRoblinUniCollege = resources.getString(R.string.dafoe_duff_uni_college);
+        String uniCollegeToRobson = resources.getString(R.string.uni_college_to_robson);
+        String russelToArchi2 = resources.getString(R.string.russel_to_archi2);
+        String tierToArtlab = resources.getString(R.string.tier_to_artlab);
+        String wallaceToParker = resources.getString(R.string.wallace_to_parker);
+
+        if(childItemName.equals(agriculture))
         {
-            case R.id.campus_map:
-                switchToNavigation();
-
-                break;
-            case R.id.navigate:
-                replaceFragment(new RoutePlannerFragment());
-
-                break;
-            case R.id.agriculture:
-                this.currBuilding = getResources().getString(R.string.agriculture);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.agri_engineer:
-                this.currBuilding = getResources().getString(R.string.agr_engineer);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.allen:
-                this.currBuilding = getResources().getString(R.string.allen);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.animal_sci:
-                this.currBuilding = getResources().getString(R.string.animal_sci);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.architecture:
-                this.currBuilding = getResources().getString(R.string.archi_2);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.armes:
-                this.currBuilding = getResources().getString(R.string.armes);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.artlab:
-                this.currBuilding = getResources().getString(R.string.artlab);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.bio_sci:
-                this.currBuilding = getResources().getString(R.string.bio_sci);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.buller:
-                this.currBuilding = getResources().getString(R.string.buller);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.dairy_sci:
-                this.currBuilding = getResources().getString(R.string.dairy_science);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.drake_centre:
-                this.currBuilding = getResources().getString(R.string.drake_centre);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.duff_roblin:
-                this.currBuilding = getResources().getString(R.string.duff_roblin);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.education:
-                this.currBuilding = getResources().getString(R.string.education);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.eitc_e1:
-                this.currBuilding = getResources().getString(R.string.eitc_e1);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.eitc_e2:
-                this.currBuilding = getResources().getString(R.string.eitc_e2);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.eitc_e3:
-                this.currBuilding = getResources().getString(R.string.eitc_e3);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.elizabeth_dafoe:
-                this.currBuilding = getResources().getString(R.string.elizabeth_dafoe);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.ext_education:
-                this.currBuilding = getResources().getString(R.string.ext_education);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.fletcher:
-                this.currBuilding = getResources().getString(R.string.fletcher);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.helen_glass:
-                this.currBuilding = getResources().getString(R.string.helen_glass);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.human_eco:
-                this.currBuilding = getResources().getString(R.string.human_ecology);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.isbister:
-                this.currBuilding = getResources().getString(R.string.isbister);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.machray:
-                this.currBuilding = getResources().getString(R.string.machray);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.parker:
-                this.currBuilding = getResources().getString(R.string.parker);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.plant_sci:
-                this.currBuilding = getResources().getString(R.string.plant_sci);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.robert_schultz:
-                this.currBuilding = getResources().getString(R.string.robert_schultz);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.robson:
-                this.currBuilding = getResources().getString(R.string.robson);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.russel:
-                this.currBuilding = getResources().getString(R.string.russel);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.st_johns:
-                this.currBuilding = getResources().getString(R.string.st_johns);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.st_pauls:
-                this.currBuilding = getResources().getString(R.string.st_pauls);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.tache_hall:
-                this.currBuilding = getResources().getString(R.string.tache_arts);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.tier:
-                this.currBuilding = getResources().getString(R.string.tier);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.uni_centre:
-                this.currBuilding = getResources().getString(R.string.uni_centre);
-                replaceFragment(new BuildingLayoutFragment());
-                break;
-            case R.id.uni_college:
-                this.currBuilding = getResources().getString(R.string.uni_college);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.wallace:
-                this.currBuilding = getResources().getString(R.string.wallace);
-                replaceFragment(new BuildingLayoutFragment());
-
-                break;
-            case R.id.agri_animal_sci:
-                replaceFragment(new Agri_AnimalSci_Tunnel());
-
-                break;
-            case R.id.archi2_ext_educ:
-                replaceFragment(new Archi2_ExtEduc_Tunnel());
-
-                break;
-            case R.id.dafoe_duff_roblin_uni_college:
-                replaceFragment(new Dafoe_DuffRoblin_UniCollege_Tunnel());
-
-                break;
-            case R.id.robson_uni_college:
-                replaceFragment(new Robson_UniCollege_Tunnel());
-
-                break;
-            case R.id.russel_archi2:
-                replaceFragment(new Russel_Archi2_Tunnel());
-
-                break;
-            case R.id.tier_artlab:
-                replaceFragment(new Tier_Artlab_Tunnel());
-
-                break;
-            case R.id.wallace_parker:
-                replaceFragment(new Wallace_Parker_Tunnel());
-
-                break;
+            this.currBuilding = agriculture;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(agri_engineer))
+        {
+            this.currBuilding = agri_engineer;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(allen))
+        {
+            this.currBuilding = allen;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(animalSci))
+        {
+            this.currBuilding = animalSci;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(archi2))
+        {
+            this.currBuilding = archi2;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(armes))
+        {
+            this.currBuilding = armes;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(artlab))
+        {
+            this.currBuilding = artlab;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(bioSci))
+        {
+            this.currBuilding = bioSci;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(buller))
+        {
+            this.currBuilding = buller;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(dairySci))
+        {
+            this.currBuilding = dairySci;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(drake))
+        {
+            this.currBuilding = drake;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(duffRoblin))
+        {
+            this.currBuilding = duffRoblin;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(education))
+        {
+            this.currBuilding = education;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(e1_eitc))
+        {
+            this.currBuilding = e1_eitc;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(e2_eitc))
+        {
+            this.currBuilding = e2_eitc;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(e3_eitc))
+        {
+            this.currBuilding = e3_eitc;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(eliDafoe))
+        {
+            this.currBuilding = eliDafoe;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(extEduc))
+        {
+            this.currBuilding = extEduc;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(fletcher))
+        {
+            this.currBuilding = fletcher;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(helenGlass))
+        {
+            this.currBuilding = helenGlass;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(humanEco))
+        {
+            this.currBuilding = humanEco;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(isbister))
+        {
+            this.currBuilding = isbister;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(machray))
+        {
+            this.currBuilding = machray;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(parker))
+        {
+            this.currBuilding = parker;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(plantScience))
+        {
+            this.currBuilding = plantScience;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(robertSchultz))
+        {
+            this.currBuilding = robertSchultz;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(robson))
+        {
+            this.currBuilding = robson;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(russel))
+        {
+            this.currBuilding = russel;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(stJohns))
+        {
+            this.currBuilding = stJohns;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(stPauls))
+        {
+            this.currBuilding = stPauls;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(tacheArts))
+        {
+            this.currBuilding = tacheArts;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(tier))
+        {
+            this.currBuilding = tier;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(uniCentre))
+        {
+            this.currBuilding = uniCentre;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(uniCollege))
+        {
+            this.currBuilding = uniCollege;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(wallace))
+        {
+            this.currBuilding = wallace;
+            replaceFragment(new BuildingLayoutFragment());
+        }
+        else if(childItemName.equals(agriToAnimalSci))
+        {
+            replaceFragment(new Agri_AnimalSci_Tunnel());
+        }
+        else if(childItemName.equals(archi2ToExtEduc))
+        {
+            replaceFragment(new Archi2_ExtEduc_Tunnel());
+        }
+        else if(childItemName.equals(dafoeDuffRoblinUniCollege))
+        {
+            replaceFragment(new Dafoe_DuffRoblin_UniCollege_Tunnel());
+        }
+        else if(childItemName.equals(uniCollegeToRobson))
+        {
+            replaceFragment(new Robson_UniCollege_Tunnel());
+        }
+        else if(childItemName.equals(russelToArchi2))
+        {
+            replaceFragment(new Russel_Archi2_Tunnel());
+        }
+        else if(childItemName.equals(tierToArtlab))
+        {
+            replaceFragment(new Tier_Artlab_Tunnel());
+        }
+        else if(childItemName.equals(wallaceToParker))
+        {
+            replaceFragment(new Wallace_Parker_Tunnel());
         }
 
-        menuItem.setChecked(true);
         mDrawerLayout.closeDrawers();
     }
 
