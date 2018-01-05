@@ -210,11 +210,11 @@ public class MachrayIndoorConnections
         IndoorVertex _41_31 = new IndoorVertex(building, new XYPos(1041.25, 31.25), 1);
         IndoorVertex _50_28 = new IndoorVertex(building, new XYPos(1050, 28.13), 1);
         IndoorVertex _50_21 = new IndoorVertex(building, new XYPos(1050, 21.88), 1);
-        IndoorVertex _137_21 = new IndoorVertex(building, new XYPos(1137.5, 21.88), 1);
-        IndoorVertex _137_27 = new IndoorVertex(building, new XYPos(1137.5, 27.5), 1);
-        duffRoblinConnection = new IndoorVertex(building, new XYPos(1137.5, -37.5), 1);
+        IndoorVertex _105_21 = new IndoorVertex(building, new XYPos(1105, 21.88), 1);
+        IndoorVertex _105_27 = new IndoorVertex(building, new XYPos(1105, 27.5), 1);
+        duffRoblinConnection = new IndoorVertex(building, new XYPos(1105, -37.5), 1);
         IndoorVertex room_113_leftSide = new IndoorVertex(building, new XYPos(1110, 27.5), 1);
-        IndoorVertex _137_77 = new IndoorVertex(building, new XYPos(1137.5, 77.5), 1);
+        IndoorVertex _105_77 = new IndoorVertex(building, new XYPos(1105, 77.5), 1);
         IndoorVertex room_108 = new IndoorVertex(building, new XYPos(1097.5, 87.5), 1);
         IndoorVertex room_111 = new IndoorVertex(building, new XYPos(1120, 81.25), 1);
         IndoorVertex room_112 = new IndoorVertex(building, new XYPos(1110, 75), 1);
@@ -225,7 +225,7 @@ public class MachrayIndoorConnections
         IndoorVertex room_107 = new IndoorVertex(building, new XYPos(1090, 80), 1);
         IndoorVertex _93_72 = new IndoorVertex(building, new XYPos(1093.75, 72.5), 1);
         IndoorVertex _50_31 = new IndoorVertex(building, new XYPos(1050, 31.25), 1);
-        IndoorVertex _137_72 = new IndoorVertex(building, new XYPos(1137.5, 72.5), 1);
+        IndoorVertex _105_72 = new IndoorVertex(building, new XYPos(1105, 72.5), 1);
 
         //rooms
         ArrayList<IndoorVertex> rm106 = new ArrayList<>();
@@ -271,21 +271,21 @@ public class MachrayIndoorConnections
         connectVertex(_50_31, _50_28);
         connectVertex(_50_28, stairs);
         connectVertex(_50_28, _50_21);
-        connectVertex(_50_21, _137_21);
-        connectVertex(_137_21, _137_27);
-        connectVertex(_137_21, _165_21);
-        connectVertex(_137_21, duffRoblinConnection);
+        connectVertex(_50_21, _105_21);
+        connectVertex(_105_21, _105_27);
+        connectVertex(_105_21, _165_21);
+        connectVertex(_105_21, duffRoblinConnection);
         connectVertex(_165_21, room_115);
         connectVertex(_165_21, room_113_rightSide);
         connectVertex(room_113_rightSide, room_115);
-        connectVertex(_137_27, room_113_leftSide);
-        connectVertex(_137_27, _137_72);
-        connectVertex(_137_72, _93_72);
-        connectVertex(_137_72, room_112);
-        connectVertex(_137_72, _137_77);
-        connectVertex(_137_77, room_108);
-        connectVertex(_137_77, room_111);
-        connectVertex(_137_77, room_112);
+        connectVertex(_105_27, room_113_leftSide);
+        connectVertex(_105_27, _105_72);
+        connectVertex(_105_72, _93_72);
+        connectVertex(_105_72, room_112);
+        connectVertex(_105_72, _105_77);
+        connectVertex(_105_77, room_108);
+        connectVertex(_105_77, room_111);
+        connectVertex(_105_77, room_112);
         connectVertex(room_108, room_111);
         connectVertex(room_106, room_107);
         connectVertex(room_106, _93_72);

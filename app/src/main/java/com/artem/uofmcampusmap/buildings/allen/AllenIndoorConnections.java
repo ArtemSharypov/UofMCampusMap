@@ -175,7 +175,7 @@ public class AllenIndoorConnections {
         elevatorFloor1.connectVertex(elevatorFloor5);
         elevatorFloor2.connectVertex(elevatorFloor3);
         elevatorFloor2.connectVertex(elevatorFloor4);
-        elevatorFloor3.connectVertex(elevatorFloor5);
+        elevatorFloor2.connectVertex(elevatorFloor5);
         elevatorFloor3.connectVertex(elevatorFloor4);
         elevatorFloor3.connectVertex(elevatorFloor5);
         elevatorFloor4.connectVertex(elevatorFloor5);
