@@ -16,6 +16,9 @@
 
     <string name="curr_location">Current Location</string>
 
+    <string name="building_layouts">Building Layouts</string>
+    <string name="tunnel_layouts">Tunnel Layouts</string>
+
     <string name="active_living_centre">Active Living Centre</string>
     <string name="agriculture">Agriculture</string>
     <string name="agr_engineer">Agricultural Engineering</string>
@@ -68,6 +71,14 @@
     <string name="wb_dafoe_at_agriculture">Westbound Dafoe at Agriculture</string>
     <string name="nb_uni_chancellor">Northbound University at Chancellor Matheson</string>
 
+    <string name="agri_to_animal_sci">Agriculture / Animal Science</string>
+    <string name="archi2_to_ext_educ">Archi2 / Ext Education</string>
+    <string name="dafoe_duff_uni_college">Dafoe / Duff Roblin / Uni Colleg</string>
+    <string name="uni_college_to_robson">Uni College / Robson</string>
+    <string name="russel_to_archi2">Russel / Architecture 2</string>
+    <string name="tier_to_artlab">Tier / Artlab</string>
+    <string name="wallace_to_parker">Wallace / Parker</string>
+
     <string-array name="lots_bus_stops">
         <item>@string/q_lot</item>
         <item>@string/k_lot</item>
@@ -80,7 +91,6 @@
         <item>@string/eb_dafoe_at_uni</item>
         <item>@string/eb_dafoe_at_agri</item>
         <item>@string/wb_dafoe_at_agriculture</item>
-        <item>@string/welcome_centre</item>
     </string-array>
 
     <string-array name="building_options" >
@@ -119,6 +129,7 @@
         <item>@string/uni_centre</item>
         <item>@string/uni_college</item>
         <item>@string/wallace</item>
+        <item>@string/welcome_centre</item>
     </string-array>
 
     <string-array name="tunnel_connected_buildings">
@@ -156,5 +167,60 @@
         <item>115 Machray</item>
         <item>211 Machray</item>
         <item>239 Machray</item>
+    </string-array>
+
+    <string-array name="drawer_group_options">
+        <item>@string/navigate</item>
+        <item>@string/campus_map</item>
+        <item>@string/building_layouts</item>
+        <item>@string/tunnel_layouts</item>
+    </string-array>
+
+    <string-array name="drawer_building_options">
+        <item>@string/agriculture</item>
+        <item>@string/agr_engineer</item>
+        <item>@string/allen</item>
+        <item>@string/animal_sci</item>
+        <item>@string/archi_2</item>
+        <item>@string/armes</item>
+        <item>@string/artlab</item>
+        <item>@string/bio_sci</item>
+        <item>@string/buller</item>
+        <item>@string/dairy_science</item>
+        <item>@string/drake_centre</item>
+        <item>@string/duff_roblin</item>
+        <item>@string/education</item>
+        <item>@string/eitc_e1</item>
+        <item>@string/eitc_e2</item>
+        <item>@string/eitc_e3</item>
+        <item>@string/elizabeth_dafoe</item>
+        <item>@string/ext_education</item>
+        <item>@string/fletcher</item>
+        <item>@string/helen_glass</item>
+        <item>@string/human_ecology</item>
+        <item>@string/isbister</item>
+        <item>@string/machray</item>
+        <item>@string/parker</item>
+        <item>@string/plant_sci</item>
+        <item>@string/robert_schultz</item>
+        <item>@string/robson</item>
+        <item>@string/russel</item>
+        <item>@string/st_johns</item>
+        <item>@string/st_pauls</item>
+        <item>@string/tache_arts</item>
+        <item>@string/tier</item>
+        <item>@string/uni_centre</item>
+        <item>@string/uni_college</item>
+        <item>@string/wallace</item>
+    </string-array>
+
+    <string-array name="drawer_tunnel_options">
+        <item>@string/agri_to_animal_sci</item>
+        <item>@string/archi2_to_ext_educ</item>
+        <item>@string/dafoe_duff_uni_college</item>
+        <item>@string/uni_college_to_robson</item>
+        <item>@string/russel_to_archi2</item>
+        <item>@string/tier_to_artlab</item>
+        <item>@string/wallace_to_parker</item>
     </string-array>
 </resources>
