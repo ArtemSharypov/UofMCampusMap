@@ -24,21 +24,25 @@ public class Instruction {
         calculateDistance();
     }
 
+    //Checks if source and destination are both indoors
     public boolean isIndoorInstruction()
     {
         return source instanceof IndoorVertex && destination instanceof IndoorVertex;
     }
 
+    //Checks if source and destination are both outdoors
     public boolean isOutdoorInstruction()
     {
         return source instanceof OutdoorVertex && destination instanceof OutdoorVertex;
     }
 
+    //Checks if source is indoors, and destination is outdoor (aka exit the building)
     public boolean isExitBuildingInstruction()
     {
         return source instanceof IndoorVertex && destination instanceof OutdoorVertex;
     }
 
+    //Checks if source and destination are on different floors, hence being stairs/elevator
     public boolean isStairsInstruction()
     {
         boolean isStairsInstruc = false;
@@ -52,6 +56,23 @@ public class Instruction {
         }
 
         return isStairsInstruc;
+    }
+
+    //Checks if source and destination are both indoors, as well as if they are different buildings
+    //being different buildings means that it is a exit current / enter another
+    public boolean isChangeBuildingsInstruction()
+    {
+        boolean isChangeBuildingsInstruc = false;
+
+        if(isIndoorInstruction())
+        {
+            if(!((IndoorVertex) source).getBuilding().equals(((IndoorVertex) destination).getBuilding()))
+            {
+                isChangeBuildingsInstruc = true;
+            }
+        }
+
+        return isChangeBuildingsInstruc;
     }
 
     //Only used for general directions, ie East/West or North/South
