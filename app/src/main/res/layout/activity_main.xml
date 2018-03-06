@@ -40,7 +40,8 @@
             android:id="@+id/nav_drawer_expandable_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="140dp" />
+            android:layout_marginTop="140dp"
+            android:groupIndicator="@null"/>
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -79,6 +80,18 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView groupTitleTV = convertView.findViewById(R.id.tv_group_title);
         groupTitleTV.setText(groupTitle);
+
+        ImageView groupArrowImage = convertView.findViewById(R.id.iv_arrow_dropdown);
+
+        if(groupPosition != 0 && groupPosition != 1)
+        {
+            if (isExpanded)
+            {
+                groupArrowImage.setImageResource(R.drawable.ic_group_collapse_00);
+            } else {
+                groupArrowImage.setImageResource(R.drawable.ic_group_expand_00);
+            }
+        }
 
         return convertView;
     }
