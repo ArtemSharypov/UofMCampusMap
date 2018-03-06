@@ -45,7 +45,6 @@ public class MapFragment extends Fragment implements DisplayRoute {
 
         mMapView = view.findViewById(R.id.mapView);
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
-        mMapView.setBuiltInZoomControls(true);
         mMapView.setMultiTouchControls(true);
 
         centerMap();
