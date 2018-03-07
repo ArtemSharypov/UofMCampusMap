@@ -13,11 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:text="From"
         app:layout_constraintBottom_toTopOf="@+id/from_autocomplete"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <AutoCompleteTextView
+    <com.artem.uofmcampusmap.ClearableAutoCompleteTextView
         android:id="@+id/from_autocomplete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -51,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="Find Route"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,11 +65,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:text="To"
         app:layout_constraintBottom_toTopOf="@+id/to_autocomplete"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <AutoCompleteTextView
+    <com.artem.uofmcampusmap.ClearableAutoCompleteTextView
         android:id="@+id/to_autocomplete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
