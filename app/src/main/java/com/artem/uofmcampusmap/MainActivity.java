@@ -36,7 +36,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PassRouteData, PassBuildingData{
+public class MainActivity extends AppCompatActivity implements PassRouteData, PassBuildingData, ChangeToolbarTitleInterface{
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        replaceToolbarTitle("");
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         mExpandableListView = findViewById(R.id.nav_drawer_expandable_lv);
 
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         expandableListAdapter = new CustomExpandableListAdapter(this, listDataHeaders, listDataChilds);
         mExpandableListView.setAdapter(expandableListAdapter);
+        mExpandableListView.setChildDivider(getResources().getDrawable(android.R.color.white));
 
         mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
@@ -86,11 +88,21 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 if(data.equals(getResources().getString(R.string.campus_map)))
                 {
+                    //Collapses all groups in case they weren't collapsed
+                    for(int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
+                        mExpandableListView.collapseGroup(i);
+                    }
+
                     switchToNavigation();
                     mDrawerLayout.closeDrawers();
                 }
                 else if(data.equals(getResources().getString(R.string.navigate)))
                 {
+                    //Collapses all groups in case they weren't collapsed
+                    for(int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
+                        mExpandableListView.collapseGroup(i);
+                    }
+
                     replaceFragment(new RoutePlannerFragment());
                     mDrawerLayout.closeDrawers();
                 }
@@ -105,8 +117,12 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
                 TextView clickedTV = view.findViewById(R.id.tv_item_title);
                 String data = clickedTV.getText().toString();
 
+                //Collapses all groups in case they weren't collapsed
+                for(int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
+                    mExpandableListView.collapseGroup(i);
+                }
+
                 selectDrawerItem(data);
-                expandableListView.collapseGroup(groupPosition);
 
                 return false;
             }
@@ -455,6 +471,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     private void replaceFragment(Fragment fragment)
     {
         resetFields();
+        replaceToolbarTitle("");
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -610,5 +627,10 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void replaceToolbarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

@@ -480,8 +480,11 @@ public class BuildingLayoutFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_building_layout, container, false);
-
+        MainActivity activity = (MainActivity) getActivity();
+        buildingName = activity.getCurrBuilding();
         ArrayList<String> buildingFloors = populateFloorNames();
+
+        activity.replaceToolbarTitle(buildingName);
 
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         viewPager.setAdapter(new BuildingFragmentPagerAdapter(getChildFragmentManager(), buildingFloors));
@@ -495,9 +498,6 @@ public class BuildingLayoutFragment extends Fragment{
     //Creates a List of floor names that are used as the titles of each tab
     private ArrayList<String> populateFloorNames()
     {
-        MainActivity activity = (MainActivity) getActivity();
-        buildingName = activity.getCurrBuilding();
-
         ArrayList<String> floors = null;
 
         if(buildingName.equals(getResources().getString(R.string.agr_engineer)))

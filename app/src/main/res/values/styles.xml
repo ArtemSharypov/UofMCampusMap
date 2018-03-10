@@ -36,7 +36,7 @@
     </style>
 
     <style name="AppTheme.NavigationView" >
-        <item name="android:listDivider">@android:color/white</item>
+        <item name="android:listDivider">@android:color/holo_orange_dark</item>
         <item name="android:textColorSecondary">@android:color/darker_gray</item>
     </style>
 </resources>

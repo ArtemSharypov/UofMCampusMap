@@ -35,6 +35,9 @@ public class RoutePlannerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route_planner, container, false);
 
+        ChangeToolbarTitleInterface toolbarActivity = (ChangeToolbarTitleInterface) getActivity();
+        toolbarActivity.replaceToolbarTitle("");
+
         String[] buildings = getResources().getStringArray(R.array.building_options);
         String[] rooms = getResources().getStringArray(R.array.building_rooms);
         String[] parkingLotsAndBuses = getResources().getStringArray(R.array.lots_bus_stops);

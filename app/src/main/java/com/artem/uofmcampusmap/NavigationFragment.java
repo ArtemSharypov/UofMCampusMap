@@ -246,6 +246,9 @@ public class NavigationFragment extends Fragment{
         destinationLocation = activity.getDestinationLocation();
         destinationRoom = activity.getDestinationRoom();
 
+        ChangeToolbarTitleInterface toolbarActivity = (ChangeToolbarTitleInterface) getActivity();
+        toolbarActivity.replaceToolbarTitle("");
+
         switchToMapFrag();
         currLocation = OUTSIDE_ID;
 
