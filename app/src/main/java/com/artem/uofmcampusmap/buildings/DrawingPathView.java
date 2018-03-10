@@ -20,6 +20,8 @@ public class DrawingPathView extends View {
     private final double XHDPI_IMAGE_WIDTH = 720;
     private final double XXHDPI_IMAGE_HEIGHT = 1400;
     private final double XXHDPI_IMAGE_WIDTH = 1080;
+    //todo make the DPI420 be approx 1225 height?
+    //also check for the width of it
 
     public DrawingPathView(Context context)
     {
@@ -53,6 +55,7 @@ public class DrawingPathView extends View {
         super.onDraw(canvas);
 
         int height = this.getHeight();
+        int width = this.getWidth();
         int density = (int) (getResources().getDisplayMetrics().density * DisplayMetrics.DENSITY_DEFAULT);
         int yPixelOffset = 0;
         double xScale = 1;
@@ -62,6 +65,7 @@ public class DrawingPathView extends View {
         int destX;
         int destY;
 
+        //2.656 per for XHIGH, 2.91 for XXHIGH
         //todo add more checks for density. Currently if its between various density's things will be misaligned
         //needs support for pixel 2 (approx 420-440?)
         //1 dip = 1 pixel on 160 dpi screen approx

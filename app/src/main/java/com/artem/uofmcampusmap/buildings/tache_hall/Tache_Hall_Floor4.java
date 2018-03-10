@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.artem.uofmcampusmap.R;
+
 /**
  * Created by Artem on 2017-09-14.
  */
@@ -16,6 +18,8 @@ public class Tache_Hall_Floor4 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_tache_hall_floor4, container, false);
+
+        return view;
     }
 }
