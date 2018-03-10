@@ -36,8 +36,8 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
           For each building north of armes, that is between the current building and armes, y gets changed by +1000. y gets changed by
            -1000 for each building south of armes with the same property as above
         */
-    abstract protected int findXPixelFor(double xCoordinate);
-    abstract protected int findYPixelFor(double yCoordinate);
+    abstract protected int findXDPIPositionFor(double xCoordinate);
+    abstract protected int findYDPIPositionFor(double yCoordinate);
 
     protected boolean checkIfValidInstruc(Instruction instruction)
     {
@@ -160,10 +160,10 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
         IndoorVertex destination = (IndoorVertex) instructionToUse.getDestination();
         Line line = null;
 
-        int sourceX = findXPixelFor(source.getPosition().getX());
-        int sourceY = findYPixelFor(source.getPosition().getY());
-        int destX = findXPixelFor(destination.getPosition().getX());
-        int destY = findYPixelFor(destination.getPosition().getY());
+        int sourceX = findXDPIPositionFor(source.getPosition().getX());
+        int sourceY = findYDPIPositionFor(source.getPosition().getY());
+        int destX = findXDPIPositionFor(destination.getPosition().getX());
+        int destY = findYDPIPositionFor(destination.getPosition().getY());
 
         if(sourceX >= 0 && sourceY >= 0 && destX >= 0 && destY >= 0)
         {
