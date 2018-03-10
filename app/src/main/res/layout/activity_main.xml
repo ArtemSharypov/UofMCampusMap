@@ -41,10 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="140dp"
-            android:dividerHeight="2dp"
-            android:footerDividersEnabled="true"
-            android:groupIndicator="@null"
-            android:headerDividersEnabled="true" />
+            android:dividerHeight="0dp"
+            android:groupIndicator="@null" />
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

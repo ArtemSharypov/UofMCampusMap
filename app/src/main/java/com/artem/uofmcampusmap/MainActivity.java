@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         expandableListAdapter = new CustomExpandableListAdapter(this, listDataHeaders, listDataChilds);
         mExpandableListView.setAdapter(expandableListAdapter);
-        mExpandableListView.setChildDivider(getResources().getDrawable(android.R.color.white));
 
         mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
