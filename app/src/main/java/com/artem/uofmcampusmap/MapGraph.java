@@ -42,6 +42,7 @@ public class MapGraph
     private void addEntrance(String keyName, Vertex entranceVertex)
     {
         ArrayList<Vertex> entrancesList;
+        keyName = keyName.toLowerCase();
 
         if(startEndLocations.containsKey(keyName))
         {
@@ -70,6 +71,9 @@ public class MapGraph
         Route route = null;
         Route indoorRoute = null;
         Route outdoorRoute = null;
+
+        startLocation = startLocation.toLowerCase();
+        endLocation = endLocation.toLowerCase();
 
         if(startEndLocations.containsKey(startLocation) && startEndLocations.containsKey(endLocation))
         {
