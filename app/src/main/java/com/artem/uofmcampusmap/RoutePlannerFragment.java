@@ -190,15 +190,15 @@ public class RoutePlannerFragment extends Fragment {
     }
 
     //Checks if the passed String is a valid location on campus
-    private boolean validLocation(String location)
+    private boolean validLocation(String currLocation)
     {
         boolean valid = false;
-
         List<String> listOfLocations = new ArrayList<>(Arrays.asList(locations));
 
-        if(listOfLocations.contains(location.trim()))
-        {
-            valid = true;
+        for(String location : listOfLocations) {
+            if(location.equalsIgnoreCase(currLocation.trim())){
+                valid = true;
+            }
         }
 
         return valid;

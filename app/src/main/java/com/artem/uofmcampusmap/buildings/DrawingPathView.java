@@ -17,9 +17,9 @@ public class DrawingPathView extends View {
     private int posWithinRoute;
     private Paint paint;
     private final double XHDPI_IMAGE_HEIGHT = 850; //878 is max
-    private final int XHDPI_IMAGE_WIDTH = 720;
+    private final double XHDPI_IMAGE_WIDTH = 720;
     private final double XXHDPI_IMAGE_HEIGHT = 1400;
-    private final int XXHDPI_IMAGE_WIDTH = 1080;
+    private final double XXHDPI_IMAGE_WIDTH = 1080;
 
     public DrawingPathView(Context context)
     {
@@ -62,6 +62,10 @@ public class DrawingPathView extends View {
         int destX;
         int destY;
 
+        //todo add more checks for density. Currently if its between various density's things will be misaligned
+        //needs support for pixel 2 (approx 420-440?)
+        //1 dip = 1 pixel on 160 dpi screen approx
+        //XXHIGH is 480, XHIGH is 320. Thus for pixel 2, the image size has to be somewhere in between that.
         //Checks the phones density, since it matters for offsetting the y position in pixels
         if(density >= DisplayMetrics.DENSITY_XXHIGH)
         {
