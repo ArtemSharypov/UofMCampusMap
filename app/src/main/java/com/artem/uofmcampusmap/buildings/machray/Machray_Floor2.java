@@ -37,73 +37,73 @@ public class Machray_Floor2 extends DrawIndoorPathsFragment
 
     //Default for a 1080x1920 resolution
     @Override
-    protected int findXPixelFor(double xCoordinate)
+    protected int findXDPIPositionFor(double xCoordinate)
     {
-        int xPixel = 0;
+        int xDPIPos = 0;
 
         if(xCoordinate == 1000)
         {
-            xPixel = 73;
+            xDPIPos = 24;
         }
         else if(xCoordinate == 1030.24)
         {
-            xPixel = 240;
+            xDPIPos = 80;
         }
         else if(xCoordinate == 1044.19)
         {
-            xPixel = 320;
+            xDPIPos = 106;
         }
         else if(xCoordinate == 1049.43)
         {
-            xPixel = 345;
+            xDPIPos = 115;
         }
         else if(xCoordinate == 1080.25)
         {
-            xPixel = 519;
+            xDPIPos = 173;
         }
 
-        return xPixel;
+        return xDPIPos;
     }
 
     //Default for a 1080x1920 resolution
     @Override
-    protected int findYPixelFor(double yCoordinate)
+    protected int findYDPIPositionFor(double yCoordinate)
     {
-        int yPixel = 0;
+        int yDPIPos = 0;
 
         if(yCoordinate == 97.11)
         {
-            yPixel = 757;
+            yDPIPos = 252;
         }
         else if(yCoordinate == 151.19)
         {
-            yPixel = 1054;
+            yDPIPos = 351;
         }
         else if(yCoordinate == 154.1)
         {
-            yPixel = 1075;
+            yDPIPos = 358;
         }
         else if(yCoordinate == 158.75)
         {
-            yPixel = 1099;
+            yDPIPos = 366;
         }
         else if(yCoordinate == 160.49)
         {
-            yPixel = 1110;
+            yDPIPos = 377;
         }
         else if(yCoordinate == 173.29)
         {
-            yPixel = 1180;
+            yDPIPos = 393;
         }
         else if(yCoordinate == 179.65)
         {
-            yPixel = 1212;
+            yDPIPos = 404;
         }
         else if(yCoordinate == 188.41)
         {
-            yPixel = 1261;
+            yDPIPos = 425;
         }
 
-        return yPixel;
+        return yDPIPos;
     }
 }

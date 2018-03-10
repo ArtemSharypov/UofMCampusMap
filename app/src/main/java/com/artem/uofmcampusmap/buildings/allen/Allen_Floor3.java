@@ -32,66 +32,66 @@ public class Allen_Floor3 extends DrawIndoorPathsFragment {
     }
 
     @Override
-    protected int findXPixelFor(double xCoordinate) {
-        int xPixel = 0;
+    protected int findXDPIPositionFor(double xCoordinate) {
+        int xDPIPos = 0;
 
         if(xCoordinate == -21.25)
         {
-            xPixel = 150;
+            xDPIPos = 50;
         }
         else if(xCoordinate == -62.5)
         {
-            xPixel = 375;
+            xDPIPos = 125;
         }
         else if(xCoordinate == -66.25)
         {
-            xPixel = 408;
+            xDPIPos = 136;
         }
         else if(xCoordinate == -71.25)
         {
-            xPixel = 438;
+            xDPIPos = 146;
         }
         else if(xCoordinate == -148.75)
         {
-            xPixel = 850;
+            xDPIPos = 284;
         }
         else if(xCoordinate == -157.5)
         {
-            xPixel = 905;
+            xDPIPos = 302;
         }
         else if(xCoordinate == -162.5)
         {
-            xPixel = 930;
+            xDPIPos = 310;
         }
 
-        return xPixel;
+        return xDPIPos;
     }
 
     @Override
-    protected int findYPixelFor(double yCoordinate) {
-        int yPixel = 0;
+    protected int findYDPIPositionFor(double yCoordinate) {
+        int yDPIPos = 0;
 
         if(yCoordinate == 36.25)
         {
-            yPixel = 759;
+            yDPIPos = 253;
         }
         else if(yCoordinate == 41.25)
         {
-            yPixel = 735;
+            yDPIPos = 245;
         }
         else if(yCoordinate == 43.75)
         {
-            yPixel = 715;
+            yDPIPos = 239;
         }
         else if(yCoordinate == 65)
         {
-            yPixel = 592;
+            yDPIPos = 198;
         }
         else if(yCoordinate == 67.5)
         {
-            yPixel = 583;
+            yDPIPos = 195;
         }
 
-        return yPixel;
+        return yDPIPos;
     }
 }

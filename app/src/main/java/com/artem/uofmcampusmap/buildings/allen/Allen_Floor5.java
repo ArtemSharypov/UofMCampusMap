@@ -33,58 +33,58 @@ public class Allen_Floor5 extends DrawIndoorPathsFragment {
     }
 
     @Override
-    protected int findXPixelFor(double xCoordinate) {
-        int xPixel = 0;
+    protected int findXDPIPositionFor(double xCoordinate) {
+        int xDPIPos = 0;
 
         if(xCoordinate == -16.25)
         {
-            xPixel = 150;
+            xDPIPos = 50;
         }
         else if(xCoordinate == -62.5)
         {
-            xPixel = 377;
+            xDPIPos = 126;
         }
         else if(xCoordinate == -66.25)
         {
-            xPixel = 407;
+            xDPIPos = 136;
         }
         else if(xCoordinate == -71.25)
         {
-            xPixel = 440;
+            xDPIPos = 147;
         }
         else if(xCoordinate == -148.75)
         {
-            xPixel = 843;
+            xDPIPos = 281;
         }
         else if(xCoordinate == -152.5)
         {
-            xPixel = 883;
+            xDPIPos = 295;
         }
 
-        return xPixel;
+        return xDPIPos;
     }
 
     @Override
-    protected int findYPixelFor(double yCoordinate) {
-        int yPixel = 0;
+    protected int findYDPIPositionFor(double yCoordinate) {
+        int yDPIPos = 0;
 
         if(yCoordinate == 37.5)
         {
-            yPixel = 744;
+            yDPIPos = 248;
         }
         else if(yCoordinate == 41.25)
         {
-            yPixel = 726;
+            yDPIPos = 242;
         }
         else if(yCoordinate == 43.75)
         {
-            yPixel = 703;
+            yDPIPos = 235;
         }
         else if(yCoordinate == 71.25)
         {
-            yPixel = 555;
+            yDPIPos = 185;
         }
 
-        return yPixel;
+        return yDPIPos;
     }
 }

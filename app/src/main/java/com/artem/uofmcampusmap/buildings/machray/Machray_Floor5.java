@@ -35,61 +35,61 @@ public class Machray_Floor5 extends DrawIndoorPathsFragment
 
     //default is 1080 x 1920
     @Override
-    protected int findXPixelFor(double xCoordinate)
+    protected int findXDPIPositionFor(double xCoordinate)
     {
-        int xPixel = 0;
+        int xDPIPos = 0;
 
         if(xCoordinate == 1011.25)
         {
-            xPixel = 95;
+            xDPIPos = 32;
         }
         else if(xCoordinate == 1018.75)
         {
-            xPixel = 130;
+            xDPIPos = 44;
         }
         else if(xCoordinate == 1028.75)
         {
-            xPixel = 200;
+            xDPIPos = 67;
         }
         else if(xCoordinate == 1033.75)
         {
-            xPixel = 231;
+            xDPIPos = 77;
         }
         else if(xCoordinate == 1042.5)
         {
-            xPixel = 285;
+            xDPIPos = 95;
         }
 
-        return xPixel;
+        return xDPIPos;
     }
 
     //default is 1080 x 1920
     @Override
-    protected int findYPixelFor(double yCoordinate)
+    protected int findYDPIPositionFor(double yCoordinate)
     {
-        int yPixel = 0;
+        int yDPIPos = 0;
 
         if(yCoordinate == 21.88)
         {
-            yPixel = 1246;
+            yDPIPos = 416;
         }
         else if(yCoordinate == 28.13)
         {
-            yPixel = 1189;
+            yDPIPos = 397;
         }
         else if(yCoordinate == 34.38)
         {
-            yPixel = 1153;
+            yDPIPos = 385;
         }
         else if(yCoordinate == 37.5)
         {
-            yPixel = 1132;
+            yDPIPos = 378;
         }
         else if(yCoordinate == 71.88)
         {
-            yPixel = 910;
+            yDPIPos = 304;
         }
 
-        return yPixel;
+        return yDPIPos;
     }
 }

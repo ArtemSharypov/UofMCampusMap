@@ -7,11 +7,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="360dp"
+        android:layout_height="466.67dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:scaleType="center"
         app:srcCompat="@drawable/machray_floor1" />
 
     <com.artem.uofmcampusmap.buildings.DrawingPathView

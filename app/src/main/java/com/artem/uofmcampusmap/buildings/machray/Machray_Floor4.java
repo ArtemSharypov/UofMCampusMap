@@ -35,77 +35,77 @@ public class Machray_Floor4 extends DrawIndoorPathsFragment
 
     //Default for a 1080x1920 resolution
     @Override
-    protected int findXPixelFor(double xCoordinate)
+    protected int findXDPIPositionFor(double xCoordinate)
     {
-        int xPixel = 0;
+        int xDPIPos = 0;
 
         if(xCoordinate == 1011.25)
         {
-            xPixel = 95;
+            xDPIPos = 32;
         }
         else if(xCoordinate == 1018.75)
         {
-            xPixel = 130;
+            xDPIPos = 44;
         }
         else if(xCoordinate == 1028.75)
         {
-            xPixel = 200;
+            xDPIPos = 67;
         }
         else if(xCoordinate == 1033.75)
         {
-            xPixel = 231;
+            xDPIPos = 77;
         }
         else if(xCoordinate == 1035)
         {
-            xPixel = 240;
+            xDPIPos = 80;
         }
         else if(xCoordinate == 1047.5)
         {
-            xPixel = 305;
+            xDPIPos = 102;
         }
         else if(xCoordinate == 1059.38)
         {
-            xPixel = 392;
+            xDPIPos = 131;
         }
         else if(xCoordinate == 1084.38)
         {
-            xPixel = 545;
+            xDPIPos = 182;
         }
 
-        return xPixel;
+        return xDPIPos;
     }
 
     //Default for a 1080x1920 resolution
     @Override
-    protected int findYPixelFor(double yCoordinate)
+    protected int findYDPIPositionFor(double yCoordinate)
     {
-        int yPixel = 0;
+        int yDPIPos = 0;
 
         if(yCoordinate == 21.88)
         {
-            yPixel = 1232;
+            yDPIPos = 411;
         }
         else if(yCoordinate == 23.13)
         {
-            yPixel = 1220;
+            yDPIPos = 407;
         }
         else if(yCoordinate == 28.13)
         {
-            yPixel = 1183;
+            yDPIPos = 395;
         }
         else if(yCoordinate == 34.38)
         {
-            yPixel = 1148;
+            yDPIPos = 383;
         }
         else if(yCoordinate == 37.5)
         {
-            yPixel = 1125;
+            yDPIPos = 375;
         }
         else if(yCoordinate == 71.88)
         {
-            yPixel = 904;
+            yDPIPos = 302;
         }
 
-        return yPixel;
+        return yDPIPos;
     }
 }

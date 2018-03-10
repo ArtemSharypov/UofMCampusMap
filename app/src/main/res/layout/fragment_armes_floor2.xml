@@ -7,10 +7,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="360dp"
+        android:layout_height="466.67dp"
         android:background="@android:color/white"
-        android:scaleType="center"
         app:srcCompat="@drawable/armes_floor2" />
 
     <com.artem.uofmcampusmap.buildings.DrawingPathView

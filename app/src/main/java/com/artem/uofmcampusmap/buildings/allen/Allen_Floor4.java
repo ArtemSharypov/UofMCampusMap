@@ -33,50 +33,50 @@ public class Allen_Floor4 extends DrawIndoorPathsFragment {
     }
 
     @Override
-    protected int findXPixelFor(double xCoordinate) {
-        int xPixel = 0;
+    protected int findXDPIPositionFor(double xCoordinate) {
+        int xDPIPos = 0;
 
         if(xCoordinate == -62.5)
         {
-            xPixel = 385;
+            xDPIPos = 129;
         }
         else if(xCoordinate == -66.25)
         {
-            xPixel = 418;
+            xDPIPos = 140;
         }
         else if(xCoordinate == -71.25)
         {
-            xPixel = 450;
+            xDPIPos = 150;
         }
         else if(xCoordinate == -148.75)
         {
-            xPixel = 835;
+            xDPIPos = 279;
         }
 
-        return xPixel;
+        return xDPIPos;
     }
 
     @Override
-    protected int findYPixelFor(double yCoordinate) {
-        int yPixel = 0;
+    protected int findYDPIPositionFor(double yCoordinate) {
+        int yDPIPos = 0;
 
         if(yCoordinate == 31.25)
         {
-            yPixel = 772;
+            yDPIPos = 258;
         }
         else if(yCoordinate == 36.25)
         {
-            yPixel = 750;
+            yDPIPos = 250;
         }
         else if(yCoordinate == 41.25)
         {
-            yPixel = 728;
+            yDPIPos = 243;
         }
         else if(yCoordinate == 43.75)
         {
-            yPixel = 704;
+            yDPIPos = 235;
         }
 
-        return yPixel;
+        return yDPIPos;
     }
 }

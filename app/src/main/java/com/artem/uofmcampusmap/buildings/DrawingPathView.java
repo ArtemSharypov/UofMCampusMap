@@ -1,6 +1,7 @@
 package com.artem.uofmcampusmap.buildings;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,12 +17,6 @@ public class DrawingPathView extends View {
     private int linePos;
     private int posWithinRoute;
     private Paint paint;
-    private final double XHDPI_IMAGE_HEIGHT = 850; //878 is max
-    private final double XHDPI_IMAGE_WIDTH = 720;
-    private final double XXHDPI_IMAGE_HEIGHT = 1400;
-    private final double XXHDPI_IMAGE_WIDTH = 1080;
-    //todo make the DPI420 be approx 1225 height?
-    //also check for the width of it
 
     public DrawingPathView(Context context)
     {
@@ -54,47 +49,22 @@ public class DrawingPathView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int height = this.getHeight();
-        int width = this.getWidth();
-        int density = (int) (getResources().getDisplayMetrics().density * DisplayMetrics.DENSITY_DEFAULT);
-        int yPixelOffset = 0;
-        double xScale = 1;
-        double yScale = 1;
         int sourceX;
         int sourceY;
         int destX;
         int destY;
-
-        //2.656 per for XHIGH, 2.91 for XXHIGH
-        //todo add more checks for density. Currently if its between various density's things will be misaligned
-        //needs support for pixel 2 (approx 420-440?)
-        //1 dip = 1 pixel on 160 dpi screen approx
-        //XXHIGH is 480, XHIGH is 320. Thus for pixel 2, the image size has to be somewhere in between that.
-        //Checks the phones density, since it matters for offsetting the y position in pixels
-        if(density >= DisplayMetrics.DENSITY_XXHIGH)
-        {
-            //Offset is half the difference between image height, and this view
-            yPixelOffset = (int) (height - XXHDPI_IMAGE_HEIGHT) / 2;
-        }
-        else if(density >= DisplayMetrics.DENSITY_XHIGH)
-        {
-            //Offset is half the difference between image height, and this view
-            yPixelOffset = (int) (height - XHDPI_IMAGE_HEIGHT) / 2;
-
-            //Scale is based on the size to change to divided by the source size
-            yScale = XHDPI_IMAGE_HEIGHT / XXHDPI_IMAGE_HEIGHT;
-            xScale = XHDPI_IMAGE_WIDTH / XXHDPI_IMAGE_WIDTH;
-        }
 
         if(linePos >= 0 && linePos < pathsToDraw.size())
         {
             for (int i = linePos; i < pathsToDraw.size(); i++) {
                 Line line = pathsToDraw.get(i);
 
-                sourceX = (int) (line.getSourceX() * xScale);
-                sourceY = (int) (line.getSourceY() * yScale) + yPixelOffset;
-                destX = (int) (line.getDestX() * xScale);
-                destY = (int) (line.getDestY() * yScale) + yPixelOffset;
+                DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+                float dpi = metrics.densityDpi / 160f;
+                sourceX = (int) (line.getSourceX() * dpi);
+                sourceY = (int) (line.getSourceY() * dpi);
+                destX = (int) (line.getDestX() * dpi);
+                destY = (int) (line.getDestY() * dpi);
 
                 canvas.drawLine(sourceX, sourceY, destX, destY, paint);
 

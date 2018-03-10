@@ -43,101 +43,101 @@ public class ArmesFloor1Fragment extends DrawIndoorPathsFragment {
 
     /* default is xxhdpi, with an image size of 1080x1040 */
     @Override
-    protected int findXPixelFor(double xCoordinate)
+    protected int findXDPIPositionFor(double xCoordinate)
     {
-        int xPixelPos = 0;
+        int xDPIPos = 0;
 
         if(xCoordinate == -22.5)
         {
-            xPixelPos = 114;
+            xDPIPos = 38;
         }
         else if(xCoordinate == 10)
         {
-            xPixelPos = 247;
+            xDPIPos = 83;
         }
         else if(xCoordinate == 18.75)
         {
-            xPixelPos = 302;
+            xDPIPos = 101;
         }
         else if(xCoordinate == 56.25)
         {
-            xPixelPos = 460;
+            xDPIPos = 154;
         }
         else if(xCoordinate == 71.25)
         {
-            xPixelPos = 517;
+            xDPIPos = 173;
         }
         else if(xCoordinate == 87.5)
         {
-            xPixelPos = 572;
+            xDPIPos = 191;
         }
         else if(xCoordinate == 92.5)
         {
-            xPixelPos = 594;
+            xDPIPos = 198;
         }
         else if(xCoordinate == 93.75)
         {
-            xPixelPos = 607;
+            xDPIPos = 203;
         }
         else if(xCoordinate == 120)
         {
-            xPixelPos = 736;
+            xDPIPos = 246;
         }
         else if(xCoordinate == 130)
         {
-            xPixelPos = 745;
+            xDPIPos = 249;
         }
         else if(xCoordinate == 163.75)
         {
-            xPixelPos = 913;
+            xDPIPos = 305;
         }
         else if(xCoordinate == 168.75)
         {
-            xPixelPos = 930;
+            xDPIPos = 310;
         }
 
-        return xPixelPos;
+        return xDPIPos;
     }
 
     /* default is is in xxhdpi, image size is based on 1080 x 1400*/
     @Override
-    protected int findYPixelFor(double yCoordinate)
+    protected int findYDPIPositionFor(double yCoordinate)
     {
-        int yPixelPos = 0;
+        int yDPIPos = 0;
 
         if(yCoordinate == 95)
         {
-            yPixelPos = 740;
+            yDPIPos = 247;
         }
         else if(yCoordinate == 120)
         {
-            yPixelPos = 643;
+            yDPIPos = 215;
         }
         else if(yCoordinate == 122.5)
         {
-            yPixelPos = 632;
+            yDPIPos = 211;
         }
         else if(yCoordinate == 126.25)
         {
-            yPixelPos = 616;
+            yDPIPos = 206;
         }
         else if(yCoordinate == 132.5)
         {
-            yPixelPos = 589;
+            yDPIPos = 197;
         }
         else if(yCoordinate == 138.75)
         {
-            yPixelPos = 559;
+            yDPIPos = 187;
         }
         else if(yCoordinate == 156.25)
         {
-            yPixelPos = 488;
+            yDPIPos = 163;
         }
         else if(yCoordinate == 212.5)
         {
-            yPixelPos = 253;
+            yDPIPos = 85;
         }
 
-        return yPixelPos;
+        return yDPIPos;
     }
 }

@@ -33,74 +33,74 @@ public class Allen_Floor1 extends DrawIndoorPathsFragment {
     }
 
     @Override
-    protected int findXPixelFor(double xCoordinate) {
-        int xPixel = 0;
+    protected int findXDPIPositionFor(double xCoordinate) {
+        int xDPIPos = 0;
 
         if(xCoordinate == -62.5)
         {
-            xPixel = 382;
+            xDPIPos = 127;
         }
         else if(xCoordinate == -67.5)
         {
-            xPixel = 413;
+            xDPIPos = 138;
         }
         else if(xCoordinate == -72.5)
         {
-            xPixel = 440;
+            xDPIPos = 147;
         }
         else if(xCoordinate == -141)
         {
-            xPixel = 792;
+            xDPIPos = 264;
         }
         else if(xCoordinate == -153.75)
         {
-            xPixel = 850;
+            xDPIPos = 283;
         }
         else if(xCoordinate == -155)
         {
-            xPixel = 862;
+            xDPIPos = 288;
         }
         else if(xCoordinate == -157.5)
         {
-            xPixel = 870;
+            xDPIPos = 290;
         }
         else if(xCoordinate == -172)
         {
-            xPixel = 954;
+            xDPIPos = 318;
         }
         else if(xCoordinate == -181.25)
         {
-            xPixel = 998;
+            xDPIPos = 333;
         }
 
-        return xPixel;
+        return xDPIPos;
     }
 
     @Override
-    protected int findYPixelFor(double yCoordinate) {
-        int yPixel = 0;
+    protected int findYDPIPositionFor(double yCoordinate) {
+        int yDPIPos = 0;
 
         if(yCoordinate == 0)
         {
-            yPixel = 1002;
+            yDPIPos = 334;
         }
         else if(yCoordinate == 31.25)
         {
-            yPixel = 861;
+            yDPIPos = 287;
         }
         else if(yCoordinate == 60)
         {
-            yPixel = 694;
+            yDPIPos = 232;
         }
         else if(yCoordinate == 68.75)
         {
-            yPixel = 654;
+            yDPIPos = 218;
         }
         else if(yCoordinate == 101.25)
         {
-            yPixel = 492;
+            yDPIPos = 164;
         }
 
-        return yPixel;
+        return yDPIPos;
     }
 }

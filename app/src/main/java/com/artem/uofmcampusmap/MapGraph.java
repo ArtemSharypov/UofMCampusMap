@@ -444,15 +444,15 @@ public class MapGraph
     {
         IndoorVertex stairs = null;
 
-        if(building.equals(resources.getString(R.string.armes)))
+        if(building.equalsIgnoreCase(resources.getString(R.string.armes)))
         {
             stairs = armesIndoorConnections.getClosestStairsToRoom(room);
         }
-        else if(building.equals(resources.getString(R.string.machray)))
+        else if(building.equalsIgnoreCase(resources.getString(R.string.machray)))
         {
             stairs = machrayIndoorConnections.getClosestStairsToRoom(room);
         }
-        else if(building.equals(resources.getString(R.string.allen)))
+        else if(building.equalsIgnoreCase(resources.getString(R.string.allen)))
         {
             stairs = allenIndoorConnections.getClosestStairsToRoom(room);
         }
@@ -465,14 +465,14 @@ public class MapGraph
     {
         IndoorVertex roomVertex = null;
 
-        if (building.equals(resources.getString(R.string.armes))) {
+        if (building.equalsIgnoreCase(resources.getString(R.string.armes))) {
             roomVertex = armesIndoorConnections.findRoom(room);
         }
-        else if(building.equals(resources.getString(R.string.machray)))
+        else if(building.equalsIgnoreCase(resources.getString(R.string.machray)))
         {
             roomVertex = machrayIndoorConnections.findRoom(room);
         }
-        else if(building.equals(resources.getString(R.string.allen)))
+        else if(building.equalsIgnoreCase(resources.getString(R.string.allen)))
         {
             roomVertex = allenIndoorConnections.findRoom(room);
         }

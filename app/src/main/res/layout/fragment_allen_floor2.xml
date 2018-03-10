@@ -7,13 +7,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srcCompat="@drawable/allen_floor2"
+        android:layout_width="360dp"
+        android:layout_height="466.67dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:scaleType="center"/>
+        app:srcCompat="@drawable/allen_floor2" />
 
     <com.artem.uofmcampusmap.buildings.DrawingPathView
         android:id="@+id/lines_view"

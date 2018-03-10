@@ -33,70 +33,70 @@ public class Allen_Floor2 extends DrawIndoorPathsFragment {
     }
 
     @Override
-    protected int findXPixelFor(double xCoordinate) {
-        int xPixel = 0;
+    protected int findXDPIPositionFor(double xCoordinate) {
+        int xDPIPos = 0;
 
         if(xCoordinate == -62.5)
         {
-            xPixel = 305;
+            xDPIPos = 102;
         }
         else if(xCoordinate == -65)
         {
-            xPixel = 327;
+            xDPIPos = 109;
         }
         else if(xCoordinate == -71.25)
         {
-            xPixel = 357;
+            xDPIPos = 119;
         }
         else if(xCoordinate == -153.75)
         {
-            xPixel = 736;
+            xDPIPos = 245;
         }
         else if(xCoordinate == -160)
         {
-            xPixel = 756;
+            xDPIPos = 252;
         }
         else if(xCoordinate == -162.5)
         {
-            xPixel = 780;
+            xDPIPos = 260;
         }
         else if(xCoordinate == -182.5)
         {
-            xPixel = 876;
+            xDPIPos = 292;
         }
         else if(xCoordinate == -200)
         {
-            xPixel = 965;
+            xDPIPos = 322;
         }
 
-        return xPixel;
+        return xDPIPos;
     }
 
     @Override
-    protected int findYPixelFor(double yCoordinate) {
-        int yPixel = 0;
+    protected int findYDPIPositionFor(double yCoordinate) {
+        int yDPIPos = 0;
 
         if(yCoordinate == 20)
         {
-            yPixel = 877;
+            yDPIPos = 292;
         }
         else if(yCoordinate == 43.75)
         {
-            yPixel = 762;
+            yDPIPos = 254;
         }
         else if(yCoordinate == 46.25)
         {
-            yPixel = 753;
+            yDPIPos = 251;
         }
         else if(yCoordinate == 51.25)
         {
-            yPixel = 736;
+            yDPIPos = 245;
         }
         else if(yCoordinate == 65)
         {
-            yPixel = 660;
+            yDPIPos = 220;
         }
 
-        return yPixel;
+        return yDPIPos;
     }
 }
