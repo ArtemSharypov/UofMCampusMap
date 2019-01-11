@@ -292,8 +292,8 @@ public class NavigationFragment extends Fragment{
 
     private void updateDistanceTimeRemaining()
     {
-        distanceRemainingTV.setText(getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
-        estTimeRemainingTV.setText(getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minutes");
+        distanceRemainingTV.setText(" " + getResources().getString(R.string.distance_remaining) + remainingDistance + " m");
+        estTimeRemainingTV.setText(" " + getResources().getString(R.string.est_time) + amountOfTime(remainingDistance) + " minute(s)");
     }
 
     private void updateActivityRoutePos()

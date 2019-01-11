@@ -46,6 +46,7 @@ public class MapFragment extends Fragment implements DisplayRoute {
         mMapView = view.findViewById(R.id.mapView);
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
         mMapView.setMultiTouchControls(true);
+        mMapView.setMaxZoomLevel(22);
 
         centerMap();
         displayRoute();
@@ -298,7 +299,7 @@ public class MapFragment extends Fragment implements DisplayRoute {
     {
         GeoPoint centerOfCampus = new GeoPoint(49.809496, -97.133810);
 
-        int zoomAmount = 21;
+        int zoomAmount = 19;
         MapController mapController = (MapController) mMapView.getController();
         mapController.setZoom(zoomAmount);
         mapController.setCenter(centerOfCampus);

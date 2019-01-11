@@ -164,10 +164,10 @@ public class Route {
     private String turnDirections(int firstDirection, int secondDirection)
     {
         String turnDirections = "";
-        final String left = "Turn left and ";
-        final String right = "Turn right and ";
-        final String slightlyLeft = "Turn slightly left and ";
-        final String slightlyRight = "Turn slightly right and ";
+        final String left = "Turn left. ";
+        final String right = "Turn right. ";
+        final String slightlyLeft = "Turn slightly left. ";
+        final String slightlyRight = "Turn slightly right. ";
 
         if(firstDirection == Vertex.NORTH)
         {

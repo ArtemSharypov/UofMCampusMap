@@ -1298,7 +1298,7 @@ public class MapGraph
         connectVertexesWithDirection(Vertex.NORTH, di, dh);
 
         OutdoorVertex dj = new OutdoorVertex(new GeoPoint(49.810910, -97.130998));
-        connectVertexesWithDirection(Vertex.NORTH_EAST, dj, di);
+        connectVertexesWithDirection(Vertex.EAST, dj, di);
         connectVertexesWithDirection(Vertex.NORTH, dj, uni_college_south_ent);
 
         OutdoorVertex dk = new OutdoorVertex(new GeoPoint(49.810690, -97.131575));

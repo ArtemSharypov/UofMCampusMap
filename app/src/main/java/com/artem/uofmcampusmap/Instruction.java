@@ -80,51 +80,9 @@ public class Instruction {
     {
         if(source != null && destination != null)
         {
-            int sourceToDestDirect = source.directionToVertexIs(destination);
-            int destToSourceDirect = destination.directionToVertexIs(source);
-
-            //Direction only matters for when the instruction goes north/south or east/west
-            if(checkIfEastWest(sourceToDestDirect, destToSourceDirect) || checkIfNorthSouth(sourceToDestDirect, destToSourceDirect))
-            {
-                direction = sourceToDestDirect;
-            }
-            else
-            {
-                direction = 0;
-            }
+            //Assume we're just going in the direction from source -> destination always
+            direction = source.directionToVertexIs(destination);
         }
-    }
-
-    private boolean checkIfEastWest(int firstDirection, int secDirection)
-    {
-        boolean eastWest = false;
-
-        if(firstDirection == Vertex.EAST && secDirection == Vertex.WEST)
-        {
-            eastWest = true;
-        }
-        else if(firstDirection == Vertex.WEST && secDirection == Vertex.EAST)
-        {
-            eastWest = true;
-        }
-
-        return eastWest;
-    }
-
-    private boolean checkIfNorthSouth(int firstDirection, int secDirection)
-    {
-        boolean northSouth = false;
-
-        if(firstDirection == Vertex.NORTH && secDirection == Vertex.SOUTH)
-        {
-            northSouth = true;
-        }
-        else if(firstDirection == Vertex.SOUTH && secDirection == Vertex.NORTH)
-        {
-            northSouth = true;
-        }
-
-        return northSouth;
     }
 
     private void calculateDistance()
@@ -195,7 +153,7 @@ public class Instruction {
                     }
 
                     toString += Math.abs(((IndoorVertex) source).getFloor() - ((IndoorVertex) destination).getFloor());
-                    toString += " floors.";
+                    toString += " floor(s)";
                 }
             }
         }
