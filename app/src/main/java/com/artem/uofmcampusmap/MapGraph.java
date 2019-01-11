@@ -826,7 +826,8 @@ public class MapGraph
         OutdoorVertex sb_uni_at_dysart = new OutdoorVertex(new GeoPoint(49.808526, -97.141261));
         addEntrance(sbUniAtDysart, sb_uni_at_dysart);
 
-        OutdoorVertex nb_uni_at_dysart = new OutdoorVertex(new GeoPoint(49.809658, -97.141567));
+        //old location was 49.809658, -97.141567, now it's where point "CA" was
+        OutdoorVertex nb_uni_at_dysart = new OutdoorVertex(new GeoPoint(49.808640, -97.131079));
         addEntrance(nbUniAtDysart, nb_uni_at_dysart);
 
         OutdoorVertex q_lot_west = new OutdoorVertex(new GeoPoint(49.810521, -97.139791));
@@ -1164,8 +1165,9 @@ public class MapGraph
         OutdoorVertex bz = new OutdoorVertex(new GeoPoint(49.808422, -97.131735));
         connectVertexesWithDirection(Vertex.WEST, bz, wb_dafoe_uofm);
 
-        OutdoorVertex ca = new OutdoorVertex(new GeoPoint(49.808640, -97.131079));
-        connectVertexesWithDirection(Vertex.WEST, ca, bz);
+        //removed temporarily as the bus stop is being used as this point
+//        OutdoorVertex ca = new OutdoorVertex(new GeoPoint(49.808640, -97.131079));
+//        connectVertexesWithDirection(Vertex.WEST, ca, bz);
 
         OutdoorVertex cb = new OutdoorVertex(new GeoPoint(49.808767, -97.130686));
         connectVertexesWithDirection(Vertex.SOUTH, cb, b);
@@ -1192,12 +1194,12 @@ public class MapGraph
         connectVertexesWithDirection(Vertex.SOUTH_EAST, cg, cb);
 
         OutdoorVertex ch = new OutdoorVertex(new GeoPoint(49.808767, -97.130686));
-        connectVertexesWithDirection(Vertex.WEST, ch, ca);
+        connectVertexesWithDirection(Vertex.WEST, ch, nb_uni_at_dysart);
         connectVertexesWithDirection(Vertex.EAST, ch, cb);
         connectVertexesWithDirection(Vertex.NORTH, ch, cg);
 
         OutdoorVertex ci = new OutdoorVertex(new GeoPoint(49.809023, -97.131366));
-        connectVertexesWithDirection(Vertex.SOUTH, ci, ca);
+        connectVertexesWithDirection(Vertex.SOUTH, ci, nb_uni_at_dysart);
 
         OutdoorVertex cj = new OutdoorVertex(new GeoPoint(49.809119, -97.131285));
         connectVertexesWithDirection(Vertex.SOUTH, cj, cg);
@@ -1568,7 +1570,7 @@ public class MapGraph
 
         OutdoorVertex ge = new OutdoorVertex(new GeoPoint(49.808718, -97.131607));
         connectVertexesWithDirection(Vertex.NORTH_EAST, ge, gd);
-        connectVertexesWithDirection(Vertex.SOUTH_EAST, ge, ca);
+        connectVertexesWithDirection(Vertex.SOUTH_EAST, ge, nb_uni_at_dysart);
 
         OutdoorVertex gf = new OutdoorVertex(new GeoPoint(49.808570, -97.131707));
         connectVertexesWithDirection(Vertex.NORTH_EAST, gf, ge);
