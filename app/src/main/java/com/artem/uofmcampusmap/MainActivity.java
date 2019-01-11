@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
     private String currBuilding;
     private int currInstructionPos;
     private Route currRoute;
+    private int lastExpandedPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,21 +88,11 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
                 if(data.equals(getResources().getString(R.string.campus_map)))
                 {
-                    //Collapses all groups in case they weren't collapsed
-                    for(int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
-                        mExpandableListView.collapseGroup(i);
-                    }
-
                     switchToNavigation();
                     mDrawerLayout.closeDrawers();
                 }
                 else if(data.equals(getResources().getString(R.string.navigate)))
                 {
-                    //Collapses all groups in case they weren't collapsed
-                    for(int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
-                        mExpandableListView.collapseGroup(i);
-                    }
-
                     replaceFragment(new RoutePlannerFragment());
                     mDrawerLayout.closeDrawers();
                 }
@@ -110,16 +101,21 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
             }
         });
 
+        mExpandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition) {
+                    mExpandableListView.collapseGroup(lastExpandedPosition);
+                }
+                lastExpandedPosition = groupPosition;
+            }
+        });
+
         mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
                 TextView clickedTV = view.findViewById(R.id.tv_item_title);
                 String data = clickedTV.getText().toString();
-
-                //Collapses all groups in case they weren't collapsed
-                for(int i = 0; i < expandableListAdapter.getGroupCount(); i++) {
-                    mExpandableListView.collapseGroup(i);
-                }
 
                 selectDrawerItem(data);
 
