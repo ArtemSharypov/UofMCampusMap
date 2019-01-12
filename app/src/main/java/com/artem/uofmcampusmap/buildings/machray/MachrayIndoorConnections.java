@@ -4,7 +4,6 @@ import android.content.res.Resources;
 
 import com.artem.uofmcampusmap.IndoorVertex;
 import com.artem.uofmcampusmap.R;
-import com.artem.uofmcampusmap.Vertex;
 import com.artem.uofmcampusmap.XYPos;
 
 import java.util.ArrayList;
@@ -87,24 +86,6 @@ public class MachrayIndoorConnections
         return closestStairs;
     }
 
-    //todo make this better for rooms that have multi entrances or that have entrances on different floors
-    //Finds a room based on its number
-    public IndoorVertex findRoom(String roomNumb)
-    {
-        ArrayList<IndoorVertex> roomList;
-        IndoorVertex room = null;
-
-        if(rooms.containsKey(roomNumb))
-        {
-            roomList = rooms.get(roomNumb);
-
-            if(roomList.size() > 0)
-                room = roomList.get(0);
-        }
-
-        return room;
-    }
-
     //Connects two vertex's, and adds them as North/South or East/West connections depending on their positions to eachother
     private void connectVertex(IndoorVertex indoorV1, IndoorVertex indoorV2)
     {
@@ -137,6 +118,24 @@ public class MachrayIndoorConnections
 
         indoorV1.addConnection(indoorV2);
         indoorV2.addConnection(indoorV1);
+    }
+
+    //todo make this better for rooms that have multi entrances or that have entrances on different floors
+    //Finds a room based on its number
+    public IndoorVertex findRoom(String roomNumb)
+    {
+        ArrayList<IndoorVertex> roomList;
+        IndoorVertex room = null;
+
+        if(rooms.containsKey(roomNumb))
+        {
+            roomList = rooms.get(roomNumb);
+
+            if(roomList.size() > 0)
+                room = roomList.get(0);
+        }
+
+        return room;
     }
 
     //Creates all of the points and exits within Machray, as well as connecting them to eachother

@@ -146,39 +146,39 @@ public class AllenIndoorConnections {
 
         //Connections between floors
         //Stairs left
-        stairsLeftFloor1.connectVertex(stairsLeftFloor2);
-        stairsLeftFloor1.connectVertex(stairsLeftFloor3);
-        stairsLeftFloor1.connectVertex(stairsLeftFloor4);
-        stairsLeftFloor1.connectVertex(stairsLeftFloor5);
-        stairsLeftFloor2.connectVertex(stairsLeftFloor3);
-        stairsLeftFloor2.connectVertex(stairsLeftFloor4);
-        stairsLeftFloor2.connectVertex(stairsLeftFloor5);
-        stairsLeftFloor3.connectVertex(stairsLeftFloor4);
-        stairsLeftFloor3.connectVertex(stairsLeftFloor5);
-        stairsLeftFloor4.connectVertex(stairsLeftFloor5);
+        stairsLeftFloor1.connectVertex(stairsLeftFloor2, true, false);
+        stairsLeftFloor1.connectVertex(stairsLeftFloor3, true, false);
+        stairsLeftFloor1.connectVertex(stairsLeftFloor4, true, false);
+        stairsLeftFloor1.connectVertex(stairsLeftFloor5, true, false);
+        stairsLeftFloor2.connectVertex(stairsLeftFloor3, true, false);
+        stairsLeftFloor2.connectVertex(stairsLeftFloor4, true, false);
+        stairsLeftFloor2.connectVertex(stairsLeftFloor5, true, false);
+        stairsLeftFloor3.connectVertex(stairsLeftFloor4, true, false);
+        stairsLeftFloor3.connectVertex(stairsLeftFloor5, true, false);
+        stairsLeftFloor4.connectVertex(stairsLeftFloor5, true, false);
 
         //Stairs right
-        stairsRightFloor1.connectVertex(stairsRightFloor2);
-        stairsRightFloor1.connectVertex(stairsRightFloor3);
-        stairsRightFloor1.connectVertex(stairsRightFloor4);
-        stairsRightFloor1.connectVertex(stairsRightFloor5);
-        stairsRightFloor2.connectVertex(stairsRightFloor3);
-        stairsRightFloor2.connectVertex(stairsRightFloor4);
-        stairsRightFloor2.connectVertex(stairsRightFloor5);
-        stairsRightFloor3.connectVertex(stairsRightFloor4);
-        stairsRightFloor4.connectVertex(stairsRightFloor5);
+        stairsRightFloor1.connectVertex(stairsRightFloor2, true, false);
+        stairsRightFloor1.connectVertex(stairsRightFloor3, true, false);
+        stairsRightFloor1.connectVertex(stairsRightFloor4, true, false);
+        stairsRightFloor1.connectVertex(stairsRightFloor5, true, false);
+        stairsRightFloor2.connectVertex(stairsRightFloor3, true, false);
+        stairsRightFloor2.connectVertex(stairsRightFloor4, true, false);
+        stairsRightFloor2.connectVertex(stairsRightFloor5, true, false);
+        stairsRightFloor3.connectVertex(stairsRightFloor4, true, false);
+        stairsRightFloor4.connectVertex(stairsRightFloor5, true, false);
 
         //Elevator
-        elevatorFloor1.connectVertex(elevatorFloor2);
-        elevatorFloor1.connectVertex(elevatorFloor3);
-        elevatorFloor1.connectVertex(elevatorFloor4);
-        elevatorFloor1.connectVertex(elevatorFloor5);
-        elevatorFloor2.connectVertex(elevatorFloor3);
-        elevatorFloor2.connectVertex(elevatorFloor4);
-        elevatorFloor2.connectVertex(elevatorFloor5);
-        elevatorFloor3.connectVertex(elevatorFloor4);
-        elevatorFloor3.connectVertex(elevatorFloor5);
-        elevatorFloor4.connectVertex(elevatorFloor5);
+        elevatorFloor1.connectVertex(elevatorFloor2, true, false);
+        elevatorFloor1.connectVertex(elevatorFloor3, true, false);
+        elevatorFloor1.connectVertex(elevatorFloor4, true, false);
+        elevatorFloor1.connectVertex(elevatorFloor5, true, false);
+        elevatorFloor2.connectVertex(elevatorFloor3, true, false);
+        elevatorFloor2.connectVertex(elevatorFloor4, true, false);
+        elevatorFloor2.connectVertex(elevatorFloor5, true, false);
+        elevatorFloor3.connectVertex(elevatorFloor4, true, false);
+        elevatorFloor3.connectVertex(elevatorFloor5, true, false);
+        elevatorFloor4.connectVertex(elevatorFloor5, true, false);
 
         //Creations of each floors connections
         createFloor1Connections(stairsLeftFloor1, stairsRightFloor1, elevatorFloor1);
@@ -208,18 +208,18 @@ public class AllenIndoorConnections {
         rooms.put("114", rm114);
 
         //Connections between points
-        armesTunnelConnection.connectVertex(_172_60);
-        armesTunnelConnection.connectVertex(_157_68);
-        _172_60.connectVertex(_155_31);
-        _172_60.connectVertex(_157_60);
-        _155_31.connectVertex(bioSciTunnelConnection);
-        _157_68.connectVertex(_157_101);
-        _157_68.connectVertex(stairsRight);
-        _157_68.connectVertex(_157_60);
-        _157_60.connectVertex(_67_60);
-        _67_60.connectVertex(_67_68);
-        _67_68.connectVertex(stairsLeft);
-        _67_68.connectVertex(elevator);
+        armesTunnelConnection.connectVertex(_172_60, true, false);
+        armesTunnelConnection.connectVertex(_157_68, true, false);
+        _172_60.connectVertex(_155_31, true, false);
+        _172_60.connectVertex(_157_60, true, false);
+        _155_31.connectVertex(bioSciTunnelConnection, true, false);
+        _157_68.connectVertex(_157_101, true, false);
+        _157_68.connectVertex(stairsRight, true, false);
+        _157_68.connectVertex(_157_60, true, false);
+        _157_60.connectVertex(_67_60, true, false);
+        _67_60.connectVertex(_67_68, true, false);
+        _67_68.connectVertex(stairsLeft, true, false);
+        _67_68.connectVertex(elevator, true, false);
 
     }
 
@@ -244,19 +244,19 @@ public class AllenIndoorConnections {
         rooms.put("201", rm201);
 
         //Connections between points
-        _182_46.connectVertex(armesNorthConnection);
-        _182_46.connectVertex(armesSouthConnection);
-        _182_46.connectVertex(_160_43);
-        _160_43.connectVertex(stairsRight);
-        _160_43.connectVertex(_160_20);
-        _160_43.connectVertex(_160_65);
-        _160_20.connectVertex(_162_20);
-        _160_20.connectVertex(_65_20);
-        _65_20.connectVertex(_65_43);
-        _65_43.connectVertex(stairsLeft);
-        _65_43.connectVertex(elevator);
-        _65_43.connectVertex(_65_65);
-        _65_65.connectVertex(_160_65);
+        _182_46.connectVertex(armesNorthConnection, true, false);
+        _182_46.connectVertex(armesSouthConnection, true, false);
+        _182_46.connectVertex(_160_43, true, false);
+        _160_43.connectVertex(stairsRight, true, false);
+        _160_43.connectVertex(_160_20, true, false);
+        _160_43.connectVertex(_160_65, true, false);
+        _160_20.connectVertex(_162_20, true, false);
+        _160_20.connectVertex(_65_20, true, false);
+        _65_20.connectVertex(_65_43, true, false);
+        _65_43.connectVertex(stairsLeft, true, false);
+        _65_43.connectVertex(elevator, true, false);
+        _65_43.connectVertex(_65_65, true, false);
+        _65_65.connectVertex(_160_65, true, false);
     }
 
     private void createFloor3Connections(IndoorVertex stairsLeft, IndoorVertex stairsRight, IndoorVertex elevator)
@@ -283,17 +283,17 @@ public class AllenIndoorConnections {
         rooms.put("316", rm316);
 
         //Connections between points
-        _66_43.connectVertex(stairsLeft);
-        _66_43.connectVertex(elevator);
-        _66_43.connectVertex(_66_65);
-        _66_43.connectVertex(_66_36);
-        _148_36.connectVertex(stairsRight);
-        _148_36.connectVertex(_157_36);
-        _148_36.connectVertex(_66_36);
-        _157_65.connectVertex(_157_36);
-        _157_65.connectVertex(_162_67);
-        _157_65.connectVertex(_66_65);
-        _66_65.connectVertex(_21_65);
+        _66_43.connectVertex(stairsLeft, true, false);
+        _66_43.connectVertex(elevator, true, false);
+        _66_43.connectVertex(_66_65, true, false);
+        _66_43.connectVertex(_66_36, true, false);
+        _148_36.connectVertex(stairsRight, true, false);
+        _148_36.connectVertex(_157_36, true, false);
+        _148_36.connectVertex(_66_36, true, false);
+        _157_65.connectVertex(_157_36, true, false);
+        _157_65.connectVertex(_162_67, true, false);
+        _157_65.connectVertex(_66_65, true, false);
+        _66_65.connectVertex(_21_65, true, false);
     }
 
     private void createFloor4Connections(IndoorVertex stairsLeft, IndoorVertex stairsRight, IndoorVertex elevator)
@@ -317,13 +317,13 @@ public class AllenIndoorConnections {
         rooms.put("403", rm403);
 
         //Connections between points
-        _148_36.connectVertex(stairsRight);
-        _148_36.connectVertex(_148_31);
-        _148_36.connectVertex(_66_36);
-        _66_36.connectVertex(_66_43);
-        _66_36.connectVertex(_66_31);
-        _66_31.connectVertex(stairsLeft);
-        _66_31.connectVertex(elevator);
+        _148_36.connectVertex(stairsRight, true, false);
+        _148_36.connectVertex(_148_31, true, false);
+        _148_36.connectVertex(_66_36, true, false);
+        _66_36.connectVertex(_66_43, true, false);
+        _66_36.connectVertex(_66_31, true, false);
+        _66_31.connectVertex(stairsLeft, true, false);
+        _66_31.connectVertex(elevator, true, false);
     }
 
     private void createFloor5Connections(IndoorVertex stairsLeft, IndoorVertex stairsRight, IndoorVertex elevator)
@@ -344,16 +344,16 @@ public class AllenIndoorConnections {
         rooms.put("522", rm522);
 
         //Connections between points
-        _66_43.connectVertex(stairsLeft);
-        _66_43.connectVertex(elevator);
-        _66_43.connectVertex(_66_37);
-        _66_43.connectVertex(_66_71);
-        _16_71.connectVertex(_66_71);
-        _16_71.connectVertex(_16_37);
-        _66_37.connectVertex(_16_37);
-        _148_37.connectVertex(_66_37);
-        _148_37.connectVertex(stairsRight);
-        _148_37.connectVertex(_152_37);
+        _66_43.connectVertex(stairsLeft, true, false);
+        _66_43.connectVertex(elevator, true, false);
+        _66_43.connectVertex(_66_37, true, false);
+        _66_43.connectVertex(_66_71, true, false);
+        _16_71.connectVertex(_66_71, true, false);
+        _16_71.connectVertex(_16_37, true, false);
+        _66_37.connectVertex(_16_37, true, false);
+        _148_37.connectVertex(_66_37, true, false);
+        _148_37.connectVertex(stairsRight, true, false);
+        _148_37.connectVertex(_152_37, true, false);
     }
 
     public IndoorVertex getArmesTunnelConnection() {

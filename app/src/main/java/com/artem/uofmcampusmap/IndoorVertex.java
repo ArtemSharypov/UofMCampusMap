@@ -24,28 +24,49 @@ public class IndoorVertex extends Vertex
     }
 
     //Connects two vertex's, and adds them as North/South or East/West connections depending on their positions to eachother
-    public void connectVertex(IndoorVertex indoorToConnect)
+    //Negative boolean positions fix issues with west/east and north/south connections
+    public void connectVertex(IndoorVertex indoorToConnect, boolean hasNegativeXPos, boolean hasNegativeYPos)
     {
         XYPos posOfOtherVertex = indoorToConnect.getPosition();
+        boolean westToEastConn;
+        boolean eastToWestConn;
+        boolean southToNorthConn;
+        boolean northToSouthConn;
+
+        if(hasNegativeXPos) {
+            westToEastConn = position.getX() < posOfOtherVertex.getX();
+            eastToWestConn = position.getX() > posOfOtherVertex.getX();
+        } else {
+            westToEastConn = position.getX() > posOfOtherVertex.getX();
+            eastToWestConn = position.getX() < posOfOtherVertex.getX();
+        }
+
+        if(hasNegativeYPos) {
+            southToNorthConn = position.getY() < posOfOtherVertex.getY();
+            northToSouthConn = position.getY() > posOfOtherVertex.getY();
+        } else  {
+            southToNorthConn = position.getY() > posOfOtherVertex.getY();
+            northToSouthConn = position.getY() < posOfOtherVertex.getY();
+        }
 
         //Change in only X position means that the vertex's are East/West of eachother
         //Change in only Y position means that the vertex's are North/South of eachother
-        if(position.getX() > posOfOtherVertex.getX() && Math.floor(position.getY() - posOfOtherVertex.getY()) == 0.0)
+        if(westToEastConn && Math.floor(position.getY() - posOfOtherVertex.getY()) == 0.0)
         {
             this.addWestConnection(indoorToConnect);
             indoorToConnect.addEastConnection(this);
         }
-        else if(position.getX() < posOfOtherVertex.getX() && Math.floor(position.getY() - posOfOtherVertex.getY()) == 0.0)
+        else if(eastToWestConn && Math.floor(position.getY() - posOfOtherVertex.getY()) == 0.0)
         {
             this.addEastConnection(indoorToConnect);
             indoorToConnect.addWestConnection(this);
         }
-        else if(position.getY() > posOfOtherVertex.getY() && Math.floor(position.getX() - posOfOtherVertex.getX()) == 0.0)
+        else if(southToNorthConn && Math.floor(position.getX() - posOfOtherVertex.getX()) == 0.0)
         {
             this.addSouthConnection(indoorToConnect);
             indoorToConnect.addNorthConnection(this);
         }
-        else if(position.getY() < posOfOtherVertex.getY() && Math.floor(position.getX() - posOfOtherVertex.getX()) == 0.0)
+        else if(northToSouthConn && Math.floor(position.getX() - posOfOtherVertex.getX()) == 0.0)
         {
             this.addNorthConnection(indoorToConnect);
             indoorToConnect.addSouthConnection(this);

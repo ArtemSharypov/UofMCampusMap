@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UManitoba Campus Map</string>
+    <string name="app_name">UManitoba Map</string>
 
     <string name="distance_remaining">Distance Remaining: </string>
     <string name="est_time">Estimated Time: </string>
