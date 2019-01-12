@@ -141,7 +141,7 @@ public class AllenIndoorConnections {
         IndoorVertex elevatorFloor5 = new IndoorVertex(building, new XYPos(-71.25, 43.75), 5);
 
         fifthFloorStairsElevator.add(stairsLeftFloor5);
-        firstFloorStairsElevator.add(stairsRightFloor5);
+        fifthFloorStairsElevator.add(stairsRightFloor5);
         fifthFloorStairsElevator.add(elevatorFloor5);
 
         //Connections between floors
@@ -166,6 +166,7 @@ public class AllenIndoorConnections {
         stairsRightFloor2.connectVertex(stairsRightFloor4, true, false);
         stairsRightFloor2.connectVertex(stairsRightFloor5, true, false);
         stairsRightFloor3.connectVertex(stairsRightFloor4, true, false);
+        stairsRightFloor3.connectVertex(stairsRightFloor5, true, false);
         stairsRightFloor4.connectVertex(stairsRightFloor5, true, false);
 
         //Elevator
@@ -228,7 +229,7 @@ public class AllenIndoorConnections {
         //Points on the floor
         armesSouthConnection = new IndoorVertex(building, new XYPos(-200, 43.75), 2);
         armesNorthConnection = new IndoorVertex(building, new XYPos(-200, 51.25), 2);
-        IndoorVertex _182_46 = new IndoorVertex(building, new XYPos(-182.5, 46.25), 2);
+        IndoorVertex _182_43 = new IndoorVertex(building, new XYPos(-182.5, 43.75), 2);
         IndoorVertex _160_43 = new IndoorVertex(building, new XYPos(-160, 43.75), 2);
         IndoorVertex _160_20 = new IndoorVertex(building, new XYPos(-160, 20), 2);
         IndoorVertex _160_65 = new IndoorVertex(building, new XYPos(-160, 65), 2);
@@ -244,9 +245,9 @@ public class AllenIndoorConnections {
         rooms.put("201", rm201);
 
         //Connections between points
-        _182_46.connectVertex(armesNorthConnection, true, false);
-        _182_46.connectVertex(armesSouthConnection, true, false);
-        _182_46.connectVertex(_160_43, true, false);
+        _182_43.connectVertex(armesNorthConnection, true, false);
+        _182_43.connectVertex(armesSouthConnection, true, false);
+        _182_43.connectVertex(_160_43, true, false);
         _160_43.connectVertex(stairsRight, true, false);
         _160_43.connectVertex(_160_20, true, false);
         _160_43.connectVertex(_160_65, true, false);
