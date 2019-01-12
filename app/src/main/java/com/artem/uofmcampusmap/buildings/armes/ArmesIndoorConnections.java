@@ -45,10 +45,13 @@ public class ArmesIndoorConnections
     {
         //floor 2
         //points
-        IndoorVertex _12_125 = new IndoorVertex(building, new XYPos(12.5, 125), 2);
+        IndoorVertex _12_131 = new IndoorVertex(building, new XYPos(12.5, 131.25), 2);
+        IndoorVertex _12_118 = new IndoorVertex(building, new XYPos(12.5, 118.75), 2);
+
         IndoorVertex _131_112 = new IndoorVertex(building, new XYPos(131.25, 112.5), 2); //room 208
         IndoorVertex _162_112 = new IndoorVertex(building, new XYPos(162.5, 112.5), 2); //room 208
         IndoorVertex rightStairsFloor2 = new IndoorVertex(building, new XYPos(156.25, 125), 2);
+        IndoorVertex _162_125 = new IndoorVertex(building, new XYPos(162.5, 125), 2);
         IndoorVertex _162_118 = new IndoorVertex(building, new XYPos(162.5, 118.75), 2);
         IndoorVertex _131_118 = new IndoorVertex(building, new XYPos(131.25, 118.75), 2);
         IndoorVertex _12_187 = new IndoorVertex(building, new XYPos(12.5, 187.5), 2);
@@ -58,6 +61,7 @@ public class ArmesIndoorConnections
         IndoorVertex _31_131 = new IndoorVertex(building, new XYPos(31.25, 131.25), 2);
         IndoorVertex _31_137 = new IndoorVertex(building, new XYPos(31.25, 137.5), 2);//rm 201
         IndoorVertex leftStairsFloor2 = new IndoorVertex(building, new XYPos(37.5, 125), 2);
+        IndoorVertex _31_125 = new IndoorVertex(building, new XYPos(31.25, 125), 2);
         IndoorVertex _50_131 = new IndoorVertex(building, new XYPos(50, 131.25), 2);
         IndoorVertex _31_112 = new IndoorVertex(building, new XYPos(31.25, 112.5), 2); //rm 200
         IndoorVertex _50_137 = new IndoorVertex(building, new XYPos(50, 137.5), 2); //rm 201
@@ -93,24 +97,24 @@ public class ArmesIndoorConnections
         //connections between points
         connectVertex(bullerConnection, southWestEntrance);
         connectVertex(southWestEntrance, _12_37);
-        connectVertex(_12_37, _12_125);
+        connectVertex(_12_37, _12_118);
+        connectVertex(_12_131, _12_118);
         connectVertex(northWestEntrance, parkerConnection);
         connectVertex(parkerConnection, _12_187);
         connectVertex(northWestEntrance, _12_187);
-        connectVertex(_12_125, _12_187);
-        connectVertex(allenConnectionNorth, _12_125);
-        connectVertex(allenConnectionSouth, _12_125);
-        connectVertex(_12_125, _22_118);
-        connectVertex(_12_125, _22_131);
+        connectVertex(_12_131, _12_187);
+        connectVertex(allenConnectionNorth, _12_131);
+        connectVertex(allenConnectionSouth, _12_118);
+        connectVertex(_12_118, _22_118);
+        connectVertex(_12_131, _22_131);
         connectVertex(_22_131, _31_131);
-        connectVertex(_22_131, leftStairsFloor2);
-        connectVertex(_22_118, leftStairsFloor2);
+        connectVertex(_31_125, leftStairsFloor2);
         connectVertex(_22_118, _31_118);
         connectVertex(_31_118, _31_112);
-        connectVertex(_31_118, leftStairsFloor2);
+        connectVertex(_31_118, _31_125);
         connectVertex(_31_118, _62_118);
         connectVertex(_31_118, _31_131);
-        connectVertex(_31_131, leftStairsFloor2);
+        connectVertex(_31_131, _31_125);
         connectVertex(_31_131, _31_137);
         connectVertex(_31_131, _50_131);
         connectVertex(_50_131, _50_137);
@@ -132,13 +136,14 @@ public class ArmesIndoorConnections
         connectVertex(_131_131, _85_131);
         connectVertex(_85_131, _85_137);
         connectVertex(_162_131, machrayConnectionNorth);
-        connectVertex(_162_131, rightStairsFloor2);
+        connectVertex(_162_131, _162_125);
+        connectVertex(_162_125, rightStairsFloor2);
         connectVertex(_162_131, _162_118);
-        connectVertex(machrayConnectionNorth, rightStairsFloor2);
+        connectVertex(machrayConnectionNorth, _162_125);
         connectVertex(_162_118, _162_112);
-        connectVertex(_162_118, rightStairsFloor2);
+        connectVertex(_162_118, _162_125);
         connectVertex(_162_118, machrayConnectionSouth);
-        connectVertex(machrayConnectionSouth, rightStairsFloor2);
+        connectVertex(machrayConnectionSouth, _162_125);
 
         //floor 1
         //points
