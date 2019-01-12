@@ -103,7 +103,7 @@ public abstract class DrawIndoorPathsFragment extends Fragment implements Displa
                 }
                 else
                 {
-                    if (!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction() && !currInstruction.isChangeBuildingsInstruction())
+                    if (!currInstruction.isExitBuildingInstruction() && !currInstruction.isStairsInstruction() && !currInstruction.isChangeBuildingsInstruction() && !currInstruction.isEnterBuildingInstruction())
                     {
                         //Since this stops once the instruction is no longer considered valid (is outdoors or is on a different floor), it has to go to
                         //the position that is after this one, aka +1 pos over.

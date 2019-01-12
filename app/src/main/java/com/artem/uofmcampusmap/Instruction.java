@@ -42,6 +42,12 @@ public class Instruction {
         return source instanceof IndoorVertex && destination instanceof OutdoorVertex;
     }
 
+    //checks if it's a enter building instruction. Indoor -> Outdoor vertex connection
+    public boolean isEnterBuildingInstruction()
+    {
+        return source instanceof OutdoorVertex && destination instanceof IndoorVertex;
+    }
+
     //Checks if source and destination are on different floors, hence being stairs/elevator
     public boolean isStairsInstruction()
     {
