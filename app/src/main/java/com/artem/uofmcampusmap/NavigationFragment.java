@@ -31,8 +31,6 @@ import com.artem.uofmcampusmap.buildings.machray.Machray_Floor2;
 import com.artem.uofmcampusmap.buildings.machray.Machray_Floor3;
 import com.artem.uofmcampusmap.buildings.machray.Machray_Floor4;
 import com.artem.uofmcampusmap.buildings.machray.Machray_Floor5;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 public class NavigationFragment extends Fragment{
 

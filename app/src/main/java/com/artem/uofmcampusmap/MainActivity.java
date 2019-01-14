@@ -1,5 +1,6 @@
 package com.artem.uofmcampusmap;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -20,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -137,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu();
+                InputMethodManager inputMethodManager = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
             }
 
             /** Called when a drawer has settled in a completely closed state. */
