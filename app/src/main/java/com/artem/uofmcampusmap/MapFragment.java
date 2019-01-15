@@ -17,6 +17,7 @@ import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
+import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
 import java.util.ArrayList;
 
@@ -46,7 +47,13 @@ public class MapFragment extends Fragment implements DisplayRoute {
         mMapView = view.findViewById(R.id.mapView);
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
         mMapView.setMultiTouchControls(true);
-        mMapView.setMaxZoomLevel(22);
+        mMapView.setBuiltInZoomControls(false);
+        mMapView.setMaxZoomLevel(22.0);
+
+        RotationGestureOverlay rotationGestureOverlay = new RotationGestureOverlay(context, mMapView);
+        rotationGestureOverlay.setEnabled(true);
+
+        mMapView.getOverlays().add(rotationGestureOverlay);
 
         centerMap();
         displayRoute();
