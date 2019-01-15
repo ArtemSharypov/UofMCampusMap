@@ -1,21 +1,27 @@
 package com.artem.uofmcampusmap;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -70,112 +76,7 @@ public class RoutePlannerFragment extends Fragment {
         findRouteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity activity = (MainActivity) getActivity();
-                String toLocation = "";
-                String toRoom = "";
-                String toText = "";
-                String[] splitToLocation;
-                String fromLocation = "";
-                String fromRoom = "";
-                String fromText = "";
-                String[] splitFromLocation;
-                boolean fromLocationValid;
-                boolean toLocationValid;
-
-                //Parses the destination location into room / building, bus stop, or parking lot
-                toText = toLocationAutoComplete.getText().toString();
-                splitToLocation = toText.split(" ");
-                toLocationValid = validLocation(toText);
-
-                //Length 1 means more than likely it is a building
-                if(splitToLocation.length == 1)
-                {
-                    toLocation = splitToLocation[0];
-                }
-                else if(splitToLocation.length > 1)
-                {
-                    //Essentially check if the the first entry is a room, if not then handle the other cases
-                    try
-                    {
-                        Integer.parseInt(splitToLocation[0]);
-
-                        //If it succeeds in casting the String to a number, then it HAS to be a room
-                        toRoom = splitToLocation[0];
-                        toLocation = combineSplitWords(1, splitToLocation);
-
-                    }
-                    catch(NumberFormatException e)
-                    {
-                        //If it failed to make the String into a number, it has to be a parking lot, bus stop, or building
-                        //Therefore just use the entire entered String from before
-                        toLocation = toText;
-                    }
-                }
-
-                //Parses the destination location into room / building, bus stop, or parking lot
-                fromText = fromLocationAutoComplete.getText().toString();
-                splitFromLocation = fromText.split(" ");
-                fromLocationValid = validLocation(fromText);
-
-                //Length 1 means more than likely it is a building
-                if(splitFromLocation.length == 1)
-                {
-                    fromLocation = splitFromLocation[0];
-                }
-                else if(splitFromLocation.length > 1)
-                {
-                    //Essentially check if the the first entry is a room, if not then handle the other cases
-                    try
-                    {
-                        Integer.parseInt(splitFromLocation[0]);
-
-                        //If it succeeds in casting the String to a number, then it HAS to be a room
-                        fromRoom = splitFromLocation[0];
-                        fromLocation = combineSplitWords(1, splitFromLocation);
-
-                    }
-                    catch(NumberFormatException e)
-                    {
-                        //If it failed to make the String into a number, it has to be a parking lot, bus stop, or building
-                        //Therefore just use the entire entered String from before
-                        fromLocation = fromText;
-                    }
-                }
-
-                //Check if both locations entered are considered to be valid
-                if(fromLocationValid && toLocationValid)
-                {
-                    activity.passStartLocation(fromLocation.trim());
-                    activity.passStartRoom(fromRoom.trim());
-
-                    activity.passDestinationLocation(toLocation.trim());
-                    activity.passDestinationRoom(toRoom.trim());
-
-                    activity.switchToNavigation();
-
-                }
-                else if(!fromLocationValid && !toLocationValid)
-                {
-                    //Both of the locations is invalid
-                    Toast.makeText(getContext(),
-                            "Couldn't find either of the two locations on campus", Toast.LENGTH_LONG)
-                            .show();
-                }
-                else if(!toLocationValid)
-                {
-                    //Only the destination is invalid
-                    Toast.makeText(getContext(),
-                            "Couldn't find the destination within the campus", Toast.LENGTH_LONG)
-                            .show();
-
-                }
-                else if(!fromLocationValid)
-                {
-                    //Only the starting location is invalid
-                    Toast.makeText(getContext(),
-                            "Couldn't find the starting location within the campus", Toast.LENGTH_LONG)
-                            .show();
-                }
+                findRoute();
             }
         });
 
@@ -187,9 +88,136 @@ public class RoutePlannerFragment extends Fragment {
         ArrayAdapter<String> fromAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, locations);
         fromLocationAutoComplete.setAdapter(fromAdapter);
 
+        toLocationAutoComplete.setOnEditorActionListener(new AutoCompleteTextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    findRoute();
+
+                    //Hides the keyboard
+                    InputMethodManager inputMethodManager = (InputMethodManager)
+                            getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
         setHasOptionsMenu(true);
 
         return view;
+    }
+
+    private void findRoute()
+    {
+        MainActivity activity = (MainActivity) getActivity();
+        String toLocation = "";
+        String toRoom = "";
+        String toText = "";
+        String[] splitToLocation;
+        String fromLocation = "";
+        String fromRoom = "";
+        String fromText = "";
+        String[] splitFromLocation;
+        boolean fromLocationValid;
+        boolean toLocationValid;
+
+        //Parses the destination location into room / building, bus stop, or parking lot
+        toText = toLocationAutoComplete.getText().toString();
+        splitToLocation = toText.split(" ");
+        toLocationValid = validLocation(toText);
+
+        //Length 1 means more than likely it is a building
+        if(splitToLocation.length == 1)
+        {
+            toLocation = splitToLocation[0];
+        }
+        else if(splitToLocation.length > 1)
+        {
+            //Essentially check if the the first entry is a room, if not then handle the other cases
+            try
+            {
+                Integer.parseInt(splitToLocation[0]);
+
+                //If it succeeds in casting the String to a number, then it HAS to be a room
+                toRoom = splitToLocation[0];
+                toLocation = combineSplitWords(1, splitToLocation);
+
+            }
+            catch(NumberFormatException e)
+            {
+                //If it failed to make the String into a number, it has to be a parking lot, bus stop, or building
+                //Therefore just use the entire entered String from before
+                toLocation = toText;
+            }
+        }
+
+        //Parses the destination location into room / building, bus stop, or parking lot
+        fromText = fromLocationAutoComplete.getText().toString();
+        splitFromLocation = fromText.split(" ");
+        fromLocationValid = validLocation(fromText);
+
+        //Length 1 means more than likely it is a building
+        if(splitFromLocation.length == 1)
+        {
+            fromLocation = splitFromLocation[0];
+        }
+        else if(splitFromLocation.length > 1)
+        {
+            //Essentially check if the the first entry is a room, if not then handle the other cases
+            try
+            {
+                Integer.parseInt(splitFromLocation[0]);
+
+                //If it succeeds in casting the String to a number, then it HAS to be a room
+                fromRoom = splitFromLocation[0];
+                fromLocation = combineSplitWords(1, splitFromLocation);
+
+            }
+            catch(NumberFormatException e)
+            {
+                //If it failed to make the String into a number, it has to be a parking lot, bus stop, or building
+                //Therefore just use the entire entered String from before
+                fromLocation = fromText;
+            }
+        }
+
+        //Check if both locations entered are considered to be valid
+        if(fromLocationValid && toLocationValid)
+        {
+            activity.passStartLocation(fromLocation.trim());
+            activity.passStartRoom(fromRoom.trim());
+
+            activity.passDestinationLocation(toLocation.trim());
+            activity.passDestinationRoom(toRoom.trim());
+
+            activity.switchToNavigation();
+
+        }
+        else if(!fromLocationValid && !toLocationValid)
+        {
+            //Both of the locations is invalid
+            Toast.makeText(getContext(),
+                    "Couldn't find either of the two locations on campus", Toast.LENGTH_LONG)
+                    .show();
+        }
+        else if(!toLocationValid)
+        {
+            //Only the destination is invalid
+            Toast.makeText(getContext(),
+                    "Couldn't find the destination within the campus", Toast.LENGTH_LONG)
+                    .show();
+
+        }
+        else if(!fromLocationValid)
+        {
+            //Only the starting location is invalid
+            Toast.makeText(getContext(),
+                    "Couldn't find the starting location within the campus", Toast.LENGTH_LONG)
+                    .show();
+        }
     }
 
     //Checks if the passed String is a valid location on campus
@@ -223,6 +251,12 @@ public class RoutePlannerFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_route_planner, menu);
+        MenuItem navigateOption = menu.findItem(R.id.navigate_button);
+
+        if(navigateOption != null) {
+            navigateOption.setVisible(false);
+        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
