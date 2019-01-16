@@ -1,5 +1,6 @@
 package com.artem.uofmcampusmap;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -12,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -127,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
 
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,  Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
 
@@ -173,6 +175,28 @@ public class MainActivity extends AppCompatActivity implements PassRouteData, Pa
             startRoom = savedInstanceState.getString("startRoom");
             destinationLocation = savedInstanceState.getString("destinationLocation");
             destinationRoom = savedInstanceState.getString("destinationRoom");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean shouldReplaceMap = false;
+
+        if(requestCode == 1) {
+            for(int i = 0; i < permissions.length; i++) {
+                if(permissions[i] == Manifest.permission.WRITE_EXTERNAL_STORAGE && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    shouldReplaceMap = true;
+                }
+            }
+        }
+
+        if(shouldReplaceMap) {
+            NavigationFragment navigationFragment = new NavigationFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_frame_layout, navigationFragment);
+            fragmentTransaction.commit();
         }
     }
 
