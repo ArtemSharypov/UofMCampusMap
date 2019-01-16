@@ -1,11 +1,16 @@
 package com.artem.uofmcampusmap;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +23,8 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
 
@@ -52,13 +59,23 @@ public class MapFragment extends Fragment implements DisplayRoute {
 
         RotationGestureOverlay rotationGestureOverlay = new RotationGestureOverlay(context, mMapView);
         rotationGestureOverlay.setEnabled(true);
-
         mMapView.getOverlays().add(rotationGestureOverlay);
+
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            addLocationOverlay();
+        }
 
         centerMap();
         displayRoute();
 
         return view;
+    }
+
+    private void addLocationOverlay() {
+        MyLocationNewOverlay locationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), mMapView);
+        locationOverlay.enableMyLocation();
+//        locationOverlay.enableFollowLocation(); //todo maybe use this?
+        mMapView.getOverlays().add(locationOverlay);
     }
 
     //Updates the PolyLines displayed dependent on what happened to the position in the route since last time the lines were drawn
